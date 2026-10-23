@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application & Letter Writer in Hindi, English & Hinglish | Free Sarkari Tools</title>
+  <meta name="description" content="Write formal applications and letters in Hindi, English & Hinglish for school, college, bank, police, and govt jobs. Fully editable templates with PDF & Word download.">
+  <meta name="keywords" content="application writer, letter writer online, leave application in hindi, bank application format, police complaint letter format, formal letter generator">
+  <meta property="og:title" content="Application & Letter Writer (Hindi & English)">
+  <meta property="og:description" content="Generate formal applications and official letters with editable templates. Download PDF & Word document.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/letter-writer.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=3.0">
+  <link rel="stylesheet" href="../css/animations.css?v=3.0">
+  <link rel="stylesheet" href="../css/tools.css?v=3.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Application & Letter Writer",
+    "description": "Generate formal letters and official applications in Hindi and English with PDF and Word download capabilities.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    .letter-a4-sheet {
+      width: 100%;
+      max-width: 780px;
+      min-height: 1000px;
+      background: white;
+      box-shadow: var(--shadow-lg);
+      border-radius: 4px;
+      padding: 50px 60px;
+      font-family: 'Inter', 'Noto Serif Devanagari', serif;
+      color: #1f2937;
+      line-height: 1.8;
+      font-size: 14px;
+      border: 1px solid var(--gray-200);
+      margin: 0 auto;
+      outline: none;
+    }
+
+    .letter-a4-sheet:focus {
+      border-color: var(--saffron);
+      box-shadow: var(--shadow-xl);
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      #letterPreviewSheet, #letterPreviewSheet * { visibility: visible; }
+      #letterPreviewSheet { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; border: none; padding: 20mm; }
+    }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1200px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Application & Letter Writer</span>
+      </div>
+
+      <div class="tool-hero" style="padding-bottom: var(--space-4);">
+        <div class="tool-icon doc-tools">✉️</div>
+        <h1>Formal Application & Letter Writer</h1>
+        <p class="tool-description">Create formal letters and applications in Hindi, English or Hinglish. Fill rough notes or choose pre-designed formats for Leave, Bank, Police, Job, and College. Download in PDF or Word format.</p>
+      </div>
+
+      <!-- Action Bar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 14px 20px; border-radius: var(--radius-md); border: 1px solid var(--gray-200); margin-bottom: var(--space-6); flex-wrap: wrap; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <label class="form-label" style="margin: 0;">Language:</label>
+          <div class="option-group" id="langPicker">
+            <button type="button" class="option-btn active" data-lang="en">English (Official)</button>
+            <button type="button" class="option-btn" data-lang="hi">हिंदी (शुद्ध कार्यालयीन)</button>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-outline btn-sm" id="copyTextBtn">📋 Copy Text</button>
+          <button type="button" class="btn btn-outline btn-sm" id="downloadWordBtn">📝 Download Word (.doc)</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="printLetterBtn">🖨️ Print</button>
+          <button type="button" class="btn btn-primary btn-sm" id="downloadPdfBtn">📥 Download PDF</button>
+        </div>
+      </div>
+
+      <!-- Split Layout -->
+      <div class="split-layout">
+        
+        <!-- Left: Form Controls -->
+        <div class="tool-workspace" style="max-height: 950px; overflow-y: auto; padding: var(--space-6);">
+          
+          <div class="form-section">
+            <h3 style="color: var(--navy);">1. Choose Pre-designed Format</h3>
+            <div class="form-group">
+              <label class="form-label" for="templateSelect">Application / Letter Type</label>
+              <select id="templateSelect" class="form-select">
+                <option value="leave_sick" selected>Leave Application (Sick / Medical Leave)</option>
+                <option value="leave_casual">Leave Application (Urgent Personal Work / Casual)</option>
+                <option value="bank_atm">Bank Application (ATM Card Block & Reissue)</option>
+                <option value="bank_statement">Bank Application (Bank Statement Request)</option>
+                <option value="police_lost">Police Complaint (Lost Mobile / Documents FIR)</option>
+                <option value="tc_college">College / School Transfer Certificate (TC)</option>
+                <option value="job_cover">Formal Job Application / Cover Letter</option>
+                <option value="custom">Custom / Free-form Drafting</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3 style="color: var(--navy);">2. Sender & Recipient Details</h3>
+            
+            <!-- Sender -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="senderName">Your Full Name (From)</label>
+                <input type="text" id="senderName" class="form-input" value="Rahul Sharma">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="senderTitle">Your Designation / Roll No / Account No</label>
+                <input type="text" id="senderTitle" class="form-input" value="Roll No. 42, B.A. Final Year">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="senderContact">Your Phone / Email / Address</label>
+                <input type="text" id="senderContact" class="form-input" value="+91 98765 43210, New Delhi">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="letterDate">Date of Letter</label>
+                <input type="text" id="letterDate" class="form-input" value="22 October 2026">
+              </div>
+            </div>
+
+            <!-- Recipient -->
+            <div class="form-row" style="margin-top: var(--space-3);">
+              <div class="form-group">
+                <label class="form-label" for="recipientTitle">Recipient Designation (To)</label>
+                <input type="text" id="recipientTitle" class="form-input" value="The Principal">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="recipientOrg">School / Bank / Office Name & City</label>
+                <input type="text" id="recipientOrg" class="form-input" value="Delhi College of Arts and Commerce, New Delhi">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3 style="color: var(--navy);">3. Subject & Letter Content</h3>
+            <div class="form-group">
+              <label class="form-label" for="subjectLine">Subject Line (विषय)</label>
+              <input type="text" id="subjectLine" class="form-input" value="Application for 3 days sick leave due to viral fever">
+            </div>
+
+            <div class="form-group" style="margin-top: var(--space-3);">
+              <label class="form-label" for="contextNotes">Write details / context in your own words (English, Hindi, or Hinglish):</label>
+              <textarea id="contextNotes" class="form-textarea" rows="4" placeholder="e.g. mujhe 3 din ki chhutti chahiye doctor ne bed rest bola hai 23 se 25 tak...">I have been suffering from high viral fever since yesterday evening. The consulting doctor has strictly advised complete medical bed rest for 3 days from 23rd October to 25th October 2026. Hence I request you to kindly grant me leave for these days.</textarea>
+            </div>
+
+            <div style="margin-top: var(--space-4);">
+              <button type="button" class="btn btn-secondary btn-sm" id="formatAiBtn">
+                ✨ Format into Perfect Official Letter
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Live Editable Letter Sheet -->
+        <div style="position: sticky; top: calc(var(--header-height) + 20px);">
+          <div class="workspace-section-title" style="justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              <span>Live Editable Letter (Click any text to edit)</span>
+            </div>
+            <span style="font-size: 11px; color: var(--success); font-weight: 600;">✓ Fully Editable</span>
+          </div>
+
+          <div id="letterPreviewSheet" class="letter-a4-sheet" contenteditable="true" spellcheck="false">
+            <!-- Dynamic Formatted Letter -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- How to use -->
+      <section class="how-to-use">
+        <h2>How to Generate Official Letters & Applications</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Pick Category & Language</h3>
+            <p>Select whether you need a Leave Application, Bank Letter, or Police Complaint in English or Hindi.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Type Rough Context</h3>
+            <p>Write your basic details in simple English, Hindi or Hinglish. Click format to generate a formal draft.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Edit & Download</h3>
+            <p>Click directly on the letter sheet to change any line. Download in PDF, Word (.doc) or print directly!</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/letter-writer.js"></script>
+</body>
+</html>

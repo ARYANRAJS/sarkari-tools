@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Schema Markup (JSON-LD) Generator for Google Rich Snippets | Sarkari Result Tools</title>
+  <meta name="description" content="Generate Google-compliant JSON-LD Schema markup for FAQ, Local Business, Article, Product and Organization. Free schema validator and instant code generator.">
+  <meta name="keywords" content="schema generator, json ld generator, faq schema generator, local business schema, rich snippet generator, google schema markup, structured data generator">
+  <meta property="og:title" content="Schema Markup (JSON-LD) Generator for Google Rich Snippets">
+  <meta property="og:description" content="Create structured data markup in JSON-LD format. Add FAQ accordions, business reviews, and article schemas to dominate Google search results.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/schema-generator.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css?v=3.1">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Schema Markup (JSON-LD) Generator",
+    "description": "Create validated JSON-LD structured data for Google Search rich snippets including FAQ, Local Business, Article, and Product schema.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1060px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Schema Markup Generator</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff;">⚡</div>
+        <h1>Google Schema Markup (JSON-LD) Generator</h1>
+        <p class="tool-description">Generate valid <strong>Schema.org JSON-LD</strong> structured data to earn Google Rich Snippets (FAQ dropdowns, Star Ratings, Local Business cards, and Article badges) that increase organic CTR.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Schema Type Selector -->
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label class="form-label" for="schemaTypeSelect" style="font-weight: 700; font-size: 15px;">Choose Schema Type: *</label>
+          <select id="schemaTypeSelect" class="form-input" style="font-size: 15px; height: 46px; font-weight: 600; color: var(--navy);">
+            <option value="faq">❓ FAQ Page Schema (Google Search Accordion Dropdown)</option>
+            <option value="local">🏪 Local Business / Cyber Cafe / Shop Schema</option>
+            <option value="article">📰 Article / Blog Post / Exam Notification</option>
+            <option value="product">🛍️ Product / Service (with Star Rating &amp; Price in INR)</option>
+            <option value="organization">🏢 Organization / Brand Website</option>
+          </select>
+        </div>
+
+        <!-- ══════════ FORM: FAQ SCHEMA ══════════ -->
+        <div id="formFaq" class="schema-form-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--navy);">Frequently Asked Questions (Q&amp;A Builder):</div>
+            <button type="button" id="btnAddFaq" class="btn btn-outline" style="font-size: 11px; padding: 4px 12px;">+ Add Question</button>
+          </div>
+          <div id="faqListContainer" style="display: flex; flex-direction: column; gap: 12px;">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- ══════════ FORM: LOCAL BUSINESS ══════════ -->
+        <div id="formLocal" class="schema-form-section" style="display: none;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-group">
+              <label class="form-label" for="locName">Business / Shop Name *</label>
+              <input type="text" id="locName" class="form-input" placeholder="e.g. Sharma Cyber Cafe &amp; CSC Center">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="locType">Business Category</label>
+              <select id="locType" class="form-input">
+                <option value="LocalBusiness">Local Business (General)</option>
+                <option value="ProfessionalService">Professional Service</option>
+                <option value="Store">Retail Store / Print Shop</option>
+                <option value="InternetCafe">Internet Cafe / Cyber Cafe</option>
+                <option value="EducationalOrganization">Coaching / Educational Center</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="locUrl">Website URL</label>
+              <input type="url" id="locUrl" class="form-input" placeholder="https://example.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="locPhone">Phone Number</label>
+              <input type="tel" id="locPhone" class="form-input" placeholder="+91 98765 43210">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="locStreet">Street Address</label>
+              <input type="text" id="locStreet" class="form-input" placeholder="Shop No. 12, Main Market Road">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="locCity">City / District</label>
+              <input type="text" id="locCity" class="form-input" placeholder="e.g. New Delhi / Jaipur / Patna">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="locPostal">PIN Code</label>
+              <input type="text" id="locPostal" class="form-input" placeholder="110001">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="locPrice">Price Range</label>
+              <input type="text" id="locPrice" class="form-input" placeholder="₹₹ (Affordable)">
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════ FORM: ARTICLE SCHEMA ══════════ -->
+        <div id="formArticle" class="schema-form-section" style="display: none;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label class="form-label" for="artHeadline">Article / News Headline *</label>
+              <input type="text" id="artHeadline" class="form-input" placeholder="e.g. SSC CGL 2026 Notification Out: Eligibility, Age Limit, Syllabus">
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label class="form-label" for="artDesc">Short Description</label>
+              <input type="text" id="artDesc" class="form-input" placeholder="Complete guide for candidates applying for SSC CGL 2026 recruitment.">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="artAuthor">Author Name</label>
+              <input type="text" id="artAuthor" class="form-input" placeholder="e.g. Hariom Bhati">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="artPublisher">Publisher / Site Name</label>
+              <input type="text" id="artPublisher" class="form-input" placeholder="Sarkari Result Tools">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="artDatePub">Date Published</label>
+              <input type="date" id="artDatePub" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="artImage">Featured Image URL</label>
+              <input type="url" id="artImage" class="form-input" placeholder="https://example.com/banner.jpg">
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════ FORM: PRODUCT SCHEMA ══════════ -->
+        <div id="formProduct" class="schema-form-section" style="display: none;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-group">
+              <label class="form-label" for="prodName">Product Name *</label>
+              <input type="text" id="prodName" class="form-input" placeholder="e.g. Passport Photo Print Pack (A4 Sheet)">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodBrand">Brand Name</label>
+              <input type="text" id="prodBrand" class="form-input" placeholder="PrintShop Pro">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodPrice">Price (₹ INR) *</label>
+              <input type="number" id="prodPrice" class="form-input" placeholder="50" step="1">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodCurrency">Currency</label>
+              <input type="text" id="prodCurrency" class="form-input" value="INR" readonly>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodRating">Average Star Rating (1.0 to 5.0)</label>
+              <input type="number" id="prodRating" class="form-input" value="4.8" min="1.0" max="5.0" step="0.1">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodReviews">Review Count</label>
+              <input type="number" id="prodReviews" class="form-input" value="128" min="1">
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════ FORM: ORGANIZATION SCHEMA ══════════ -->
+        <div id="formOrg" class="schema-form-section" style="display: none;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-group">
+              <label class="form-label" for="orgName">Organization / Brand Name *</label>
+              <input type="text" id="orgName" class="form-input" placeholder="Sarkari Result Tools">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="orgUrl">Official Website URL *</label>
+              <input type="url" id="orgUrl" class="form-input" placeholder="https://sarkaritools.in">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="orgLogo">Logo Image URL</label>
+              <input type="url" id="orgLogo" class="form-input" placeholder="https://sarkaritools.in/favicon.svg">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="orgSocial">Social Profile URL (e.g. Twitter / YouTube)</label>
+              <input type="url" id="orgSocial" class="form-input" placeholder="https://twitter.com/SarkariTools">
+            </div>
+          </div>
+        </div>
+
+        <div class="workspace-divider"></div>
+
+        <!-- Output Code Box -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+            <div class="workspace-section-title" style="margin: 0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span>Generated JSON-LD Code (Paste inside &lt;head&gt; or &lt;body&gt;)</span>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener" class="btn btn-outline" style="font-size: 12px; padding: 6px 12px; text-decoration: none;">🔍 Test with Google</a>
+              <button type="button" id="btnCopySchema" class="btn btn-outline" style="font-size: 12px; padding: 6px 12px;">📋 Copy JSON-LD</button>
+              <button type="button" id="btnDownloadSchema" class="btn btn-primary" style="font-size: 12px; padding: 6px 12px;">⬇️ Download (.jsonld)</button>
+            </div>
+          </div>
+
+          <div class="code-preview-box">
+            <pre><code id="schemaCodeOutput">&lt;!-- Generated Schema will appear here --&gt;</code></pre>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SEO Educational Info -->
+      <div class="tool-info-section" style="margin-top: var(--space-8); background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-8);">
+        <h2 style="font-size: 20px; color: var(--navy); margin-bottom: 12px;">How Does Schema Markup Boost Google Rankings?</h2>
+        <p style="color: var(--gray-600); line-height: 1.6; font-size: 14px; margin-bottom: 16px;">
+          Schema markup is a standard code vocabulary agreed upon by Google, Microsoft, and Yahoo. When you implement JSON-LD Schema markup on your web pages, Google Search can display eye-catching <strong>Rich Snippets</strong>—such as FAQ dropdown accordions, gold review stars (★ 4.8), product pricing, and verified author badges. These rich elements drastically increase your organic <strong>Click-Through Rate (CTR)</strong> by up to 35%.
+        </p>
+
+        <h3 style="font-size: 16px; color: var(--navy); margin: 16px 0 8px;">Recommended Google Schema Types:</h3>
+        <ul style="color: var(--gray-600); font-size: 13px; line-height: 1.7; padding-left: 20px;">
+          <li><strong>FAQPage:</strong> Best for guides, tool landing pages, and exam portals to dominate SERP real estate.</li>
+          <li><strong>LocalBusiness:</strong> Crucial for cyber cafes, photostats, coaching institutes, and local shops in India to rank in Google Maps 3-Pack.</li>
+          <li><strong>Article / NewsArticle:</strong> Essential for Google Discover and Google News eligibility.</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/schema-generator.js"></script>
+</body>
+</html>

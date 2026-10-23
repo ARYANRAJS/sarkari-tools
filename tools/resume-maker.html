@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Online Resume / CV Maker for Govt & Private Jobs | Sarkari Tools</title>
+  <meta name="description" content="Create professional resumes and CVs online for free with Canva-style templates. Fill details or load sample data, preview live, and download print-ready PDF.">
+  <meta name="keywords" content="resume maker, cv maker, sarkari resume format, resume builder online free, sarkari job cv format, canva style resume maker free">
+  <meta property="og:title" content="Free Online Resume Maker with Professional Templates">
+  <meta property="og:description" content="Build professional resumes for sarkari interviews, PSU, and corporate jobs. Free PDF download.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/resume-maker.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=3.0">
+  <link rel="stylesheet" href="../css/animations.css?v=3.0">
+  <link rel="stylesheet" href="../css/tools.css?v=3.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Sarkari Resume Maker",
+    "description": "Create professional resumes with multiple templates and download in PDF format for government and corporate jobs.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    /* Resume specific preview styles */
+    .resume-a4-sheet {
+      width: 100%;
+      max-width: 800px;
+      min-height: 1050px;
+      background: white;
+      box-shadow: var(--shadow-lg);
+      border-radius: 4px;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #1f2937;
+      line-height: 1.5;
+      font-size: 13px;
+      margin: 0 auto;
+    }
+
+    /* Template 1: Classic Formal */
+    .theme-classic { padding: 40px; }
+    .theme-classic .res-header { text-align: center; border-bottom: 2px solid #1a237e; padding-bottom: 16px; margin-bottom: 20px; }
+    .theme-classic .res-name { font-size: 26px; font-weight: 700; color: #1a237e; text-transform: uppercase; letter-spacing: 0.05em; }
+    .theme-classic .res-contact { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; font-size: 11px; color: #4b5563; margin-top: 6px; }
+    .theme-classic .res-section { margin-bottom: 18px; }
+    .theme-classic .res-sec-title { font-size: 13px; font-weight: 700; color: #1a237e; text-transform: uppercase; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; margin-bottom: 8px; letter-spacing: 0.05em; }
+
+    /* Template 2: Modern Executive */
+    .theme-modern { display: grid; grid-template-columns: 260px 1fr; min-height: 1050px; }
+    .theme-modern .res-sidebar { background: #1a237e; color: white; padding: 30px 20px; }
+    .theme-modern .res-main { padding: 30px; background: white; }
+    .theme-modern .res-name { font-size: 24px; font-weight: 700; color: white; margin-bottom: 4px; }
+    .theme-modern .res-title { font-size: 12px; color: #ff9933; text-transform: uppercase; font-weight: 600; margin-bottom: 20px; }
+    .theme-modern .res-sec-title { font-size: 13px; font-weight: 700; text-transform: uppercase; border-bottom: 1.5px solid #ff9933; padding-bottom: 4px; margin-bottom: 10px; }
+    .theme-modern .res-sidebar .res-sec-title { color: #ff9933; border-color: rgba(255,255,255,0.2); }
+    .theme-modern .res-main .res-sec-title { color: #1a237e; }
+
+    /* Template 3: Saffron Accent */
+    .theme-saffron { padding: 36px; border-top: 8px solid #ff9933; }
+    .theme-saffron .res-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #fed7aa; padding-bottom: 20px; margin-bottom: 20px; }
+    .theme-saffron .res-name { font-size: 26px; font-weight: 700; color: #1f2937; }
+    .theme-saffron .res-title { font-size: 13px; font-weight: 600; color: #ea580c; }
+    .theme-saffron .res-sec-title { font-size: 13px; font-weight: 700; color: #ea580c; border-left: 3px solid #ff9933; padding-left: 8px; margin-bottom: 10px; text-transform: uppercase; }
+
+    /* Printable adjustments */
+    @media print {
+      body * { visibility: hidden; }
+      #resumePreviewSheet, #resumePreviewSheet * { visibility: visible; }
+      #resumePreviewSheet { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1200px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Resume / CV Maker</span>
+      </div>
+
+      <div class="tool-hero" style="padding-bottom: var(--space-4);">
+        <div class="tool-icon doc-tools">📝</div>
+        <h1>Resume & CV Maker (Canva-Style Templates)</h1>
+        <p class="tool-description">Create an ATS-friendly, professional resume formatted for Indian government interviews, PSU recruitments, and private jobs. Download print-ready PDF free.</p>
+      </div>
+
+      <!-- Quick Action Bar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 14px 20px; border-radius: var(--radius-md); border: 1px solid var(--gray-200); margin-bottom: var(--space-6); flex-wrap: wrap; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <label class="form-label" style="margin: 0;">Template Style:</label>
+          <div class="option-group" id="templatePicker" style="flex-wrap: wrap;">
+            <button type="button" class="option-btn active" data-theme="theme-classic">Classic Formal</button>
+            <button type="button" class="option-btn" data-theme="theme-modern">Modern Blue (2-Col)</button>
+            <button type="button" class="option-btn" data-theme="theme-saffron">Saffron Indian</button>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-outline btn-sm" id="loadDemoBtn">⚡ Load Sample Data</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="printResumeBtn">🖨️ Print</button>
+          <button type="button" class="btn btn-primary btn-sm" id="downloadPdfBtn">📥 Download PDF</button>
+        </div>
+      </div>
+
+      <!-- Split Layout: Left Form / Right Preview -->
+      <div class="split-layout">
+        
+        <!-- Left Column: Form Builder -->
+        <div class="tool-workspace" style="max-height: 950px; overflow-y: auto; padding: var(--space-6);">
+          
+          <!-- Personal Info -->
+          <div class="form-section">
+            <h3 style="color: var(--navy);">1. Personal Information</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="inpName">Full Name *</label>
+                <input type="text" id="inpName" class="form-input" placeholder="e.g. Rahul Sharma" value="Rahul Sharma">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="inpTitle">Job Title / Target Post</label>
+                <input type="text" id="inpTitle" class="form-input" placeholder="e.g. Assistant Audit Officer / Software Engineer" value="Assistant Audit Officer (SSC CGL)">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="inpEmail">Email Address</label>
+                <input type="email" id="inpEmail" class="form-input" placeholder="rahul.sharma@example.com" value="rahul.sharma@example.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="inpPhone">Mobile Number</label>
+                <input type="tel" id="inpPhone" class="form-input" placeholder="+91 98765 43210" value="+91 98765 43210">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="inpCity">Location (City, State)</label>
+                <input type="text" id="inpCity" class="form-input" placeholder="e.g. New Delhi, India" value="New Delhi, India">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="inpLinkedin">LinkedIn / Website</label>
+                <input type="text" id="inpLinkedin" class="form-input" placeholder="linkedin.com/in/rahulsharma" value="linkedin.com/in/rahulsharma">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: var(--space-4);">
+              <label class="form-label" for="inpSummary">Career Objective / Profile Summary</label>
+              <textarea id="inpSummary" class="form-textarea" rows="3" placeholder="Brief 2-3 lines about your background, career aims, and strengths...">Dedicated and results-oriented graduate with strong analytical, accounting and quantitative aptitude. Aspiring to contribute with high integrity and diligence in public administrative services and corporate auditing.</textarea>
+            </div>
+          </div>
+
+          <!-- Education -->
+          <div class="form-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h3 style="color: var(--navy); margin: 0;">2. Educational Qualifications</h3>
+              <button type="button" class="btn btn-ghost btn-sm" id="addEduBtn" style="color: var(--saffron);">+ Add Degree</button>
+            </div>
+            <div id="eduListContainer">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Work Experience -->
+          <div class="form-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <h3 style="color: var(--navy); margin: 0;">3. Work Experience / Internship</h3>
+              <button type="button" class="btn btn-ghost btn-sm" id="addExpBtn" style="color: var(--saffron);">+ Add Experience</button>
+            </div>
+            <div id="expListContainer">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Skills & Languages -->
+          <div class="form-section">
+            <h3 style="color: var(--navy);">4. Skills & Languages</h3>
+            <div class="form-group">
+              <label class="form-label" for="inpSkills">Key Skills (Comma separated)</label>
+              <input type="text" id="inpSkills" class="form-input" value="Financial Accounting, MS Excel (VLOOKUP, Macros), Data Analysis, Public Administration, Tally ERP 9, Report Writing">
+            </div>
+            <div class="form-group" style="margin-top: var(--space-3);">
+              <label class="form-label" for="inpLanguages">Languages Known (Comma separated)</label>
+              <input type="text" id="inpLanguages" class="form-input" value="Hindi (Native/Fluent), English (Professional Working)">
+            </div>
+          </div>
+
+          <!-- Declaration -->
+          <div class="form-section">
+            <h3 style="color: var(--navy);">5. Declaration (Govt Application Standard)</h3>
+            <div class="form-group">
+              <textarea id="inpDeclaration" class="form-textarea" rows="2">I hereby declare that all information furnished above is true, complete and correct to the best of my knowledge and belief.</textarea>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Live Printable Sheet Preview -->
+        <div style="position: sticky; top: calc(var(--header-height) + 20px);">
+          <div class="workspace-section-title" style="justify-content: space-between;">
+            <span>Live Sheet Preview</span>
+            <span style="font-size: 11px; color: var(--gray-500);">Standard A4 Layout</span>
+          </div>
+
+          <div id="resumePreviewSheet" class="resume-a4-sheet theme-classic">
+            <!-- Populated dynamically by JS -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/resume-maker.js"></script>
+</body>
+</html>

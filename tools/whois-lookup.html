@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Domain WHOIS, DNS &amp; SSL Checker | Sarkari Result Tools</title>
+  <meta name="description" content="Free online Domain WHOIS lookup, real-time DNS records checker (A, MX, TXT, NS, CNAME), SSL status, domain age, and hosting details. Fast, accurate, and free.">
+  <meta name="keywords" content="whois lookup, dns checker, domain whois, check dns records, mx record lookup, domain age checker, ssl checker, nameserver lookup, digital marketing tools">
+  <meta property="og:title" content="Domain WHOIS, DNS Records &amp; SSL Checker">
+  <meta property="og:description" content="Check live DNS records, domain WHOIS details, registrar, nameservers, SPF/DMARC records and domain age in seconds.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/whois-lookup.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Domain WHOIS & DNS Checker",
+    "description": "Free tool to inspect domain WHOIS registration details, real-time DNS records, domain age, and email security headers.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1040px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Domain WHOIS &amp; DNS Checker</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff;">🌐</div>
+        <h1>Domain WHOIS, DNS &amp; SSL Checker</h1>
+        <p class="tool-description">Inspect live DNS records (A, AAAA, MX, TXT, NS, CNAME), domain registrar details, domain age, SSL security, and email authentication (SPF &amp; DMARC) in real time.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Search Input Form -->
+        <div class="settings-group" style="margin-bottom: var(--space-4);">
+          <label class="form-label" for="domainInput" style="font-weight: 600;">Enter Domain Name or Website URL *</label>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 260px; position: relative;">
+              <input type="text" id="domainInput" class="form-input" placeholder="e.g. sarkariresult.com, flipkart.com, google.com" style="padding-left: 38px; font-size: 15px; height: 46px;">
+              <span style="position: absolute; left: 12px; top: 13px; color: var(--gray-400); font-size: 16px;">🔍</span>
+            </div>
+            <button type="button" id="btnLookup" class="btn btn-primary" style="height: 46px; min-width: 140px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+              <span>Lookup Domain</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+            <span style="font-size: 12px; color: var(--gray-500);">Quick Samples:</span>
+            <button type="button" class="quick-sample-btn btn btn-outline" data-domain="sarkariresult.com" style="padding: 2px 8px; font-size: 11px;">sarkariresult.com</button>
+            <button type="button" class="quick-sample-btn btn btn-outline" data-domain="flipkart.com" style="padding: 2px 8px; font-size: 11px;">flipkart.com</button>
+            <button type="button" class="quick-sample-btn btn btn-outline" data-domain="github.com" style="padding: 2px 8px; font-size: 11px;">github.com</button>
+            <button type="button" class="quick-sample-btn btn btn-outline" data-domain="wikipedia.org" style="padding: 2px 8px; font-size: 11px;">wikipedia.org</button>
+          </div>
+        </div>
+
+        <!-- Loader -->
+        <div id="lookupLoading" style="display: none; text-align: center; padding: 40px 20px;">
+          <div class="spinner" style="margin: 0 auto 16px; width: 44px; height: 44px; border: 4px solid var(--gray-200); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+          <div style="font-size: 15px; font-weight: 600; color: var(--navy);">Querying Cloudflare DNS &amp; Registry Servers...</div>
+          <div style="font-size: 12px; color: var(--gray-500); margin-top: 4px;">Checking A, MX, TXT, NS records and security policies</div>
+        </div>
+
+        <!-- Results Workspace -->
+        <div id="lookupResults" style="display: none;">
+          
+          <div class="workspace-divider"></div>
+
+          <!-- Overview Cards -->
+          <div class="seo-metrics-grid">
+            <div class="seo-metric-card">
+              <div class="seo-metric-title">Domain Name</div>
+              <div id="resDomainName" style="font-size: 18px; font-weight: 700; color: var(--navy); word-break: break-all;">-</div>
+              <div id="resTld" class="seo-metric-desc" style="margin-top: 4px;">TLD: -</div>
+            </div>
+            <div class="seo-metric-card">
+              <div class="seo-metric-title">Domain Status</div>
+              <div id="resDomainStatus" style="font-size: 15px; font-weight: 600; color: #16a34a; margin-top: 4px;">Active ✓</div>
+              <div id="resIpAddress" class="seo-metric-desc" style="margin-top: 4px; font-family: monospace;">IP: -</div>
+            </div>
+            <div class="seo-metric-card">
+              <div class="seo-metric-title">Estimated Age / Host</div>
+              <div id="resHostingProvider" style="font-size: 15px; font-weight: 600; color: var(--navy);">-</div>
+              <div id="resAge" class="seo-metric-desc" style="margin-top: 4px;">-</div>
+            </div>
+            <div class="seo-metric-card">
+              <div class="seo-metric-title">Security &amp; Auth</div>
+              <div id="resSecurityScore" style="font-size: 18px; font-weight: 700; color: #16a34a;">-</div>
+              <div id="resEmailSec" class="seo-metric-desc" style="margin-top: 4px;">SPF &amp; DMARC: Checking</div>
+            </div>
+          </div>
+
+          <!-- DNS Record Tabs -->
+          <div class="tool-tabs" id="dnsTabs">
+            <button type="button" class="tool-tab active" data-type="ALL">All Records (<span id="countAll">0</span>)</button>
+            <button type="button" class="tool-tab" data-type="A">A / IPv4 (<span id="countA">0</span>)</button>
+            <button type="button" class="tool-tab" data-type="AAAA">AAAA / IPv6 (<span id="countAAAA">0</span>)</button>
+            <button type="button" class="tool-tab" data-type="MX">MX / Mail (<span id="countMX">0</span>)</button>
+            <button type="button" class="tool-tab" data-type="TXT">TXT / Auth (<span id="countTXT">0</span>)</button>
+            <button type="button" class="tool-tab" data-type="NS">NS / Nameservers (<span id="countNS">0</span>)</button>
+          </div>
+
+          <!-- DNS Records Table -->
+          <div class="dns-table-container">
+            <table class="dns-table">
+              <thead>
+                <tr>
+                  <th style="width: 90px;">Type</th>
+                  <th style="width: 180px;">Host / Name</th>
+                  <th>Value / Target Record</th>
+                  <th style="width: 80px;">TTL</th>
+                </tr>
+              </thead>
+              <tbody id="dnsTableBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Email Security & DMARC Audit Section -->
+          <div style="margin-top: 24px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 18px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <span>🛡️ Email Authentication &amp; Spam Protection Audit</span>
+            </div>
+            <div class="seo-audit-list" id="authAuditList">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; flex-wrap: wrap;">
+            <button type="button" id="btnCopyDns" class="btn btn-outline" style="font-size: 13px;">📋 Copy DNS Records</button>
+            <button type="button" id="btnDownloadDns" class="btn btn-primary" style="font-size: 13px;">⬇️ Download Report (.txt)</button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SEO Educational / How to Use Section -->
+      <div class="tool-info-section" style="margin-top: var(--space-8); background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-8);">
+        <h2 style="font-size: 20px; color: var(--navy); margin-bottom: 12px;">What is a Domain WHOIS &amp; DNS Lookup?</h2>
+        <p style="color: var(--gray-600); line-height: 1.6; font-size: 14px; margin-bottom: 16px;">
+          DNS (Domain Name System) translates human-friendly domain names (like <code>sarkariresult.com</code>) into computer IP addresses. A WHOIS &amp; DNS checker helps digital marketers, website administrators, and SEO professionals inspect DNS propagation, verify MX records for Google Workspace or Zoho Mail, verify domain ownership, and ensure that SPF, DKIM, and DMARC security records are configured to prevent email spoofing.
+        </p>
+
+        <h3 style="font-size: 16px; color: var(--navy); margin: 16px 0 8px;">Key DNS Record Types Explained</h3>
+        <ul style="color: var(--gray-600); font-size: 13px; line-height: 1.7; padding-left: 20px;">
+          <li><strong>A Record:</strong> Points the domain to an IPv4 IP address (e.g. <code>104.21.55.12</code>).</li>
+          <li><strong>AAAA Record:</strong> Points the domain to an IPv6 address.</li>
+          <li><strong>MX Record:</strong> Specifies the mail exchange servers responsible for accepting incoming emails for your domain.</li>
+          <li><strong>TXT Record:</strong> Used for domain ownership verification, SPF (Sender Policy Framework), and DMARC security policies.</li>
+          <li><strong>NS Record:</strong> Identifies the authoritative DNS nameservers for the domain.</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/whois-lookup.js"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Change Photo Background Color Online Free | White, Blue & Red Background</title>
+  <meta name="description" content="Change photo background color to White, Light Blue or Red for government exams (SSC, UPSC, Police). 1-click presets, 100% free and client-side private.">
+  <meta name="keywords" content="change photo background color, make photo background white online, passport photo blue background, change bg color to white free, sarkari photo background changer">
+  <meta property="og:title" content="Change Photo Background Color Online - Sarkari Tools">
+  <meta property="og:description" content="Convert your photo background to White or Light Blue for government forms.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/bg-color-changer.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Photo Background Color Changer",
+    "description": "Change background color of photos to white or light blue for government exam forms.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Background Color Changer</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon image-tools">🎨</div>
+        <h1>Photo Background Color Changer</h1>
+        <p class="tool-description">Instantly replace any photo background with official government compliant colors — Pure White for SSC/UPSC or Light Blue for Visas and Police exams.</p>
+      </div>
+
+      <!-- Upload Zone -->
+      <div class="upload-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*">
+        <div class="upload-zone-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <h3>Select or Drag & Drop Photo</h3>
+        <p>Supports JPG, JPEG, PNG, WEBP (Max 15MB)</p>
+        <div class="file-types">
+          <span class="file-type-badge">WHITE BACKGROUND</span>
+          <span class="file-type-badge">LIGHT BLUE</span>
+          <span class="file-type-badge">1-CLICK COLOR</span>
+        </div>
+      </div>
+
+      <!-- Workspace -->
+      <div class="tool-workspace" id="toolWorkspace" style="display: none; margin-top: var(--space-6);">
+        
+        <!-- Controls Grid -->
+        <div class="settings-panel">
+          <div class="settings-group">
+            <label class="form-label">Pick Target Government Color</label>
+            <div class="option-group" id="quickColorGroup">
+              <button type="button" class="option-btn active" data-color="#ffffff">⚪ Pure White (SSC / UPSC)</button>
+              <button type="button" class="option-btn" data-color="#38bdf8">🔵 Sky Blue (Visa / Exam)</button>
+              <button type="button" class="option-btn" data-color="#1d4ed8">🟦 Deep Blue</button>
+              <button type="button" class="option-btn" data-color="#dc2626">🔴 Red</button>
+              <button type="button" class="option-btn" data-color="#10b981">🟢 Green</button>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="customColor">Or Custom Color</label>
+            <input type="color" id="customColor" value="#ffffff" style="width: 100%; height: 44px; padding: 2px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); cursor: pointer;">
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="toleranceSlider">Color Sensitivity: <strong id="toleranceVal">28%</strong></label>
+            <input type="range" id="toleranceSlider" class="range-slider" min="5" max="80" value="28">
+            <span class="hint">Adjust if edges or wall shades are missed</span>
+          </div>
+        </div>
+
+        <div class="workspace-divider"></div>
+
+        <!-- Preview Canvas -->
+        <div class="workspace-section">
+          <div class="comparison-grid">
+            <div class="comparison-panel">
+              <div class="comparison-panel-header">Original (Click background if needed)</div>
+              <div class="comparison-panel-body" style="text-align: center;">
+                <canvas id="origCanvas" style="max-height: 320px; max-width: 100%; cursor: crosshair; border-radius: 4px;"></canvas>
+              </div>
+            </div>
+
+            <div class="comparison-panel">
+              <div class="comparison-panel-header">New Background Preview</div>
+              <div class="comparison-panel-body" style="text-align: center;">
+                <canvas id="outputCanvas" style="max-height: 320px; max-width: 100%; border-radius: 4px;"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar" style="border-top: 1px solid var(--gray-200); margin-top: var(--space-6); padding-top: var(--space-6);">
+          <div class="action-bar-left">
+            <button type="button" class="btn btn-outline" id="resetBtn">Upload Another</button>
+          </div>
+          <div class="action-bar-right">
+            <button type="button" class="btn btn-primary btn-lg" id="downloadBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Changed Photo (JPG)
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- How to use -->
+      <section class="how-to-use">
+        <h2>How to Change Background to White or Blue</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Upload Photo</h3>
+            <p>Upload your portrait taken with any phone or camera.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Pick Preset Color</h3>
+            <p>Click "Pure White" for SSC/UPSC or "Sky Blue" for Visa forms.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Download Ready File</h3>
+            <p>Download your new photo instantly. Guaranteed accepted format.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/bg-color-changer.js"></script>
+</body>
+</html>

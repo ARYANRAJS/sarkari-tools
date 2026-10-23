@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Passport Size Photo Maker with A4 Print Layout | Sarkari Result Tools</title>
+  <meta name="description" content="Create passport size photos online. Arrange 5, 8, 10 or 30 photos on A4 sheet with cutting lines. Download high resolution print ready JPG or PDF free.">
+  <meta name="keywords" content="passport size photo maker, passport photo online, 5 passport photo a4, 10 passport photo sheet, print passport photo a4, ssc passport photo maker">
+  <meta property="og:title" content="Passport Size Photo Maker - A4 Sheet Print Ready">
+  <meta property="og:description" content="Generate passport photos with A4 sheet layout for 5, 8, 10 or multiple copies. Includes cutting borders and 300 DPI resolution.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/passport-photo.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Passport Photo Maker",
+    "description": "Online tool to make passport size photos and arrange 5, 10 or multiple photos on A4 sheet for instant printing.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Passport Photo Maker</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon image-tools">📷</div>
+        <h1>Passport Size Photo Maker (A4 Sheet)</h1>
+        <p class="tool-description">Generate 3.5×4.5 cm passport photos and arrange 5, 8, 10 or 30 photos on a single A4 paper with cutting lines ready for studio printing.</p>
+      </div>
+
+      <!-- Upload Zone -->
+      <div class="upload-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*">
+        <div class="upload-zone-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <h3>Select or Drag & Drop Your Portrait Photo</h3>
+        <p>Upload a clear face photo. You can adjust zoom and framing next.</p>
+        <div class="file-types">
+          <span class="file-type-badge">A4 5 PHOTOS</span>
+          <span class="file-type-badge">A4 10 PHOTOS</span>
+          <span class="file-type-badge">4×6 SHEET</span>
+          <span class="file-type-badge">PRINT READY</span>
+        </div>
+      </div>
+
+      <!-- Workspace -->
+      <div class="tool-workspace" id="toolWorkspace" style="display: none; margin-top: var(--space-6);">
+        
+        <!-- Controls Grid -->
+        <div class="settings-panel">
+          <div class="settings-group">
+            <label class="form-label" for="photoPreset">Photo Size Standard</label>
+            <select id="photoPreset" class="form-select">
+              <option value="passport_in" selected>India Passport (3.5 × 4.5 cm)</option>
+              <option value="stamp">Stamp Size (2.0 × 2.5 cm)</option>
+              <option value="pan_card">PAN Card (2.5 × 3.5 cm)</option>
+              <option value="us_visa">US / International Visa (2 × 2 inch)</option>
+            </select>
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="sheetLayout">Print Paper Layout</label>
+            <select id="sheetLayout" class="form-select">
+              <option value="5_a4">5 Photos on A4 (1 Row)</option>
+              <option value="8_a4">8 Photos on A4 (2 Rows)</option>
+              <option value="10_a4" selected>10 Photos on A4 (2 Rows of 5)</option>
+              <option value="fill_a4">Max Fill A4 Sheet (30 Photos)</option>
+              <option value="6_4x6">6 Photos on 4×6 inch Photo Paper</option>
+              <option value="single">Single Photo (Single Image File)</option>
+            </select>
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="zoomSlider">Face Zoom: <strong id="zoomVal">100%</strong></label>
+            <input type="range" id="zoomSlider" class="range-slider" min="50" max="250" value="100">
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label">Photo Border & Guidelines</label>
+            <div style="display: flex; gap: 16px; align-items: center; height: 44px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="checkbox" id="addBorder" checked style="accent-color: var(--saffron);">
+                <span>Black Border</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="checkbox" id="addCutLines" checked style="accent-color: var(--saffron);">
+                <span>Cut Guidelines</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="workspace-divider"></div>
+
+        <!-- Sheet Preview Canvas Container -->
+        <div class="workspace-section">
+          <div class="workspace-section-title" style="justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+              <span>Sheet Preview (<span id="photoCountDisplay">10</span> Photos Arranged)</span>
+            </div>
+            <span style="font-size: var(--text-xs); color: var(--gray-500);">300 DPI High Resolution Layout</span>
+          </div>
+
+          <div class="canvas-container" style="background: #e2e8f0; padding: var(--space-4);">
+            <canvas id="sheetCanvas" style="box-shadow: var(--shadow-lg); border-radius: 4px; background: #fff;"></canvas>
+          </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar" style="border-top: 1px solid var(--gray-200); margin-top: var(--space-6); padding-top: var(--space-6);">
+          <div class="action-bar-left">
+            <button type="button" class="btn btn-outline" id="resetBtn">Upload Another Photo</button>
+          </div>
+          <div class="action-bar-right" style="gap: 12px;">
+            <button type="button" class="btn btn-secondary" id="downloadPdfBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Download Printable PDF
+            </button>
+            <button type="button" class="btn btn-primary btn-lg" id="downloadImgBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download JPG Image
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- How to use -->
+      <section class="how-to-use">
+        <h2>How to Print Passport Photos at Home or Cyber Cafe</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Upload Portrait</h3>
+            <p>Upload any clear photo from your phone. Use the zoom slider to frame your face correctly.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Select Count (5, 8, 10 or 30)</h3>
+            <p>Choose how many photos you want on the A4 page (e.g. 5 photos in 1 row, or 10 photos in 2 rows).</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Print & Cut</h3>
+            <p>Download the PDF or high-res JPG and print on photo paper or normal paper. Cut along the dashed guidelines!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>How many passport photos fit on one A4 sheet?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                A standard A4 sheet can hold up to 30 passport photos (5 columns × 6 rows) with standard 3.5×4.5 cm dimensions. You can also pick standard sequence layouts like 5 photos, 8 photos, or 10 photos if you only need a few prints.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>What paper should I print this on?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                For official government submissions, print on 180 GSM or 210 GSM glossy photo paper at any local photo studio or cyber cafe. The downloaded file is created at 300 DPI for crystal clear studio print quality.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/passport-photo.js"></script>
+</body>
+</html>

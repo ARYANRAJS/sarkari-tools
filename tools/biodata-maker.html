@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marriage Biodata Maker Online Free | Shadi Bio Data in Hindi & English</title>
+  <meta name="description" content="Create beautiful marriage biodata (शादी बायोडाटा) online for free. Traditional Hindu, Muslim, Sikh & modern formats with Om, Ganesh, and Kundli details. Download PDF.">
+  <meta name="keywords" content="marriage biodata maker, shadi biodata maker, marriage biodata format in hindi, matrimonial biodata format, free biodata maker for marriage pdf">
+  <meta property="og:title" content="Marriage / Shadi Biodata Maker Online - Free PDF">
+  <meta property="og:description" content="Design beautiful matrimonial biodata with photo, family, education, and kundli details. Instant PDF download.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/biodata-maker.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Rozha+One&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=3.0">
+  <link rel="stylesheet" href="../css/animations.css?v=3.0">
+  <link rel="stylesheet" href="../css/tools.css?v=3.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Marriage Biodata Maker",
+    "description": "Create matrimonial biodata for marriage with Indian cultural designs, horoscope details, and downloadable PDF format.",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    /* Biodata sheet styles */
+    .biodata-sheet {
+      width: 100%;
+      max-width: 780px;
+      min-height: 1040px;
+      background: #fffdfa;
+      box-shadow: var(--shadow-lg);
+      border-radius: 4px;
+      padding: 36px 44px;
+      font-family: 'Inter', sans-serif;
+      color: #1f2937;
+      position: relative;
+      margin: 0 auto;
+    }
+
+    /* Traditional Indian Theme */
+    .bio-traditional {
+      border: 12px double #b91c1c;
+      background: #fffbf5;
+    }
+    .bio-traditional .bio-heading {
+      text-align: center;
+      color: #b91c1c;
+      font-family: 'Noto Serif Devanagari', serif;
+      margin-bottom: 20px;
+    }
+    .bio-traditional .bio-symbol {
+      font-size: 26px;
+      color: #ea580c;
+      margin-bottom: 4px;
+    }
+    .bio-traditional .sec-title {
+      background: #fef2f2;
+      color: #991b1b;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-left: 4px solid #b91c1c;
+      margin: 16px 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Royal Gold Theme */
+    .bio-royal {
+      border: 10px solid #1a237e;
+      outline: 2px solid #d4a73a;
+      outline-offset: -6px;
+      background: #ffffff;
+    }
+    .bio-royal .bio-heading {
+      text-align: center;
+      color: #1a237e;
+      margin-bottom: 20px;
+    }
+    .bio-royal .sec-title {
+      background: #eff6ff;
+      color: #1a237e;
+      border-left: 4px solid #d4a73a;
+      padding: 4px 10px;
+      font-size: 13px;
+      font-weight: 700;
+      margin: 16px 0 10px;
+      text-transform: uppercase;
+    }
+
+    .bio-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+    .bio-table td {
+      padding: 4px 8px;
+      vertical-align: top;
+    }
+    .bio-table td.bio-label {
+      width: 32%;
+      font-weight: 600;
+      color: #374151;
+    }
+    .bio-table td.bio-val {
+      width: 68%;
+      color: #111827;
+    }
+
+    @media print {
+      body * { visibility: hidden; }
+      #biodataPreviewSheet, #biodataPreviewSheet * { visibility: visible; }
+      #biodataPreviewSheet { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1200px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Marriage Biodata Maker</span>
+      </div>
+
+      <div class="tool-hero" style="padding-bottom: var(--space-4);">
+        <div class="tool-icon doc-tools">💍</div>
+        <h1>Shadi / Marriage Biodata Maker</h1>
+        <p class="tool-description">Create traditional Indian matrimonial biodata (शादी के लिए बायोडाटा) with Ganeshji, Kundli details, family background, and photo. 100% free with instant PDF download.</p>
+      </div>
+
+      <!-- Quick Action Bar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 14px 20px; border-radius: var(--radius-md); border: 1px solid var(--gray-200); margin-bottom: var(--space-6); flex-wrap: wrap; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <label class="form-label" style="margin: 0;">Select Theme:</label>
+          <div class="option-group" id="bioThemePicker" style="flex-wrap: wrap;">
+            <button type="button" class="option-btn active" data-theme="bio-traditional">Traditional Maroon</button>
+            <button type="button" class="option-btn" data-theme="bio-royal">Royal Navy & Gold</button>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-outline btn-sm" id="loadBioDemoBtn">⚡ Load Sample</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="printBioBtn">🖨️ Print</button>
+          <button type="button" class="btn btn-primary btn-sm" id="downloadBioPdfBtn">📥 Download PDF</button>
+        </div>
+      </div>
+
+      <!-- Split Layout -->
+      <div class="split-layout">
+        
+        <!-- Left: Form Input -->
+        <div class="tool-workspace" style="max-height: 950px; overflow-y: auto; padding: var(--space-6);">
+          
+          <!-- Header Symbol -->
+          <div class="form-section">
+            <h3 style="color: var(--navy);">Top Religious / Cultural Header</h3>
+            <div class="form-group">
+              <label class="form-label" for="bioSymbolSelect">Select Header Symbol / Text</label>
+              <select id="bioSymbolSelect" class="form-select">
+                <option value="॥ श्री गणेशाय नमः ॥" selected>॥ श्री गणेशाय नमः ॥ (Ganeshji)</option>
+                <option value="॥ ॐ ॥">॥ ॐ ॥ (Om)</option>
+                <option value="॥ ੴ सतिगुर प्रसादि ॥">॥ ੴ सतिगुर प्रसादि ॥ (Ik Onkar)</option>
+                <option value="॥ श्री राधे ॥">॥ श्री राधे ॥ (Radhe Radhe)</option>
+                <option value="MATRIMONIAL BIODATA">MATRIMONIAL BIODATA (Simple English)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Personal Details -->
+          <div class="form-section">
+            <h3 style="color: var(--navy);">1. Personal Details</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bioName">Full Name *</label>
+                <input type="text" id="bioName" class="form-input" value="Rohit Verma">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bioDob">Date of Birth</label>
+                <input type="text" id="bioDob" class="form-input" placeholder="e.g. 18 August 1997" value="18 August 1997">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bioTob">Time of Birth (TOB)</label>
+                <input type="text" id="bioTob" class="form-input" placeholder="e.g. 06:45 AM" value="06:45 AM">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bioPob">Place of Birth (POB)</label>
+                <input type="text" id="bioPob" class="form-input" placeholder="e.g. Jaipur, Rajasthan" value="Jaipur, Rajasthan">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bioHeight">Height</label>
+                <input type="text" id="bioHeight" class="form-input" placeholder="e.g. 5 ft 10 in" value="5 ft 10 in (178 cm)">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bioComplexion">Complexion / Blood Group</label>
+                <input type="text" id="bioComplexion" class="form-input" placeholder="e.g. Fair / B+ Positive" value="Fair / B+ Positive">
+              </div>
+            </div>
+          </div>
+
+          <!-- Horoscope / Astrology -->
+          <div class="form-section">
+            <h3 style="color: var(--navy);">2. Kundli & Religious Details</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bioReligion">Religion & Caste</label>
+                <input type="text" id="bioReligion" class="form-input" placeholder="e.g. Hindu - Brahmin" value="Hindu, Gaur Brahmin">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bioGotra">Gotra</label>
+                <input type="text" id="bioGotra" class="form-input" placeholder="e.g. Kaushik / Kashyap" value="Kaushik (Maternal: Vashisht)">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bioRashi">Rashi / Nakshatra</label>
+                <input type="text" id="bioRashi" class="form-input" placeholder="e.g. Leo (सिंह) / Magha" value="Leo (सिंह) / Magha">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bioManglik">Manglik Status</label>
+                <select id="bioManglik" class="form-select">
+                  <option value="Non-Manglik (अमांगलिक)" selected>Non-Manglik (अमांगलिक)</option>
+                  <option value="Manglik (मांगलिक)">Manglik (मांगलिक)</option>
+                  <option value="Anshik Manglik (आंशिक मांगलिक)">Anshik Manglik (आंशिक मांगलिक)</option>
+                  <option value="Not Known / Kundli Available">Not Known / Kundli Available</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Education & Career -->
+          <div class="form-section">
+            <h3 style="color: var(--navy);">3. Education & Profession</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bioEducation">Highest Education</label>
+                <input type="text" id="bioEducation" class="form-input" placeholder="e.g. B.Tech (Computer Science)" value="B.Tech (Computer Science) - NIT Jaipur">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bioOccupation">Occupation / Job</label>
+                <input type="text" id="bioOccupation" class="form-input" placeholder="e.g. Senior Software Engineer" value="Senior Software Engineer, MNC Gurugram">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bioIncome">Annual Package / Income</label>
+                <input type="text" id="bioIncome" class="form-input" placeholder="e.g. ₹ 24 LPA" value="₹ 22 Lakhs Per Annum">
+              </div>
+            </div>
+          </div>
+
+          <!-- Family Background -->
+          <div class="form-section">
+            <h3 style="color: var(--navy);">4. Family Details</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bioFather">Father's Name & Occupation</label>
+                <input type="text" id="bioFather" class="form-input" value="Shri Ramesh Verma (Class I Gazetted Officer, Govt of India)">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bioMother">Mother's Name & Occupation</label>
+                <input type="text" id="bioMother" class="form-input" value="Smt. Sunita Verma (Homemaker)">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="bioSiblings">Brothers & Sisters</label>
+                <input type="text" id="bioSiblings" class="form-input" value="1 Younger Sister (Pursuing MBA, Unmarried)">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bioFamilyType">Family Values / Type</label>
+                <input type="text" id="bioFamilyType" class="form-input" value="Moderate / Nuclear Family (Own House in Jaipur)">
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Details -->
+          <div class="form-section">
+            <h3 style="color: var(--navy);">5. Contact Information</h3>
+            <div class="form-group">
+              <label class="form-label" for="bioAddress">Residential Address</label>
+              <textarea id="bioAddress" class="form-textarea" rows="2">Plot No. 45, Surya Nagar, Gopalpura Bypass, Jaipur, Rajasthan - 302015</textarea>
+            </div>
+            <div class="form-row" style="margin-top: var(--space-3);">
+              <div class="form-group">
+                <label class="form-label" for="bioPhone">Contact Phone Numbers</label>
+                <input type="text" id="bioPhone" class="form-input" value="+91 98290 12345, +91 94140 67890">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bioEmail">Contact Email</label>
+                <input type="text" id="bioEmail" class="form-input" value="verma.family.jpr@gmail.com">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Live Biodata Preview -->
+        <div style="position: sticky; top: calc(var(--header-height) + 20px);">
+          <div class="workspace-section-title" style="justify-content: space-between;">
+            <span>Live Matrimonial Biodata Sheet</span>
+            <span style="font-size: 11px; color: var(--gray-500);">A4 Print Ready</span>
+          </div>
+
+          <div id="biodataPreviewSheet" class="biodata-sheet bio-traditional">
+            <!-- Dynamic Content -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/biodata-maker.js"></script>
+</body>
+</html>

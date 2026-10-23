@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name and Date on Photo Maker for SSC, Railway & Sarkari Forms</title>
+  <meta name="description" content="Add Candidate Name and Date of Photo (DOP) on passport photos for SSC, UP Police, Railway, and Sarkari online application forms. 100% free & instant.">
+  <meta name="keywords" content="name and date on photo, write name on photo, date on passport photo, dop on photo, ssc name date photo maker, sarkari photo name date joiner">
+  <meta property="og:title" content="Name & Date on Photo Maker - Free Sarkari Tool">
+  <meta property="og:description" content="Write your name and date of photo (DOP) below your passport photo for government exam forms.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/name-date-photo.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Name and Date on Photo Maker",
+    "description": "Add candidate name, date of photo (DOP), and custom text below passport photos for SSC and government job exams.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Name & Date on Photo</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon image-tools">🏷️</div>
+        <h1>Name & Date on Photo Maker</h1>
+        <p class="tool-description">Add candidate name and Date of Photograph (DOP) below your passport picture as strictly demanded by SSC, UP Police, Railway and State exam notifications.</p>
+      </div>
+
+      <!-- Upload Zone -->
+      <div class="upload-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*">
+        <div class="upload-zone-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <h3>Select or Drag & Drop Passport Photo</h3>
+        <p>Supports JPG, JPEG, PNG, WEBP (Max 15MB)</p>
+        <div class="file-types">
+          <span class="file-type-badge">NAME ON PHOTO</span>
+          <span class="file-type-badge">DOP / DOB STAMP</span>
+          <span class="file-type-badge">SSC APPROVED</span>
+        </div>
+      </div>
+
+      <!-- Workspace -->
+      <div class="tool-workspace" id="toolWorkspace" style="display: none; margin-top: var(--space-6);">
+        
+        <!-- Controls Grid -->
+        <div class="settings-panel">
+          <div class="settings-group">
+            <label class="form-label" for="candidateName">Candidate Name</label>
+            <input type="text" id="candidateName" class="form-input" placeholder="e.g. RAHUL SHARMA" value="YOUR NAME HERE">
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="dateText">Date of Photo (DOP) or Date</label>
+            <input type="text" id="dateText" class="form-input" placeholder="e.g. DOP: 15/08/2026" value="DOP: 22/10/2026">
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="extraText">Optional Third Line (e.g. Roll No / DOB)</label>
+            <input type="text" id="extraText" class="form-input" placeholder="Optional text (leave empty if not needed)">
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="fontSize">Font Size: <strong id="fontSizeVal">18px</strong></label>
+            <input type="range" id="fontSize" class="range-slider" min="12" max="36" value="18">
+          </div>
+        </div>
+
+        <div class="workspace-divider"></div>
+
+        <!-- Appearance Options -->
+        <div class="settings-panel">
+          <div class="settings-group">
+            <label class="form-label" for="textPos">Text Position</label>
+            <select id="textPos" class="form-select">
+              <option value="bottom" selected>Bottom of Photo (Standard)</option>
+              <option value="top">Top of Photo</option>
+            </select>
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="fontColor">Font Color</label>
+            <input type="color" id="fontColor" value="#000000" style="width: 100%; height: 44px; padding: 2px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); cursor: pointer;">
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="boxBgColor">Text Box Background Color</label>
+            <input type="color" id="boxBgColor" value="#ffffff" style="width: 100%; height: 44px; padding: 2px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); cursor: pointer;">
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="targetKb">Target Max File Size</label>
+            <select id="targetKb" class="form-select">
+              <option value="0">Original / High Quality</option>
+              <option value="50" selected>Under 50 KB (SSC Standard)</option>
+              <option value="100">Under 100 KB</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="workspace-divider"></div>
+
+        <!-- Live Canvas Preview -->
+        <div class="workspace-section">
+          <div class="workspace-section-title" style="justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+              <span>Live Photo Preview</span>
+            </div>
+            <span id="outputInfoText" style="font-size: var(--text-sm); font-weight: 600; color: var(--success);">Size: ~40 KB</span>
+          </div>
+
+          <div class="canvas-container" style="padding: 20px; background: #f8fafc;">
+            <canvas id="photoCanvas" style="box-shadow: var(--shadow-md); border-radius: 4px; max-height: 420px;"></canvas>
+          </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar" style="border-top: 1px solid var(--gray-200); margin-top: var(--space-6); padding-top: var(--space-6);">
+          <div class="action-bar-left">
+            <button type="button" class="btn btn-outline" id="resetBtn">Change Photo</button>
+          </div>
+          <div class="action-bar-right">
+            <button type="button" class="btn btn-primary btn-lg" id="downloadBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Photo with Name & Date
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- How to use -->
+      <section class="how-to-use">
+        <h2>How to Add Name and Date on Passport Photos</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Upload Photo</h3>
+            <p>Upload your recent passport photo from your mobile or PC.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Type Name & Date</h3>
+            <p>Type your full name in capital letters and the date the photo was taken (DOP).</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Download Under 50KB</h3>
+            <p>Instant high quality download ready to upload directly to your SSC or Railway portal!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Why is Date of Photo (DOP) mandatory in SSC exam notifications?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                SSC rules state that candidate photographs must not be older than 3 months from the notification release date. Printing the Date of Photo (DOP) clearly confirms the photo is recent, preventing application rejections.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/name-date-photo.js"></script>
+</body>
+</html>

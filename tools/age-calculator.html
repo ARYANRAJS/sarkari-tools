@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sarkari Age Calculator for Govt Exams 2026 | SSC, UPSC, Railway Eligibility</title>
+  <meta name="description" content="Calculate your exact age in years, months, and days for Sarkari exam notifications (SSC CGL, CHSL, UPSC, RRB, Banking). Includes OBC/SC/ST age relaxation check.">
+  <meta name="keywords" content="age calculator, sarkari age calculator, ssc age calculator, age calculator as on date, exam age eligibility checker, age relaxation obc sc st">
+  <meta property="og:title" content="Sarkari Age Calculator for Govt Exam Eligibility">
+  <meta property="og:description" content="Calculate exact age as on exam cutoff date with OBC, SC/ST, PwD category relaxation. Free and instant.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/age-calculator.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Sarkari Age Calculator",
+    "description": "Calculate exact age and government examination eligibility for SSC, UPSC, Railway, and Banking exams.",
+    "applicationCategory": "CalculatorApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Age Calculator</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon calc-tools">📅</div>
+        <h1>Sarkari Exam Age Calculator</h1>
+        <p class="tool-description">Find your exact age in years, months, and days on any exam cutoff date. Includes automatic age relaxation calculation for General, OBC, SC, ST and PwD candidates.</p>
+      </div>
+
+      <!-- Calculator Input Form -->
+      <div class="tool-workspace">
+        
+        <div class="settings-panel">
+          <div class="settings-group">
+            <label class="form-label" for="dobInput">Date of Birth (DOB) *</label>
+            <input type="date" id="dobInput" class="form-input" value="2000-01-15" required>
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="asOfDateInput">Age as on Date (Cutoff Date) *</label>
+            <input type="date" id="asOfDateInput" class="form-input" required>
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="categorySelect">Candidate Category (Age Relaxation)</label>
+            <select id="categorySelect" class="form-select">
+              <option value="0" selected>General / EWS (No Relaxation)</option>
+              <option value="3">OBC (Non-Creamy Layer) (+3 Years)</option>
+              <option value="5">SC / ST (+5 Years)</option>
+              <option value="10">PwD General (+10 Years)</option>
+              <option value="13">PwD + OBC (+13 Years)</option>
+              <option value="15">PwD + SC/ST (+15 Years)</option>
+              <option value="5">Ex-Servicemen (+5 Years)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="action-bar" style="border-top: 1px solid var(--gray-200); margin-top: var(--space-6); padding-top: var(--space-6); justify-content: flex-end;">
+          <button type="button" class="btn btn-primary btn-lg" id="calculateBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
+            Calculate Exact Age
+          </button>
+        </div>
+
+        <!-- Result Box -->
+        <div id="resultBox" class="result-section" style="margin-top: var(--space-8); background: #f0fdf4; border: 1.5px solid #86efac;">
+          <h2 style="font-size: var(--text-base); color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Your Exact Age Is</h2>
+          <div id="mainAgeDisplay" style="font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--navy); margin-bottom: var(--space-4);">
+            26 Years, 9 Months, 7 Days
+          </div>
+
+          <div class="result-stats" style="margin-top: var(--space-6);">
+            <div class="result-stat">
+              <div class="stat-value" id="statMonths">321</div>
+              <div class="stat-label">Total Months</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-value" id="statWeeks">1,397</div>
+              <div class="stat-label">Total Weeks</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-value" id="statDays">9,777</div>
+              <div class="stat-label">Total Days</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-value" id="statNextBday">28 Days</div>
+              <div class="stat-label">Next Birthday In</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Government Exam Eligibility Checklist -->
+        <div class="workspace-section" style="margin-top: var(--space-8);">
+          <div class="workspace-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            Exam Eligibility Status (With Selected Relaxation)
+          </div>
+
+          <div id="examEligibilityGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-4);">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- How to use -->
+      <section class="how-to-use">
+        <h2>How to Check Age for Sarkari Jobs</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Enter Date of Birth</h3>
+            <p>Select your exact Date of Birth as mentioned on your 10th (Matriculation) certificate.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Enter Cutoff Date</h3>
+            <p>Enter the cutoff date specified in the exam notification (e.g. 01-08-2026 or 01-01-2026).</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Select Category</h3>
+            <p>Select your category (General, OBC, SC, ST) to automatically apply upper age relaxation limits.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>How is cutoff date age calculated in SSC notifications?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                SSC notifications define a specific reference date (usually 1st January or 1st August of the exam year). Your age must fall within the minimum (usually 18) and maximum (27 or 32) limits on that exact date.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>What is the standard age relaxation for reserved categories?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Central government norms prescribe 3 years upper age relaxation for OBC (Non-Creamy Layer), 5 years for SC/ST, and 10 years for Persons with Disabilities (PwD) candidates.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/age-calculator.js"></script>
+</body>
+</html>

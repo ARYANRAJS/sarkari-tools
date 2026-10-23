@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Calculator & 75% Target Planner | College & School</title>
+  <meta name="description" content="Calculate your college attendance percentage and find out how many classes you need to attend (or can safely miss) to reach 75% attendance criteria. Free student tool.">
+  <meta name="keywords" content="attendance calculator, 75 percent attendance calculator, how many classes to attend for 75, college attendance calculator, bunk calculator, cgpa to percentage calculator">
+  <meta property="og:title" content="75% Attendance Target & Bunk Calculator for Students">
+  <meta property="og:description" content="Know exactly how many classes you must attend or can skip to maintain 75% attendance. Includes CGPA to percentage converter.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/attendance-calculator.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "College Attendance Calculator",
+    "description": "Calculate attendance percentage and plan classes required to satisfy mandatory 75% college and university attendance rules.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Attendance Calculator</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon calc-tools">🎓</div>
+        <h1>College Attendance & 75% Target Planner</h1>
+        <p class="tool-description">Find out your current attendance percentage, exactly how many upcoming classes you must attend to cross the 75% exam eligibility mark, or how many you can safely miss.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <div class="tool-tabs" id="calcTabs">
+          <button type="button" class="tool-tab active" data-tab="attendanceTab">📊 75% Attendance Planner</button>
+          <button type="button" class="tool-tab" data-tab="cgpaTab">🎯 CGPA to Percentage</button>
+        </div>
+
+        <!-- Tab 1: Attendance Planner -->
+        <div class="tab-panel active" id="attendanceTab">
+          <div class="settings-panel">
+            <div class="settings-group">
+              <label class="form-label" for="inpTotalClasses">Total Classes Held So Far *</label>
+              <input type="number" id="inpTotalClasses" class="form-input" min="1" max="1000" value="60">
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="inpAttendedClasses">Classes Attended by You *</label>
+              <input type="number" id="inpAttendedClasses" class="form-input" min="0" max="1000" value="40">
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="inpTargetPercent">Target Attendance Requirement (%)</label>
+              <select id="inpTargetPercent" class="form-select">
+                <option value="75" selected>75% (Standard University / CBSE Rule)</option>
+                <option value="80">80% (Strict Medical / Engineering)</option>
+                <option value="70">70%</option>
+                <option value="65">65%</option>
+                <option value="85">85%</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Attendance Result Box -->
+          <div id="attendanceResultCard" class="result-section" style="margin-top: var(--space-6); text-align: center; padding: var(--space-8);">
+            <div style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-600); text-transform: uppercase; margin-bottom: 4px;">Current Attendance Status</div>
+            <div id="currentPercentDisplay" style="font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; color: #b91c1c;">
+              66.67%
+            </div>
+
+            <div id="attendanceAdviceBadge" style="margin: var(--space-4) auto; max-width: 550px; font-size: 15px; font-weight: 600; padding: 12px 20px; border-radius: var(--radius-md); background: #fee2e2; color: #991b1b; border: 1.5px solid #fca5a5;">
+              ⚠️ You are short of attendance! You must attend the next <strong>20 consecutive classes</strong> to reach 75%.
+            </div>
+
+            <div class="result-stats" style="margin-top: var(--space-6);">
+              <div class="result-stat">
+                <div class="stat-value" id="resClassesHeld" style="color: var(--navy);">60</div>
+                <div class="stat-label">Classes Held</div>
+              </div>
+              <div class="result-stat">
+                <div class="stat-value" id="resClassesAttended" style="color: var(--success);">40</div>
+                <div class="stat-label">Classes Attended</div>
+              </div>
+              <div class="result-stat">
+                <div class="stat-value" id="resClassesMissed" style="color: var(--error);">20</div>
+                <div class="stat-label">Classes Missed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: CGPA to Percentage -->
+        <div class="tab-panel" id="cgpaTab">
+          <div class="settings-panel">
+            <div class="settings-group">
+              <label class="form-label" for="inpCgpa">Enter your CGPA (on 10-point scale) *</label>
+              <input type="number" id="inpCgpa" class="form-input" min="0" max="10" step="0.01" value="8.4">
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="cgpaFormulaSelect">Conversion Formula / University</label>
+              <select id="cgpaFormulaSelect" class="form-select">
+                <option value="9.5" selected>CBSE / Standard (CGPA × 9.5)</option>
+                <option value="10">Direct Percentage (CGPA × 10)</option>
+                <option value="mumbai">Mumbai University ((CGPA × 7.1) + 11)</option>
+                <option value="vtu">VTU Karnataka ((CGPA - 0.75) × 10)</option>
+                <option value="aktu">AKTU / UPTU (CGPA × 10)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="result-section" style="margin-top: var(--space-6); background: #f0fdf4; border: 1.5px solid #86efac; text-align: center; padding: var(--space-8);">
+            <div style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-600); text-transform: uppercase; margin-bottom: 4px;">Equivalent Percentage</div>
+            <div id="cgpaPercentResult" style="font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; color: #15803d;">
+              79.80%
+            </div>
+            <p id="cgpaFormulaNote" style="font-size: 13px; color: var(--gray-600); margin-top: 6px;">
+              Calculated using official CBSE formula: 8.4 × 9.5 = 79.80%
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- How to use -->
+      <section class="how-to-use">
+        <h2>University Attendance Rules & Calculations</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Why 75% Attendance is Mandatory</h3>
+            <p>University Grants Commission (UGC) and state colleges mandate minimum 75% attendance to receive your examination admit card.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Consecutive Class Attendance Formula</h3>
+            <p>If attendance &lt; 75%, the formula calculates: `Classes to attend = (0.75 × Total - Attended) / 0.25`.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Bunk / Safe Leave Calculation</h3>
+            <p>If attendance &gt; 75%, it calculates how many classes you can skip before your percentage drops below 75%.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/attendance-calculator.js"></script>
+</body>
+</html>

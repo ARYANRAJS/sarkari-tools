@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image to PDF Converter — Free 50+ Pages, Header/Footer & Watermark</title>
+  <meta name="description" content="Convert JPG, PNG to PDF free up to 50+ pages. Add custom header, footer, page numbers, watermarks, margins and borders. Instant client-side PDF maker for sarkari forms.">
+  <meta name="keywords" content="image to pdf, jpg to pdf, convert photos to pdf 50 pages, pdf converter with watermark, add page number in pdf, sarkari result jpg to pdf">
+  <meta property="og:title" content="Free Image to PDF Converter with Header, Footer & Watermark">
+  <meta property="og:description" content="Convert multiple images to PDF with custom headers, footers, page numbering, and watermarks. 100% free and private.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/image-to-pdf.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image to PDF Converter",
+    "description": "Convert up to 50+ photos to PDF with custom headers, footers, watermark, page numbers, and borders for government exams.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Image to PDF</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon pdf-tools">📄</div>
+        <h1>Image to PDF Converter (50+ Pages Free)</h1>
+        <p class="tool-description">Combine multiple certificate photos, documents or notes into a single professional PDF. Includes custom header, footer, page numbers, watermark, and border controls.</p>
+      </div>
+
+      <!-- Upload Zone -->
+      <div class="upload-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*" multiple>
+        <div class="upload-zone-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <h3>Select or Drag & Drop Images (Up to 50+ Pages)</h3>
+        <p>Supports JPG, JPEG, PNG, WEBP (Combine multiple certificates/documents)</p>
+        <div class="file-types">
+          <span class="file-type-badge">50+ PAGES FREE</span>
+          <span class="file-type-badge">PAGE NUMBERS</span>
+          <span class="file-type-badge">CUSTOM WATERMARK</span>
+          <span class="file-type-badge">HEADER / FOOTER</span>
+        </div>
+      </div>
+
+      <!-- Workspace -->
+      <div class="tool-workspace" id="toolWorkspace" style="display: none; margin-top: var(--space-6);">
+        
+        <!-- PDF Page Settings -->
+        <div class="workspace-section">
+          <div class="workspace-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+            Page & Layout Settings
+          </div>
+          <div class="settings-panel">
+            <div class="settings-group">
+              <label class="form-label" for="pageSize">Page Size</label>
+              <select id="pageSize" class="form-select">
+                <option value="a4" selected>A4 (Standard 210 × 297 mm)</option>
+                <option value="letter">US Letter (8.5 × 11 in)</option>
+                <option value="legal">Legal Paper</option>
+              </select>
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="pageOrientation">Orientation</label>
+              <select id="pageOrientation" class="form-select">
+                <option value="portrait" selected>Portrait (Vertical)</option>
+                <option value="landscape">Landscape (Horizontal)</option>
+              </select>
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="pageMargin">Page Margin & Border</label>
+              <select id="pageMargin" class="form-select">
+                <option value="borderless" selected>Borderless (Full Page Edge-to-Edge)</option>
+                <option value="small">Small Margin (5 mm)</option>
+                <option value="normal">Standard Margin (12 mm)</option>
+                <option value="box_border">Decorative Box Border</option>
+              </select>
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="imageFit">Image Scaling / Zoom</label>
+              <select id="imageFit" class="form-select">
+                <option value="fit" selected>Fit to Page (Keep Aspect Ratio)</option>
+                <option value="stretch">Fill Entire Page</option>
+                <option value="original">Original Image Scale</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="workspace-divider"></div>
+
+        <!-- Header, Footer & Page Numbering -->
+        <div class="workspace-section">
+          <div class="workspace-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 18h16M10 12h4"/></svg>
+            Header, Footer & Page Numbers
+          </div>
+          <div class="settings-panel">
+            <div class="settings-group">
+              <label class="form-label" for="headerText">Header Text (Top of each page)</label>
+              <input type="text" id="headerText" class="form-input" placeholder="e.g. APPLICATION DOCUMENTS - RAHUL SHARMA">
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="footerText">Footer Text (Bottom of each page)</label>
+              <input type="text" id="footerText" class="form-input" placeholder="e.g. Confidential / Submitted for SSC CGL 2026">
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="pageNumberPos">Page Number Placement</label>
+              <select id="pageNumberPos" class="form-select">
+                <option value="bottom_center" selected>Bottom Center (Page 1 of N)</option>
+                <option value="bottom_right">Bottom Right (Page 1)</option>
+                <option value="top_right">Top Right</option>
+                <option value="none">No Page Numbers</option>
+              </select>
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="pageNumberFormat">Number Format</label>
+              <select id="pageNumberFormat" class="form-select">
+                <option value="page_x_of_y" selected>"Page 1 of 10"</option>
+                <option value="x_slash_y">"1 / 10"</option>
+                <option value="just_number">"1"</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="workspace-divider"></div>
+
+        <!-- Watermark Options -->
+        <div class="workspace-section">
+          <div class="workspace-section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16 3.95 6.06M14.31 16H2.83M16.62 12l-5.74 9.94"/></svg>
+            PDF Security Watermark (Optional)
+          </div>
+          <div class="settings-panel">
+            <div class="settings-group">
+              <label class="form-label" for="watermarkText">Watermark Text</label>
+              <input type="text" id="watermarkText" class="form-input" placeholder="e.g. VERIFIED COPY or CONFIDENTIAL">
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="watermarkColor">Watermark Color</label>
+              <input type="color" id="watermarkColor" value="#94a3b8" style="width: 100%; height: 44px; padding: 2px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); cursor: pointer;">
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="watermarkOpacity">Watermark Transparency: <strong id="opacityVal">20%</strong></label>
+              <input type="range" id="watermarkOpacity" class="range-slider" min="5" max="80" value="20">
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="watermarkStyle">Watermark Style</label>
+              <select id="watermarkStyle" class="form-select">
+                <option value="diagonal" selected>Diagonal Across Page</option>
+                <option value="center">Horizontal in Center</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="workspace-divider"></div>
+
+        <!-- Page List / Thumbnails -->
+        <div class="workspace-section">
+          <div class="workspace-section-title" style="justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 17 9 12 15 12 15 17"/></svg>
+              <span>Pages to Include (<span id="pageCountDisplay">0</span>)</span>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline" id="addMorePagesBtn">+ Add More Pages</button>
+          </div>
+
+          <div id="pagesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: var(--space-3); max-height: 380px; overflow-y: auto; padding: 10px; background: var(--gray-50); border-radius: var(--radius-md);">
+            <!-- Page cards injected by JS -->
+          </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar" style="border-top: 1px solid var(--gray-200); margin-top: var(--space-6); padding-top: var(--space-6);">
+          <div class="action-bar-left">
+            <button type="button" class="btn btn-outline" id="clearPagesBtn">Clear All</button>
+          </div>
+          <div class="action-bar-right">
+            <button type="button" class="btn btn-primary btn-lg" id="generatePdfBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Generate & Download PDF
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- How to use -->
+      <section class="how-to-use">
+        <h2>How to Convert Multiple Photos into One PDF</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Upload Documents</h3>
+            <p>Select your certificates, marksheets, or notes. Up to 50+ pages can be merged completely free.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Add Header, Footer & Numbers</h3>
+            <p>Optionally add your name/roll number in header, date in footer, page numbers, or watermark.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Generate PDF</h3>
+            <p>Click Generate PDF. Download your clean A4 document ready for official upload!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Is there any limit on number of pages?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                No! You can upload and merge 50 or more pages at once. The PDF is compiled entirely on your client machine with high speed and zero charges.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Can I rearrange the order of pages?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Yes, you can remove individual pages, reorder them, or add more documents at any time before hitting the Generate PDF button.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/image-to-pdf.js"></script>
+</body>
+</html>

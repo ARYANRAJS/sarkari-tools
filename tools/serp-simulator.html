@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Google SERP Snippet Simulator &amp; Pixel-Width Checker | Sarkari Result Tools</title>
+  <meta name="description" content="Simulate exact Google Search desktop and mobile results with real pixel width calculation (Arial 20px), rich snippets (stars, dates), keyword bolding and CTR optimizer.">
+  <meta name="keywords" content="serp simulator, google serp preview, pixel width checker, title tag pixel length, rich snippet simulator, meta description preview, google search simulator">
+  <meta property="og:title" content="Google SERP Snippet Simulator &amp; Pixel-Width Checker">
+  <meta property="og:description" content="Test how your website appears on Google search results with pixel-accurate title and description truncation meters.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/serp-simulator.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Google SERP Snippet Simulator",
+    "description": "Simulate desktop and mobile Google Search snippets with exact Arial font pixel width measurements and rich snippet previews.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1040px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">SERP Snippet Simulator</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon" style="background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff;">🔍</div>
+        <h1>Google SERP Snippet Simulator &amp; CTR Optimizer</h1>
+        <p class="tool-description">Preview your search listing with Google's exact typography. Measures real <strong>pixel width (max 580px)</strong> using canvas font rendering, simulates mobile view, star ratings, and keyword bolding.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Mode Switch: Desktop vs Mobile -->
+        <div class="tool-tabs" id="deviceTabs">
+          <button type="button" class="tool-tab active" data-device="desktop">🖥️ Desktop Google SERP</button>
+          <button type="button" class="tool-tab" data-device="mobile">📱 Mobile Smartphone SERP</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
+          
+          <!-- Inputs Column -->
+          <div>
+            
+            <!-- Page Title -->
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <label class="form-label" for="simTitle" style="margin: 0; font-weight: 600;">SEO Title Tag *</label>
+                <span id="titlePixelBadge" class="status-pill pass" style="font-size: 11px;">0 px / 580 px</span>
+              </div>
+              <input type="text" id="simTitle" class="form-input" placeholder="e.g. Free Passport Photo Maker &amp; Size Resizer for Government Exams">
+              <div class="pixel-meter">
+                <div class="pixel-meter-fill" id="titlePixelFill" style="width: 0%;"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--gray-500);">
+                <span id="titleCharCount">0 characters</span>
+                <span>Max safe limit: ~580 pixels</span>
+              </div>
+            </div>
+
+            <!-- Meta Description -->
+            <div class="form-group" style="margin-top: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <label class="form-label" for="simDesc" style="margin: 0; font-weight: 600;">Meta Description *</label>
+                <span id="descPixelBadge" class="status-pill pass" style="font-size: 11px;">0 px / 960 px</span>
+              </div>
+              <textarea id="simDesc" class="form-input" rows="3" placeholder="e.g. Crop, resize, change photo background to white, and compress under 50KB for SSC, UPSC, and government online applications in 1 click." style="resize: vertical;"></textarea>
+              <div class="pixel-meter">
+                <div class="pixel-meter-fill" id="descPixelFill" style="width: 0%;"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--gray-500);">
+                <span id="descCharCount">0 characters</span>
+                <span>Max safe limit: ~960 pixels</span>
+              </div>
+            </div>
+
+            <!-- URL & Breadcrumb -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px;">
+              <div class="form-group">
+                <label class="form-label" for="simUrl">Display URL / Canonical</label>
+                <input type="url" id="simUrl" class="form-input" placeholder="https://sarkaritools.in/passport-photo">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="simSiteName">Website Brand Name</label>
+                <input type="text" id="simSiteName" class="form-input" placeholder="Sarkari Result Tools">
+              </div>
+            </div>
+
+            <!-- Keyword Bolding Simulator -->
+            <div class="form-group" style="margin-top: 16px;">
+              <label class="form-label" for="simSearchQuery" style="font-weight: 600;">Simulate Search Query (Words that Google will bold):</label>
+              <input type="text" id="simSearchQuery" class="form-input" placeholder="e.g. passport photo resizer online free">
+            </div>
+
+            <!-- Rich Snippet Enhancements -->
+            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 14px; margin-top: 16px;">
+              <div style="font-weight: 600; font-size: 13px; color: var(--navy); margin-bottom: 10px;">🌟 Rich Snippet Enhancements:</div>
+              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer;">
+                  <input type="checkbox" id="chkShowStars" checked style="accent-color: var(--navy);">
+                  <span>Star Rating (★ 4.9 · 1,420 votes)</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer;">
+                  <input type="checkbox" id="chkShowDate" checked style="accent-color: var(--navy);">
+                  <span>Date Snippet (Oct 22, 2026)</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="workspace-divider"></div>
+
+          <!-- Preview Simulator Box -->
+          <div>
+            <div style="font-weight: 700; font-size: 15px; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;">
+              <span>Google SERP Live Result:</span>
+              <span id="deviceIndicator" style="font-size: 12px; color: var(--gray-500); font-weight: normal;">Desktop View (Arial 20px)</span>
+            </div>
+
+            <!-- Google Search Box Simulation -->
+            <div id="serpDisplayBox" class="serp-card" style="margin: 0 auto; transition: max-width 0.3s ease;">
+              
+              <!-- URL Row -->
+              <div class="serp-url-row">
+                <div class="serp-favicon">🌐</div>
+                <div>
+                  <div class="serp-site-name" id="dispSiteName">Sarkari Result Tools</div>
+                  <div class="serp-breadcrumb" id="dispBreadcrumb">https://sarkaritools.in &gt; tools &gt; passport-photo</div>
+                </div>
+              </div>
+
+              <!-- Title -->
+              <div class="serp-title" id="dispTitle">
+                Free Passport Photo Maker &amp; Size Resizer for Government Exams
+              </div>
+
+              <!-- Rich Rating Row -->
+              <div id="dispRatingRow" style="font-size: 12px; color: #4d5156; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                <span style="color: #e37400; font-size: 13px;">★★★★★</span>
+                <span>Rating: 4.9</span>
+                <span>·</span>
+                <span>1,420 votes</span>
+                <span>·</span>
+                <span style="color: #16a34a; font-weight: 500;">Free</span>
+              </div>
+
+              <!-- Description -->
+              <div class="serp-desc" id="dispDesc">
+                <span id="dispDateBadge" style="color: #70757a; font-size: 13px;">Oct 22, 2026 — </span>Crop, resize, change photo background to white, and compress under 50KB for SSC, UPSC, and government online applications in 1 click.
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SEO Educational Info -->
+      <div class="tool-info-section" style="margin-top: var(--space-8); background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-8);">
+        <h2 style="font-size: 20px; color: var(--navy); margin-bottom: 12px;">Why Does Pixel Width Matter More Than Character Count?</h2>
+        <p style="color: var(--gray-600); line-height: 1.6; font-size: 14px; margin-bottom: 16px;">
+          Google displays title tags inside a container of roughly <strong>600 pixels</strong> wide on desktop. Because letters like <code>W</code> and <code>M</code> take significantly more pixels than thin letters like <code>I</code> or <code>l</code>, a 55-character title with wide uppercase letters can get cut off, whereas a 65-character title with narrow letters might fit completely! Our simulator renders text onto an off-screen HTML5 Canvas with Google's native Arial 20px font to measure exact pixel width down to a single pixel.
+        </p>
+
+        <h3 style="font-size: 16px; color: var(--navy); margin: 16px 0 8px;">Tips to Boost Your Organic CTR:</h3>
+        <ul style="color: var(--gray-600); font-size: 13px; line-height: 1.7; padding-left: 20px;">
+          <li>Include current year brackets like <strong>[2026]</strong> or <strong>(Updated)</strong> to signal fresh content.</li>
+          <li>Incorporate power action verbs: <em>Free, Download, Calculator, Step-by-Step, Online</em>.</li>
+          <li>Keep your Title tag between <strong>480px and 570px</strong> to avoid awkward mid-sentence truncation.</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/serp-simulator.js"></script>
+</body>
+</html>

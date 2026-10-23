@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Google Review QR Code Generator — Get 5-Star Reviews for Business | Sarkari Tools</title>
+  <meta name="description" content="Generate direct Google Business Review QR codes for counter standees, receipts, and flyers. Boost your Google Maps ranking with instant 5-star customer reviews.">
+  <meta name="keywords" content="google review qr code generator, google business review qr code, get 5 star reviews qr maker, google maps review link qr, shop feedback qr code, g page review link qr">
+  <meta property="og:title" content="Free Google Review QR Code Generator (Get 5-Star Reviews)">
+  <meta property="og:description" content="Create printable 5-star Google Review QR codes for your shop, clinic, or restaurant. Customers scan to open your review page directly.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/google-review-qr-generator.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=3.0">
+  <link rel="stylesheet" href="../css/animations.css?v=3.0">
+  <link rel="stylesheet" href="../css/tools.css?v=3.0">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Free Google Review QR Code Generator",
+        "url": "https://sarkaritools.in/tools/google-review-qr-generator.html",
+        "description": "Generate direct Google Business Profile review QR codes to boost 5-star ratings and local SEO ranking on Google Maps.",
+        "applicationCategory": "MarketingApplication",
+        "operatingSystem": "All",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I get my direct Google Review shortlink?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "1. Search for your business on Google or open the Google Business Profile dashboard. 2. Click the 'Ask for reviews' icon. 3. Copy the short review link (e.g. `https://g.page/r/your-id/review`) and paste it into this generator."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does scanning this QR code take the customer straight to the review box?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! When scanned, it opens your Google Business listing directly with the 5-star rating popup open, so happy customers don't have to search for your business name."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do Google reviews help my local business ranking?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Google's local search algorithm heavily prioritizes review count, star rating velocity, and recency when deciding which businesses rank in the coveted 'Google Local 3-Pack' on Google Maps."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body data-qr-tab="review">
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1140px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Google Review QR Code Generator</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon daily-tools">⭐</div>
+        <h1>Free Google Review QR Code Generator</h1>
+        <p class="tool-description">Boost your Google Maps 5-star rating and customer trust. Create a high-converting <strong>Google Review QR standee</strong> for your checkout counter, dining tables, or receipts to get 5x more genuine customer reviews.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- QR Tools Suite Nav (SEO Friendly Internal Linking) -->
+        <div class="qr-tab-nav" id="qrStudioTabs">
+          <a href="upi-qr-generator.html" class="qr-tab-btn" data-tab="upi">💳 UPI Payment</a>
+          <a href="vcard-qr-generator.html" class="qr-tab-btn" data-tab="vcard">📇 vCard Visiting Card</a>
+          <a href="qr-scanner.html" class="qr-tab-btn" data-tab="scanner">📷 Scan QR Code</a>
+          <a href="wifi-qr-generator.html" class="qr-tab-btn" data-tab="wifi">📶 Wi-Fi Access</a>
+          <a href="whatsapp-qr-generator.html" class="qr-tab-btn" data-tab="whatsapp">💬 WhatsApp Chat</a>
+          <a href="google-review-qr-generator.html" class="qr-tab-btn active" data-tab="review">⭐ Google Review</a>
+          <a href="google-maps-qr-generator.html" class="qr-tab-btn" data-tab="maps">📍 Google Maps</a>
+          <a href="qr-generator.html" class="qr-tab-btn" data-tab="all">🎛️ All-in-One Studio</a>
+        </div>
+
+        <!-- WORKSPACE GRID (Left Inputs + Right Live Standee/QR) -->
+        <div id="qrGeneratorLayout" class="qr-workspace-grid">
+          
+          <!-- LEFT: Form Inputs -->
+          <div class="qr-form-column" style="display: flex; flex-direction: column; gap: var(--space-3);">
+            
+            <!-- Google Review Fields -->
+            <div id="fieldGroupReview" class="field-subgroup">
+              <div class="settings-group">
+                <label class="form-label" for="reviewUrl">Google Place Review Link *</label>
+                <input type="url" id="reviewUrl" class="form-input" placeholder="e.g. https://g.page/r/your-id/review" value="https://g.page/r/example/review">
+                <div style="font-size: 11.5px; color: var(--gray-600); margin-top: 6px; line-height: 1.5; background: #eff6ff; padding: 8px 12px; border-radius: 6px; border: 1px solid #bfdbfe;">
+                  💡 <strong>How to get this link:</strong> Search your business name on Google &gt; Click <strong>'Ask for reviews'</strong> &gt; Copy your unique short link.
+                </div>
+              </div>
+            </div>
+
+            <!-- Other hidden input groups for unified JS support -->
+            <div id="fieldGroupUpi" class="field-subgroup" style="display: none;"><input type="text" id="upiId" value="a@upi"><input type="text" id="payeeName" value="Merchant"><input type="number" id="upiAmount"><input type="text" id="upiNote"></div>
+            <div id="fieldGroupVcard" class="field-subgroup" style="display: none;"><input type="text" id="vcFirst" value="Rahul"><input type="text" id="vcLast" value="Sharma"><input type="text" id="vcOrg" value="CSC"><input type="text" id="vcTitle" value="Owner"><input type="tel" id="vcPhone" value="+919876543210"><input type="email" id="vcEmail" value="info@example.com"><input type="url" id="vcWebsite" value="https://sarkaritools.in"><input type="text" id="vcAddress" value="Delhi, India"></div>
+            <div id="fieldGroupWifi" class="field-subgroup" style="display: none;"><input type="text" id="wifiSsid" value="Wi-Fi"><input type="text" id="wifiPassword" value="Pass"><select id="wifiAuth"><option value="WPA">WPA</option></select></div>
+            <div id="fieldGroupWhatsapp" class="field-subgroup" style="display: none;"><input type="tel" id="waPhone" value="919876543210"><input type="text" id="waMsg" value="Hello"></div>
+            <div id="fieldGroupMaps" class="field-subgroup" style="display: none;"><input type="text" id="mapsQuery" value="Delhi"></div>
+            <div id="fieldGroupUrl" class="field-subgroup" style="display: none;"><input type="url" id="urlInput" value="https://sarkaritools.in"></div>
+            <div id="fieldGroupContact" class="field-subgroup" style="display: none;"><select id="contactType"><option value="tel">tel</option></select><input type="text" id="contactTarget" value="+919876543210"></div>
+            <div id="fieldGroupEvent" class="field-subgroup" style="display: none;"><input type="text" id="eventTitle" value="Event"><input type="datetime-local" id="eventStart"><input type="datetime-local" id="eventEnd"><input type="text" id="eventLoc" value="Center"></div>
+            <div id="fieldGroupBulk" class="field-subgroup" style="display: none;"><textarea id="bulkInput">Item1&#10;Item2</textarea><button type="button" id="btnGenerateBulk">Gen</button></div>
+
+            <hr style="border: none; border-top: 1px solid var(--border-color); margin: var(--space-4) 0;">
+
+            <!-- QR DESIGN MODE: Standard vs Full Photo QR -->
+            <div class="settings-group" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: var(--radius-lg); padding: 14px; margin-bottom: var(--space-4);">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                <label class="form-label" style="margin: 0; font-weight: 700; color: var(--navy); font-size: 13px;">
+                  🎨 Visual Design &amp; Shop Photo Mode
+                </label>
+                <span id="qrScannableBadge" class="status-pill pass" style="font-size: 11px;">✨ 100% Scannable ✓</span>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <button type="button" id="btnModeClassic" class="btn btn-primary qr-mode-btn active" style="font-size: 13px; font-weight: 600; padding: 10px 12px; justify-content: center; text-align: center;">
+                  ⭐ Classic Review QR
+                </button>
+                <button type="button" id="btnModeFullImage" class="btn btn-outline qr-mode-btn" style="font-size: 13px; font-weight: 700; padding: 10px 12px; justify-content: center; text-align: center; border-color: var(--saffron-dark); color: var(--saffron-dark);">
+                  🖼️ Shop Photo QR
+                </button>
+              </div>
+
+              <!-- FULL IMAGE QR CONTROLS -->
+              <div id="fullImageControls" style="display: none; margin-top: 14px; border-top: 1px dashed #cbd5e1; padding-top: 12px;">
+                <div class="form-group" style="margin-bottom: 12px;">
+                  <label class="form-label" for="fullPhotoUpload" style="font-weight: 600; font-size: 12px;">
+                    📷 Upload Shopfront or Business Photo
+                  </label>
+                  <input type="file" id="fullPhotoUpload" accept="image/*" class="form-input" style="font-size: 12px; padding: 6px 10px;">
+                  <div style="display: flex; gap: 6px; align-items: center; margin-top: 6px; flex-wrap: wrap;">
+                    <span style="font-size: 11px; color: var(--gray-600);">Or try sample photo:</span>
+                    <button type="button" class="btn btn-outline btn-photo-sample" data-sample="shop" style="font-size: 10px; padding: 2px 8px;">Shop / Cafe</button>
+                    <button type="button" class="btn btn-outline btn-photo-sample" data-sample="portrait" style="font-size: 10px; padding: 2px 8px;">Owner Photo</button>
+                  </div>
+                </div>
+
+                <!-- Style & Shape -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                  <div>
+                    <label class="form-label" for="photoBlendStyle" style="font-size: 11px;">Photo QR Blend Style</label>
+                    <select id="photoBlendStyle" class="form-select" style="font-size: 12px; height: 34px;">
+                      <option value="translucent" selected>👁️ Translucent Dots (Photo Shows Through)</option>
+                      <option value="mosaic">🎨 Dot Mosaic (Photo Colors)</option>
+                      <option value="highcontrast">🚀 High Contrast (Fast Phone Scan)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label" for="qrDotShape" style="font-size: 11px;">QR Dot Shape</label>
+                    <select id="qrDotShape" class="form-select" style="font-size: 12px; height: 34px;">
+                      <option value="squircle" selected>Smooth Squircle (Recommended)</option>
+                      <option value="circle">Rounded Circles (Modern Art)</option>
+                      <option value="square">Classic Squares</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Sliders -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <div>
+                    <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
+                      <span>Photo Visibility:</span>
+                      <span id="valPhotoOpacity" style="font-weight: 600;">70%</span>
+                    </div>
+                    <input type="range" id="sliderPhotoOpacity" min="30" max="95" value="70" style="width: 100%; accent-color: var(--navy);">
+                  </div>
+                  <div>
+                    <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
+                      <span>QR Dots Darkness:</span>
+                      <span id="valDotIntensity" style="font-weight: 600;">85%</span>
+                    </div>
+                    <input type="range" id="sliderDotIntensity" min="50" max="100" value="85" style="width: 100%; accent-color: var(--navy);">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CENTER LOGO OVERLAY -->
+            <div id="centerLogoSection" class="settings-group">
+              <label class="form-label">
+                Center Logo Overlay
+              </label>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px;">
+                <button type="button" class="btn btn-outline logo-preset-btn active" data-logo="gpay" style="font-size: 11px; padding: 4px 10px;">Google (G Logo)</button>
+                <button type="button" class="btn btn-outline logo-preset-btn" data-logo="none" style="font-size: 11px; padding: 4px 10px;">None</button>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 12px; color: var(--gray-600);">Or Upload Business Logo:</span>
+                <input type="file" id="customLogoUpload" accept="image/*" style="font-size: 12px;">
+              </div>
+            </div>
+
+            <!-- Color & Size -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+              <div class="settings-group">
+                <label class="form-label" for="colorPresets">QR Color Theme</label>
+                <select id="colorPresets" class="form-select">
+                  <option value="#EA4335" selected>Google Red</option>
+                  <option value="#4285F4">Google Blue</option>
+                  <option value="#1A237E">Navy Blue</option>
+                  <option value="#0f172a">Slate Black</option>
+                  <option value="#FBBC05">Star Gold</option>
+                </select>
+                <input type="color" id="qrFgColor" value="#EA4335" style="display: none;">
+              </div>
+              <div class="settings-group">
+                <label class="form-label" for="qrSize">Output Size</label>
+                <select id="qrSize" class="form-select">
+                  <option value="256">256 x 256 px (Web)</option>
+                  <option value="512" selected>512 x 512 px (HD Print)</option>
+                  <option value="1024">1024 x 1024 px (Counter Standee)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="qrStandeeLabel">Standee Subtitle / Tagline</label>
+              <input type="text" id="qrStandeeLabel" class="form-input" placeholder="e.g. Scan to Leave a 5-Star Review" value="Scan to Leave a 5-Star Review">
+            </div>
+
+          </div>
+
+          <!-- RIGHT: Live Standee / QR Preview Card -->
+          <div class="qr-preview-column" style="position: sticky; top: 90px;">
+            <div class="card" style="padding: var(--space-6); text-align: center; background: #ffffff; border: 2px solid var(--border-color); box-shadow: var(--shadow-lg);">
+              
+              <!-- Printable Header -->
+              <div id="standeeCardHeader" style="margin-bottom: 12px;">
+                <div id="standeeBrand" style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: #EA4335; text-transform: uppercase;">
+                  GOOGLE 5-STAR REVIEWS
+                </div>
+                <div id="standeeTitle" style="font-size: 18px; font-weight: 700; color: #0f172a; margin-top: 2px;">
+                  Rate Us on Google
+                </div>
+                <div id="standeeSubtitle" style="font-size: 12px; color: var(--gray-600); margin-top: 2px;">
+                  Scan to Leave a 5-Star Review
+                </div>
+              </div>
+
+              <!-- Main Canvas -->
+              <div style="display: flex; justify-content: center; align-items: center; margin: 10px 0; min-height: 230px;">
+                <canvas id="mainQrCanvas" width="220" height="220" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.06);"></canvas>
+              </div>
+
+              <!-- Footer -->
+              <div id="standeeFooter" style="font-size: 11px; font-weight: 600; color: var(--gray-500); margin-top: 8px; border-top: 1px dashed var(--border-color); padding-top: 8px;">
+                Your feedback helps our business grow • ⭐⭐⭐⭐⭐
+              </div>
+
+              <!-- Action Buttons -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px;">
+                <button type="button" id="btnDownloadQr" class="btn btn-primary" style="font-size: 13px;">
+                  ⬇️ Download QR PNG
+                </button>
+                <button type="button" id="btnPrintStandee" class="btn btn-secondary" style="font-size: 13px;">
+                  🖨️ Print Review Standee
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Hidden Scanner for Unified Script -->
+        <div id="qrScannerLayout" style="display: none;">
+          <button type="button" id="btnStartCamera"></button><button type="button" id="btnStopCamera"></button><input type="file" id="scannerImageInput">
+          <div id="scannerViewportBox"><video id="scannerVideo"></video></div>
+          <div id="scanResultCard"><span id="scanTypeBadge"></span><div id="scanResultText"></div><button type="button" id="btnCopyScanResult"></button><a id="btnOpenScanLink" href="#"></a></div>
+        </div>
+
+        <!-- Hidden Bulk for Unified Script -->
+        <div id="bulkGallerySection" style="display: none;">
+          <span id="bulkCount">0</span><button type="button" id="btnDownloadAllBulk"></button><div id="bulkQrGrid"></div>
+        </div>
+
+      </div>
+
+      <!-- SEO Educational Section & FAQs -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Why Google Reviews Are Critical for Local Business SEO</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Direct 5-Star Review Box</h3>
+            <p>Customers rarely search for your shop on Google Maps just to write a review. A QR code takes them directly to the 5-star rating screen in 1 click.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Dominate the Google 3-Pack</h3>
+            <p>Businesses with frequent, recent 5-star reviews appear at the top of local searches (e.g. "best cyber cafe near me" or "csc center nearby").</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Counter Standee Conversion</h3>
+            <p>Place an acrylic standee next to your UPI payment QR. While the customer waits for their receipt or printout, invite them to leave a quick rating.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <h3>Build Organic Trust</h3>
+            <p>Over 88% of local consumers read Google reviews before visiting a new store or clinic. Positive reviews convert searchers into paying clients.</p>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-8); background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-8);">
+          <h2 style="font-size: 20px; color: var(--navy); margin-bottom: 16px;">Frequently Asked Questions (FAQ)</h2>
+          
+          <div style="margin-bottom: 14px;">
+            <h3 style="font-size: 15px; color: var(--navy); margin-bottom: 4px;">Q: What if I don't have a custom Google shortlink yet?</h3>
+            <p style="font-size: 13.5px; color: var(--gray-600); margin: 0; line-height: 1.6;">
+              You can paste your normal Google Maps place URL (e.g. <code>https://maps.app.goo.gl/...</code>). It will open your business page on Google Maps where users can tap 'Write a Review'.
+            </p>
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <h3 style="font-size: 15px; color: var(--navy); margin-bottom: 4px;">Q: Can I print this on cash receipts or delivery bags?</h3>
+            <p style="font-size: 13.5px; color: var(--gray-600); margin: 0; line-height: 1.6;">
+              Yes! Download the QR code as PNG and insert it into your thermal bill printer template or shopping bag stamps with the text "Scan to review us on Google".
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <!-- Libraries: QRCode.js, jsQR, JSZip -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/qr-generator.js?v=2.5"></script>
+</body>
+</html>

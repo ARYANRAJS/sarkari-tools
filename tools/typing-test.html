@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Typing Speed Test for Govt Exams | SSC CHSL, CGL Hindi & English</title>
+  <meta name="description" content="Free online typing test for SSC CGL, CHSL, High Court & Railway exams. Practice English (35 WPM) and Hindi (30 WPM) typing with instant WPM, accuracy & error report.">
+  <meta name="keywords" content="typing test, ssc typing test, typing speed test online, hindi typing test, ssc chsl typing practice, english typing test 10 minutes, sarkari typing test">
+  <meta property="og:title" content="Online Typing Test for Government Exams (Hindi & English)">
+  <meta property="og:description" content="Test and improve your typing speed for SSC CHSL, CGL, and High Court exams with real-time WPM, accuracy, and Pass/Fail evaluation.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/typing-test.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Sarkari Typing Speed Test",
+    "description": "Typing test simulator for SSC CGL, CHSL, and State government recruitment examinations in Hindi and English.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Typing Test</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon exam-tools">⌨️</div>
+        <h1>Govt Exam Typing Speed Test</h1>
+        <p class="tool-description">Practice for SSC CHSL, CGL Tier 2, High Court & Railway typist exams. Real-time WPM, accuracy, backspace error tracking and Pass/Fail grading.</p>
+      </div>
+
+      <!-- Test Configuration Bar -->
+      <div class="tool-workspace">
+        <div class="settings-panel">
+          <div class="settings-group">
+            <label class="form-label" for="langSelect">Language</label>
+            <select id="langSelect" class="form-select">
+              <option value="en" selected>English Typing (Target: 35 WPM)</option>
+              <option value="hi">हिंदी टाइपिंग (Target: 30 WPM / Mangal/Inscript)</option>
+            </select>
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="timeSelect">Test Duration</label>
+            <select id="timeSelect" class="form-select">
+              <option value="60">1 Minute (Quick Warm-up)</option>
+              <option value="120">2 Minutes</option>
+              <option value="300">5 Minutes</option>
+              <option value="600" selected>10 Minutes (Standard SSC CHSL)</option>
+              <option value="900">15 Minutes (Standard SSC CGL)</option>
+            </select>
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="passageSelect">Select Passage</label>
+            <select id="passageSelect" class="form-select">
+              <option value="0">Passage 1: Digital India & Public Governance</option>
+              <option value="1">Passage 2: Indian Railways & Modern Infrastructure</option>
+              <option value="2">Passage 3: Environmental Conservation & Forests</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="workspace-divider"></div>
+
+        <!-- Realtime Live Stats Bar -->
+        <div class="typing-stats">
+          <div class="typing-stat-card">
+            <div class="stat-value" id="timeLeftDisplay" style="color: var(--saffron-dark);">10:00</div>
+            <div class="stat-label">Time Remaining</div>
+          </div>
+          <div class="typing-stat-card">
+            <div class="stat-value" id="netWpmDisplay">0</div>
+            <div class="stat-label">Net WPM (Speed)</div>
+          </div>
+          <div class="typing-stat-card">
+            <div class="stat-value" id="accuracyDisplay" style="color: var(--success);">100%</div>
+            <div class="stat-label">Accuracy</div>
+          </div>
+          <div class="typing-stat-card">
+            <div class="stat-value" id="errorCountDisplay" style="color: var(--error);">0</div>
+            <div class="stat-label">Errors</div>
+          </div>
+        </div>
+
+        <!-- Text Display Box (Prompt to type) -->
+        <div class="typing-area" id="typingDisplay" style="user-select: none; max-height: 220px; overflow-y: auto; background: #fff; margin-bottom: var(--space-4); border: 2px solid var(--gray-200); border-radius: var(--radius-md); padding: 18px;">
+          <!-- Characters rendered here -->
+        </div>
+
+        <!-- User Input Textarea -->
+        <div class="form-group">
+          <textarea id="typingInput" class="form-textarea" placeholder="Click here and start typing to begin the countdown timer..." style="font-family: monospace; font-size: 1.1rem; min-height: 120px; border: 2px solid var(--gray-300);" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="action-bar" style="margin-top: var(--space-4);">
+          <div class="action-bar-left">
+            <button type="button" class="btn btn-outline" id="restartBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+              Restart Test
+            </button>
+          </div>
+          <div class="action-bar-right">
+            <button type="button" class="btn btn-secondary" id="finishTestBtn">Submit / Finish Now</button>
+          </div>
+        </div>
+
+        <!-- Result Modal / Card (Shown after test ends) -->
+        <div id="testResultCard" class="result-section" style="display: none; margin-top: var(--space-8); text-align: left; padding: var(--space-8);">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-200); padding-bottom: var(--space-4); margin-bottom: var(--space-6);">
+            <div>
+              <h3 style="font-size: var(--text-2xl); color: var(--navy); margin-bottom: 4px;">Typing Test Evaluation Report</h3>
+              <p style="font-size: var(--text-sm); color: var(--gray-500);">Government Examination Performance Summary</p>
+            </div>
+            <div id="sscStatusBadge" style="font-size: var(--text-lg); font-weight: 700; padding: 6px 16px; border-radius: var(--radius-full);">
+              PASSED ✓
+            </div>
+          </div>
+
+          <div class="result-stats" style="margin-bottom: var(--space-6);">
+            <div class="result-stat">
+              <div class="stat-value" id="resGrossWpm" style="color: var(--navy);">0</div>
+              <div class="stat-label">Gross Speed (WPM)</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-value" id="resNetWpm" style="color: var(--saffron-dark);">0</div>
+              <div class="stat-label">Net Speed (WPM)</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-value" id="resAccuracy" style="color: var(--success);">0%</div>
+              <div class="stat-label">Final Accuracy</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-value" id="resTotalChars">0</div>
+              <div class="stat-label">Total Keystrokes</div>
+            </div>
+          </div>
+
+          <div style="background: white; border-radius: var(--radius-md); padding: var(--space-4); border: 1px solid var(--gray-200);">
+            <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--navy); margin-bottom: 6px;">Exam Qualification Norms:</h4>
+            <ul style="font-size: var(--text-xs); color: var(--gray-600); line-height: 1.8; padding-left: 20px;">
+              <li><strong>SSC CHSL English Typing:</strong> Minimum 35 WPM (10500 KDPH) with up to 5% allowed mistakes for General, 7% for OBC/SC/ST.</li>
+              <li><strong>SSC CHSL Hindi Typing:</strong> Minimum 30 WPM (9000 KDPH).</li>
+              <li><strong>Court Typist / Steno:</strong> Minimum 35 - 40 WPM with 95%+ accuracy.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- How to use -->
+      <section class="how-to-use">
+        <h2>How to Practice for SSC Typing Exams</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Select Exam Mode</h3>
+            <p>Choose English or Hindi and select 10 or 15 minutes as per official exam guidelines.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Type with Rhythm</h3>
+            <p>Look at the screen text and type smoothly. Correct letters turn green, mistakes turn red.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Review Qualification</h3>
+            <p>At the end of timer, check whether you cleared the SSC 35 WPM / 30 WPM threshold!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>What is Net WPM vs Gross WPM in SSC exams?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Gross WPM is total words typed per minute including mistakes. Net WPM subtracts your errors from the gross words. Government exams score you strictly on Net WPM and overall accuracy percentage.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/typing-test.js"></script>
+</body>
+</html>

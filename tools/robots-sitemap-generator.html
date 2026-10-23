@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Robots.txt &amp; XML Sitemap Generator &amp; Tester | Sarkari Result Tools</title>
+  <meta name="description" content="Generate and test Robots.txt and XML Sitemap files online. Presets for WordPress, Shopify, Next.js, live URL crawl testing, bulk URL import, and instant download.">
+  <meta name="keywords" content="robots txt generator, xml sitemap generator, sitemap builder, robots txt tester, googlebot allow disallow, sitemap xml download, seo tools india">
+  <meta property="og:title" content="Robots.txt &amp; XML Sitemap Generator &amp; Tester">
+  <meta property="og:description" content="Create Google-compliant robots.txt and XML sitemaps with presets, bulk URL import, and live URL crawler tester.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/robots-sitemap-generator.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css?v=3.1">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Robots.txt & XML Sitemap Generator",
+    "description": "Generate W3C-compliant XML sitemaps and robots.txt files with live crawl tester, bulk import, and CMS presets.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1040px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Robots.txt &amp; Sitemap Generator</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon" style="background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff;">🤖</div>
+        <h1>Robots.txt &amp; XML Sitemap Generator</h1>
+        <p class="tool-description">Instruct Googlebot, Bingbot, and search crawlers how to index your website. Build customized <strong>robots.txt</strong> with live URL testing and generate Google-compliant <strong>XML sitemaps</strong> in seconds.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Main Dual Tabs -->
+        <div class="tool-tabs" id="mainToolTabs">
+          <button type="button" class="tool-tab active" data-tab="tabRobots">🤖 Robots.txt Builder &amp; Tester</button>
+          <button type="button" class="tool-tab" data-tab="tabSitemap">🗺️ XML Sitemap Generator</button>
+        </div>
+
+        <!-- ══════════ TAB 1: ROBOTS.TXT ══════════ -->
+        <div id="tabRobotsContent">
+          
+          <!-- CMS Presets -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; background: var(--gray-50); padding: 10px 16px; border-radius: var(--radius-md); border: 1px solid var(--gray-200);">
+            <div style="font-size: 13px; font-weight: 600; color: var(--gray-700);">💡 Quick CMS Presets:</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              <button type="button" id="btnPresetWp" class="btn btn-outline" style="font-size: 11px; padding: 4px 10px;">WordPress</button>
+              <button type="button" id="btnPresetShopify" class="btn btn-outline" style="font-size: 11px; padding: 4px 10px;">Shopify</button>
+              <button type="button" id="btnPresetStatic" class="btn btn-outline" style="font-size: 11px; padding: 4px 10px;">HTML / Static Site</button>
+              <button type="button" id="btnPresetAllowAll" class="btn btn-outline" style="font-size: 11px; padding: 4px 10px;">Allow Everything</button>
+              <button type="button" id="btnPresetBlockAll" class="btn btn-outline" style="font-size: 11px; padding: 4px 10px; color: #dc2626;">Disallow All (Staging)</button>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+            
+            <!-- Global Directives -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <div class="form-group">
+                <label class="form-label" for="robotsUserAgent">Target Search Bot (User-Agent) *</label>
+                <select id="robotsUserAgent" class="form-input">
+                  <option value="*">* (All Search Engines)</option>
+                  <option value="Googlebot">Googlebot (Google Search)</option>
+                  <option value="Bingbot">Bingbot (Microsoft Bing)</option>
+                  <option value="Slurp">Slurp (Yahoo)</option>
+                  <option value="DuckDuckBot">DuckDuckBot</option>
+                  <option value="Baiduspider">Baiduspider</option>
+                  <option value="YandexBot">YandexBot</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="robotsCrawlDelay">Crawl Delay (Seconds)</label>
+                <select id="robotsCrawlDelay" class="form-input">
+                  <option value="0">No delay (Recommended)</option>
+                  <option value="1">1 second</option>
+                  <option value="2">2 seconds</option>
+                  <option value="5">5 seconds</option>
+                  <option value="10">10 seconds</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Sitemap URL Directive -->
+            <div class="form-group">
+              <label class="form-label" for="robotsSitemapUrl">Sitemap URL (Optional Directive)</label>
+              <input type="url" id="robotsSitemapUrl" class="form-input" placeholder="https://example.com/sitemap.xml">
+            </div>
+
+            <!-- Path Rules Builder -->
+            <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div style="font-weight: 600; font-size: 14px; color: var(--navy);">Disallow / Allow Path Rules:</div>
+                <button type="button" id="btnAddRobotsRule" class="btn btn-outline" style="font-size: 11px; padding: 4px 10px;">+ Add Custom Path Rule</button>
+              </div>
+              
+              <div id="robotsRulesContainer" style="display: flex; flex-direction: column; gap: 8px;">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- Live URL Tester -->
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: var(--radius-lg); padding: 16px;">
+              <div style="font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <span>🧪 Live URL Crawl Tester:</span>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <input type="text" id="testUrlInput" class="form-input" placeholder="e.g. /wp-admin/post.php or /blog/seo-tips" style="flex: 1; min-width: 200px;">
+                <button type="button" id="btnTestUrl" class="btn btn-primary" style="font-size: 12px; padding: 6px 14px;">Test Crawl Permission</button>
+              </div>
+              <div id="testUrlResult" style="margin-top: 10px; font-size: 13px; font-weight: 600; display: none;"></div>
+            </div>
+
+            <!-- Output Box -->
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                <div style="font-weight: 600; font-size: 14px; color: var(--navy);">Generated robots.txt Preview:</div>
+                <div style="display: flex; gap: 8px;">
+                  <button type="button" id="btnCopyRobots" class="btn btn-outline" style="font-size: 12px; padding: 4px 12px;">📋 Copy</button>
+                  <button type="button" id="btnDownloadRobots" class="btn btn-primary" style="font-size: 12px; padding: 4px 12px;">⬇️ Download robots.txt</button>
+                </div>
+              </div>
+              <div class="code-preview-box">
+                <pre><code id="robotsOutput">User-agent: *
+Disallow:</code></pre>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ══════════ TAB 2: XML SITEMAP ══════════ -->
+        <div id="tabSitemapContent" style="display: none;">
+          
+          <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <div class="form-group">
+                <label class="form-label" for="sitemapBaseUrl">Base Website Domain *</label>
+                <input type="url" id="sitemapBaseUrl" class="form-input" placeholder="https://example.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="sitemapDefaultFreq">Default Change Frequency</label>
+                <select id="sitemapDefaultFreq" class="form-input">
+                  <option value="daily" selected>Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="always">Always</option>
+                  <option value="hourly">Hourly</option>
+                  <option value="yearly">Yearly</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Bulk URL Import Box -->
+            <div class="form-group">
+              <label class="form-label" for="sitemapBulkUrls">Bulk Import URLs (Paste one URL per line):</label>
+              <textarea id="sitemapBulkUrls" class="form-input" rows="4" placeholder="https://example.com/&#10;https://example.com/tools/image-resizer.html&#10;https://example.com/tools/age-calculator.html&#10;https://example.com/tools/typing-test.html" style="font-family: monospace; font-size: 12px;"></textarea>
+              <div style="margin-top: 6px; display: flex; justify-content: flex-end;">
+                <button type="button" id="btnParseBulkUrls" class="btn btn-outline" style="font-size: 11px; padding: 4px 12px;">⚡ Parse &amp; Build Sitemap</button>
+              </div>
+            </div>
+
+            <!-- Sitemap Output Box -->
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                <div style="font-weight: 600; font-size: 14px; color: var(--navy);">
+                  Generated XML Sitemap (<span id="sitemapUrlCount">0</span> URLs):
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <button type="button" id="btnCopySitemap" class="btn btn-outline" style="font-size: 12px; padding: 4px 12px;">📋 Copy XML</button>
+                  <button type="button" id="btnDownloadSitemap" class="btn btn-primary" style="font-size: 12px; padding: 4px 12px;">⬇️ Download sitemap.xml</button>
+                </div>
+              </div>
+              <div class="code-preview-box">
+                <pre><code id="sitemapOutput">&lt;!-- XML Sitemap will appear here --&gt;</code></pre>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SEO Educational Info -->
+      <div class="tool-info-section" style="margin-top: var(--space-8); background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-8);">
+        <h2 style="font-size: 20px; color: var(--navy); margin-bottom: 12px;">Why are Robots.txt &amp; XML Sitemaps Essential?</h2>
+        <p style="color: var(--gray-600); line-height: 1.6; font-size: 14px; margin-bottom: 16px;">
+          The <strong>robots.txt</strong> file is the first file search engines read when visiting your site. It controls where Googlebot is allowed to go, preventing it from wasting crawl budget on private admin panels, backend scripts, or duplicate search parameter queries.
+          An <strong>XML Sitemap</strong> acts as a comprehensive map of your website, informing Google of newly published tools, articles, and pages so they get indexed within hours instead of weeks.
+        </p>
+
+        <h3 style="font-size: 16px; color: var(--navy); margin: 16px 0 8px;">Where to Place These Files:</h3>
+        <ul style="color: var(--gray-600); font-size: 13px; line-height: 1.7; padding-left: 20px;">
+          <li>Upload <code>robots.txt</code> directly to your root directory (e.g. <code>https://yourdomain.com/robots.txt</code>).</li>
+          <li>Upload <code>sitemap.xml</code> directly to your root directory (e.g. <code>https://yourdomain.com/sitemap.xml</code>).</li>
+          <li>Submit your sitemap URL directly in <strong>Google Search Console</strong> under the Sitemaps tab.</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/robots-sitemap-generator.js"></script>
+</body>
+</html>

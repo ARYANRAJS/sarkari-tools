@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo and Signature Joiner for Sarkari Result Exams | Free Online Tool</title>
+  <meta name="description" content="Combine photo and signature into a single image for SSC, Police, Railway, and State government exam applications. Instant vertical/horizontal join with target KB.">
+  <meta name="keywords" content="photo signature joiner, combine photo and signature, photo sign joiner ssc, sarkari result photo signature joiner, merge photo and signature online">
+  <meta property="og:title" content="Photo & Signature Joiner for Government Exam Forms">
+  <meta property="og:description" content="Combine photo and signature into one image file with custom dimensions and KB limit for sarkari job applications.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/photo-signature.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Photo & Signature Joiner",
+    "description": "Online tool to combine photograph and signature into a single file for Indian government job application forms.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Photo & Signature Joiner</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon image-tools">✍️</div>
+        <h1>Photo & Signature Joiner</h1>
+        <p class="tool-description">Merge your passport photograph and signature into a single image file as required by UP Police, SSC, MPPEB, Railway and State exam forms.</p>
+      </div>
+
+      <!-- Upload Section (Two Cards) -->
+      <div class="comparison-grid" style="margin-bottom: var(--space-6);">
+        <!-- Photo Upload Box -->
+        <div class="upload-zone" id="photoDropZone">
+          <input type="file" id="photoInput" accept="image/*">
+          <div class="upload-zone-icon">📷</div>
+          <h3 id="photoLabel">1. Select Photograph</h3>
+          <p>Click or drag your passport photo here</p>
+          <img id="photoThumb" style="max-height: 120px; display: none; margin: 10px auto; border-radius: 4px;" alt="Photo thumbnail">
+        </div>
+
+        <!-- Signature Upload Box -->
+        <div class="upload-zone" id="signDropZone">
+          <input type="file" id="signInput" accept="image/*">
+          <div class="upload-zone-icon">✍️</div>
+          <h3 id="signLabel">2. Select Signature</h3>
+          <p>Click or drag your signature photo here</p>
+          <img id="signThumb" style="max-height: 80px; display: none; margin: 10px auto; border-radius: 4px;" alt="Signature thumbnail">
+        </div>
+      </div>
+
+      <!-- Workspace -->
+      <div class="tool-workspace" id="toolWorkspace">
+        
+        <!-- Controls Grid -->
+        <div class="settings-panel">
+          <div class="settings-group">
+            <label class="form-label" for="layoutMode">Layout Arrangement</label>
+            <select id="layoutMode" class="form-select">
+              <option value="vertical" selected>Vertical (Photo on Top, Signature Bottom)</option>
+              <option value="horizontal">Horizontal (Photo Left, Signature Right)</option>
+            </select>
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="canvasPreset">Output Dimensions</label>
+            <select id="canvasPreset" class="form-select">
+              <option value="350x450" selected>350 × 450 px (Standard SSC / UP Police)</option>
+              <option value="400x500">400 × 500 px (High Res)</option>
+              <option value="413x531">413 × 531 px (Passport Standard)</option>
+              <option value="300x400">300 × 400 px</option>
+              <option value="custom">Custom Size...</option>
+            </select>
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="photoRatio">Photo vs Sign Ratio: <strong id="ratioVal">75% Photo</strong></label>
+            <input type="range" id="photoRatio" class="range-slider" min="50" max="85" value="75">
+          </div>
+
+          <div class="settings-group">
+            <label class="form-label" for="targetKb">Target Max File Size</label>
+            <select id="targetKb" class="form-select">
+              <option value="0">Auto / Quality Based</option>
+              <option value="50" selected>Under 50 KB (Most Common)</option>
+              <option value="100">Under 100 KB</option>
+              <option value="200">Under 200 KB</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="workspace-divider"></div>
+
+        <!-- Custom Dimensions (if custom selected) -->
+        <div id="customDimRow" class="settings-panel" style="display: none; margin-bottom: var(--space-4);">
+          <div class="settings-group">
+            <label class="form-label" for="customW">Width (px)</label>
+            <input type="number" id="customW" class="form-input" value="350" min="100" max="2000">
+          </div>
+          <div class="settings-group">
+            <label class="form-label" for="customH">Height (px)</label>
+            <input type="number" id="customH" class="form-input" value="450" min="100" max="2000">
+          </div>
+        </div>
+
+        <!-- Border and Divider Options -->
+        <div class="settings-panel">
+          <div class="settings-group">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; height: 44px;">
+              <input type="checkbox" id="addDividerLine" checked style="accent-color: var(--saffron); width: 18px; height: 18px;">
+              <span>Separator Line Between Photo & Sign</span>
+            </label>
+          </div>
+          <div class="settings-group">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; height: 44px;">
+              <input type="checkbox" id="addOuterBorder" checked style="accent-color: var(--saffron); width: 18px; height: 18px;">
+              <span>Outer Box Border</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="workspace-divider"></div>
+
+        <!-- Live Preview Canvas -->
+        <div class="workspace-section">
+          <div class="workspace-section-title" style="justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+              <span>Merged Output Preview</span>
+            </div>
+            <span id="outputSizeText" style="font-size: var(--text-sm); font-weight: 600; color: var(--success);">Size: ~40 KB</span>
+          </div>
+
+          <div class="canvas-container" style="padding: 20px; background: #f8fafc;">
+            <canvas id="joinCanvas" style="box-shadow: var(--shadow-md); border-radius: 4px; max-height: 420px;"></canvas>
+          </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar" style="border-top: 1px solid var(--gray-200); margin-top: var(--space-6); padding-top: var(--space-6);">
+          <div class="action-bar-left">
+            <button type="button" class="btn btn-outline" id="resetBtn">Reset</button>
+          </div>
+          <div class="action-bar-right">
+            <button type="button" class="btn btn-primary btn-lg" id="downloadBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Combined JPG
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- How to use -->
+      <section class="how-to-use">
+        <h2>How to Combine Photo and Signature for Sarkari Application</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Upload Both Images</h3>
+            <p>Upload your passport photograph in box 1 and your signature image in box 2.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Choose Layout & Ratio</h3>
+            <p>Select vertical arrangement (photo on top) and adjust how much space is given to photo vs signature.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Download Under 50KB</h3>
+            <p>Download the combined image. It is compressed and formatted directly for your online form submission.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Which examinations require Photo & Signature combined in one file?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Several state recruitment boards like UP Police, Madhya Pradesh Professional Examination Board (MPPEB / MPESB), and select defense and teacher recruitment exams specifically mandate uploading a single image containing both the candidate's photo and signature.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>How to make sure the file size is under 50KB?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Simply leave the "Target Max File Size" set to "Under 50 KB". Our compression engine will automatically optimize the JPEG encoding so the output never exceeds the 50 KB limit.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/photo-signature.js"></script>
+</body>
+</html>

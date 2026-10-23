@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Meta Tag &amp; Open Graph Generator with Live Preview | Sarkari Result Tools</title>
+  <meta name="description" content="Generate perfect SEO meta tags, OpenGraph (Facebook, WhatsApp) and Twitter cards with live Google SERP and social share previews. Free &amp; instant.">
+  <meta name="keywords" content="meta tag generator, open graph generator, twitter card generator, seo title preview, google serp simulator, social share preview, facebook card preview">
+  <meta property="og:title" content="Meta Tag &amp; Open Graph Generator with Live Social Preview">
+  <meta property="og:description" content="Build high-ranking Google meta tags and social share cards with live Google, Facebook &amp; Twitter previews.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/meta-tag-generator.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css?v=3.1">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Meta Tag & Open Graph Generator",
+    "description": "Generate SEO meta tags, Open Graph and Twitter Card tags with real-time Google search and social media card previews.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1080px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Meta Tag Generator</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff;">🏷️</div>
+        <h1>SEO Meta Tag &amp; Social Card Generator</h1>
+        <p class="tool-description">Generate Google-compliant meta tags, Open Graph (Facebook, WhatsApp) and Twitter cards with live SERP preview, character limiters, and one-click code generation.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Preset Bar -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; background: var(--gray-50); padding: 10px 16px; border-radius: var(--radius-md); border: 1px solid var(--gray-200);">
+          <div style="font-size: 13px; font-weight: 600; color: var(--gray-700);">💡 Quick Fill Templates:</div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button type="button" id="btnPresetSarkari" class="btn btn-outline" style="font-size: 11px; padding: 4px 10px;">Sarkari Exam Post</button>
+            <button type="button" id="btnPresetBlog" class="btn btn-outline" style="font-size: 11px; padding: 4px 10px;">Blog Article</button>
+            <button type="button" id="btnPresetHome" class="btn btn-outline" style="font-size: 11px; padding: 4px 10px;">Business Website</button>
+            <button type="button" id="btnPresetProduct" class="btn btn-outline" style="font-size: 11px; padding: 4px 10px;">Product / Service</button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; width: 100%; min-width: 0;">
+          
+          <!-- Column 1: Input Form -->
+          <div>
+            
+            <!-- Basic Meta Section -->
+            <div class="workspace-section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <span>1. Essential Search Engine Tags</span>
+            </div>
+
+            <!-- Page Title -->
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <label class="form-label" for="inpTitle" style="margin: 0; font-weight: 600;">Page Title (SEO Title) *</label>
+                <span id="titleCounter" style="font-size: 12px; color: var(--gray-500); font-weight: 500;">0 / 60 chars</span>
+              </div>
+              <input type="text" id="inpTitle" class="form-input" placeholder="e.g. SSC CGL 2026 Online Application Form, Eligibility &amp; Syllabus" maxlength="100">
+              <div class="pixel-meter">
+                <div class="pixel-meter-fill" id="titleMeter" style="width: 0%;"></div>
+              </div>
+              <div style="font-size: 11px; color: var(--gray-500);">Recommended: 50 - 60 characters (~580px width)</div>
+            </div>
+
+            <!-- Meta Description -->
+            <div class="form-group" style="margin-top: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <label class="form-label" for="inpDesc" style="margin: 0; font-weight: 600;">Meta Description *</label>
+                <span id="descCounter" style="font-size: 12px; color: var(--gray-500); font-weight: 500;">0 / 160 chars</span>
+              </div>
+              <textarea id="inpDesc" class="form-input" rows="3" placeholder="e.g. Apply online for SSC CGL 2026 recruitment. Check age limit, exam pattern, syllabus, salary details and direct link to submit application." maxlength="250" style="resize: vertical;"></textarea>
+              <div class="pixel-meter">
+                <div class="pixel-meter-fill" id="descMeter" style="width: 0%;"></div>
+              </div>
+              <div style="font-size: 11px; color: var(--gray-500);">Recommended: 120 - 158 characters (~960px width)</div>
+            </div>
+
+            <!-- Canonical URL & Site Name -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px;">
+              <div class="form-group">
+                <label class="form-label" for="inpUrl">Canonical URL *</label>
+                <input type="url" id="inpUrl" class="form-input" placeholder="https://example.com/page">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="inpSiteName">Website / Brand Name</label>
+                <input type="text" id="inpSiteName" class="form-input" placeholder="e.g. Sarkari Result Tools">
+              </div>
+            </div>
+
+            <!-- Keywords & Robots -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px;">
+              <div class="form-group">
+                <label class="form-label" for="inpKeywords">Keywords (comma separated)</label>
+                <input type="text" id="inpKeywords" class="form-input" placeholder="e.g. ssc cgl, sarkari result, exam 2026">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="inpRobots">Robots Meta Directive</label>
+                <select id="inpRobots" class="form-input">
+                  <option value="index, follow">index, follow (Default - Allow Ranking)</option>
+                  <option value="noindex, follow">noindex, follow (Hide from search)</option>
+                  <option value="index, nofollow">index, nofollow (Do not pass links)</option>
+                  <option value="noindex, nofollow">noindex, nofollow (Completely private)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="workspace-divider"></div>
+
+            <!-- Social Share / Open Graph Section -->
+            <div class="workspace-section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              <span>2. Social Media &amp; Open Graph (Facebook, WhatsApp, X)</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+              <div class="form-group">
+                <label class="form-label" for="inpOgImage">Social Share Image URL (og:image) *</label>
+                <input type="url" id="inpOgImage" class="form-input" placeholder="https://example.com/banner.jpg">
+                <div style="font-size: 11px; color: var(--gray-500); margin-top: 2px;">Recommended: 1200 × 630 pixels</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="inpTwitterHandle">Twitter / X Creator Handle</label>
+                <input type="text" id="inpTwitterHandle" class="form-input" placeholder="@yourhandle">
+              </div>
+            </div>
+
+          </div>
+
+          <div class="workspace-divider"></div>
+
+          <!-- Column 2: Live Previews -->
+          <div>
+            <div class="workspace-section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span>3. Live Interactive Previews</span>
+            </div>
+
+            <!-- Preview Tabs -->
+            <div class="tool-tabs" id="previewTabs">
+              <button type="button" class="tool-tab active" data-preview="google">🔍 Google Search SERP</button>
+              <button type="button" class="tool-tab" data-preview="facebook">📱 WhatsApp &amp; Facebook</button>
+              <button type="button" class="tool-tab" data-preview="twitter">🐦 Twitter / X Card</button>
+            </div>
+
+            <!-- Preview 1: Google SERP -->
+            <div id="previewGoogle">
+              <div class="serp-card">
+                <div class="serp-url-row">
+                  <div class="serp-favicon">🌐</div>
+                  <div>
+                    <div class="serp-site-name" id="serpSiteDisplay">Sarkari Result Tools</div>
+                    <div class="serp-breadcrumb" id="serpUrlDisplay">https://sarkaritools.in &gt; exam</div>
+                  </div>
+                </div>
+                <a href="javascript:void(0)" class="serp-title" id="serpTitleDisplay">SSC CGL 2026 Online Application Form, Eligibility &amp; Syllabus</a>
+                <div class="serp-desc" id="serpDescDisplay">
+                  Apply online for SSC CGL 2026 recruitment. Check age limit, exam pattern, syllabus, salary details and direct link to submit application.
+                </div>
+              </div>
+            </div>
+
+            <!-- Preview 2: Facebook / WhatsApp -->
+            <div id="previewFacebook" style="display: none;">
+              <div class="fb-card-preview" style="max-width: 520px;">
+                <div class="fb-card-img" id="fbImgPreview">
+                  <span>1200 × 630 Social Banner Preview</span>
+                </div>
+                <div class="fb-card-content">
+                  <div class="fb-card-domain" id="fbDomainDisplay">SARKARITOOLS.IN</div>
+                  <div class="fb-card-title" id="fbTitleDisplay">SSC CGL 2026 Online Application Form</div>
+                  <div class="fb-card-desc" id="fbDescDisplay">Apply online for SSC CGL 2026 recruitment. Check age limit, exam pattern and syllabus.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Preview 3: Twitter / X Card -->
+            <div id="previewTwitter" style="display: none;">
+              <div class="tw-card-preview" style="max-width: 500px;">
+                <div class="tw-card-img" id="twImgPreview">
+                  <span>Summary Large Image Banner</span>
+                </div>
+                <div class="tw-card-content">
+                  <div class="tw-card-domain" id="twDomainDisplay">sarkaritools.in</div>
+                  <div class="tw-card-title" id="twTitleDisplay">SSC CGL 2026 Online Application Form</div>
+                  <div class="tw-card-desc" id="twDescDisplay">Apply online for SSC CGL 2026 recruitment. Check age limit, exam pattern and syllabus.</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="workspace-divider"></div>
+
+          <!-- Generated HTML Code Output -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div class="workspace-section-title" style="margin: 0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                <span>4. Generated HTML Code (Paste inside &lt;head&gt;)</span>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" id="btnCopyTags" class="btn btn-outline" style="font-size: 12px; padding: 6px 14px;">📋 Copy Meta Tags</button>
+                <button type="button" id="btnDownloadTags" class="btn btn-primary" style="font-size: 12px; padding: 6px 14px;">⬇️ Download (.html)</button>
+              </div>
+            </div>
+
+            <div class="code-preview-box">
+              <pre><code id="metaCodeOutput">&lt;!-- Generated SEO Meta Tags will appear here --&gt;</code></pre>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SEO Educational Info -->
+      <div class="tool-info-section" style="margin-top: var(--space-8); background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-8);">
+        <h2 style="font-size: 20px; color: var(--navy); margin-bottom: 12px;">Why are SEO Meta Tags &amp; Open Graph Critical?</h2>
+        <p style="color: var(--gray-600); line-height: 1.6; font-size: 14px; margin-bottom: 16px;">
+          Meta tags communicate vital details to search engines like Google and Bing. An optimized <strong>Title Tag</strong> directly influences search rankings and click-through rates (CTR). <strong>Open Graph (og:) tags</strong> ensure that when someone shares your page on WhatsApp, Facebook, LinkedIn, or Telegram, an attractive image card with clean title and description appears instead of a bare, clickable link.
+        </p>
+
+        <h3 style="font-size: 16px; color: var(--navy); margin: 16px 0 8px;">Best Practices for Maximum Search Clicks:</h3>
+        <ul style="color: var(--gray-600); font-size: 13px; line-height: 1.7; padding-left: 20px;">
+          <li>Place your primary targeted keyword near the beginning of your Title tag.</li>
+          <li>Write an action-oriented Meta Description (include words like <em>Free, Apply Online, Download, Check</em>).</li>
+          <li>Use 1200×630 px images for Open Graph to prevent blurry thumbnails on WhatsApp &amp; Facebook.</li>
+          <li>Always set a <code>canonical</code> tag to avoid duplicate content penalties from URL parameters.</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/meta-tag-generator.js"></script>
+</body>
+</html>

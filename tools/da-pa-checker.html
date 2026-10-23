@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Domain Authority (DA) &amp; Page Authority (PA) Checker | Sarkari Result Tools</title>
+  <meta name="description" content="Check Domain Authority (DA), Page Authority (PA), Spam Score, and on-page technical SEO score for any website free. Fast, accurate website authority checker.">
+  <meta name="keywords" content="da pa checker, domain authority checker, page authority, moz da checker, check website da pa, bulk da checker, free seo checker, spam score checker">
+  <meta property="og:title" content="Domain Authority (DA) &amp; Page Authority (PA) SEO Checker">
+  <meta property="og:description" content="Calculate and analyze website Domain Authority (DA 1-100), Page Authority (PA), Spam Score, and Technical SEO health.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/da-pa-checker.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Domain Authority & Page Authority Checker",
+    "description": "Analyze website authority metrics including estimated Domain Authority (DA), Page Authority (PA), Spam Score, and technical SEO health.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1040px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">DA &amp; PA Checker</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">📊</div>
+        <h1>Domain Authority (DA) &amp; Page Authority (PA) Checker</h1>
+        <p class="tool-description">Analyze any website's search engine ranking potential. Calculates estimated <strong>Domain Authority (DA 1–100)</strong>, <strong>Page Authority (PA)</strong>, <strong>Spam Score</strong>, and technical SEO audit indicators.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Input Box -->
+        <div class="settings-group" style="margin-bottom: var(--space-4);">
+          <label class="form-label" for="siteUrlInput" style="font-weight: 600;">Enter Website Domain or URL *</label>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 260px; position: relative;">
+              <input type="text" id="siteUrlInput" class="form-input" placeholder="e.g. https://sarkariresult.com or examtoolkit.in" style="padding-left: 38px; font-size: 15px; height: 46px;">
+              <span style="position: absolute; left: 12px; top: 13px; color: var(--gray-400); font-size: 16px;">🌐</span>
+            </div>
+            <button type="button" id="btnCheckDaPa" class="btn btn-primary" style="height: 46px; min-width: 150px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+              <span>Analyze Authority</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+            <span style="font-size: 12px; color: var(--gray-500);">Test Popular Domains:</span>
+            <button type="button" class="quick-domain-btn btn btn-outline" data-url="sarkariresult.com" style="padding: 2px 8px; font-size: 11px;">sarkariresult.com</button>
+            <button type="button" class="quick-domain-btn btn btn-outline" data-url="upsc.gov.in" style="padding: 2px 8px; font-size: 11px;">upsc.gov.in</button>
+            <button type="button" class="quick-domain-btn btn btn-outline" data-url="timesofindia.indiatimes.com" style="padding: 2px 8px; font-size: 11px;">timesofindia.com</button>
+            <button type="button" class="quick-domain-btn btn btn-outline" data-url="wikipedia.org" style="padding: 2px 8px; font-size: 11px;">wikipedia.org</button>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="daPaLoading" style="display: none; text-align: center; padding: 40px 20px;">
+          <div class="spinner" style="margin: 0 auto 16px; width: 44px; height: 44px; border: 4px solid var(--gray-200); border-top-color: #10b981; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+          <div style="font-size: 15px; font-weight: 600; color: var(--navy);">Running Deep SEO &amp; Authority Algorithm...</div>
+          <div style="font-size: 12px; color: var(--gray-500); margin-top: 4px;">Auditing TLD tier, DNS resolution, SSL security, and URL structure</div>
+        </div>
+
+        <!-- Results Display -->
+        <div id="daPaResults" style="display: none;">
+          
+          <div class="workspace-divider"></div>
+
+          <!-- Gauges Grid -->
+          <div class="seo-metrics-grid">
+            
+            <!-- DA Gauge -->
+            <div class="seo-metric-card">
+              <div class="seo-metric-gauge">
+                <svg viewBox="0 0 100 100">
+                  <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
+                  <circle class="gauge-fill" id="daCircle" cx="50" cy="50" r="40" stroke="#10b981" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                </svg>
+                <div class="seo-gauge-val" id="valDA">0</div>
+              </div>
+              <div class="seo-metric-title">Domain Authority (DA)</div>
+              <div class="seo-metric-desc" id="ratingDA">Ranking Power: High</div>
+            </div>
+
+            <!-- PA Gauge -->
+            <div class="seo-metric-card">
+              <div class="seo-metric-gauge">
+                <svg viewBox="0 0 100 100">
+                  <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
+                  <circle class="gauge-fill" id="paCircle" cx="50" cy="50" r="40" stroke="#0284c7" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                </svg>
+                <div class="seo-gauge-val" id="valPA">0</div>
+              </div>
+              <div class="seo-metric-title">Page Authority (PA)</div>
+              <div class="seo-metric-desc" id="ratingPA">Specific URL Weight</div>
+            </div>
+
+            <!-- SEO Health Gauge -->
+            <div class="seo-metric-card">
+              <div class="seo-metric-gauge">
+                <svg viewBox="0 0 100 100">
+                  <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
+                  <circle class="gauge-fill" id="seoCircle" cx="50" cy="50" r="40" stroke="#8b5cf6" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                </svg>
+                <div class="seo-gauge-val" id="valSEO">0%</div>
+              </div>
+              <div class="seo-metric-title">Technical SEO Health</div>
+              <div class="seo-metric-desc">On-Page Infrastructure</div>
+            </div>
+
+            <!-- Spam Score Gauge -->
+            <div class="seo-metric-card">
+              <div class="seo-metric-gauge">
+                <svg viewBox="0 0 100 100">
+                  <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
+                  <circle class="gauge-fill" id="spamCircle" cx="50" cy="50" r="40" stroke="#16a34a" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                </svg>
+                <div class="seo-gauge-val" id="valSpam">1%</div>
+              </div>
+              <div class="seo-metric-title">Spam Score</div>
+              <div class="seo-metric-desc" id="ratingSpam">Very Low Risk ✓</div>
+            </div>
+
+          </div>
+
+          <!-- Domain Summary Bar -->
+          <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="font-size: 11px; text-transform: uppercase; color: var(--gray-500); font-weight: 600;">Analyzed Target</div>
+              <div id="targetUrlDisplay" style="font-size: 16px; font-weight: 700; color: var(--navy); word-break: break-all;">-</div>
+            </div>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+              <div>
+                <div style="font-size: 11px; color: var(--gray-500);">TLD Reputation</div>
+                <div id="tldScoreBadge" class="status-pill pass">Tier 1 (.com)</div>
+              </div>
+              <div>
+                <div style="font-size: 11px; color: var(--gray-500);">SSL Certificate</div>
+                <div id="sslStatusBadge" class="status-pill pass">Active HTTPS ✓</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deep Technical SEO Audit Checklist -->
+          <div style="margin-bottom: 24px;">
+            <div style="font-weight: 600; font-size: 16px; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+              <span>📋 10-Point Technical SEO &amp; Authority Audit</span>
+            </div>
+            <div class="seo-audit-list" id="seoChecklist">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+
+          <!-- Recommendations -->
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-lg); padding: 18px; margin-bottom: 20px;">
+            <div style="font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 8px;">💡 SEO Growth Recommendations:</div>
+            <ul id="recommendationsList" style="margin: 0; padding-left: 20px; font-size: 13px; color: var(--gray-700); line-height: 1.6;">
+              <!-- Injected via JS -->
+            </ul>
+          </div>
+
+          <!-- Action Buttons -->
+          <div style="display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap;">
+            <button type="button" id="btnCopyAudit" class="btn btn-outline" style="font-size: 13px;">📋 Copy Audit Summary</button>
+            <button type="button" id="btnDownloadAudit" class="btn btn-primary" style="font-size: 13px;">⬇️ Download SEO Report (.txt)</button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Educational Content Section -->
+      <div class="tool-info-section" style="margin-top: var(--space-8); background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-8);">
+        <h2 style="font-size: 20px; color: var(--navy); margin-bottom: 12px;">What are Domain Authority (DA) and Page Authority (PA)?</h2>
+        <p style="color: var(--gray-600); line-height: 1.6; font-size: 14px; margin-bottom: 16px;">
+          <strong>Domain Authority (DA)</strong> is a search engine ranking score developed to predict how likely a website is to rank on search engine result pages (SERPs). Scores range from 1 to 100, with higher scores corresponding to a greater ability to rank. <strong>Page Authority (PA)</strong> measures the predictive ranking strength of a single individual page rather than the whole domain.
+        </p>
+
+        <h3 style="font-size: 16px; color: var(--navy); margin: 16px 0 8px;">What is a Good DA Score?</h3>
+        <ul style="color: var(--gray-600); font-size: 13px; line-height: 1.7; padding-left: 20px;">
+          <li><strong>DA 1 to 20:</strong> Brand new websites or small personal blogs just getting started.</li>
+          <li><strong>DA 21 to 40:</strong> Growing regional websites, established local cyber cafes, niche portals.</li>
+          <li><strong>DA 41 to 60:</strong> Strong authoritative sites with solid backlink profiles and high organic traffic.</li>
+          <li><strong>DA 61 to 100:</strong> Giant national and global authority sites (e.g. Sarkari Result, Wikipedia, UPSC, Indian Government portals).</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/da-pa-checker.js"></script>
+</body>
+</html>

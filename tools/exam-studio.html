@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All-in-One Exam Photo & Signature Studio | SSC, UPSC, Railway, IBPS</title>
+  <meta name="description" content="All-in-one exam photo and signature studio. Upload photo & signature, choose exam preset (SSC, UPSC, Bank, Police), add date/name, auto-compress under 20KB/50KB and download together.">
+  <meta name="keywords" content="exam photo signature studio, ssc photo signature maker, upsc photo resizer, all in one photo sign tool, 50kb photo 20kb signature, sarkari exam photo studio">
+  <meta property="og:title" content="All-in-One Exam Photo & Signature Studio">
+  <meta property="og:description" content="Prepare compliant photo, signature, date stamp, and exact KB size in a single unified workflow.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/exam-studio.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css?v=3.1">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Exam Photo and Signature Studio",
+    "description": "Unified all-in-one workflow to prepare photographs and signatures for all competitive and government exams.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1100px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Exam Photo & Signature Studio</span>
+      </div>
+
+      <div class="tool-hero" style="padding-bottom: var(--space-4);">
+        <div class="tool-icon exam-tools">🎯</div>
+        <h1>All-in-One Exam Photo & Signature Studio</h1>
+        <p class="tool-description">Complete government exam submission toolkit in one screen. Select your exam, upload photo & signature, add date/name, auto-compress to exact KB limit, and download both ready files instantly.</p>
+      </div>
+
+      <!-- Step 1: Exam Selection Bar -->
+      <div class="tool-workspace" style="margin-bottom: var(--space-6); padding: var(--space-6);">
+        <div class="workspace-section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Step 1: Select Target Examination Portal Preset
+        </div>
+
+        <div class="preset-grid" id="examPresetsGrid">
+          <button type="button" class="preset-btn active" data-exam="ssc">
+            <span class="preset-name">SSC (CGL, CHSL, MTS, GD)</span>
+            <span class="preset-size">Photo: 20-50 KB | Sign: 10-20 KB</span>
+          </button>
+          <button type="button" class="preset-btn" data-exam="upsc">
+            <span class="preset-name">UPSC Civil Services / NDA</span>
+            <span class="preset-size">Photo: 20-300 KB (350×350) | Sign: 20-300 KB</span>
+          </button>
+          <button type="button" class="preset-btn" data-exam="ibps">
+            <span class="preset-name">IBPS / SBI Banking</span>
+            <span class="preset-size">Photo: 20-50 KB (200×230) | Sign: 10-20 KB</span>
+          </button>
+          <button type="button" class="preset-btn" data-exam="rrb">
+            <span class="preset-name">Railway RRB (NTPC, Group D)</span>
+            <span class="preset-size">Photo: 30-70 KB | Sign: 30-70 KB</span>
+          </button>
+          <button type="button" class="preset-btn" data-exam="police">
+            <span class="preset-name">State Police (UP, Bihar, MP)</span>
+            <span class="preset-size">Photo: 20-50 KB | Sign: 5-20 KB</span>
+          </button>
+          <button type="button" class="preset-btn" data-exam="custom">
+            <span class="preset-name">Custom Parameters</span>
+            <span class="preset-size">Set custom dimensions & KB</span>
+          </button>
+        </div>
+
+        <div id="criteriaNotification" style="margin-top: var(--space-4); background: #eff6ff; border-left: 4px solid #2563eb; padding: 10px 16px; border-radius: 4px; font-size: 13px; color: #1e3a8a;">
+          <strong>SSC Portal Criteria Loaded:</strong> Photo must be 3.5×4.5 cm (20-50 KB, JPG). Signature must be 4.0×2.0 cm (10-20 KB, JPG).
+        </div>
+      </div>
+
+      <!-- Step 2: Dual Upload & Editing Workspace -->
+      <div class="split-layout">
+        
+        <!-- Photo Studio Column -->
+        <div class="tool-workspace" style="padding: var(--space-6);">
+          <div class="workspace-section-title" style="justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span>📷 1. Photograph Preparation</span>
+            </div>
+            <span id="photoStatusBadge" style="font-size: 11px; font-weight: 700; color: #b45309; background: #fef3c7; padding: 2px 8px; border-radius: 999px;">Upload Pending</span>
+          </div>
+
+          <div class="upload-zone" id="photoDropZone" style="padding: var(--space-6); margin-bottom: var(--space-4);">
+            <input type="file" id="photoInput" accept="image/*">
+            <p style="margin: 0; font-size: 13px; color: var(--navy); font-weight: 600;">Click or Drop Photo Here</p>
+            <span style="font-size: 11px; color: var(--gray-500);">JPG, PNG, WEBP allowed</span>
+          </div>
+
+          <div id="photoSettingsArea" style="display: none;">
+            <div class="settings-group" style="margin-bottom: var(--space-3);">
+              <label class="form-label" for="addDateCheckbox" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" id="addDateCheckbox" checked style="accent-color: var(--saffron); width: 16px; height: 16px;">
+                <span>Add Name & Date of Photo (DOP) at bottom</span>
+              </label>
+            </div>
+
+            <div id="dateFieldsRow" class="form-row" style="margin-bottom: var(--space-3);">
+              <input type="text" id="candidateName" class="form-input" placeholder="Candidate Name" value="CANDIDATE NAME" style="font-size: 12px; height: 38px;">
+              <input type="text" id="dopText" class="form-input" placeholder="DOP: 22/10/2026" value="DOP: 22/10/2026" style="font-size: 12px; height: 38px;">
+            </div>
+
+            <div class="form-row" style="margin-bottom: var(--space-3);">
+              <div class="settings-group">
+                <label class="form-label" style="font-size: 12px;">Background</label>
+                <select id="photoBgSelect" class="form-select" style="height: 38px; font-size: 12px;">
+                  <option value="keep" selected>Keep Original</option>
+                  <option value="white">Replace with White</option>
+                  <option value="blue">Replace with Light Blue</option>
+                </select>
+              </div>
+              <div class="settings-group">
+                <label class="form-label" style="font-size: 12px;">Max File Size</label>
+                <select id="photoTargetKb" class="form-select" style="height: 38px; font-size: 12px;">
+                  <option value="50" selected>Max 50 KB</option>
+                  <option value="40">Max 40 KB</option>
+                  <option value="100">Max 100 KB</option>
+                  <option value="200">Max 200 KB</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="text-align: center; background: #f8fafc; border: 1px solid var(--gray-200); border-radius: 4px; padding: 10px; margin-bottom: var(--space-4);">
+              <canvas id="photoCanvas" style="max-height: 220px; max-width: 100%; border-radius: 2px; box-shadow: var(--shadow-sm);"></canvas>
+              <div id="photoSizeOutput" style="font-size: 12px; font-weight: 600; color: var(--success); margin-top: 6px;">
+                Dimensions: 413×531 px | Size: 38.4 KB
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-secondary btn-sm" id="downloadPhotoBtn" style="width: 100%;">
+              📥 Download Prepared Photo (JPG)
+            </button>
+          </div>
+        </div>
+
+        <!-- Signature Studio Column -->
+        <div class="tool-workspace" style="padding: var(--space-6);">
+          <div class="workspace-section-title" style="justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span>✍️ 2. Signature Preparation</span>
+            </div>
+            <span id="signStatusBadge" style="font-size: 11px; font-weight: 700; color: #b45309; background: #fef3c7; padding: 2px 8px; border-radius: 999px;">Upload Pending</span>
+          </div>
+
+          <div class="upload-zone" id="signDropZone" style="padding: var(--space-6); margin-bottom: var(--space-4);">
+            <input type="file" id="signInput" accept="image/*">
+            <p style="margin: 0; font-size: 13px; color: var(--navy); font-weight: 600;">Click or Drop Signature Here</p>
+            <span style="font-size: 11px; color: var(--gray-500);">Crop handwritten sign on white paper</span>
+          </div>
+
+          <div id="signSettingsArea" style="display: none;">
+            <div class="form-row" style="margin-bottom: var(--space-3);">
+              <div class="settings-group">
+                <label class="form-label" style="font-size: 12px;">Ink & Contrast</label>
+                <select id="signContrastSelect" class="form-select" style="height: 38px; font-size: 12px;">
+                  <option value="boost" selected>Enhance Dark Ink & Whiten Paper</option>
+                  <option value="normal">Normal Original</option>
+                  <option value="pure_bw">High Contrast Black & White</option>
+                </select>
+              </div>
+              <div class="settings-group">
+                <label class="form-label" style="font-size: 12px;">Max File Size</label>
+                <select id="signTargetKb" class="form-select" style="height: 38px; font-size: 12px;">
+                  <option value="20" selected>Max 20 KB (Strict)</option>
+                  <option value="15">Max 15 KB</option>
+                  <option value="50">Max 50 KB</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="text-align: center; background: #f8fafc; border: 1px solid var(--gray-200); border-radius: 4px; padding: 10px; margin-bottom: var(--space-4);">
+              <canvas id="signCanvas" style="max-height: 140px; max-width: 100%; border-radius: 2px; box-shadow: var(--shadow-sm);"></canvas>
+              <div id="signSizeOutput" style="font-size: 12px; font-weight: 600; color: var(--success); margin-top: 6px;">
+                Dimensions: 280×120 px | Size: 14.2 KB
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-secondary btn-sm" id="downloadSignBtn" style="width: 100%;">
+              📥 Download Prepared Signature (JPG)
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Step 3: Master Action Download Bar -->
+      <div class="tool-workspace" style="margin-top: var(--space-6); text-align: center; background: #f0fdf4; border: 1.5px solid #86efac; padding: var(--space-8);">
+        <h3 style="font-size: var(--text-xl); color: #166534; margin-bottom: 6px;">Both Files Ready for Official Submission</h3>
+        <p style="font-size: var(--text-sm); color: var(--gray-600); margin-bottom: var(--space-6);">Guaranteed compliant dimensions and file sizes for direct upload on portal.</p>
+        <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-primary btn-lg" id="downloadBothBtn" style="white-space: normal; text-align: center; max-width: 100%;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Both Files (Photo + Signature)
+          </button>
+        </div>
+      </div>
+
+      <!-- How to use -->
+      <section class="how-to-use">
+        <h2>Why Exam Studio Saves Time & Rejections</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Zero Guesswork</h3>
+            <p>Official guidelines for SSC, UPSC, and Banking are pre-programmed. No need to look up notification PDFs.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Unified Workflow</h3>
+            <p>Do not visit multiple websites. Prepare photo, signature, date stamp, and exact KB size in under 60 seconds.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>100% Accepted</h3>
+            <p>Clean white background, sharp ink contrast, and strict file size guarantee no portal rejection.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/exam-studio.js"></script>
+</body>
+</html>

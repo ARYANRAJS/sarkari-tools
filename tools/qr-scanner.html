@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free QR Code Scanner Online — Scan from Image, Screenshot &amp; Camera | Sarkari Tools</title>
+  <meta name="description" content="Scan and decode any QR code online in your browser. Use your webcam/phone camera or upload a saved screenshot/photo. 100% private and instant client-side decoding.">
+  <meta name="keywords" content="qr code scanner online, scan qr from image, scan qr code from screenshot, upload qr code image, webcam qr reader, decode qr code online, free online barcode scanner, read qr code on pc">
+  <meta property="og:title" content="Free Online QR Code Scanner (From Image, Screenshot &amp; Camera)">
+  <meta property="og:description" content="Decode QR codes directly in your browser. Upload any screenshot or image, or use your live camera with instant 1-click link opening.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/qr-scanner.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=3.0">
+  <link rel="stylesheet" href="../css/animations.css?v=3.0">
+  <link rel="stylesheet" href="../css/tools.css?v=3.0">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Free Online QR Code Scanner",
+        "url": "https://sarkaritools.in/tools/qr-scanner.html",
+        "description": "Scan and decode QR codes from live camera or uploaded image files and screenshots without server transmission.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How can I scan a QR code from a screenshot or saved gallery image?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Click the 'Upload QR Image' button or drag and drop your screenshot into the scanner. The browser's HTML5 Canvas engine and jsQR library decode the pixel matrix instantly and display the hidden URL or UPI link on screen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I scan QR codes using my laptop or desktop PC webcam?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! Click 'Start Camera Scan' and allow camera access when prompted by your browser. Hold any printed paper, phone screen, or product package in front of your webcam to decode it in real time."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my uploaded image or camera video uploaded to any server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Never. All scanning occurs 100% inside your web browser using WebAssembly and JavaScript. No image bytes or video frames ever leave your local device."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body data-qr-tab="scanner">
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1040px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Online QR Code Scanner</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon daily-tools">📷</div>
+        <h1>Free Online QR Code Scanner</h1>
+        <p class="tool-description">Scan and decode any QR code online in your browser. Point your laptop or phone camera, or upload a saved screenshot or gallery image to decode UPI payments, URLs, and text instantly with 100% privacy.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- QR Tools Suite Nav (SEO Friendly Internal Linking) -->
+        <div class="qr-tab-nav" id="qrStudioTabs">
+          <a href="upi-qr-generator.html" class="qr-tab-btn" data-tab="upi">💳 UPI Payment</a>
+          <a href="vcard-qr-generator.html" class="qr-tab-btn" data-tab="vcard">📇 vCard Visiting Card</a>
+          <a href="qr-scanner.html" class="qr-tab-btn active" data-tab="scanner">📷 Scan QR Code</a>
+          <a href="wifi-qr-generator.html" class="qr-tab-btn" data-tab="wifi">📶 Wi-Fi Access</a>
+          <a href="whatsapp-qr-generator.html" class="qr-tab-btn" data-tab="whatsapp">💬 WhatsApp Chat</a>
+          <a href="google-review-qr-generator.html" class="qr-tab-btn" data-tab="review">⭐ Google Review</a>
+          <a href="google-maps-qr-generator.html" class="qr-tab-btn" data-tab="maps">📍 Google Maps</a>
+          <a href="qr-generator.html" class="qr-tab-btn" data-tab="all">🎛️ All-in-One Studio</a>
+        </div>
+
+        <!-- SCANNER VIEWPORT (Displayed by default on this dedicated page) -->
+        <div id="qrScannerLayout" style="display: block; padding: var(--space-8); background: #ffffff; border-radius: var(--radius-xl); border: 2px solid var(--border-color); box-shadow: var(--shadow-md); text-align: center;">
+          <h3 style="font-size: 20px; color: var(--navy); margin-bottom: 8px;">📷 Live Camera &amp; Screenshot QR Decoder</h3>
+          <p style="font-size: 14px; color: var(--gray-600); max-width: 580px; margin: 0 auto 24px; line-height: 1.6;">
+            Point your webcam or phone camera at any QR code, or upload a screenshot/image file from WhatsApp, Paytm, or your gallery to decode it instantly.
+          </p>
+
+          <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap;">
+            <button type="button" id="btnStartCamera" class="btn btn-primary" style="padding: 12px 24px; font-size: 15px;">
+              🎥 Start Camera Scan
+            </button>
+            <button type="button" id="btnStopCamera" class="btn btn-outline" style="display: none; padding: 12px 24px; font-size: 15px;">
+              ⏹️ Stop Camera
+            </button>
+            <label class="btn btn-secondary" style="cursor: pointer; margin: 0; padding: 12px 24px; font-size: 15px; display: inline-flex; align-items: center; gap: 8px;">
+              📁 Upload QR Image / Screenshot
+              <input type="file" id="scannerImageInput" accept="image/*" style="display: none;">
+            </label>
+          </div>
+
+          <!-- Video Viewport -->
+          <div class="scanner-viewport" id="scannerViewportBox" style="display: none; max-width: 480px; margin: 0 auto; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.15);">
+            <video id="scannerVideo" class="scanner-video" playsinline style="width: 100%; height: auto; display: block;"></video>
+            <div class="scanner-overlay">
+              <div class="scanner-laser"></div>
+            </div>
+          </div>
+
+          <!-- Decoded Output Result Card -->
+          <div id="scanResultCard" style="display: none; max-width: 600px; margin: 24px auto 0; background: #f8fafc; border: 2px solid #22c55e; border-radius: var(--radius-lg); padding: 20px; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span class="badge badge-success" style="font-size: 12px; padding: 4px 10px; background: #dcfce7; color: #166534; font-weight: 700;">✅ QR Code Decoded Successfully</span>
+              <span id="scanTypeBadge" style="font-size: 11px; font-weight: 700; color: var(--navy); text-transform: uppercase;">URL Link</span>
+            </div>
+            <div id="scanResultText" style="font-family: monospace; font-size: 14px; word-break: break-all; background: #ffffff; border: 1px solid #cbd5e1; padding: 14px; border-radius: 6px; margin-bottom: 14px; color: #0f172a; line-height: 1.5;">
+              -
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button type="button" id="btnCopyScanResult" class="btn btn-primary" style="font-size: 13px; padding: 8px 16px;">📋 Copy Text / Link</button>
+              <a id="btnOpenScanLink" href="#" target="_blank" class="btn btn-outline" style="font-size: 13px; padding: 8px 16px; display: none;">🌐 Open Link</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hidden Generator Layout for Unified Script Compatibility -->
+        <div id="qrGeneratorLayout" style="display: none;">
+          <div id="fieldGroupUpi" class="field-subgroup"><input type="text" id="upiId" value="a@upi"><input type="text" id="payeeName" value="Merchant"><input type="number" id="upiAmount"><input type="text" id="upiNote"></div>
+          <div id="fieldGroupVcard" class="field-subgroup"><input type="text" id="vcFirst" value="Rahul"><input type="text" id="vcLast" value="Sharma"><input type="text" id="vcOrg" value="CSC"><input type="text" id="vcTitle" value="Owner"><input type="tel" id="vcPhone" value="+919876543210"><input type="email" id="vcEmail" value="info@example.com"><input type="url" id="vcWebsite" value="https://sarkaritools.in"><input type="text" id="vcAddress" value="Delhi, India"></div>
+          <div id="fieldGroupWifi" class="field-subgroup"><input type="text" id="wifiSsid" value="Wi-Fi"><input type="text" id="wifiPassword" value="Pass"><select id="wifiAuth"><option value="WPA">WPA</option></select></div>
+          <div id="fieldGroupWhatsapp" class="field-subgroup"><input type="tel" id="waPhone" value="919876543210"><input type="text" id="waMsg" value="Hello"></div>
+          <div id="fieldGroupReview" class="field-subgroup"><input type="url" id="reviewUrl" value="https://g.page/r/example/review"></div>
+          <div id="fieldGroupMaps" class="field-subgroup"><input type="text" id="mapsQuery" value="Delhi"></div>
+          <div id="fieldGroupUrl" class="field-subgroup"><input type="url" id="urlInput" value="https://sarkaritools.in"></div>
+          <div id="fieldGroupContact" class="field-subgroup"><select id="contactType"><option value="tel">tel</option></select><input type="text" id="contactTarget" value="+919876543210"></div>
+          <div id="fieldGroupEvent" class="field-subgroup"><input type="text" id="eventTitle" value="Event"><input type="datetime-local" id="eventStart"><input type="datetime-local" id="eventEnd"><input type="text" id="eventLoc" value="Center"></div>
+          <div id="fieldGroupBulk" class="field-subgroup"><textarea id="bulkInput">Item1&#10;Item2</textarea><button type="button" id="btnGenerateBulk">Gen</button></div>
+          <button type="button" id="btnModeClassic"></button><button type="button" id="btnModeFullImage"></button>
+          <div id="fullImageControls"><input type="file" id="fullPhotoUpload"><select id="photoBlendStyle"><option value="translucent">a</option></select><select id="qrDotShape"><option value="squircle">b</option></select><input type="range" id="sliderPhotoOpacity"><input type="range" id="sliderDotIntensity"><span id="valPhotoOpacity"></span><span id="valDotIntensity"></span></div>
+          <div id="centerLogoSection"><button type="button" class="logo-preset-btn" data-logo="none"></button><input type="file" id="customLogoUpload"></div>
+          <select id="colorPresets"><option value="#1A237E">Navy</option></select><input type="color" id="qrFgColor" value="#1A237E"><select id="qrSize"><option value="512">512</option></select><input type="text" id="qrStandeeLabel" value="Scan">
+          <div id="standeeBrand"></div><div id="standeeTitle"></div><div id="standeeSubtitle"></div><canvas id="mainQrCanvas" width="220" height="220"></canvas><div id="standeeFooter"></div>
+          <button type="button" id="btnDownloadQr"></button><button type="button" id="btnPrintStandee"></button><span id="qrScannableBadge"></span>
+        </div>
+
+        <div id="bulkGallerySection" style="display: none;">
+          <span id="bulkCount">0</span>
+          <button type="button" id="btnDownloadAllBulk"></button>
+          <div id="bulkQrGrid"></div>
+        </div>
+
+      </div>
+
+      <!-- SEO Educational Section & FAQs -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>How to Scan QR Codes from Images, Screenshots &amp; Webcams</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Scan WhatsApp &amp; Gallery Screenshots</h3>
+            <p>If someone sends you a payment QR code, Wi-Fi pass, or event ticket on WhatsApp, take a screenshot and click 'Upload QR Image' to read the details instantly on your PC or phone.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>PC &amp; Laptop Webcam Scanner</h3>
+            <p>Most laptops do not have built-in QR readers. Our tool lets you use your laptop's integrated camera or USB webcam to scan printed papers, admit cards, and bills in seconds.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Verify Suspicious Links First</h3>
+            <p>Scanning directly with banking apps can sometimes trigger unwanted actions. Our scanner displays the exact raw text or URL first, giving you full control to verify before opening.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <h3>100% Client-Side Privacy</h3>
+            <p>Your camera stream and uploaded images are processed entirely in browser memory using HTML5 Canvas. Nothing is ever sent across the network or stored on any server.</p>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-8); background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-8);">
+          <h2 style="font-size: 20px; color: var(--navy); margin-bottom: 16px;">Frequently Asked Questions (FAQ)</h2>
+          
+          <div style="margin-bottom: 14px;">
+            <h3 style="font-size: 15px; color: var(--navy); margin-bottom: 4px;">Q: Why does my browser ask for camera permission?</h3>
+            <p style="font-size: 13.5px; color: var(--gray-600); margin: 0; line-height: 1.6;">
+              Browsers require user consent to access the webcam for security reasons. Click 'Allow' when the prompt appears. We do not record, store, or stream your camera feed.
+            </p>
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <h3 style="font-size: 15px; color: var(--navy); margin-bottom: 4px;">Q: What formats of QR codes are supported?</h3>
+            <p style="font-size: 13.5px; color: var(--gray-600); margin: 0; line-height: 1.6;">
+              Our scanner supports standard QR codes containing Web URLs, UPI payment URIs (`upi://pay`), vCard contact cards, Wi-Fi credentials (`WIFI:`), plain text, phone numbers, and geo coordinates.
+            </p>
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <h3 style="font-size: 15px; color: var(--navy); margin-bottom: 4px;">Q: Why won't a blurry or dark QR code scan?</h3>
+            <p style="font-size: 13.5px; color: var(--gray-600); margin: 0; line-height: 1.6;">
+              Ensure adequate lighting and hold the code steady so the three large corner square markers (finder patterns) are clearly visible and sharp in the viewfinder.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <!-- Libraries: QRCode.js, jsQR, JSZip -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/qr-generator.js?v=2.5"></script>
+</body>
+</html>

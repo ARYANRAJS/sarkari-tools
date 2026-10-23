@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Online Barcode Generator | Code 128, EAN-13 &amp; Printable Label Sheets</title>
+  <meta name="description" content="Generate free barcodes online: Code 128, EAN-13, UPC, Code 39. Download SVG/PNG and print A4 barcode sticker label sheets for shops, inventory & products.">
+  <meta name="keywords" content="barcode generator, online barcode maker, free barcode generator india, code 128 generator, ean 13 barcode generator, barcode sticker print a4, product barcode maker">
+  <meta property="og:title" content="Free Online Barcode Generator &amp; A4 Sticker Label Sheet Maker">
+  <meta property="og:description" content="Generate Code 128, EAN-13, and UPC barcodes with instant PNG/SVG download and printable A4 sticker sheets.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/barcode-generator.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Online Barcode Generator & Label Sheet Maker",
+        "url": "https://sarkaritools.in/tools/barcode-generator.html",
+        "description": "Create Code 128, EAN-13, and UPC barcodes with vector SVG, PNG, and printable A4 sticker label sheets.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "All",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Which barcode format should I use for retail products in India?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For standard retail products, EAN-13 (13 digits) is the universal international standard. For internal shop inventory, cyber cafes, asset tags, or serial numbers, Code 128 is the best choice because it supports letters, numbers, and symbols."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I print multiple barcode stickers on a single A4 sheet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! Our tool provides an automatic A4 print layout that arranges 24, 30, or 40 barcode labels per sheet, formatted with dashed cutting guidelines for standard self-adhesive sticker paper."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1080px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Barcode Generator</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon business-tools">🏷️</div>
+        <h1>Free Online Barcode Generator</h1>
+        <p class="tool-description">Generate Code 128, EAN-13, UPC, and Code 39 barcodes for shop inventory, retail products, cyber cafes, and libraries. Download crisp vector SVG, PNG, or print A4 sticker label sheets.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <div class="workspace-grid" style="grid-template-columns: 1.1fr 1fr; gap: var(--space-6);">
+          
+          <!-- Left: Barcode Settings -->
+          <div class="settings-panel">
+            
+            <div class="settings-group">
+              <label class="form-label" for="barcodeValue">Barcode Data / Value *</label>
+              <input type="text" id="barcodeValue" class="form-input" value="SARKARI-2026-X1" placeholder="Enter text or numbers...">
+              <span id="barcodeFormatTip" style="font-size: 11px; color: var(--gray-500); margin-top: 4px; display: block;">Supports uppercase, lowercase, numbers, and punctuation.</span>
+            </div>
+
+            <div class="settings-group">
+              <label class="form-label" for="barcodeFormat">Barcode Symbology / Format</label>
+              <select id="barcodeFormat" class="form-select">
+                <option value="CODE128" selected>Code 128 (Universal - Letters &amp; Numbers)</option>
+                <option value="EAN13">EAN-13 (Standard Retail Product - 13 Digits)</option>
+                <option value="EAN8">EAN-8 (Compact Retail - 8 Digits)</option>
+                <option value="UPC">UPC-A (North American Retail - 12 Digits)</option>
+                <option value="CODE39">Code 39 (Alphanumeric Industrial)</option>
+                <option value="ITF14">ITF-14 (Shipping Packaging - 14 Digits)</option>
+                <option value="pharmacode">Pharmacode (Pharmaceutical)</option>
+              </select>
+            </div>
+
+            <!-- Customization Options -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+              <div class="settings-group">
+                <label class="form-label" for="barHeight">Bar Height (px)</label>
+                <input type="range" id="barHeight" min="30" max="150" value="80" class="form-range">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--gray-500);">
+                  <span>30px</span><span id="valBarHeight">80px</span><span>150px</span>
+                </div>
+              </div>
+              <div class="settings-group">
+                <label class="form-label" for="barWidth">Bar Width (Density)</label>
+                <select id="barWidth" class="form-select">
+                  <option value="1">1 (Ultra Compact)</option>
+                  <option value="2" selected>2 (Standard Sharp)</option>
+                  <option value="3">3 (Large Print)</option>
+                  <option value="4">4 (Extra Bold)</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+              <div class="settings-group">
+                <label class="form-label" for="barcodeColor">Barcode Line Color</label>
+                <input type="color" id="barcodeColor" value="#000000" style="width: 100%; height: 38px; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;">
+              </div>
+              <div class="settings-group">
+                <label class="form-label" for="barcodeBgColor">Background Color</label>
+                <input type="color" id="barcodeBgColor" value="#ffffff" style="width: 100%; height: 38px; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;">
+              </div>
+            </div>
+
+            <!-- Text label settings -->
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-top: 10px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                <label style="font-size: 13px; font-weight: 600; color: var(--gray-800); cursor: pointer;">
+                  <input type="checkbox" id="chkDisplayValue" checked style="margin-right: 6px;"> Show Text Below Barcode
+                </label>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <div>
+                  <label class="form-label" for="barcodeFontSize" style="font-size: 11px;">Font Size</label>
+                  <input type="number" id="barcodeFontSize" class="form-input" value="16" min="10" max="36" style="padding: 4px 8px; font-size: 12px;">
+                </div>
+                <div>
+                  <label class="form-label" for="barcodeTextAlign" style="font-size: 11px;">Text Align</label>
+                  <select id="barcodeTextAlign" class="form-select" style="padding: 4px 8px; font-size: 12px;">
+                    <option value="center" selected>Center</option>
+                    <option value="left">Left</option>
+                    <option value="right">Right</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- A4 Sheet Presets -->
+            <div class="settings-group" style="margin-top: 16px;">
+              <label class="form-label" for="sheetLabelCount">A4 Printable Sticker Sheet Count</label>
+              <select id="sheetLabelCount" class="form-select">
+                <option value="24" selected>24 Labels per A4 (3 × 8 Grid)</option>
+                <option value="30">30 Labels per A4 (3 × 10 Grid)</option>
+                <option value="40">40 Labels per A4 (4 × 10 Grid)</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- Right: Live Preview Panel -->
+          <div class="preview-panel" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-6);">
+            <div class="preview-header" style="width: 100%; margin-bottom: var(--space-4);">
+              <h3>Live Barcode Preview</h3>
+              <span class="badge badge-success">✓ Vector SVG</span>
+            </div>
+
+            <!-- Barcode Display Container -->
+            <div style="background: #ffffff; border: 2px solid var(--border-color); border-radius: var(--radius-lg); padding: 30px 20px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.04); max-width: 360px; width: 100%; display: flex; justify-content: center; align-items: center; min-height: 180px;">
+              <svg id="barcodeSvg" style="max-width: 100%; height: auto;"></svg>
+            </div>
+
+            <!-- Download & Print Actions -->
+            <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); width: 100%; justify-content: center;">
+              <button type="button" id="btnDownloadSvg" class="btn btn-outline" style="flex: 1; min-width: 120px;">
+                📐 Download SVG
+              </button>
+              <button type="button" id="btnDownloadPng" class="btn btn-primary" style="flex: 1; min-width: 120px;">
+                📥 Download PNG
+              </button>
+              <button type="button" id="btnPrintLabels" class="btn btn-secondary" style="flex: 1; min-width: 140px;">
+                🖨️ Print A4 Label Sheet
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SEO Educational Section & FAQs -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Understanding Barcode Formats for Retail &amp; Inventory</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Code 128 (Most Popular)</h3>
+            <p>Code 128 encodes any alphanumeric characters (letters, numbers, symbols). Ideal for cyber cafe receipts, logistics, asset tagging, and student ID cards.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>EAN-13 (Retail Standard)</h3>
+            <p>EAN-13 consists of exactly 12 data digits + 1 checksum digit. It is the mandatory international barcode for groceries, books, and packaged retail goods.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Vector SVG vs PNG</h3>
+            <p>SVG gives mathematically perfect, pixel-free vector lines suitable for high-resolution laser printing, while PNG is universally compatible with all software.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <!-- Library Scripts: JsBarcode -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/barcode-generator.js"></script>
+</body>
+</html>

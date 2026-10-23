@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free AI Content Detector & Plagiarism Checker | Words & % Score</title>
+  <meta name="description" content="Free AI Detector & Plagiarism Checker for students and exam applicants. Detect ChatGPT, Claude, Gemini text, calculate exact AI %, Human %, words count, and highlighted sentences. 100% private.">
+  <meta name="keywords" content="ai detector, ai content checker, plagiarism checker, chatgpt detector, free ai detector india, percentage ai checker, burstiness perplexity ai detector">
+  <meta property="og:title" content="AI Content Detector & Plagiarism Checker with Words & % Breakdown">
+  <meta property="og:description" content="Detect AI-generated text from ChatGPT, Claude & Gemini. Get accurate AI %, Human %, word count metrics and sentence-by-sentence highlights.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/ai-plagiarism-checker.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "AI Content Detector & Plagiarism Checker",
+    "description": "Analyze text for AI probability (ChatGPT, Claude, Gemini) and plagiarism with exact word counts, percentage scores, and highlighted sentences.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1060px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">AI & Plagiarism Checker</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon doc-tools" style="background: linear-gradient(135deg, #1A237E, #312E81); color: #fff;">🤖</div>
+        <h1>AI Content Detector &amp; Plagiarism Checker</h1>
+        <p class="tool-description">Verify essays, assignments, SOPs, and competitive exam answers. Calculates exact <strong>AI % probability</strong>, <strong>Human %</strong>, <strong>word count breakdown</strong>, and highlights suspicious sentences with zero server uploads.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Tabs -->
+        <div class="tool-tabs" id="detectorTabs">
+          <button type="button" class="tool-tab active" data-tab="tabAiDetector">🤖 AI Content Probability Detector</button>
+          <button type="button" class="tool-tab" data-tab="tabPlagiarism">🔍 Plagiarism &amp; Similarity Checker</button>
+        </div>
+
+        <!-- Sample Load Bar -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: var(--space-4); background: #f8fafc; padding: 10px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+          <div style="font-size: 13px; font-weight: 600; color: var(--gray-700);">
+            💡 Try Sample Texts:
+          </div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button type="button" id="btnSampleAi" class="btn btn-outline" style="font-size: 11px; padding: 3px 8px;">Load ChatGPT Sample</button>
+            <button type="button" id="btnSampleHuman" class="btn btn-outline" style="font-size: 11px; padding: 3px 8px;">Load Human Sample</button>
+            <button type="button" id="btnSampleMixed" class="btn btn-outline" style="font-size: 11px; padding: 3px 8px;">Load Mixed Sample</button>
+          </div>
+        </div>
+
+        <!-- Text Input Area -->
+        <div class="settings-group" style="margin-bottom: var(--space-4);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label class="form-label" for="aiTextInput" style="margin: 0;">Enter or Paste Your Text (Minimum 25 words recommended) *</label>
+            <span id="inputCharCount" style="font-size: 12px; color: var(--gray-500);">0 words • 0 characters</span>
+          </div>
+          <textarea id="aiTextInput" class="form-textarea" rows="8" placeholder="Paste your essay, SOP, cover letter, or assignment paragraph here to check for AI content and plagiarism..." style="font-size: 15px; line-height: 1.6; padding: 16px;"></textarea>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-6);">
+          <button type="button" id="btnClearAiText" class="btn btn-outline" style="color: #b91c1c; border-color: #fca5a5;">
+            🗑️ Clear Text
+          </button>
+          <div style="display: flex; gap: var(--space-3);">
+            <button type="button" id="btnAnalyzeText" class="btn btn-primary" style="padding: 10px 24px; font-size: 15px;">
+              🚀 Analyze AI &amp; Plagiarism Now
+            </button>
+          </div>
+        </div>
+
+        <!-- RESULT SECTION (Shown after analysis) -->
+        <div id="aiAnalysisResults" style="display: none;">
+          
+          <div class="workspace-divider"></div>
+
+          <!-- Gauges Summary -->
+          <div class="ai-score-summary">
+            
+            <!-- AI Probability Gauge -->
+            <div class="ai-gauge-card">
+              <div style="font-size: 13px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
+                AI Generation Score
+              </div>
+              <div style="position: relative; width: 140px; height: 140px; margin: 0 auto;">
+                <svg class="ai-gauge-svg" viewBox="0 0 100 100">
+                  <circle class="ai-gauge-bg" cx="50" cy="50" r="40"></circle>
+                  <circle id="aiGaugeMeter" class="ai-gauge-meter" cx="50" cy="50" r="40" stroke="#ef4444" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                </svg>
+                <div id="aiScoreText" class="ai-gauge-text">0%</div>
+              </div>
+              <div id="aiVerdictBadge" style="margin-top: 14px; font-weight: 700; font-size: 14px; padding: 4px 12px; border-radius: 20px; display: inline-block;">
+                Analyzing...
+              </div>
+            </div>
+
+            <!-- Human Written Gauge -->
+            <div class="ai-gauge-card">
+              <div style="font-size: 13px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
+                Human Originality Score
+              </div>
+              <div style="position: relative; width: 140px; height: 140px; margin: 0 auto;">
+                <svg class="ai-gauge-svg" viewBox="0 0 100 100">
+                  <circle class="ai-gauge-bg" cx="50" cy="50" r="40"></circle>
+                  <circle id="humanGaugeMeter" class="ai-gauge-meter" cx="50" cy="50" r="40" stroke="#16a34a" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                </svg>
+                <div id="humanScoreText" class="ai-gauge-text" style="color: #16a34a;">0%</div>
+              </div>
+              <div id="humanVerdictBadge" style="margin-top: 14px; font-weight: 700; font-size: 14px; padding: 4px 12px; border-radius: 20px; display: inline-block; background: #dcfce7; color: #166534;">
+                Likely Human
+              </div>
+            </div>
+
+            <!-- Plagiarism / Similarity Gauge -->
+            <div class="ai-gauge-card">
+              <div style="font-size: 13px; font-weight: 700; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
+                Similarity &amp; Plagiarism
+              </div>
+              <div style="position: relative; width: 140px; height: 140px; margin: 0 auto;">
+                <svg class="ai-gauge-svg" viewBox="0 0 100 100">
+                  <circle class="ai-gauge-bg" cx="50" cy="50" r="40"></circle>
+                  <circle id="plagGaugeMeter" class="ai-gauge-meter" cx="50" cy="50" r="40" stroke="#9333ea" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                </svg>
+                <div id="plagScoreText" class="ai-gauge-text" style="color: #7e22ce;">0%</div>
+              </div>
+              <div id="plagVerdictBadge" style="margin-top: 14px; font-weight: 700; font-size: 14px; padding: 4px 12px; border-radius: 20px; display: inline-block; background: #f3e8ff; color: #6b21a8;">
+                Original Content
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Exact Words & Linguistic Breakdown Stats -->
+          <div class="result-stats" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); margin-bottom: var(--space-6);">
+            <div class="result-stat">
+              <div class="stat-value" id="resTotalWords" style="color: var(--navy);">0</div>
+              <div class="stat-label">Total Words</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-value" id="resAiWords" style="color: #b91c1c;">0</div>
+              <div class="stat-label">AI Flagged Words</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-value" id="resHumanWords" style="color: #15803d;">0</div>
+              <div class="stat-label">Human Words</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-value" id="resBurstiness" style="color: #0284c7; font-size: 1.4rem;">0.00</div>
+              <div class="stat-label">Burstiness Index</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-value" id="resPerplexity" style="color: #d97706; font-size: 1.4rem;">Low</div>
+              <div class="stat-label">Perplexity Score</div>
+            </div>
+            <div class="result-stat">
+              <div class="stat-value" id="resVocabDiversity" style="color: #475569; font-size: 1.4rem;">0%</div>
+              <div class="stat-label">Vocab Diversity</div>
+            </div>
+          </div>
+
+          <!-- Highlight Legend -->
+          <div class="ai-legend">
+            <span style="color: var(--gray-600); margin-right: 4px;">Sentence Color Guide:</span>
+            <div class="ai-legend-item">
+              <span class="ai-legend-dot" style="background: #ef4444;"></span>
+              <span>High AI Probability (&gt;70%)</span>
+            </div>
+            <div class="ai-legend-item">
+              <span class="ai-legend-dot" style="background: #f59e0b;"></span>
+              <span>Moderate AI Probability (40-70%)</span>
+            </div>
+            <div class="ai-legend-item">
+              <span class="ai-legend-dot" style="background: #22c55e;"></span>
+              <span>Likely Human Written (&lt;40%)</span>
+            </div>
+            <div class="ai-legend-item">
+              <span class="ai-legend-dot" style="background: #9333ea;"></span>
+              <span>Repeated / Plagiarized Phrase</span>
+            </div>
+          </div>
+
+          <!-- Highlighted Sentences Container -->
+          <div class="ai-highlight-view" id="highlightedSentenceContainer">
+            <!-- Dynamically populated sentences with hover & click -->
+          </div>
+
+          <!-- Sentence Inspector Box -->
+          <div id="sentenceInspectorCard" style="display: none; background: #f8fafc; border: 1.5px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px; margin-bottom: var(--space-6);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 12px; font-weight: 700; color: var(--navy); text-transform: uppercase;">Selected Sentence Breakdown</span>
+              <span id="inspectScoreBadge" class="badge badge-warning">85% AI</span>
+            </div>
+            <div id="inspectSentenceText" style="font-size: 14px; font-weight: 500; color: #0f172a; margin-bottom: 8px; font-style: italic;">
+              ""
+            </div>
+            <div id="inspectTriggersList" style="font-size: 12px; color: var(--gray-600); margin-bottom: 8px;">
+              <!-- Trigger details -->
+            </div>
+            <div id="inspectHumanizeTip" style="font-size: 12px; background: #eef2ff; color: #1e1b4b; padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--navy);">
+              💡 <strong>Humanize Tip:</strong> Vary your sentence length or replace robotic transitions with active, personal voice.
+            </div>
+          </div>
+
+          <!-- Export & Report Actions -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3); padding-top: var(--space-4); border-top: 1px solid var(--border-color);">
+            <button type="button" id="btnCopyAuditSummary" class="btn btn-outline">
+              📋 Copy Audit Summary
+            </button>
+            <div style="display: flex; gap: var(--space-3);">
+              <button type="button" id="btnDownloadReportPdf" class="btn btn-primary">
+                📄 Download Verification Certificate (PDF)
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- How to use / Technical Education -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>How AI Detectors Work: Perplexity &amp; Burstiness</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Burstiness (Sentence Rhythm)</h3>
+            <p>Humans write with natural rhythmic variation — alternating short, punchy statements with sprawling complex sentences. AI outputs uniform 14-18 word sentences with steady rhythm.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Perplexity (Word Predictability)</h3>
+            <p>Large Language Models pick statistically probable next tokens, creating predictable text with signature transition phrases ("delve into", "tapestry", "in conclusion", "crucial role").</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>100% Client-Side Privacy</h3>
+            <p>Your essays, research notes, and personal thoughts are analyzed entirely inside your browser using mathematical heuristics. Nothing is uploaded to any third-party server.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <!-- PDF CDNs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/ai-plagiarism-checker.js"></script>
+</body>
+</html>

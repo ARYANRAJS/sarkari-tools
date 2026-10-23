@@ -1,0 +1,22 @@
+# OS & System
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Logs & temp
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node modules & scratch
+node_modules/
+dist/
+tmp/
+temp/
+.temp/
+.cache/
+
+# Agent & Playwright
+.playwright-mcp/
+.gemini/
