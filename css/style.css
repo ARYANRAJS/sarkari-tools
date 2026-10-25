@@ -1730,3 +1730,107 @@ body.dark .form-input::placeholder,
 body.dark .form-textarea::placeholder {
   color: #8E9CB5;
 }
+
+/* ═══ DARK MODE round 2 — leftover light surfaces ═══ */
+body.dark .feedback-card,
+body.dark .feedback-modal-box {
+  background: #1B2436;
+  border-color: #24324B;
+}
+body.dark .feedback-badge {
+  background: rgba(5, 150, 105, 0.18);
+  color: #6EE7B7;
+  border-color: rgba(5, 150, 105, 0.45);
+}
+body.dark .settings-group { background: #16202F; }
+body.dark .result-stat {
+  background: #16202F;
+  border-color: #24324B;
+}
+body.dark .status-pill.pass {
+  background: rgba(5, 150, 105, 0.22);
+  color: #6EE7B7;
+}
+body.dark .status-pill.fail {
+  background: rgba(220, 38, 38, 0.22);
+  color: #FCA5A5;
+}
+/* inline-styled light boxes inside workspaces (result cards, toolbars) */
+body.dark .tool-workspace div[style*="#fff"],
+body.dark .tool-workspace div[style*="#ffffff"],
+body.dark .tool-workspace div[style*="255, 255, 255"],
+body.dark .tool-workspace div[style*="#f8fafc"],
+body.dark .tool-workspace div[style*="#f0fdf4"],
+body.dark .tool-workspace div[style*="#f1f5f9"],
+body.dark .tool-workspace div[style*="#eff6ff"],
+body.dark .tool-workspace div[style*="#fef3c7"] {
+  background: #16202F !important;
+  border-color: #24324B !important;
+}
+/* the inline green age-result box */
+body.dark #resultBox {
+  background: rgba(5, 150, 105, 0.12) !important;
+  border-color: rgba(5, 150, 105, 0.5) !important;
+}
+/* resume A4 sheet is paper — keep white, reset vars inside */
+body.dark .resume-a4-sheet {
+  --white: #FFFFFF; --off-white: #FAFAFA; --cream: #FFF8F0;
+  --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB; --gray-400: #9CA3AF; --gray-500: #6B7280;
+  --gray-600: #4B5563; --gray-700: #374151; --gray-800: #1F2937;
+  --gray-900: #111827; --navy: #1A237E;
+  background: #FFFFFF;
+}
+
+body.dark .tool-workspace div[style*="background: white"],
+body.dark .tool-workspace div[style*="background:white"],
+body.dark .tool-workspace div[style*="background: #fff;"],
+body.dark .tool-workspace div[style*="background: #ffffff;"],
+body.dark .tool-workspace tr[style*="background: white"],
+body.dark .tool-workspace tr[style*="background: #f8fafc"] {
+  background: #16202F !important;
+}
+
+/* white inline bars anywhere (resume toolbar etc.), paper sheets protected below */
+body.dark div[style*="background: white"],
+body.dark div[style*="background: #fff"],
+body.dark div[style*="background: #ffffff"] {
+  background: #16202F !important;
+}
+/* paper previews keep their white inline surfaces */
+body.dark .resume-a4-sheet div[style*="background: white"],
+body.dark .resume-a4-sheet div[style*="background: #fff"],
+body.dark .preview-panel div[style*="background: white"],
+body.dark .bill-paper div[style*="background: white"] {
+  background: #FFFFFF !important;
+}
+
+/* ═══ DARK MODE round 3 — domain cards, biodata paper, progress tracks ═══ */
+body.dark .domain-result-card.is-taken {
+  background: rgba(220, 38, 38, 0.14);
+  border-color: rgba(220, 38, 38, 0.4);
+}
+body.dark .domain-result-card.is-available {
+  background: rgba(5, 150, 105, 0.14);
+  border-color: rgba(5, 150, 105, 0.4);
+}
+body.dark .domain-result-card.is-checking {
+  background: #16202F;
+  border-color: #24324B;
+}
+/* biodata sheet is paper like resume — keep white, reset vars inside */
+body.dark .biodata-sheet {
+  --white: #FFFFFF; --off-white: #FAFAFA; --cream: #FFF8F0;
+  --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB; --gray-400: #9CA3AF; --gray-500: #6B7280;
+  --gray-600: #4B5563; --gray-700: #374151; --gray-800: #1F2937;
+  --gray-900: #111827; --navy: #1A237E;
+  background: #FFFFFF;
+}
+/* light progress-bar tracks and misc inline light grays */
+body.dark div[style*="background: #e2e8f0"],
+body.dark div[style*="background:#e2e8f0"],
+body.dark div[style*="background: #f1f5f9"],
+body.dark div[style*="background: #e5e7eb"] {
+  background: #24324B !important;
+}
