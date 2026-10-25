@@ -112,6 +112,18 @@
       badge: 'New'
     },
     {
+      id: 'video-subtitle-maker',
+      name: 'AI Video Subtitle Maker',
+      description: 'Auto-generate timed subtitles from video with on-device AI — Hindi, English & Hinglish, timeline editor, SRT/VTT export',
+      category: 'video',
+      categoryLabel: 'Video & Subtitles',
+      icon: '🎬',
+      iconBg: 'utility-tools',
+      url: 'tools/video-subtitle-maker.html',
+      keywords: ['video to subtitle', 'subtitle', 'subtitles', 'srt', 'vtt', 'whisper', 'ai subtitle', 'hindi subtitle', 'hinglish subtitle', 'english subtitle', 'caption', 'captions', 'subtitle editor', 'timeline', 'transcription', 'video caption maker'],
+      badge: 'New'
+    },
+    {
       id: 'age-calculator',
       name: 'Age Calculator',
       description: 'Calculate exact age in years, months and days for government exam eligibility',
@@ -471,6 +483,7 @@
     { id: 'exam', label: 'Exam Tools', count: TOOLS.filter(t => t.category === 'exam').length },
     { id: 'document', label: 'Documents', count: TOOLS.filter(t => t.category === 'document').length },
     { id: 'utility', label: 'Utilities', count: TOOLS.filter(t => t.category === 'utility').length },
+    { id: 'video', label: 'Video & Subtitles', count: TOOLS.filter(t => t.category === 'video').length },
     { id: 'seo', label: 'SEO & Marketing', count: TOOLS.filter(t => t.category === 'seo').length }
   ];
 

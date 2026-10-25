@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free AI Video Subtitle Maker — Auto Subtitles Hindi, English, Hinglish | Sarkari Tools</title>
+  <meta name="description" content="Generate subtitles from video automatically with on-device AI (Whisper). Timeline editor, Hindi / English / Hinglish support, SRT & VTT export, live preview — 100% private in your browser.">
+  <meta name="keywords" content="video to subtitle, ai subtitle generator, auto subtitles, hindi subtitle maker, english subtitles, hinglish subtitles, srt maker, vtt converter, whisper subtitles, subtitle editor online, timeline subtitle">
+  <meta property="og:title" content="AI Video Subtitle Maker — Hindi, English & Hinglish Subtitles Online">
+  <meta property="og:description" content="Auto-generate timed subtitles from any video with on-device AI, edit them on a visual timeline, and export SRT/VTT — fully private.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://sarkaritools.in/tools/video-subtitle-maker.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=3.1">
+  <link rel="stylesheet" href="../css/animations.css?v=3.1">
+  <link rel="stylesheet" href="../css/tools.css?v=3.1">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "AI Video Subtitle Maker & Editor",
+        "url": "https://sarkaritools.in/tools/video-subtitle-maker.html",
+        "description": "Auto-generate timed subtitles from video with on-device Whisper AI in Hindi, English or Hinglish, edit on a visual timeline, and export SRT/VTT files.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "All",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does my video get uploaded to a server for transcription?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The Whisper AI model downloads into your browser once and transcription runs entirely on your device. Your video and audio never leave your computer or phone."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which languages can it generate subtitles in?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Hindi (Devanagari), English and auto-detect are supported for speech recognition. Any transcript can also be displayed as Hinglish (Roman script) using the built-in transliteration toggle."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I edit subtitle timings after auto-generation?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Every subtitle appears as a block on the visual timeline — drag it to shift, pull its edges to change start/end, split or merge cues, nudge by 0.1s, and watch the video preview update live."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    /* ── Subtitle maker specific styles (scoped) ── */
+    .sub-upload-zone {
+      border: 2px dashed var(--gray-300, #cbd5e1); border-radius: var(--radius-lg, 12px);
+      padding: var(--space-8, 32px) var(--space-4); text-align: center;
+      background: var(--gray-50, #f8fafc); transition: border-color .2s, background .2s; cursor: pointer;
+    }
+    .sub-upload-zone:hover, .sub-upload-zone.dragover { border-color: var(--saffron, #f59e0b); background: #fffbeb; }
+    .sub-upload-zone .u-icon { font-size: 42px; margin-bottom: 8px; }
+    .sub-status {
+      display: none; margin-top: 10px; padding: 10px 14px; border-radius: 8px;
+      background: #eff6ff; color: #1d4ed8; font-size: 13px; font-weight: 500; border: 1px solid #bfdbfe;
+    }
+    .sub-status.show { display: block; }
+    .sub-progress-wrap { display: none; margin-top: 10px; }
+    .sub-progress-wrap.show { display: block; }
+    .sub-progress {
+      height: 10px; border-radius: 6px; background: #e2e8f0; overflow: hidden; margin-top: 6px;
+    }
+    .sub-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #f59e0b, #f97316); transition: width .3s; }
+    .sub-cue-list { max-height: 480px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 2px; }
+    .sub-cue {
+      border: 1px solid var(--gray-200); border-radius: 10px; background: #fff; padding: 8px 10px;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .sub-cue.active { border-color: var(--saffron); box-shadow: 0 0 0 3px rgba(245,158,11,.15); }
+    .sub-cue-head { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+    .sub-cue-num {
+      background: #0f172a; color: #fff; font-size: 11px; font-weight: 700; border-radius: 5px; padding: 1px 7px;
+    }
+    .sub-time-input {
+      width: 86px; border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 6px;
+      font-size: 12px; font-family: 'JetBrains Mono', monospace, monospace; color: var(--gray-700);
+    }
+    .sub-cue-head button {
+      border: 1px solid var(--gray-200); background: #fff; border-radius: 6px; padding: 2px 7px;
+      font-size: 11px; cursor: pointer; color: var(--gray-600); min-width: 26px;
+    }
+    .sub-cue-head button:hover { border-color: var(--saffron); color: var(--saffron); }
+    .sub-cue-head button.danger:hover { border-color: #dc2626; color: #dc2626; }
+    .sub-cue textarea {
+      width: 100%; border: 1px solid var(--gray-100); border-radius: 8px; padding: 7px 9px;
+      font-size: 13.5px; font-family: 'Inter', sans-serif; resize: vertical; min-height: 44px;
+      color: var(--gray-800); background: #f8fafc;
+    }
+    .sub-cue textarea:focus { outline: none; border-color: var(--saffron); background: #fff; }
+    .sub-video-shell {
+      position: relative; background: #0f172a; border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--gray-200); min-height: 200px; display: flex; align-items: center; justify-content: center;
+    }
+    .sub-video-shell video { width: 100%; max-height: 52vh; display: block; background: #000; }
+    .sub-overlay {
+      position: absolute; left: 0; right: 0; bottom: 8%; display: flex; justify-content: center;
+      pointer-events: none; padding: 0 5%; z-index: 3;
+    }
+    .sub-overlay span {
+      background: rgba(2,6,23,.82); color: #fff; font-size: clamp(13px, 1.6vw, 19px);
+      font-family: 'Inter', sans-serif; padding: 4px 12px; border-radius: 6px; text-align: center;
+      max-width: 90%; line-height: 1.35;
+    }
+    .sub-timeline-wrap { margin-top: 12px; }
+    .sub-timeline-label { font-size: 11px; color: var(--gray-500); margin-bottom: 4px; display: flex; justify-content: space-between; }
+    .sub-timeline {
+      position: relative; height: 64px; background: #f1f5f9; border: 1px solid var(--gray-200);
+      border-radius: 9px; overflow: hidden; cursor: crosshair; touch-action: none; user-select: none;
+    }
+    .sub-tl-ruler { position: absolute; inset: 0; display: flex; }
+    .sub-tl-tick { flex: 1; border-right: 1px solid #e2e8f0; position: relative; }
+    .sub-tl-tick i { position: absolute; bottom: 2px; left: 3px; font-style: normal; font-size: 8.5px; color: #94a3b8; }
+    .sub-tl-cue {
+      position: absolute; top: 8px; height: 30px; background: linear-gradient(180deg, #fbbf24, #f59e0b);
+      border-radius: 5px; opacity: .92; cursor: grab; border: 1px solid #b45309;
+      display: flex; align-items: center; justify-content: center; overflow: hidden; z-index: 2;
+    }
+    .sub-tl-cue:active { cursor: grabbing; }
+    .sub-tl-cue span { font-size: 9px; color: #451a03; white-space: nowrap; padding: 0 3px; pointer-events: none; font-weight: 600; }
+    .sub-tl-cue .hL, .sub-tl-cue .hR {
+      position: absolute; top: 0; bottom: 0; width: 8px; cursor: ew-resize; z-index: 3;
+    }
+    .sub-tl-cue .hL { left: -2px; } .sub-tl-cue .hR { right: -2px; }
+    .sub-tl-cue .hL::after, .sub-tl-cue .hR::after {
+      content: ''; position: absolute; top: 6px; bottom: 6px; width: 3px; border-radius: 2px; background: #78350f; left: 4px;
+    }
+    .sub-tl-playhead { position: absolute; top: 0; bottom: 0; width: 2px; background: #dc2626; z-index: 4; pointer-events: none; }
+    .sub-transport { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .sub-transport .tc { font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--gray-600); }
+    .sub-empty-hint {
+      text-align: center; color: #94a3b8; font-size: 13px; padding: 60px 16px;
+    }
+    .sub-lang-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+    .sub-lang-pill {
+      border: 1.5px solid var(--gray-200); background: #fff; border-radius: 999px; padding: 4px 12px;
+      font-size: 12px; font-weight: 600; cursor: pointer; color: var(--gray-600);
+    }
+    .sub-lang-pill.active { border-color: var(--saffron); color: #92400e; background: #fffbeb; }
+    @media (max-width: 992px) { .sub-cue-list { max-height: 320px; } }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1400px;">
+
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">AI Video Subtitle Maker</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon utility-tools">🎬</div>
+        <h1>AI Video Subtitle Maker &amp; Timeline Editor</h1>
+        <p class="tool-description">Auto-generate perfectly timed subtitles from any video or audio file with on-device Whisper AI — Hindi, English or Hinglish. Edit every cue on a drag-and-drop timeline, preview live on the video, and export SRT / VTT / TXT. Nothing is uploaded.</p>
+      </div>
+
+      <!-- Upload Zone -->
+      <div class="sub-upload-zone" id="subUploadZone" role="button" tabindex="0" aria-label="Upload video or audio file">
+        <div class="u-icon">🎬</div>
+        <h3 style="margin-bottom: 6px;">Drop a video or audio file here, or click to browse</h3>
+        <p style="font-size: 13px; color: var(--gray-500);">MP4 / WebM / MP3 / WAV / M4A — the AI model downloads once and then runs fully on your device.</p>
+        <input type="file" id="subFileInput" accept="video/*,audio/*,.mp4,.webm,.mp3,.wav,.m4a" hidden>
+      </div>
+
+      <div class="sub-status" id="subStatus"></div>
+      <div class="sub-progress-wrap" id="subProgressWrap">
+        <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--gray-600);">
+          <span id="subProgressLabel">Preparing…</span><span id="subProgressPct">0%</span>
+        </div>
+        <div class="sub-progress"><div class="sub-progress-fill" id="subProgressFill"></div></div>
+      </div>
+
+      <!-- Workspace -->
+      <div class="tool-workspace" id="subWorkspace" style="display: none; margin-top: var(--space-6);">
+
+        <div class="tool-split">
+        <div class="tool-split-inputs">
+
+          <!-- AI transcription -->
+          <div class="workspace-section">
+            <div class="workspace-section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+              AI Speech-to-Text (on-device Whisper)
+            </div>
+            <div class="settings-panel">
+              <div class="settings-group">
+                <label class="form-label">Spoken Language</label>
+                <div class="sub-lang-pills" id="subLangPills">
+                  <button type="button" class="sub-lang-pill active" data-lang="auto">🌐 Auto Detect</button>
+                  <button type="button" class="sub-lang-pill" data-lang="hi">🇮🇳 Hindi</button>
+                  <button type="button" class="sub-lang-pill" data-lang="en">🇬🇧 English</button>
+                </div>
+              </div>
+              <div class="settings-group">
+                <label class="form-label" for="subModelSelect">AI Model (bigger = more accurate, slower)</label>
+                <select id="subModelSelect" class="form-select">
+                  <option value="Xenova/whisper-tiny" selected>Tiny — fast (~40 MB download)</option>
+                  <option value="Xenova/whisper-base">Base — balanced (~75 MB)</option>
+                  <option value="Xenova/whisper-small">Small — most accurate (~250 MB)</option>
+                </select>
+              </div>
+              <div class="settings-group" style="align-items: center;">
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size: 13px;">
+                  <input type="checkbox" id="subTranslate" style="accent-color: var(--saffron); width:17px; height:17px;">
+                  <span>Translate speech to English subtitles</span>
+                </label>
+              </div>
+              <button type="button" class="btn btn-primary btn-lg" id="btnTranscribe" style="width:100%;">
+                ✨ Auto-Generate Subtitles
+              </button>
+              <p style="font-size: 11.5px; color: var(--gray-500); margin-top: 6px;">First run downloads the AI model into your browser (cached for next time). Long files are processed in 30-second chunks — keep this tab open.</p>
+            </div>
+          </div>
+
+          <div class="workspace-divider"></div>
+
+          <!-- Cue editor -->
+          <div class="workspace-section">
+            <div class="workspace-section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H4z"/><path d="M4 16l4 4"/><path d="M8 8h8M8 12h5"/></svg>
+              Subtitle Cues <span id="cueCountBadge" style="font-weight:400; color:var(--gray-500); font-size: 12px;">(0)</span>
+            </div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
+              <button type="button" class="btn btn-outline" id="btnAddCue">＋ Add Cue</button>
+              <button type="button" class="btn btn-outline" id="btnImportSrt">📥 Import SRT/VTT</button>
+              <input type="file" id="subImportInput" accept=".srt,.vtt,text/plain" hidden>
+              <button type="button" class="btn btn-outline" id="btnClearCues" style="color:#b91c1c;">🗑 Clear All</button>
+            </div>
+            <div class="sub-lang-pills" id="subDisplayPills" style="margin-bottom: 10px;">
+              <button type="button" class="sub-lang-pill active" data-mode="orig">Original text</button>
+              <button type="button" class="sub-lang-pill" data-mode="deva">देवनागरी (Hindi)</button>
+              <button type="button" class="sub-lang-pill" data-mode="hinglish">Hinglish (Roman)</button>
+            </div>
+            <div class="sub-cue-list" id="subCueList">
+              <div class="sub-empty-hint">No subtitles yet — run the AI above, import an SRT/VTT file, or add a cue manually.</div>
+            </div>
+          </div>
+
+          <div class="workspace-divider"></div>
+
+          <!-- Export -->
+          <div class="workspace-section">
+            <div class="workspace-section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export Subtitles
+            </div>
+            <div class="settings-panel">
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button type="button" class="btn btn-primary" id="btnExportSrt">⬇ Download .SRT</button>
+                <button type="button" class="btn btn-outline" id="btnExportVtt">⬇ Download .VTT</button>
+                <button type="button" class="btn btn-outline" id="btnExportTxt">⬇ Transcript .TXT</button>
+              </div>
+              <p style="font-size: 11.5px; color: var(--gray-500);">SRT works with YouTube uploads, VLC, Premiere, mobile players; VTT is for web players (HTML5 track tag).</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tool-split-output">
+
+          <!-- Video preview -->
+          <div class="sub-video-shell" id="subVideoShell">
+            <video id="subVideo" controls playsinline></video>
+            <div class="sub-overlay" id="subOverlay" style="display:none;"><span id="subOverlayText"></span></div>
+          </div>
+
+          <!-- Timeline -->
+          <div class="sub-timeline-wrap">
+            <div class="sub-timeline-label">
+              <span>⏱ Timeline — drag blocks to shift, pull edges to retime, click empty area to seek</span>
+              <span id="subTlDuration">0:00</span>
+            </div>
+            <div class="sub-timeline" id="subTimeline">
+              <div class="sub-tl-ruler" id="subTlRuler"></div>
+              <div class="sub-tl-playhead" id="subTlPlayhead" style="left:0;"></div>
+            </div>
+            <div class="sub-transport">
+              <button type="button" class="btn btn-outline" id="btnPlayPause">▶ Play</button>
+              <span class="tc" id="subTimecode">0:00.0 / 0:00.0</span>
+              <button type="button" class="btn btn-outline" id="btnPrevCue">⏮ Prev cue</button>
+              <button type="button" class="btn btn-outline" id="btnNextCue">⏭ Next cue</button>
+            </div>
+          </div>
+
+          <p style="font-size: 12px; color: var(--gray-500); margin-top: 12px;" id="subMediaInfo"></p>
+
+        </div>
+        </div>
+
+      </div>
+
+      <!-- How to use -->
+      <section class="how-to-use">
+        <h2>How to Make Subtitles from a Video — Step by Step</h2>
+        <ol>
+          <li><strong>Load media:</strong> drop your video (or just an audio/podcast file). It plays on the right — nothing is uploaded anywhere.</li>
+          <li><strong>Run the AI:</strong> pick language (Hindi / English / auto), choose Tiny / Base / Small model and press "Auto-Generate Subtitles". The Whisper model runs inside your browser.</li>
+          <li><strong>Edit on the timeline:</strong> each subtitle is a block — drag to move, pull edges to adjust start/end. In the cue list you can retype text, split or merge cues, and nudge timings by ±0.1s.</li>
+          <li><strong>Hinglish mode:</strong> toggle "Hinglish (Roman)" to show Devanagari subtitles in Roman script — great for reels and shorts.</li>
+          <li><strong>Export:</strong> download the finished SRT (YouTube / VLC / editors) or VTT (web players), or a plain text transcript.</li>
+        </ol>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question">Does my video get uploaded to a server for transcription?</button>
+            <div class="faq-answer"><div class="faq-answer-inner"><p>No. The Whisper AI model downloads into your browser once and then transcription runs entirely on your device. Your video and audio never leave your computer or phone — perfect for private or exam-related recordings.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Which languages are supported?</button>
+            <div class="faq-answer"><div class="faq-answer-inner"><p>Speech recognition supports Hindi (Devanagari output), English, and auto-detect. Any transcript can be toggled to Hinglish — Devanagari text shown in Roman letters — with one click.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Can I fix wrong timings or typos?</button>
+            <div class="faq-answer"><div class="faq-answer-inner"><p>Yes — that is what the timeline editor is for. Drag blocks to shift a subtitle, pull their edges to retime, use ±0.1s nudge buttons for precision, split long cues, merge short ones, and retype any text inline.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/tools/video-subtitle-maker.js"></script>
+</body>
+</html>
