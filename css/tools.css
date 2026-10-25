@@ -1991,3 +1991,38 @@ table {
   border-color: var(--navy);
   transform: translateY(-2px);
 }
+
+/* ═══ DARK MODE — tool surfaces (style.css has the variable flips) ═══ */
+body.dark .ai-gauge-card,
+body.dark .ai-highlight-view,
+body.dark .qr-nav-pill,
+body.dark .barcode-sheet-grid,
+body.dark .barcode-label-item,
+body.dark .dns-badge-soa,
+body.dark .domain-result-card.is-checking {
+  background: #16202F;
+  border-color: #24324B;
+}
+
+body.dark .serp-card {
+  background: #FFFFFF;
+}
+
+body.dark .domain-status-badge.checking {
+  background: #3D2E0F;
+  color: #FCD34D;
+}
+
+body.dark .qr-tab-btn,
+body.dark .qr-nav-pill {
+  background: #16202F;
+  border-color: #24324B;
+  color: #D0D9E8;
+}
+
+body.dark .qr-tab-btn:hover,
+body.dark .qr-nav-pill:hover {
+  background: #1D2A40;
+  border-color: #A9B6FF;
+  color: #C3CCFF;
+}

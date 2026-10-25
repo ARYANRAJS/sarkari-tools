@@ -1570,3 +1570,163 @@ body.home-page.scrolled-past-hero .header-search {
     color: black;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   DARK MODE — toggled via body.dark (theme button in header)
+   ═══════════════════════════════════════════════════════════ */
+body.dark {
+  --white: #1B2436;
+  --off-white: #0F1522;
+  --cream: #141B2B;
+  --gray-50: #0D1320;
+  --gray-100: #16202F;
+  --gray-200: #24324B;
+  --gray-300: #35486E;
+  --gray-400: #8E9CB5;
+  --gray-500: #9FADC4;
+  --gray-600: #B9C4D8;
+  --gray-700: #D0D9E8;
+  --gray-800: #E4EAF4;
+  --gray-900: #F2F6FC;
+  --navy: #A9B6FF;
+  --navy-light: #C3CCFF;
+  --success-light: rgba(5, 150, 105, 0.22);
+  --error-light: rgba(220, 38, 38, 0.22);
+  --warning-light: rgba(217, 119, 6, 0.22);
+  --info-light: rgba(37, 99, 235, 0.25);
+}
+
+body,
+.site-header,
+.tool-card,
+.tool-workspace,
+.settings-panel,
+.faq-question {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* header */
+body.dark .site-header {
+  background: rgba(13, 19, 32, 0.93);
+  border-bottom-color: #24324B;
+}
+
+body.dark .search-results-dropdown {
+  background: #16202F;
+  border-color: #24324B;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+body.dark .search-result-item:hover {
+  background: #1D2A40;
+}
+
+/* footer & dark sections */
+body.dark .site-footer,
+body.dark .features-section {
+  background: #0A0F1C;
+}
+
+/* buttons that must keep white text on colored backgrounds */
+body.dark .btn-primary,
+body.dark .back-to-top {
+  color: #FFFFFF;
+}
+
+body.dark .btn-secondary {
+  background: #3D51D9;
+  color: #FFFFFF;
+}
+
+/* navy-background pills/badges → brighter indigo on dark */
+body.dark .qr-tab-btn.active,
+body.dark .qr-nav-pill.active,
+body.dark .quick-tag-pill:hover,
+body.dark .domain-ext-badge {
+  background: #3D51D9;
+  color: #FFFFFF;
+}
+
+body.dark ::selection {
+  background: #3D51D9;
+  color: #FFFFFF;
+}
+
+/* paper previews & platform cards must stay LIGHT (print/preview reality) */
+body.dark .preview-panel,
+body.dark .fb-card-preview,
+body.dark .tw-card-preview {
+  --white: #FFFFFF;
+  --off-white: #FAFAFA;
+  --cream: #FFF8F0;
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-600: #4B5563;
+  --gray-700: #374151;
+  --gray-800: #1F2937;
+  --gray-900: #111827;
+  --navy: #1A237E;
+  background: #FFFFFF;
+  border-color: #35486E;
+}
+
+/* theme toggle button (injected in header by app.js) */
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1.5px solid var(--gray-200);
+  background: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: var(--space-2);
+  color: var(--gray-700);
+  flex-shrink: 0;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  padding: 0;
+}
+
+.theme-toggle:hover {
+  border-color: var(--saffron);
+  color: var(--saffron);
+}
+
+.theme-toggle:active {
+  transform: scale(0.92);
+}
+
+.theme-toggle svg {
+  width: 19px;
+  height: 19px;
+}
+
+.theme-toggle .icon-sun { display: none; }
+
+body.dark .theme-toggle .icon-sun { display: block; }
+body.dark .theme-toggle .icon-moon { display: none; }
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* dark mode: form controls */
+body.dark .form-input,
+body.dark .form-select,
+body.dark .form-textarea {
+  background: #0D1320;
+  color: #E4EAF4;
+}
+
+body.dark .form-input::placeholder,
+body.dark .form-textarea::placeholder {
+  color: #8E9CB5;
+}

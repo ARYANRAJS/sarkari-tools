@@ -13,9 +13,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=3.1">
-  <link rel="stylesheet" href="../css/animations.css?v=3.1">
-  <link rel="stylesheet" href="../css/tools.css?v=3.1">
+  <link rel="stylesheet" href="../css/style.css?v=3.2">
+  <link rel="stylesheet" href="../css/animations.css?v=3.2">
+  <link rel="stylesheet" href="../css/tools.css?v=3.2">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -157,6 +157,20 @@
     }
     .sub-lang-pill.active { border-color: var(--saffron); color: #92400e; background: #fffbeb; }
     @media (max-width: 992px) { .sub-cue-list { max-height: 320px; } }
+    /* ── dark mode ── */
+    body.dark .sub-upload-zone { background: #141B2B; }
+    body.dark .sub-upload-zone:hover, body.dark .sub-upload-zone.dragover { background: #1B2436; border-color: var(--saffron); }
+    body.dark .sub-cue { background: #16202F; border-color: #24324B; }
+    body.dark .sub-cue textarea { background: #0D1320; color: #E4EAF4; border-color: #24324B; }
+    body.dark .sub-cue textarea:focus { background: #0F1522; border-color: var(--saffron); }
+    body.dark .sub-cue-head button { background: #16202F; border-color: #24324B; color: #D0D9E8; }
+    body.dark .sub-time-input { background: #0D1320; border-color: #24324B; color: #E4EAF4; }
+    body.dark .sub-timeline { background: #16202F; border-color: #24324B; }
+    body.dark .sub-tl-tick { border-right-color: #24324B; }
+    body.dark .sub-empty-hint { color: #8E9CB5; }
+    body.dark .sub-status { background: #16202F !important; color: #93B4FF !important; border-color: #24324B !important; }
+    body.dark .sub-lang-pill { background: #16202F; border-color: #24324B; color: #B9C4D8; }
+    body.dark .sub-lang-pill.active { border-color: var(--saffron); color: #FFC97E; background: #2A1F0D; }
   </style>
 </head>
 <body>

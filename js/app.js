@@ -5,6 +5,16 @@
 (function() {
   'use strict';
 
+  /* ───────── THEME (DARK MODE) — applied before first paint ───────── */
+  (function initTheme() {
+    let saved = null;
+    try { saved = localStorage.getItem('skt-theme'); } catch (e) { /* private mode */ }
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (saved === 'dark' || (!saved && prefersDark)) {
+      document.body.classList.add('dark');
+    }
+  })();
+
   /* ───────── TOOL REGISTRY ───────── */
   const TOOLS = [
     {
@@ -524,6 +534,15 @@
             <li><a href="${homeUrl}#features">Why Us</a></li>
           </ul>
         </nav>
+
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark / light mode">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
 
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1088,6 +1107,15 @@
     
     if (headerEl) headerEl.innerHTML = renderHeader();
     if (footerEl) footerEl.innerHTML = renderFooter();
+
+    // Theme toggle (sun/moon) — top right corner of header
+    const themeBtn = document.getElementById('themeToggle');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', function () {
+        const dark = document.body.classList.toggle('dark');
+        try { localStorage.setItem('skt-theme', dark ? 'dark' : 'light'); } catch (e) { /* private mode */ }
+      });
+    }
 
     // Initialize all modules
     initHeaderScroll();

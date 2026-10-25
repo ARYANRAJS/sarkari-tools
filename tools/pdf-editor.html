@@ -13,9 +13,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=3.1">
-  <link rel="stylesheet" href="../css/animations.css?v=3.1">
-  <link rel="stylesheet" href="../css/tools.css?v=3.1">
+  <link rel="stylesheet" href="../css/style.css?v=3.2">
+  <link rel="stylesheet" href="../css/animations.css?v=3.2">
+  <link rel="stylesheet" href="../css/tools.css?v=3.2">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -199,6 +199,18 @@
     @media (max-width: 992px) {
       .pdf-thumbs-grid { max-height: 240px; }
     }
+    /* ── dark mode ── */
+    body.dark .pdf-upload-zone { background: #141B2B; border-color: #35486E; }
+    body.dark .pdf-upload-zone:hover, body.dark .pdf-upload-zone.dragover { background: #1B2436; border-color: var(--saffron); }
+    body.dark .pdf-file-chip { background: #16202F; border-color: #24324B; }
+    body.dark .pdf-file-chip .fname { color: #E4EAF4; }
+    body.dark .pdf-thumb { background: #16202F; border-color: #24324B; }
+    body.dark .pdf-thumb .pop button, body.dark .pdf-thumb .pop2 button { background: #24324B; border-color: #35486E; color: #D0D9E8; }
+    body.dark .pdf-viewer-shell { background: #0A0F1C; border-color: #24324B; }
+    body.dark .pdf-nav-btns button, body.dark .pdf-zoom button { background: #16202F; border-color: #24324B; color: #D0D9E8; }
+    body.dark .pdf-sig-modal { background: #1B2436; }
+    body.dark .pdf-sig-modal h3, body.dark .pdf-sig-controls { color: #E4EAF4; }
+    body.dark .pdf-status { background: #16202F !important; color: #93B4FF !important; border-color: #24324B !important; }
   </style>
 </head>
 <body>
