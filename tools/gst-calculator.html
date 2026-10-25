@@ -57,8 +57,9 @@
 
         <!-- Tab 1: GST Calculator -->
         <div class="tab-panel active" id="tabGst">
-          <div class="workspace-grid">
-            
+          <div class="tool-split">
+
+          <div class="tool-split-inputs">
             <!-- Left: Settings -->
             <div class="settings-panel">
               <div class="settings-group">
@@ -104,7 +105,9 @@
               </div>
 
             </div>
+            </div>
 
+          <div class="tool-split-output">
             <!-- Right: Tax Breakdown Display -->
             <div class="preview-panel" style="padding: var(--space-6);">
               <div class="preview-header">
@@ -153,13 +156,15 @@
               </div>
 
             </div>
-
+            </div>
           </div>
         </div>
 
         <!-- Tab 2: Profit & Margin Planner -->
         <div class="tab-panel" id="tabMargin">
-          <div class="workspace-grid">
+          <div class="tool-split">
+
+          <div class="tool-split-inputs">
             <div class="settings-panel">
               <div class="settings-group">
                 <label class="form-label" for="costPrice">Cost Price (CP) (₹) *</label>
@@ -170,7 +175,9 @@
                 <input type="number" id="sellingPrice" class="form-input" value="750" min="0" step="any">
               </div>
             </div>
+            </div>
 
+          <div class="tool-split-output">
             <div class="preview-panel" style="padding: var(--space-6); text-align: center;">
               <div class="preview-header" style="justify-content: center; margin-bottom: var(--space-4);">
                 <h3>Profitability Breakdown</h3>
@@ -194,6 +201,7 @@
               <div id="marginInsight" style="margin-top: 20px; font-size: 13px; color: var(--gray-600); background: #f0fdf4; padding: 12px; border-radius: 8px; border: 1px solid #bbf7d0;">
                 You earn <strong>₹250.00</strong> on every item sold, giving a <strong>33.33% margin</strong> on sales revenue.
               </div>
+            </div>
             </div>
           </div>
         </div>

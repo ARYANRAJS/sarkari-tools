@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -13,9 +13,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=3.0">
-  <link rel="stylesheet" href="../css/animations.css?v=3.0">
-  <link rel="stylesheet" href="../css/tools.css?v=3.0">
+  <link rel="stylesheet" href="../css/style.css?v=3.1">
+  <link rel="stylesheet" href="../css/animations.css?v=3.1">
+  <link rel="stylesheet" href="../css/tools.css?v=3.1">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -43,18 +43,19 @@
       </div>
 
       <div class="tool-hero">
-        <div class="tool-icon business-tools">🧾</div>
+        <div class="tool-icon business-tools">ðŸ§¾</div>
         <h1>Cyber Cafe & Small Shop Invoice Maker</h1>
         <p class="tool-description">Create professional cash memos, service receipts, and GST invoices for cyber cafes, CSC centers, xerox shops, and freelancers. 100% private in browser with instant PDF download.</p>
       </div>
 
       <div class="tool-workspace">
-        <div class="workspace-grid" style="grid-template-columns: 1fr 1.1fr; gap: var(--space-6);">
-          
+        <div class="tool-split">
+        <div class="tool-split-inputs">
+
           <!-- Left: Invoice Editor -->
           <div class="settings-panel">
             <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--navy); border-bottom: 2px solid var(--border-color); padding-bottom: 6px;">
-              🏢 Shop & Business Information
+              ðŸ¢ Shop & Business Information
             </h3>
             
             <div class="settings-group">
@@ -79,7 +80,7 @@
             </div>
 
             <h3 style="font-size: 16px; margin: 20px 0 12px; color: var(--navy); border-bottom: 2px solid var(--border-color); padding-bottom: 6px;">
-              👤 Customer & Invoice Details
+              ðŸ‘¤ Customer & Invoice Details
             </h3>
 
             <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-3);">
@@ -116,21 +117,21 @@
 
             <!-- Quick Add Service Presets -->
             <h3 style="font-size: 15px; margin: 20px 0 8px; color: var(--gray-700);">
-              ⚡ Quick Add Cyber Cafe Services
+              âš¡ Quick Add Cyber Cafe Services
             </h3>
             <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;">
-              <button type="button" class="btn btn-outline quick-add-btn" data-name="Online Form Filling" data-rate="100" style="font-size: 11px; padding: 4px 8px;">+ Form Filling (₹100)</button>
-              <button type="button" class="btn btn-outline quick-add-btn" data-name="Admit Card Print (Color)" data-rate="20" style="font-size: 11px; padding: 4px 8px;">+ Admit Card (₹20)</button>
-              <button type="button" class="btn btn-outline quick-add-btn" data-name="Passport Photo (8 Copies)" data-rate="50" style="font-size: 11px; padding: 4px 8px;">+ Passport Photo (₹50)</button>
-              <button type="button" class="btn btn-outline quick-add-btn" data-name="Document Scan & PDF" data-rate="30" style="font-size: 11px; padding: 4px 8px;">+ Scan to PDF (₹30)</button>
-              <button type="button" class="btn btn-outline quick-add-btn" data-name="A4 Lamination" data-rate="20" style="font-size: 11px; padding: 4px 8px;">+ Lamination (₹20)</button>
-              <button type="button" class="btn btn-outline quick-add-btn" data-name="Color Printout" data-rate="10" style="font-size: 11px; padding: 4px 8px;">+ Color Print (₹10)</button>
+              <button type="button" class="btn btn-outline quick-add-btn" data-name="Online Form Filling" data-rate="100" style="font-size: 11px; padding: 4px 8px;">+ Form Filling (â‚¹100)</button>
+              <button type="button" class="btn btn-outline quick-add-btn" data-name="Admit Card Print (Color)" data-rate="20" style="font-size: 11px; padding: 4px 8px;">+ Admit Card (â‚¹20)</button>
+              <button type="button" class="btn btn-outline quick-add-btn" data-name="Passport Photo (8 Copies)" data-rate="50" style="font-size: 11px; padding: 4px 8px;">+ Passport Photo (â‚¹50)</button>
+              <button type="button" class="btn btn-outline quick-add-btn" data-name="Document Scan & PDF" data-rate="30" style="font-size: 11px; padding: 4px 8px;">+ Scan to PDF (â‚¹30)</button>
+              <button type="button" class="btn btn-outline quick-add-btn" data-name="A4 Lamination" data-rate="20" style="font-size: 11px; padding: 4px 8px;">+ Lamination (â‚¹20)</button>
+              <button type="button" class="btn btn-outline quick-add-btn" data-name="Color Printout" data-rate="10" style="font-size: 11px; padding: 4px 8px;">+ Color Print (â‚¹10)</button>
             </div>
 
             <!-- Tax & Discount -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: 14px;">
               <div class="settings-group">
-                <label class="form-label" for="discountInput">Discount (₹)</label>
+                <label class="form-label" for="discountInput">Discount (â‚¹)</label>
                 <input type="number" id="discountInput" class="form-input" value="0" min="0" step="any">
               </div>
               <div class="settings-group">
@@ -151,17 +152,21 @@
 
           </div>
 
+        </div>
+
+        <div class="tool-split-output">
+
           <!-- Right: Live Bill Sheet Preview -->
           <div class="preview-panel" style="padding: var(--space-4); background: #f1f5f9; display: flex; flex-direction: column;">
             
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <h3 style="font-size: 16px; margin: 0; color: var(--navy);">📄 Bill & Receipt Preview</h3>
+              <h3 style="font-size: 16px; margin: 0; color: var(--navy);">ðŸ“„ Bill & Receipt Preview</h3>
               <div style="display: flex; gap: 8px;">
                 <button type="button" id="btnDownloadPdf" class="btn btn-primary" style="font-size: 13px; padding: 6px 14px;">
-                  📥 Save PDF
+                  ðŸ“¥ Save PDF
                 </button>
                 <button type="button" id="btnPrintBill" class="btn btn-secondary" style="font-size: 13px; padding: 6px 14px;">
-                  🖨️ Print Receipt
+                  ðŸ–¨ï¸ Print Receipt
                 </button>
               </div>
             </div>
@@ -201,8 +206,8 @@
                       <th style="padding: 8px 10px; width: 40px;">#</th>
                       <th style="padding: 8px 10px;">Service / Item</th>
                       <th style="padding: 8px 10px; width: 60px; text-align: center;">Qty</th>
-                      <th style="padding: 8px 10px; width: 80px; text-align: right;">Rate (₹)</th>
-                      <th style="padding: 8px 10px; width: 90px; text-align: right;">Total (₹)</th>
+                      <th style="padding: 8px 10px; width: 80px; text-align: right;">Rate (â‚¹)</th>
+                      <th style="padding: 8px 10px; width: 90px; text-align: right;">Total (â‚¹)</th>
                       <th class="no-print" style="padding: 8px 10px; width: 40px; text-align: center;">Action</th>
                     </tr>
                   </thead>
@@ -222,19 +227,19 @@
                 <div style="width: 250px; font-size: 13px;">
                   <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                     <span style="color: #64748b;">Subtotal:</span>
-                    <strong id="billSubtotal">₹0.00</strong>
+                    <strong id="billSubtotal">â‚¹0.00</strong>
                   </div>
                   <div id="billDiscountRow" style="display: none; justify-content: space-between; margin-bottom: 6px; color: #15803d;">
                     <span>Discount:</span>
-                    <span id="billDiscount">-₹0.00</span>
+                    <span id="billDiscount">-â‚¹0.00</span>
                   </div>
                   <div id="billGstRow" style="display: none; justify-content: space-between; margin-bottom: 6px; color: #475569;">
                     <span>GST (<span id="billGstRate">0</span>%):</span>
-                    <span id="billGstAmount">₹0.00</span>
+                    <span id="billGstAmount">â‚¹0.00</span>
                   </div>
                   <div style="display: flex; justify-content: space-between; border-top: 2px solid #1A237E; padding-top: 8px; margin-top: 8px; font-size: 16px;">
                     <strong style="color: #1A237E;">Grand Total:</strong>
-                    <strong id="billGrandTotal" style="color: #1A237E;">₹0.00</strong>
+                    <strong id="billGrandTotal" style="color: #1A237E;">â‚¹0.00</strong>
                   </div>
                 </div>
               </div>
@@ -260,6 +265,8 @@
             </div>
 
           </div>
+
+        </div>
 
         </div>
       </div>

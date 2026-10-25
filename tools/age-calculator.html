@@ -50,7 +50,10 @@
 
       <!-- Calculator Input Form -->
       <div class="tool-workspace">
-        
+
+        <div class="tool-split">
+        <div class="tool-split-inputs">
+
         <div class="settings-panel">
           <div class="settings-group">
             <label class="form-label" for="dobInput">Date of Birth (DOB) *</label>
@@ -82,6 +85,10 @@
             Calculate Exact Age
           </button>
         </div>
+
+        </div>
+
+        <div class="tool-split-output">
 
         <!-- Result Box -->
         <div id="resultBox" class="result-section" style="margin-top: var(--space-8); background: #f0fdf4; border: 1.5px solid #86efac;">
@@ -120,6 +127,9 @@
           <div id="examEligibilityGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-4);">
             <!-- Populated by JS -->
           </div>
+        </div>
+
+        </div>
         </div>
 
       </div>

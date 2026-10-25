@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free QR Code Scanner Online — Scan from Image, Screenshot &amp; Camera | Sarkari Tools</title>
+  <title>Free QR Code Scanner Online â€” Scan from Image, Screenshot &amp; Camera | Sarkari Tools</title>
   <meta name="description" content="Scan and decode any QR code online in your browser. Use your webcam/phone camera or upload a saved screenshot/photo. 100% private and instant client-side decoding.">
   <meta name="keywords" content="qr code scanner online, scan qr from image, scan qr code from screenshot, upload qr code image, webcam qr reader, decode qr code online, free online barcode scanner, read qr code on pc">
   <meta property="og:title" content="Free Online QR Code Scanner (From Image, Screenshot &amp; Camera)">
@@ -13,9 +13,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=3.0">
-  <link rel="stylesheet" href="../css/animations.css?v=3.0">
-  <link rel="stylesheet" href="../css/tools.css?v=3.0">
+  <link rel="stylesheet" href="../css/style.css?v=3.1">
+  <link rel="stylesheet" href="../css/animations.css?v=3.1">
+  <link rel="stylesheet" href="../css/tools.css?v=3.1">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -77,41 +77,48 @@
       </div>
 
       <div class="tool-hero">
-        <div class="tool-icon daily-tools">📷</div>
+        <div class="tool-icon daily-tools">ðŸ“·</div>
         <h1>Free Online QR Code Scanner</h1>
         <p class="tool-description">Scan and decode any QR code online in your browser. Point your laptop or phone camera, or upload a saved screenshot or gallery image to decode UPI payments, URLs, and text instantly with 100% privacy.</p>
       </div>
 
       <div class="tool-workspace">
-        
+
+        <div class="tool-split">
+        <div class="tool-split-inputs">
+
         <!-- QR Tools Suite Nav (SEO Friendly Internal Linking) -->
         <div class="qr-tab-nav" id="qrStudioTabs">
-          <a href="upi-qr-generator.html" class="qr-tab-btn" data-tab="upi">💳 UPI Payment</a>
-          <a href="vcard-qr-generator.html" class="qr-tab-btn" data-tab="vcard">📇 vCard Visiting Card</a>
-          <a href="qr-scanner.html" class="qr-tab-btn active" data-tab="scanner">📷 Scan QR Code</a>
-          <a href="wifi-qr-generator.html" class="qr-tab-btn" data-tab="wifi">📶 Wi-Fi Access</a>
-          <a href="whatsapp-qr-generator.html" class="qr-tab-btn" data-tab="whatsapp">💬 WhatsApp Chat</a>
-          <a href="google-review-qr-generator.html" class="qr-tab-btn" data-tab="review">⭐ Google Review</a>
-          <a href="google-maps-qr-generator.html" class="qr-tab-btn" data-tab="maps">📍 Google Maps</a>
-          <a href="qr-generator.html" class="qr-tab-btn" data-tab="all">🎛️ All-in-One Studio</a>
+          <a href="upi-qr-generator.html" class="qr-tab-btn" data-tab="upi">ðŸ’³ UPI Payment</a>
+          <a href="vcard-qr-generator.html" class="qr-tab-btn" data-tab="vcard">ðŸ“‡ vCard Visiting Card</a>
+          <a href="qr-scanner.html" class="qr-tab-btn active" data-tab="scanner">ðŸ“· Scan QR Code</a>
+          <a href="wifi-qr-generator.html" class="qr-tab-btn" data-tab="wifi">ðŸ“¶ Wi-Fi Access</a>
+          <a href="whatsapp-qr-generator.html" class="qr-tab-btn" data-tab="whatsapp">ðŸ’¬ WhatsApp Chat</a>
+          <a href="google-review-qr-generator.html" class="qr-tab-btn" data-tab="review">â­ Google Review</a>
+          <a href="google-maps-qr-generator.html" class="qr-tab-btn" data-tab="maps">ðŸ“ Google Maps</a>
+          <a href="qr-generator.html" class="qr-tab-btn" data-tab="all">ðŸŽ›ï¸ All-in-One Studio</a>
         </div>
+
+        </div>
+
+        <div class="tool-split-output">
 
         <!-- SCANNER VIEWPORT (Displayed by default on this dedicated page) -->
         <div id="qrScannerLayout" style="display: block; padding: var(--space-8); background: #ffffff; border-radius: var(--radius-xl); border: 2px solid var(--border-color); box-shadow: var(--shadow-md); text-align: center;">
-          <h3 style="font-size: 20px; color: var(--navy); margin-bottom: 8px;">📷 Live Camera &amp; Screenshot QR Decoder</h3>
+          <h3 style="font-size: 20px; color: var(--navy); margin-bottom: 8px;">ðŸ“· Live Camera &amp; Screenshot QR Decoder</h3>
           <p style="font-size: 14px; color: var(--gray-600); max-width: 580px; margin: 0 auto 24px; line-height: 1.6;">
             Point your webcam or phone camera at any QR code, or upload a screenshot/image file from WhatsApp, Paytm, or your gallery to decode it instantly.
           </p>
 
           <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap;">
             <button type="button" id="btnStartCamera" class="btn btn-primary" style="padding: 12px 24px; font-size: 15px;">
-              🎥 Start Camera Scan
+              ðŸŽ¥ Start Camera Scan
             </button>
             <button type="button" id="btnStopCamera" class="btn btn-outline" style="display: none; padding: 12px 24px; font-size: 15px;">
-              ⏹️ Stop Camera
+              â¹ï¸ Stop Camera
             </button>
             <label class="btn btn-secondary" style="cursor: pointer; margin: 0; padding: 12px 24px; font-size: 15px; display: inline-flex; align-items: center; gap: 8px;">
-              📁 Upload QR Image / Screenshot
+              ðŸ“ Upload QR Image / Screenshot
               <input type="file" id="scannerImageInput" accept="image/*" style="display: none;">
             </label>
           </div>
@@ -127,17 +134,20 @@
           <!-- Decoded Output Result Card -->
           <div id="scanResultCard" style="display: none; max-width: 600px; margin: 24px auto 0; background: #f8fafc; border: 2px solid #22c55e; border-radius: var(--radius-lg); padding: 20px; text-align: left;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <span class="badge badge-success" style="font-size: 12px; padding: 4px 10px; background: #dcfce7; color: #166534; font-weight: 700;">✅ QR Code Decoded Successfully</span>
+              <span class="badge badge-success" style="font-size: 12px; padding: 4px 10px; background: #dcfce7; color: #166534; font-weight: 700;">âœ… QR Code Decoded Successfully</span>
               <span id="scanTypeBadge" style="font-size: 11px; font-weight: 700; color: var(--navy); text-transform: uppercase;">URL Link</span>
             </div>
             <div id="scanResultText" style="font-family: monospace; font-size: 14px; word-break: break-all; background: #ffffff; border: 1px solid #cbd5e1; padding: 14px; border-radius: 6px; margin-bottom: 14px; color: #0f172a; line-height: 1.5;">
               -
             </div>
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-              <button type="button" id="btnCopyScanResult" class="btn btn-primary" style="font-size: 13px; padding: 8px 16px;">📋 Copy Text / Link</button>
-              <a id="btnOpenScanLink" href="#" target="_blank" class="btn btn-outline" style="font-size: 13px; padding: 8px 16px; display: none;">🌐 Open Link</a>
+              <button type="button" id="btnCopyScanResult" class="btn btn-primary" style="font-size: 13px; padding: 8px 16px;">ðŸ“‹ Copy Text / Link</button>
+              <a id="btnOpenScanLink" href="#" target="_blank" class="btn btn-outline" style="font-size: 13px; padding: 8px 16px; display: none;">ðŸŒ Open Link</a>
             </div>
           </div>
+        </div>
+
+        </div>
         </div>
 
         <!-- Hidden Generator Layout for Unified Script Compatibility -->

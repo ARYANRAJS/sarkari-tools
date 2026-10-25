@@ -57,6 +57,8 @@
 
         <!-- Tab 1: Attendance Planner -->
         <div class="tab-panel active" id="attendanceTab">
+          <div class="tool-split">
+          <div class="tool-split-inputs">
           <div class="settings-panel">
             <div class="settings-group">
               <label class="form-label" for="inpTotalClasses">Total Classes Held So Far *</label>
@@ -79,6 +81,9 @@
               </select>
             </div>
           </div>
+          </div>
+
+          <div class="tool-split-output">
 
           <!-- Attendance Result Box -->
           <div id="attendanceResultCard" class="result-section" style="margin-top: var(--space-6); text-align: center; padding: var(--space-8);">
@@ -106,10 +111,14 @@
               </div>
             </div>
           </div>
+          </div>
+          </div>
         </div>
 
         <!-- Tab 2: CGPA to Percentage -->
         <div class="tab-panel" id="cgpaTab">
+          <div class="tool-split">
+          <div class="tool-split-inputs">
           <div class="settings-panel">
             <div class="settings-group">
               <label class="form-label" for="inpCgpa">Enter your CGPA (on 10-point scale) *</label>
@@ -127,6 +136,9 @@
               </select>
             </div>
           </div>
+          </div>
+
+          <div class="tool-split-output">
 
           <div class="result-section" style="margin-top: var(--space-6); background: #f0fdf4; border: 1.5px solid #86efac; text-align: center; padding: var(--space-8);">
             <div style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-600); text-transform: uppercase; margin-bottom: 4px;">Equivalent Percentage</div>
@@ -136,6 +148,8 @@
             <p id="cgpaFormulaNote" style="font-size: 13px; color: var(--gray-600); margin-top: 6px;">
               Calculated using official CBSE formula: 8.4 × 9.5 = 79.80%
             </p>
+          </div>
+          </div>
           </div>
         </div>
 

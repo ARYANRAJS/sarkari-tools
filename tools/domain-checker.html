@@ -83,7 +83,10 @@
 
         <!-- ══════════ TAB 1: MULTI-TLD SCANNER ══════════ -->
         <div id="panelMultiTld">
-          
+
+          <div class="tool-split">
+          <div class="tool-split-inputs">
+
           <!-- TLD Filter Pill Checkboxes -->
           <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 20px;">
             <div style="font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 8px;">Select TLDs to Scan:</div>
@@ -122,6 +125,9 @@
               </label>
             </div>
           </div>
+          </div>
+
+          <div class="tool-split-output">
 
           <!-- Loading Progress -->
           <div id="multiProgressBox" style="display: none; margin-bottom: 20px;">
@@ -141,11 +147,15 @@
           <div id="multiResultsGrid" class="domain-results-grid">
             <!-- Dynamically injected via JS -->
           </div>
+          </div>
+          </div>
 
         </div>
 
         <!-- ══════════ TAB 2: BULK CHECKER ══════════ -->
         <div id="panelBulkDom" style="display: none;">
+          <div class="tool-split">
+          <div class="tool-split-inputs">
           <div class="form-group" style="margin-bottom: 16px;">
             <label class="form-label" for="bulkInputArea" style="font-weight: 600;">Paste Domains to Check (One domain per line, up to 20 domains):</label>
             <textarea id="bulkInputArea" class="form-input" rows="6" placeholder="sarkariresult.com&#10;mycybercafe.in&#10;freeresults.org&#10;examtoolkit.in&#10;fastphotoresizer.com" style="font-family: monospace; font-size: 13px;"></textarea>
@@ -154,6 +164,9 @@
               <button type="button" id="btnRunBulkCheck" class="btn btn-primary" style="font-size: 13px; padding: 8px 18px;">⚡ Check All Domains</button>
             </div>
           </div>
+          </div>
+
+          <div class="tool-split-output">
 
           <!-- Bulk Table Output -->
           <div id="bulkResultsContainer" style="display: none;">
@@ -179,19 +192,28 @@
               </table>
             </div>
           </div>
+          </div>
+          </div>
         </div>
 
         <!-- ══════════ TAB 3: NAME SUGGESTIONS ══════════ -->
         <div id="panelSuggestions" style="display: none;">
+          <div class="tool-split">
+          <div class="tool-split-inputs">
           <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 20px;">
             <div style="font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 6px;">💡 Smart Domain Name Ideas &amp; Variations:</div>
             <p style="font-size: 13px; color: var(--gray-600); margin: 0;">
               Can't get the exact <code>.com</code> or <code>.in</code>? These brandable prefixes, suffixes, and alternatives are generated dynamically and verified live.
             </p>
           </div>
+          </div>
+
+          <div class="tool-split-output">
 
           <div id="suggestionsList" class="domain-suggestions-grid">
             <!-- Injected via JS -->
+          </div>
+          </div>
           </div>
         </div>
 

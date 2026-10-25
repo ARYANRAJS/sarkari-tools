@@ -100,6 +100,18 @@
       badge: 'Popular'
     },
     {
+      id: 'pdf-editor',
+      name: 'Advanced PDF Editor',
+      description: 'Edit PDF in browser — add text, images & signatures, watermark, merge, rotate and reorder pages',
+      category: 'pdf',
+      categoryLabel: 'PDF Tools',
+      icon: '📝',
+      iconBg: 'pdf-tools',
+      url: 'tools/pdf-editor.html',
+      keywords: ['pdf editor', 'edit pdf', 'pdf', 'signature', 'sign pdf', 'watermark pdf', 'merge pdf', 'rotate pdf', 'delete pdf pages', 'reorder pdf', 'annotate pdf', 'pdf page numbers'],
+      badge: 'New'
+    },
+    {
       id: 'age-calculator',
       name: 'Age Calculator',
       description: 'Calculate exact age in years, months and days for government exam eligibility',
