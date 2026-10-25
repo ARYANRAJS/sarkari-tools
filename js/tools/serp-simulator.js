@@ -107,8 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateSerp() {
     const rawTitle = simTitle.value.trim() || 'Free Passport Photo Maker & Size Resizer for Government Exams';
     const rawDesc = simDesc.value.trim() || 'Crop, resize, change photo background to white, and compress under 50KB for SSC, UPSC, and government online applications in 1 click.';
-    const rawUrl = simUrl.value.trim() || 'https://sarkaritools.in/tools/passport-photo.html';
-    const siteName = simSiteName.value.trim() || 'Sarkari Result Tools';
+    const rawUrl = simUrl.value.trim() || 'https://alltoolsinone.com/tools/passport-photo.html';
+    const siteName = simSiteName.value.trim() || 'AllToolsInOne';
     const query = simSearchQuery.value.trim();
 
     // Fonts
@@ -192,8 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial populate
   simTitle.value = 'Free Passport Photo Maker & Size Resizer for Government Exams';
   simDesc.value = 'Crop, resize, change photo background to white, and compress under 50KB for SSC, UPSC, and government online applications in 1 click.';
-  simUrl.value = 'https://sarkaritools.in/tools/passport-photo.html';
-  simSiteName.value = 'Sarkari Result Tools';
+  simUrl.value = 'https://alltoolsinone.com/tools/passport-photo.html';
+  simSiteName.value = 'AllToolsInOne';
   simSearchQuery.value = 'passport photo resizer';
   updateSerp();
 

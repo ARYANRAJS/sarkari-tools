@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Govt Exam Typing Test Engine
+   AllToolsInOne — Govt Exam Typing Test Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

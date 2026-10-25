@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Resume / CV Maker Engine
+   AllToolsInOne — Resume / CV Maker Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

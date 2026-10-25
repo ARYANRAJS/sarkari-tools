@@ -1,5 +1,5 @@
 /**
- * Sarkari Tools - Cyber Cafe & Shop Invoice Maker
+ * AllToolsInOne - Cyber Cafe & Shop Invoice Maker
  * Generates instant printable cash receipts & PDF invoices
  */
 

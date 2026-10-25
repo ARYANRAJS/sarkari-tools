@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — All-in-One Exam Studio Engine
+   AllToolsInOne — All-in-One Exam Studio Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

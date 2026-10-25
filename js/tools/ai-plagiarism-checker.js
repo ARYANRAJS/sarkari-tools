@@ -1,5 +1,5 @@
 /**
- * Sarkari Tools - AI Content Detector & Plagiarism Checker
+ * AllToolsInOne - AI Content Detector & Plagiarism Checker
  * Client-side mathematical analysis of Perplexity, Burstiness & Plagiarism Similarity
  */
 
@@ -463,7 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `Burstiness (Rhythm)      : ${analysisData.burstiness} (Sentence variance)\n` +
         `Vocabulary Diversity     : ${analysisData.vocabDiversity}\n` +
         `-----------------------------------------\n` +
-        `Analyzed privately in-browser at SarkariTools.in`;
+        `Analyzed privately in-browser at AllToolsInOne.in`;
 
       navigator.clipboard.writeText(summaryText).then(() => {
         if (window.showToast) window.showToast('Audit summary copied to clipboard!');
@@ -526,7 +526,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <div style="border-top: 1px dashed #cbd5e1; padding-top: 14px; font-size: 11px; color: #64748b; display: flex; justify-content: space-between;">
-          <span>Generated privately via SarkariTools.in (Zero Server Upload)</span>
+          <span>Generated privately via AllToolsInOne.in (Zero Server Upload)</span>
           <span>Verified In-Browser Heuristics Engine</span>
         </div>
       `;

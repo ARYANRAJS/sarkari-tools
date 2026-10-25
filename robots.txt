@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Sitemap: https://sarkaritools.in/sitemap.xml
+Sitemap: https://alltoolsinone.com/sitemap.xml
 
 User-agent: Googlebot
 Allow: /

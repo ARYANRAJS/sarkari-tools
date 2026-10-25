@@ -1,7 +1,7 @@
 {
-  "name": "Sarkari Result Tools",
-  "short_name": "SarkariTools",
-  "description": "Free online tools for Indian government exam preparation",
+  "name": "AllToolsInOne — Free Online Tools",
+  "short_name": "AllToolsInOne",
+  "description": "40+ free online tools — PDF editor, subtitle maker, image resizer, QR generator. 100% private, in-browser.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FAFAFA",

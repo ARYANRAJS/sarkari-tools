@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Strong Password Generator Engine
+   AllToolsInOne — Strong Password Generator Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

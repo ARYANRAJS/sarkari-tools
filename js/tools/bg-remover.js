@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Background Remover Engine
+   AllToolsInOne — Background Remover Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

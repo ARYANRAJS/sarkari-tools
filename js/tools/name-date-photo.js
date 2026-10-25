@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Name & Date on Photo Engine
+   AllToolsInOne — Name & Date on Photo Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

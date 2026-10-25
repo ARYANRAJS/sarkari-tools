@@ -1,5 +1,5 @@
 /**
- * Sarkari Tools - Online Barcode Generator & Label Sheet Maker
+ * AllToolsInOne - Online Barcode Generator & Label Sheet Maker
  * Generates Code 128, EAN-13, UPC, Code 39 barcodes with SVG, PNG & A4 label sheets
  */
 

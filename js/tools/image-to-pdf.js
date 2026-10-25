@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Image to PDF Converter Engine
+   AllToolsInOne — Image to PDF Converter Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

@@ -1,5 +1,5 @@
 /**
- * Sarkari Tools - Indian GST & Profit Margin Calculator
+ * AllToolsInOne - Indian GST & Profit Margin Calculator
  * Real-time calculation of CGST, SGST, IGST inclusive/exclusive breakdowns and margins
  */
 
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
       slip += `Total GST: ${dispTotalTax.textContent}\n` +
               `Total Payable: ${dispFinalAmount.textContent}\n` +
               `------------------------\n` +
-              `Generated via SarkariTools.in`;
+              `Generated via AllToolsInOne.in`;
 
       navigator.clipboard.writeText(slip).then(() => {
         if (window.showToast) window.showToast('GST slip copied to clipboard!');

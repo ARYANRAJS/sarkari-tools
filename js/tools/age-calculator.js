@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Age Calculator Engine
+   AllToolsInOne — Age Calculator Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Image Format Converter Engine
+   AllToolsInOne — Image Format Converter Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

@@ -1,5 +1,5 @@
 /**
- * Sarkari Tools - All-in-One QR Code Studio & Scanner
+ * AllToolsInOne - All-in-One QR Code Studio & Scanner
  * UPI with Logo, vCard 3.0, Wi-Fi, WhatsApp, Google Reviews, Bulk QR & Live Scanner
  */
 
@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const q = (mapsQuery.value || 'Delhi, India').trim();
       return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
     } else if (currentTab === 'url') {
-      let url = (urlInput.value || 'https://sarkaritools.in').trim();
+      let url = (urlInput.value || 'https://alltoolsinone.com').trim();
       if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
       return url;
     } else if (currentTab === 'contact') {
@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const loc = (eventLoc.value || 'Exam Center').trim();
       return `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${title}\nLOCATION:${loc}\nDTSTART:${formatIcalDate(eventStart.value)}\nDTEND:${formatIcalDate(eventEnd.value)}\nEND:VEVENT\nEND:VCALENDAR`;
     } else {
-      return (urlInput.value || 'https://sarkaritools.in').trim();
+      return (urlInput.value || 'https://alltoolsinone.com').trim();
     }
   }
 

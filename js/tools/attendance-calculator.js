@@ -1,5 +1,5 @@
 /**
- * Sarkari Tools - College Attendance & CGPA Calculator
+ * AllToolsInOne - College Attendance & CGPA Calculator
  * Client-side calculation of 75% college attendance requirements and CGPA conversion
  */
 

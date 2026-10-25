@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Image Resizer Engine
+   AllToolsInOne — Image Resizer Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

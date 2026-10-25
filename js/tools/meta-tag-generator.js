@@ -59,11 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
   btnPresetSarkari.addEventListener('click', () => {
     inpTitle.value = 'SSC CGL 2026 Online Application Form, Notification & Eligibility';
     inpDesc.value = 'Apply online for SSC CGL 2026 recruitment. Download official notification PDF, check exam dates, age limit, syllabus and tier-1 exam pattern.';
-    inpUrl.value = 'https://sarkaritools.in/exams/ssc-cgl-2026';
-    inpSiteName.value = 'Sarkari Result Tools';
+    inpUrl.value = 'https://alltoolsinone.com/exams/ssc-cgl-2026';
+    inpSiteName.value = 'AllToolsInOne';
     inpKeywords.value = 'ssc cgl 2026, ssc application form, sarkari result, cgl notification';
     inpOgImage.value = 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200';
-    inpTwitterHandle.value = '@SarkariTools';
+    inpTwitterHandle.value = '@AllToolsInOne';
     updateAll();
   });
 
@@ -81,11 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
   btnPresetHome.addEventListener('click', () => {
     inpTitle.value = 'Cyber Cafe Digital Suite & Online Document Utilities';
     inpDesc.value = 'One-stop portal for photo resizing, signature joining, PDF compression, invoice generation, and government exam utilities for cyber cafes and students.';
-    inpUrl.value = 'https://sarkaritools.in/';
-    inpSiteName.value = 'Sarkari Tools';
+    inpUrl.value = 'https://alltoolsinone.com/';
+    inpSiteName.value = 'AllToolsInOne';
     inpKeywords.value = 'photo resizer, pdf compressor, cyber cafe tools, online utilities';
     inpOgImage.value = 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200';
-    inpTwitterHandle.value = '@SarkariTools';
+    inpTwitterHandle.value = '@AllToolsInOne';
     updateAll();
   });
 

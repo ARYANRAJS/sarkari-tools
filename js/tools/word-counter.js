@@ -1,5 +1,5 @@
 /**
- * Sarkari Tools - Word Counter & Text Formatter
+ * AllToolsInOne - Word Counter & Text Formatter
  * Real-time word, character, sentence counter and text transform utility
  */
 

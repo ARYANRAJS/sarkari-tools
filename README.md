@@ -1,4 +1,4 @@
-# Sarkari Result Tools 🇮🇳
+# AllToolsInOne 🇮🇳
 
 > A high-performance, mobile-first, client-side web application suite featuring 38+ free online utilities designed for Indian government exam applicants (SSC, UPSC, Railway, State PSC, Banking), students, freelancers, cyber cafes, and digital creators.
 

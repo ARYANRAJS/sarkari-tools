@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateUtmUrls() {
-    const base = utmBaseUrl.value.trim() || 'https://sarkaritools.in/exam-studio.html';
+    const base = utmBaseUrl.value.trim() || 'https://alltoolsinone.com/exam-studio.html';
     const source = utmSource.value.trim() || 'whatsapp';
     const medium = utmMedium.value.trim() || 'chat';
     const campaign = utmCampaign.value.trim() || 'ssc_cgl_admit_card';
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Export CSV
   btnDownloadCsv.addEventListener('click', () => {
-    const base = utmBaseUrl.value.trim() || 'https://sarkaritools.in/';
+    const base = utmBaseUrl.value.trim() || 'https://alltoolsinone.com/';
     const campaign = utmCampaign.value.trim() || 'campaign_2026';
     const term = utmTerm.value.trim();
     const content = utmContent.value.trim();
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initial populate
-  utmBaseUrl.value = 'https://sarkaritools.in/tools/exam-studio.html';
+  utmBaseUrl.value = 'https://alltoolsinone.com/tools/exam-studio.html';
   utmSource.value = 'whatsapp';
   utmMedium.value = 'chat';
   utmCampaign.value = 'ssc_cgl_special';

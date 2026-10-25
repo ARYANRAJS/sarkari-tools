@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Photo & Signature Joiner Engine
+   AllToolsInOne — Photo & Signature Joiner Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

@@ -510,13 +510,13 @@
     <div class="tricolor-stripe"></div>
     <header class="site-header" id="siteHeader">
       <div class="header-inner">
-        <a href="${homeUrl}" class="logo" aria-label="Sarkari Result Tools - Home">
+        <a href="${homeUrl}" class="logo" aria-label="AllToolsInOne - Home">
           <svg class="logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="36" height="36" rx="8" fill="#1A237E"/>
             <path d="M8 18C8 12.477 12.477 8 18 8s10 4.477 10 10-4.477 10-10 10S8 23.523 8 18z" fill="#FF9933" opacity="0.9"/>
             <path d="M18 11l1.5 4.5H24l-3.7 2.7L21.8 23 18 20.3 14.2 23l1.5-4.8L12 15.5h4.5L18 11z" fill="white"/>
           </svg>
-          <div class="logo-text">Sarkari<span>Tools</span></div>
+          <div class="logo-text">All<span>ToolsInOne</span></div>
         </a>
 
         <div class="header-search" id="headerSearch">
@@ -571,8 +571,8 @@
       <div class="footer-inner">
         <div class="footer-grid">
           <div class="footer-brand">
-            <div class="logo-text">Sarkari<span style="color: var(--saffron);">Tools</span></div>
-            <p>Free online tools for Indian government exam preparation, college students, and cyber cafes. 100% private in browser — zero server uploads, no login required.</p>
+            <div class="logo-text">All<span style="color: var(--saffron);">ToolsInOne</span></div>
+            <p>All-in-one free online tools for everyone — students, freelancers, and businesses worldwide. 100% private in your browser: zero server uploads, no login required.</p>
           </div>
           <div class="footer-col">
             <h4>Image & Exam Tools</h4>
@@ -609,7 +609,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; ${new Date().getFullYear()} Sarkari Result Tools. 100% Free &amp; Private — No Google / Gmail Login Required.</p>
+          <p>&copy; ${new Date().getFullYear()} AllToolsInOne. 100% Free &amp; Private — No Google / Gmail Login Required.</p>
           <div class="footer-bottom-links">
             <a href="${homeUrl}">Home</a>
             <a href="${homeUrl}#tools">All Tools</a>

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Passport Size Photo Maker Engine
+   AllToolsInOne — Passport Size Photo Maker Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

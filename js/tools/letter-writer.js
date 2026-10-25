@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Application & Letter Writer Engine
+   AllToolsInOne — Application & Letter Writer Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

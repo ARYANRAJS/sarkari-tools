@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   Sarkari Result Tools — Photo BG Color Changer Engine
+   AllToolsInOne — Photo BG Color Changer Engine
    ═══════════════════════════════════════════════════ */
 
 (function () {

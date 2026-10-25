@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const headline = document.getElementById('artHeadline').value.trim() || 'SSC CGL 2026 Notification Out';
       const desc = document.getElementById('artDesc').value.trim() || 'Comprehensive application and eligibility guide.';
       const author = document.getElementById('artAuthor').value.trim() || 'Hariom Bhati';
-      const publisher = document.getElementById('artPublisher').value.trim() || 'Sarkari Result Tools';
+      const publisher = document.getElementById('artPublisher').value.trim() || 'AllToolsInOne';
       const datePub = document.getElementById('artDatePub').value || new Date().toISOString().split('T')[0];
       const img = document.getElementById('artImage').value.trim() || 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200';
 
@@ -194,9 +194,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       };
     } else if (type === 'organization') {
-      const name = document.getElementById('orgName').value.trim() || 'Sarkari Result Tools';
-      const url = document.getElementById('orgUrl').value.trim() || 'https://sarkaritools.in';
-      const logo = document.getElementById('orgLogo').value.trim() || 'https://sarkaritools.in/favicon.svg';
+      const name = document.getElementById('orgName').value.trim() || 'AllToolsInOne';
+      const url = document.getElementById('orgUrl').value.trim() || 'https://alltoolsinone.com';
+      const logo = document.getElementById('orgLogo').value.trim() || 'https://alltoolsinone.com/favicon.svg';
       const social = document.getElementById('orgSocial').value.trim();
 
       schemaObj = {
