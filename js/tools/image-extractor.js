@@ -177,6 +177,13 @@
     // Download Actions
     btnDownloadSelected?.addEventListener('click', handleDownloadSelected);
     btnDownloadAllZip?.addEventListener('click', handleDownloadAllZip);
+
+    // Top Bar Quick Actions
+    const btnQuickSelectAll = document.getElementById('btnQuickSelectAll');
+    btnQuickSelectAll?.addEventListener('click', () => btnSelectAll?.click());
+
+    const btnQuickDownloadZip = document.getElementById('btnQuickDownloadZip');
+    btnQuickDownloadZip?.addEventListener('click', () => btnDownloadAllZip?.click());
   }
 
   // 3. Extract from Live URL
@@ -722,9 +729,15 @@
 
     if (btnSelectedCount) btnSelectedCount.textContent = selectedCount;
     if (btnAllZipCount) btnAllZipCount.textContent = totalCount;
+
+    // Quick Top Bar counters
+    const topBarBadge = document.getElementById('topBarShowingBadge');
+    if (topBarBadge) topBarBadge.textContent = showingCount;
+    const topBarZipCount = document.getElementById('topBarZipCount');
+    if (topBarZipCount) topBarZipCount.textContent = totalCount;
   }
 
-  // 8. Render Gallery Cards with HD Badges & Actions
+  // 8. Render Gallery Cards with HD Badges & Clear Download Action
   function renderGalleryCards() {
     if (!galleryGrid) return;
     galleryGrid.innerHTML = '';
@@ -743,31 +756,45 @@
       card.id = `card_${item.id}`;
 
       const dimText = item.width > 0 ? `${item.width} × ${item.height}` : (item.type === 'SVG' ? 'Vector SVG' : 'Probing...');
-      const hdBadgeHtml = item.isHdUpgraded ? `<span class="img-hd-badge">⭐ 4K Source</span>` : '';
+      const hdBadgeHtml = item.isHdUpgraded ? `<span class="img-hd-source-badge">⭐ 4K Source</span>` : '';
 
-      const dlButtonLabel = activeHdQuality === 1 ? 'Save HD' : (activeHdQuality === 2 ? '⚡ 2x HD' : '🔥 4x HD');
+      const dlButtonLabel = activeHdQuality === 1 
+        ? (item.isHdUpgraded ? 'Download 4K' : 'Download HD') 
+        : (activeHdQuality === 2 ? 'Download 2x HD' : 'Download 4x HD');
 
       card.innerHTML = `
-        <input type="checkbox" class="img-card-checkbox" data-id="${item.id}" ${item.selected ? 'checked' : ''} title="Select for download">
-        <span class="img-card-badge">${item.type}</span>
-        ${hdBadgeHtml}
         <div class="img-preview-box checkerboard-bg">
+          <!-- Checkbox Top-Left inside Preview -->
+          <label class="img-card-checkbox-wrap" title="Select for bulk download">
+            <input type="checkbox" class="img-card-checkbox" data-id="${item.id}" ${item.selected ? 'checked' : ''}>
+          </label>
+
+          <!-- Badges Top-Right inside Preview -->
+          <div class="img-badges-top-right">
+            <span class="img-format-badge">${item.type}</span>
+            ${hdBadgeHtml}
+          </div>
+
+          <!-- Thumbnail Image -->
           <img src="${item.url}" alt="${item.filename}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100\\' height=\\'100\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'%2394a3b8\\' stroke-width=\\'2\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><polyline points=\\'21 15 16 10 5 21\\'/></svg>';">
+          
+          <!-- Dimensions Bottom-Right inside Preview -->
           <span class="img-dim-badge" id="dim_${item.id}">${dimText}</span>
         </div>
+
+        <!-- Info & Actions Area -->
         <div class="img-card-info">
           <div class="img-card-name" title="${item.filename}">${item.filename}</div>
           <div class="img-card-actions">
-            <button type="button" class="img-btn-sm ${item.isHdUpgraded || activeHdQuality > 1 ? 'img-btn-hd' : 'img-btn-primary'} btn-dl-single" data-id="${item.id}" title="Download in HD quality (${activeHdQuality}x)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              ${dlButtonLabel}
+            <button type="button" class="btn-card-download ${item.isHdUpgraded || activeHdQuality > 1 ? 'is-hd' : ''} btn-dl-single" data-id="${item.id}" title="Download image (${activeHdQuality}x HD)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>${dlButtonLabel}</span>
             </button>
-            <button type="button" class="img-btn-sm btn-copy-single" data-url="${item.hdUrl || item.url}" title="Copy HD URL">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-              URL
+            <button type="button" class="btn-card-icon btn-copy-single" data-url="${item.hdUrl || item.url}" title="Copy Direct Image URL">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
             </button>
-            <a href="${item.hdUrl || item.url}" target="_blank" rel="noopener noreferrer" class="img-btn-sm" title="Open Full HD in New Tab">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <a href="${item.hdUrl || item.url}" target="_blank" rel="noopener noreferrer" class="btn-card-icon" title="Open Full Resolution in New Tab">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             </a>
           </div>
         </div>
