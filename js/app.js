@@ -413,7 +413,7 @@
       iconBg: 'calc-tools',
       url: 'tools/website-analyzer.html',
       keywords: ['website analyzer', 'site audit', 'meta ads', 'facebook ads library', 'instagram finder', 'google maps', 'tech stack', 'competitor analysis', 'email finder', 'phone finder'],
-      badge: 'Popular'
+      badge: 'New'
     },
     {
       id: 'tech-detector',

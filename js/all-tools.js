@@ -12,7 +12,7 @@
     badge: 'all',
     tag: null,
     searchQuery: '',
-    sortBy: 'recommended',
+    sortBy: 'newest', // Default is Newly Added First
     viewMode: 'grid' // 'grid' | 'list'
   };
 
@@ -285,11 +285,11 @@
     state.badge = 'all';
     state.tag = null;
     state.searchQuery = '';
-    state.sortBy = 'recommended';
+    state.sortBy = 'newest';
 
     if (dirSearchInput) dirSearchInput.value = '';
     if (dirSearchClear) dirSearchClear.style.display = 'none';
-    if (dirSortSelect) dirSortSelect.value = 'recommended';
+    if (dirSortSelect) dirSortSelect.value = 'newest';
 
     updateSidebarCategoryUI();
     updateBadgeUI();
@@ -352,9 +352,40 @@
     syncUrl();
   }
 
+  // Chronological hierarchy of recently added tools (newest first)
+  const NEWEST_TOOL_IDS = [
+    'website-analyzer',
+    'tech-detector',
+    'image-to-text',
+    'whois-lookup',
+    'pdf-editor',
+    'video-subtitle-maker',
+    'barcode-generator',
+    'schema-generator',
+    'gst-calculator',
+    'google-maps-qr-generator',
+    'wifi-qr-generator',
+    'vcard-qr-generator',
+    'ai-plagiarism-checker',
+    'invoice-maker',
+    'upi-qr-generator'
+  ];
+
   function sortTools(tools, sortBy) {
     const arr = [...tools];
     switch (sortBy) {
+      case 'newest':
+      default:
+        return arr.sort((a, b) => {
+          const aIdx = NEWEST_TOOL_IDS.indexOf(a.id);
+          const bIdx = NEWEST_TOOL_IDS.indexOf(b.id);
+          const aRank = aIdx !== -1 ? aIdx : ((a.badge || '').toLowerCase().includes('new') ? 50 : 100);
+          const bRank = bIdx !== -1 ? bIdx : ((b.badge || '').toLowerCase().includes('new') ? 50 : 100);
+          if (aRank !== bRank) return aRank - bRank;
+          return a.name.localeCompare(b.name);
+        });
+      case 'recommended':
+        return arr; // Original catalog order
       case 'name-asc':
         return arr.sort((a, b) => a.name.localeCompare(b.name));
       case 'name-desc':
@@ -365,17 +396,8 @@
           const bPop = (b.badge || '').toLowerCase().includes('popular') ? 1 : 0;
           return bPop - aPop;
         });
-      case 'newest':
-        return arr.sort((a, b) => {
-          const aNew = (a.badge || '').toLowerCase().includes('new') ? 1 : 0;
-          const bNew = (b.badge || '').toLowerCase().includes('new') ? 1 : 0;
-          return bNew - aNew;
-        });
       case 'category':
         return arr.sort((a, b) => (a.categoryLabel || '').localeCompare(b.categoryLabel || ''));
-      case 'recommended':
-      default:
-        return arr; // Keeps original curated order
     }
   }
 
@@ -538,7 +560,7 @@
     if (state.badge !== 'all') params.set('badge', state.badge);
     if (state.tag) params.set('tag', state.tag);
     if (state.searchQuery) params.set('q', state.searchQuery);
-    if (state.sortBy !== 'recommended') params.set('sort', state.sortBy);
+    if (state.sortBy !== 'newest') params.set('sort', state.sortBy);
 
     const queryString = params.toString();
     const newUrl = window.location.pathname + (queryString ? `?${queryString}` : '');
