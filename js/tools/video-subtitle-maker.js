@@ -107,7 +107,7 @@
     cues: [],             // {id, start, end, text}
     uid: 1,
     lang: 'auto',
-    model: 'Xenova/whisper-tiny',
+    model: 'Xenova/whisper-base',
     display: 'orig',      // orig | deva | hinglish
     activeCueId: null,
     workerBusy: false,
@@ -128,6 +128,7 @@
       textCase: 'uppercase'
     }
   };
+  window.__subState = state;
 
   /* ───────── tiny helpers ───────── */
   function escapeHtml(s) {
@@ -572,13 +573,11 @@
       '        loadedDevice = msg.device;',
       '      }',
       '      var opts = {',
-      '        chunk_length_s: 20,',
-      '        stride_length_s: 4,',
+      '        chunk_length_s: 30,',
+      '        stride_length_s: 5,',
       '        return_timestamps: true,',
       '        condition_on_previous_text: false,',
-      '        repetition_penalty: 1.35,',
-      '        no_repeat_ngram_size: 3,',
-      '        temperature: 0.0',
+      '        repetition_penalty: 1.15',
       '      };',
       '      if (msg.language && msg.language !== "auto") opts.language = msg.language;',
       '      if (msg.translate) opts.task = "translate";',
@@ -626,6 +625,8 @@
     } else if (m.type === 'result') {
       state.workerBusy = false;
       progressHide();
+      window.__lastAsrData = m.data;
+      console.log('ASR Result received:', m.data);
       applyTranscription(m.data);
     } else if (m.type === 'error') {
       state.workerBusy = false;
@@ -651,11 +652,35 @@
   }
 
   /* ───────── Smart Anti-Hallucination & Repetition Buster ───────── */
+  function isHallucination(text) {
+    if (!text || text.length < 2) return true;
+    var t = text.trim();
+    // Common Whisper non-speech tags & musical symbols
+    if (/^(\[[^\]]+\]|\([^\)]+\)|♪|♫|\*B)/i.test(t)) return true;
+    // Common youtube/caption filler hallucinations
+    if (/(thank\s+you\s+for\s+watching|please\s+subscribe|subtitles\s+by)/i.test(t)) return true;
+    // Repeating single characters (e.g. "a a a a a..." or "s s s s...")
+    if (/^([a-zA-Z\u0900-\u097F]\s+){3,}/.test(t)) return true;
+
+    // Word repetition check: loops like "तो तो तो तो तो" or "absolutely absolutely absolutely"
+    var words = t.toLowerCase().replace(/[^a-zA-Z0-9\u0900-\u097F\s]/g, '').split(/\s+/).filter(Boolean);
+    if (words.length >= 3) {
+      var unique = {};
+      var uCount = 0;
+      for (var i = 0; i < words.length; i++) {
+        if (!unique[words[i]]) { unique[words[i]] = true; uCount++; }
+      }
+      // If unique word ratio is < 42% (e.g. 10 words, only 2 unique), it's a hallucination loop
+      if (uCount / words.length < 0.42) return true;
+    }
+    return false;
+  }
+
   function cleanTranscript(text) {
     if (!text) return '';
     // Collapse repeating single words: "jeep jeep jeep jeep..." -> "jeep"
     text = text.replace(/\b([a-zA-Z\u0900-\u097F]+)(?:\s+\1\b){2,}/gi, '$1');
-    // Collapse repeating phrases (e.g. "that many of you are being able to say that many of you are being able to say...")
+    // Collapse repeating phrases
     text = text.replace(/(\b.+?\b)(?:\s+\1){2,}/gi, '$1');
     // Remove hallucinated prompt tokens
     text = text.replace(/\[[^\]]+\]/g, '').replace(/\([^\)]+\)/g, '');
@@ -667,30 +692,81 @@
   }
 
   function applyTranscription(data) {
-    var chunks = data.chunks || [];
-    if (!chunks.length && data.text && data.text.trim()) {
-      chunks = [{ timestamp: [0, state.duration], text: data.text }];
+    var rawChunks = data.chunks || [];
+    if (!rawChunks.length && data.text && data.text.trim()) {
+      rawChunks = [{ timestamp: [0, state.duration], text: data.text }];
     }
-    var made = 0;
+
+    // Reset cues for fresh, accurate transcription
+    state.cues = [];
+    state.uid = 1;
+
+    var candidates = [];
     var lastAddedText = '';
-    chunks.forEach(function (c) {
-      var s = c.timestamp && c.timestamp[0] != null ? c.timestamp[0] : 0;
-      var en = c.timestamp && c.timestamp[1] != null ? c.timestamp[1] : s + 2;
+
+    rawChunks.forEach(function (c) {
+      if (!c.text) return;
+      if (isHallucination(c.text)) return;
       var txt = cleanTranscript(c.text || '');
-      if (!txt || txt.length < 2) return;
-      // Skip duplicate consecutive hallucinated cues
+      if (!txt || txt.length < 2 || isHallucination(txt)) return;
+      // Skip consecutive exact duplicates
       if (txt.toLowerCase() === lastAddedText.toLowerCase()) return;
       lastAddedText = txt;
-      state.cues.push({ id: state.uid++, start: s, end: Math.max(en, s + 0.3), text: txt });
-      made++;
+
+      var s = c.timestamp && c.timestamp[0] != null ? c.timestamp[0] : 0;
+      var words = txt.split(/\s+/).filter(Boolean);
+      var wordCount = words.length;
+
+      // Smart End Timing (No Silence Stretching):
+      // If Whisper stretches a 1-4 word phrase across > 4 seconds of silence/music, clamp to speech duration!
+      var maxSpeechDuration = Math.max(1.2, wordCount * 0.45);
+      var en;
+      if (c.timestamp && c.timestamp[1] != null) {
+        var rawDur = c.timestamp[1] - s;
+        if (rawDur > maxSpeechDuration + 1.2 && wordCount <= 4) {
+          en = s + maxSpeechDuration;
+        } else {
+          en = c.timestamp[1];
+        }
+      } else {
+        en = s + maxSpeechDuration;
+      }
+      if (en <= s) en = s + 1.2;
+
+      // Ensure it doesn't overshoot video duration
+      if (state.duration && s >= state.duration) return;
+      if (state.duration && en > state.duration) en = state.duration;
+
+      candidates.push({ start: Math.round(s * 100) / 100, end: Math.round(en * 100) / 100, text: txt });
     });
+
+    // Natural Pacing Splitter: Break long cues (> 3.5s) into readable shorts/reels cards
+    candidates.forEach(function (cue) {
+      var dur = cue.end - cue.start;
+      var words = cue.text.split(/\s+/);
+      if (dur > 3.5 && words.length >= 6) {
+        // Find natural punctuation split (comma, period, exclamation)
+        var splitIdx = -1;
+        for (var idx = 2; idx <= words.length - 3; idx++) {
+          if (/[,.!?]$/.test(words[idx])) { splitIdx = idx + 1; break; }
+        }
+        if (splitIdx < 1) splitIdx = Math.ceil(words.length / 2);
+
+        var midTime = Math.round((cue.start + dur * (splitIdx / words.length)) * 100) / 100;
+        state.cues.push({ id: state.uid++, start: cue.start, end: midTime, text: words.slice(0, splitIdx).join(' ') });
+        state.cues.push({ id: state.uid++, start: midTime, end: cue.end, text: words.slice(splitIdx).join(' ') });
+      } else {
+        state.cues.push({ id: state.uid++, start: cue.start, end: cue.end, text: cue.text });
+      }
+    });
+
     sortCues();
     renderCueList();
     renderTimeline();
-    if (made) {
-      status('✅ AI ne ' + made + ' perfect subtitle cues banaye! Timings adjust karo, styles change karo aur HD video export karo.');
+    if (state.cues.length) {
+      status('✅ AI ne ' + state.cues.length + ' accurate subtitle cues banaye! Exact voice timing aur 0 silence subtitle.');
     } else {
-      status('AI could not detect clear speech. Try selecting Hindi explicitly or switch model to Base/Small.', true);
+      status('AI could not detect clear speech. Check audio volume or select Hindi explicitly.', true);
     }
   }
 

@@ -432,18 +432,18 @@
                 <label class="form-label">Spoken Language in Video</label>
                 <div class="sub-lang-pills" id="subLangPills">
                   <button type="button" class="sub-lang-pill active" data-lang="auto">🌐 Auto Detect</button>
-                  <button type="button" class="sub-lang-pill" data-lang="hi">🇮🇳 Hindi (हिन्दी)</button>
+                  <button type="button" class="sub-lang-pill" data-lang="hi">🇮🇳 Hindi (हिन्दी / Hinglish)</button>
                   <button type="button" class="sub-lang-pill" data-lang="en">🇬🇧 English</button>
                 </div>
-                <p style="font-size: 11px; color: var(--gray-500); margin-top: 4px;">💡 Tip: Agar Indian reel/saree/Hindi video hai, toh <strong>Hindi</strong> select karein for maximum accuracy.</p>
+                <p style="font-size: 11px; color: var(--gray-500); margin-top: 4px;">💡 Spoken language me subtitles ke liye <strong>Translate unchecked</strong> rakhein. "Auto Detect" spoken words ko bina translate kiye naturally capture karta hai.</p>
               </div>
 
               <div class="settings-group">
                 <label class="form-label" for="subModelSelect">AI Whisper Model</label>
                 <select id="subModelSelect" class="form-select">
-                  <option value="Xenova/whisper-tiny" selected>Tiny — Ultra Fast (~40 MB, Zero-lag)</option>
-                  <option value="Xenova/whisper-base">Base — Balanced &amp; High Accuracy (~75 MB, Recommended)</option>
-                  <option value="Xenova/whisper-small">Small — Studio Quality (~240 MB, Best for noisy audio)</option>
+                  <option value="Xenova/whisper-base" selected>Base — High Accuracy &amp; Hindi/Hinglish (~75 MB, Recommended)</option>
+                  <option value="Xenova/whisper-small">Small — Studio Quality (~240 MB, Best for noisy background)</option>
+                  <option value="Xenova/whisper-tiny">Tiny — Ultra Fast (~40 MB, Basic English only)</option>
                 </select>
               </div>
 
