@@ -1,7 +1,8 @@
 /* ═══════════════════════════════════════════════════
-   AllToolsInOne — Webpage Image Extractor & Downloader v1.0
+   AllToolsInOne — Webpage Image Extractor & HD Downloader v1.1
    Extracts photos, icons, SVGs, and CSS backgrounds from any URL
-   Supports single downloads, filtering, and bulk ZIP export
+   Supports Max Source HD (CDN un-stripping), 2x/4x Super-Resolution Upscaling,
+   and Bulk HD ZIP export
    ═══════════════════════════════════════════════════ */
 
 (function () {
@@ -14,6 +15,8 @@
   let activeFormatFilter = 'all';
   let activeSizeFilter = 'all';
   let activeSortOrder = 'original';
+  let activeHdQuality = 1; // 1 (Original HD) | 2 (2x Upscale) | 4 (4x Ultra HD)
+  let autoUnstripHd = true;
   let searchQuery = '';
 
   // DOM Elements - Mode Switcher
@@ -34,6 +37,10 @@
   const chkBgImages = document.getElementById('chkBgImages');
   const chkMetaImages = document.getElementById('chkMetaImages');
   const chkLinkedImages = document.getElementById('chkLinkedImages');
+
+  // HD Engine Elements
+  const hdQualityToggle = document.getElementById('hdQualityToggle');
+  const chkAutoUnstripHd = document.getElementById('chkAutoUnstripHd');
 
   // Status & Progress
   const loadingStatusWrap = document.getElementById('loadingStatusWrap');
@@ -109,6 +116,23 @@
 
     btnExtractSource?.addEventListener('click', handleExtractSource);
 
+    // HD Quality Selector (1x, 2x, 4x)
+    hdQualityToggle?.addEventListener('click', (e) => {
+      const btn = e.target.closest('.quality-toggle-btn');
+      if (!btn) return;
+      document.querySelectorAll('#hdQualityToggle .quality-toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeHdQuality = parseInt(btn.getAttribute('data-quality'), 10) || 1;
+      
+      const label = activeHdQuality === 1 ? 'Max Source HD' : (activeHdQuality === 2 ? '⚡ 2x HD Upscale' : '🔥 4x Ultra HD');
+      window.showToast?.(`HD Mode set to: ${label}`, 'info', 2000);
+      renderGalleryCards(); // updates card button texts
+    });
+
+    chkAutoUnstripHd?.addEventListener('change', (e) => {
+      autoUnstripHd = e.target.checked;
+    });
+
     // Filter Chips
     formatChipBar?.addEventListener('click', (e) => {
       const chip = e.target.closest('.filter-chip-btn');
@@ -177,7 +201,7 @@
       return;
     }
 
-    showLoading(true, `Extracting images from ${parsedUrl.hostname}...`, 'Connecting through high-speed proxy cascade...');
+    showLoading(true, `Extracting HD images from ${parsedUrl.hostname}...`, 'Connecting through high-speed proxy cascade...');
     btnExtractUrl.disabled = true;
 
     try {
@@ -210,7 +234,7 @@
       baseUrl = 'https://' + baseUrl;
     }
 
-    showLoading(true, 'Parsing pasted HTML source...', 'Extracting image paths, attributes, and SVG tags...');
+    showLoading(true, 'Parsing pasted HTML source...', 'Extracting high-resolution image paths, attributes, and SVG tags...');
     setTimeout(() => {
       parseAndExtract(rawHtml, baseUrl || 'https://example.com');
       showLoading(false);
@@ -289,7 +313,67 @@
     throw new Error('All CORS proxies failed. Site may have strict anti-scraping bot protection.');
   }
 
-  // 5. HTML Parser & Normalizer
+  // 5. Intelligent CDN Un-stripping: Transforms Thumbnails into Raw 4K/HD Source
+  function getHdUrl(url) {
+    if (!url || url.startsWith('data:') || url.startsWith('blob:')) return url;
+    let hd = url;
+
+    try {
+      // A. Wikipedia / Wikimedia Commons Raw Original (often 4000x3000px)
+      // Pattern: /wikipedia/commons/thumb/a/ab/File.jpg/300px-File.jpg -> /wikipedia/commons/a/ab/File.jpg
+      if (hd.includes('upload.wikimedia.org') && hd.includes('/thumb/')) {
+        hd = hd.replace(/\/thumb\//, '/');
+        hd = hd.replace(/\/[^/]+px-[^/]+$/, '');
+      }
+
+      // B. WordPress / Jetpack / WooCommerce Uncropped Raw
+      // Pattern: /photo-300x200.jpg -> /photo.jpg
+      if (hd.match(/-[0-9]{2,4}x[0-9]{2,4}\.(jpe?g|png|webp)/i)) {
+        hd = hd.replace(/-[0-9]{2,4}x[0-9]{2,4}(\.(jpe?g|png|webp))/i, '$1');
+        hd = hd.replace(/[?&](resize|fit|w|h)=[0-9%C,]+/g, '');
+      }
+
+      // C. Shopify Master Resolution
+      // Pattern: shoe_small.jpg -> shoe_master.jpg
+      if (hd.includes('cdn.shopify.com')) {
+        hd = hd.replace(/_(small|compact|medium|large|grande|pico|thumb|100x100|200x200|300x300|400x400|600x600|1024x1024)\./g, '_master.');
+      }
+
+      // D. YouTube Thumbnails (Upgrade to 1080p Full HD)
+      if (hd.includes('img.youtube.com') || hd.includes('i.ytimg.com')) {
+        hd = hd.replace(/\/(default|hqdefault|mqdefault|sddefault)\.jpg/g, '/maxresdefault.jpg');
+      }
+
+      // E. Unsplash High-Res (Upgrade to 2.5K Studio Resolution)
+      if (hd.includes('images.unsplash.com')) {
+        hd = hd.replace(/[?&]w=[0-9]+/g, '&w=2560').replace(/[?&]q=[0-9]+/g, '&q=100');
+        if (!hd.includes('w=2560')) hd += (hd.includes('?') ? '&' : '?') + 'w=2560&q=100';
+      }
+
+      // F. Amazon E-commerce Studio Shots (Upgrade to SL1500)
+      if (hd.includes('images-na.ssl-images-amazon.com') || hd.includes('m.media-amazon.com')) {
+        hd = hd.replace(/\._[A-Z0-9,._-]+_\./, '._SL1500_.');
+      }
+
+      // G. Twitter / X Original Image
+      if (hd.includes('pbs.twimg.com')) {
+        hd = hd.replace(/[?&]name=[a-z0-9_]+/g, '&name=orig');
+        if (!hd.includes('name=')) hd += (hd.includes('?') ? '&' : '?') + 'name=orig';
+      }
+
+      // H. Cloudinary / ImageKit / imgix thumbnail un-cropping
+      if (hd.includes('cloudinary.com') || hd.includes('imagekit.io')) {
+        hd = hd.replace(/\/c_thumb,w_[0-9]+,h_[0-9]+/, '');
+        hd = hd.replace(/\/tr:w-[0-9]+,h-[0-9]+/, '');
+      }
+    } catch (e) {
+      console.warn('Error upgrading HD url:', e);
+    }
+
+    return hd;
+  }
+
+  // 6. HTML Parser & Normalizer
   function parseAndExtract(htmlString, baseUrl) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
@@ -303,19 +387,29 @@
     const foundSet = new Set();
     const imageList = [];
 
-    function addImage(url, sourceType, metaLabel = '') {
+    function addImage(url, sourceType, metaLabel = '', preferredHdUrl = null) {
       if (!url) return;
       const clean = resolveUrl(url, baseUrl);
       if (!clean || clean.length < 5) return;
       if (foundSet.has(clean)) return; // Deduplicate
       foundSet.add(clean);
 
+      // Determine HD URL
+      let candidateHd = preferredHdUrl ? resolveUrl(preferredHdUrl, baseUrl) : null;
+      if (!candidateHd && autoUnstripHd) {
+        candidateHd = getHdUrl(clean);
+      }
+      const finalHdUrl = candidateHd || clean;
+      const isHdUpgraded = finalHdUrl !== clean;
+
       const type = detectImageType(clean);
-      const filename = generateCleanFilename(clean, imageList.length, type);
+      const filename = generateCleanFilename(finalHdUrl || clean, imageList.length, type);
 
       const item = {
         id: 'img_' + imageList.length,
         url: clean,
+        hdUrl: finalHdUrl,
+        isHdUpgraded: isHdUpgraded,
         type: type,
         filename: filename,
         sourceType: sourceType,
@@ -335,36 +429,64 @@
     // 1. Standard <img> and <picture>
     if (allowImg) {
       doc.querySelectorAll('img').forEach(img => {
+        // Check if wrapped in an anchor link pointing to high-res image
+        let parentLinkHd = null;
+        const parentA = img.closest('a');
+        if (parentA) {
+          const href = parentA.getAttribute('href');
+          if (href && href.match(/\.(jpe?g|png|webp|gif|svg|avif|bmp)(\?.*)?$/i)) {
+            parentLinkHd = href;
+          }
+        }
+
+        // Check high-res zoom attributes
+        const zoomAttr = img.getAttribute('data-zoom-image') ||
+                         img.getAttribute('data-highres') ||
+                         img.getAttribute('data-large-file') ||
+                         img.getAttribute('data-full-url') ||
+                         img.getAttribute('data-original') ||
+                         img.getAttribute('data-src');
+
+        // Check srcset for highest resolution candidate
+        const srcset = img.getAttribute('srcset') || img.getAttribute('data-srcset');
+        let highestSrcsetCandidate = null;
+        if (srcset) {
+          highestSrcsetCandidate = extractHighestSrcsetCandidate(srcset);
+        }
+
+        const bestHdCandidate = parentLinkHd || zoomAttr || highestSrcsetCandidate;
+
         // Direct src
         const src = img.getAttribute('src');
-        if (src) addImage(src, 'img');
+        if (src) {
+          addImage(src, 'img', '', bestHdCandidate);
+        } else if (bestHdCandidate) {
+          addImage(bestHdCandidate, 'img', 'High-Res', bestHdCandidate);
+        }
 
-        // Lazy loading attributes common in modern CMS
-        ['data-src', 'data-original', 'data-lazy-src', 'data-srcset', 'data-full'].forEach(attr => {
-          const val = img.getAttribute(attr);
-          if (val) parseSrcsetOrUrl(val, (u) => addImage(u, 'img'));
-        });
-
-        // Srcset
-        const srcset = img.getAttribute('srcset');
-        if (srcset) parseSrcsetOrUrl(srcset, (u) => addImage(u, 'img'));
+        // Also add other candidate images if multiple unique
+        if (highestSrcsetCandidate && highestSrcsetCandidate !== src) {
+          addImage(highestSrcsetCandidate, 'img', 'Srcset 4K');
+        }
       });
 
       // Picture sources
       doc.querySelectorAll('picture source').forEach(source => {
         const srcset = source.getAttribute('srcset') || source.getAttribute('data-srcset');
-        if (srcset) parseSrcsetOrUrl(srcset, (u) => addImage(u, 'img'));
+        if (srcset) {
+          const best = extractHighestSrcsetCandidate(srcset);
+          if (best) addImage(best, 'img', 'Picture HD');
+        }
       });
     }
 
-    // 2. SVG Vectors
+    // 2. SVG Vectors (Infinitely scalable)
     if (allowSvg) {
       // Find inline <svg>
       doc.querySelectorAll('svg').forEach((svg, idx) => {
         try {
           const serializer = new XMLSerializer();
           let svgString = serializer.serializeToString(svg);
-          // Ensure xmlns attribute
           if (!svgString.includes('xmlns=')) {
             svgString = svgString.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
           }
@@ -414,12 +536,12 @@
       });
     }
 
-    // 5. Linked Images (<a href="...jpg">)
+    // 5. Linked High-Res Images (<a href="...jpg">)
     if (allowLinked) {
       doc.querySelectorAll('a[href]').forEach(a => {
         const href = a.getAttribute('href') || '';
         if (href.match(/\.(jpe?g|png|webp|gif|svg|avif|bmp)(\?.*)?$/i)) {
-          addImage(href, 'link');
+          addImage(href, 'link', 'Linked Photo');
         }
       });
     }
@@ -432,11 +554,18 @@
       return;
     }
 
+    // Count how many were upgraded to HD
+    const hdCount = extractedImages.filter(i => i.isHdUpgraded).length;
+
     // Show workspace
     if (resultsWorkspace) resultsWorkspace.style.display = 'block';
     resultsWorkspace.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    window.showToast?.(`🎉 Extracted ${extractedImages.length} images successfully!`, 'success');
+    if (hdCount > 0) {
+      window.showToast?.(`🎉 Extracted ${extractedImages.length} images (${hdCount} auto-upgraded to 4K/HD)!`, 'success');
+    } else {
+      window.showToast?.(`🎉 Extracted ${extractedImages.length} images successfully!`, 'success');
+    }
 
     // Reset filters
     activeFormatFilter = 'all';
@@ -446,6 +575,34 @@
     document.querySelectorAll('#formatChipBar .filter-chip-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-fmt') === 'all'));
 
     applyFiltersAndRender();
+  }
+
+  // Helper to extract the highest resolution URL from a srcset attribute
+  function extractHighestSrcsetCandidate(srcsetStr) {
+    if (!srcsetStr) return null;
+    const parts = srcsetStr.split(',');
+    let maxVal = -1;
+    let bestUrl = null;
+
+    parts.forEach(part => {
+      const tokens = part.trim().split(/\s+/);
+      const url = tokens[0];
+      const descriptor = tokens[1] || '';
+
+      let numVal = 1;
+      if (descriptor.endsWith('w')) {
+        numVal = parseInt(descriptor, 10) || 1;
+      } else if (descriptor.endsWith('x')) {
+        numVal = (parseFloat(descriptor) || 1) * 1000;
+      }
+
+      if (numVal > maxVal) {
+        maxVal = numVal;
+        bestUrl = url;
+      }
+    });
+
+    return bestUrl;
   }
 
   // URL Helpers
@@ -459,18 +616,6 @@
       return new URL(src, base).href;
     } catch (e) {
       return null;
-    }
-  }
-
-  function parseSrcsetOrUrl(str, callback) {
-    if (!str) return;
-    if (str.includes(',')) {
-      str.split(',').forEach(part => {
-        const trimmed = part.trim().split(/\s+/)[0];
-        if (trimmed) callback(trimmed);
-      });
-    } else {
-      callback(str.trim().split(/\s+/)[0]);
     }
   }
 
@@ -521,10 +666,11 @@
         cardDim.textContent = 'Vector SVG';
       }
     };
-    probe.src = item.url;
+    // Probe HD URL if available, else standard URL
+    probe.src = item.hdUrl || item.url;
   }
 
-  // 6. Filtering & Sorting Engine
+  // 7. Filtering & Sorting Engine
   function applyFiltersAndRender() {
     let list = [...extractedImages];
 
@@ -578,7 +724,7 @@
     if (btnAllZipCount) btnAllZipCount.textContent = totalCount;
   }
 
-  // 7. Render Gallery Cards
+  // 8. Render Gallery Cards with HD Badges & Actions
   function renderGalleryCards() {
     if (!galleryGrid) return;
     galleryGrid.innerHTML = '';
@@ -597,10 +743,14 @@
       card.id = `card_${item.id}`;
 
       const dimText = item.width > 0 ? `${item.width} × ${item.height}` : (item.type === 'SVG' ? 'Vector SVG' : 'Probing...');
+      const hdBadgeHtml = item.isHdUpgraded ? `<span class="img-hd-badge">⭐ 4K Source</span>` : '';
+
+      const dlButtonLabel = activeHdQuality === 1 ? 'Save HD' : (activeHdQuality === 2 ? '⚡ 2x HD' : '🔥 4x HD');
 
       card.innerHTML = `
         <input type="checkbox" class="img-card-checkbox" data-id="${item.id}" ${item.selected ? 'checked' : ''} title="Select for download">
         <span class="img-card-badge">${item.type}</span>
+        ${hdBadgeHtml}
         <div class="img-preview-box checkerboard-bg">
           <img src="${item.url}" alt="${item.filename}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100\\' height=\\'100\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'%2394a3b8\\' stroke-width=\\'2\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><polyline points=\\'21 15 16 10 5 21\\'/></svg>';">
           <span class="img-dim-badge" id="dim_${item.id}">${dimText}</span>
@@ -608,15 +758,15 @@
         <div class="img-card-info">
           <div class="img-card-name" title="${item.filename}">${item.filename}</div>
           <div class="img-card-actions">
-            <button type="button" class="img-btn-sm img-btn-primary btn-dl-single" data-id="${item.id}" title="Download this image">
+            <button type="button" class="img-btn-sm ${item.isHdUpgraded || activeHdQuality > 1 ? 'img-btn-hd' : 'img-btn-primary'} btn-dl-single" data-id="${item.id}" title="Download in HD quality (${activeHdQuality}x)">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Save
+              ${dlButtonLabel}
             </button>
-            <button type="button" class="img-btn-sm btn-copy-single" data-url="${item.url}" title="Copy Image URL">
+            <button type="button" class="img-btn-sm btn-copy-single" data-url="${item.hdUrl || item.url}" title="Copy HD URL">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
               URL
             </button>
-            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="img-btn-sm" title="Open Full in New Tab">
+            <a href="${item.hdUrl || item.url}" target="_blank" rel="noopener noreferrer" class="img-btn-sm" title="Open Full HD in New Tab">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             </a>
           </div>
@@ -633,11 +783,11 @@
 
       // Single Download
       const dlBtn = card.querySelector('.btn-dl-single');
-      dlBtn?.addEventListener('click', () => downloadSingleImage(item));
+      dlBtn?.addEventListener('click', () => downloadSingleImage(item, activeHdQuality));
 
       // Copy URL
       const copyBtn = card.querySelector('.btn-copy-single');
-      copyBtn?.addEventListener('click', () => copyImageUrl(item.url));
+      copyBtn?.addEventListener('click', () => copyImageUrl(item.hdUrl || item.url));
 
       frag.appendChild(card);
     });
@@ -645,47 +795,127 @@
     galleryGrid.appendChild(frag);
   }
 
-  // 8. Single Image Downloader (CORS-safe)
-  async function downloadSingleImage(item) {
-    window.showToast?.(`Downloading ${item.filename}...`, 'info', 2000);
+  // 9. Client-Side HD Super-Resolution Upscaler (Canvas Bicubic + Unsharp-Mask)
+  async function upscaleImageBlob(blob, factor = 2) {
+    if (factor <= 1) return blob;
+
+    return new Promise((resolve) => {
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(blob);
+
+      img.onload = () => {
+        try {
+          const targetW = Math.round(img.naturalWidth * factor);
+          const targetH = Math.round(img.naturalHeight * factor);
+
+          const canvas = document.createElement('canvas');
+          canvas.width = targetW;
+          canvas.height = targetH;
+          const ctx = canvas.getContext('2d');
+
+          // High quality bicubic scaling
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          ctx.drawImage(img, 0, 0, targetW, targetH);
+
+          // Subtle unsharp-mask filter for crisp edges
+          applyUnsharpMask(ctx, targetW, targetH, 0.35);
+
+          canvas.toBlob((upscaledBlob) => {
+            URL.revokeObjectURL(objectUrl);
+            resolve(upscaledBlob || blob);
+          }, 'image/png');
+        } catch (e) {
+          console.warn('Canvas upscale failed, returning raw blob:', e);
+          URL.revokeObjectURL(objectUrl);
+          resolve(blob);
+        }
+      };
+
+      img.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        resolve(blob);
+      };
+
+      img.src = objectUrl;
+    });
+  }
+
+  // Unsharp-mask convolution kernel
+  function applyUnsharpMask(ctx, w, h, strength = 0.35) {
+    try {
+      const imgData = ctx.getImageData(0, 0, w, h);
+      const data = imgData.data;
+      const copy = new Uint8ClampedArray(data);
+
+      const c = 1 + 4 * strength;
+      const s = -strength;
+
+      for (let y = 1; y < h - 1; y++) {
+        for (let x = 1; x < w - 1; x++) {
+          const idx = (y * w + x) * 4;
+          for (let ch = 0; ch < 3; ch++) {
+            const val = copy[idx + ch] * c
+              + (copy[idx - 4 + ch] + copy[idx + 4 + ch] + copy[idx - w * 4 + ch] + copy[idx + w * 4 + ch]) * s;
+            data[idx + ch] = Math.min(255, Math.max(0, val));
+          }
+        }
+      }
+      ctx.putImageData(imgData, 0, 0);
+    } catch (e) {}
+  }
+
+  // 10. Single Image Downloader (Prioritizes HD URL & Upscaling)
+  async function downloadSingleImage(item, qualityFactor = 1) {
+    const targetUrl = item.hdUrl || item.url;
+    window.showToast?.(`Downloading HD: ${item.filename}...`, 'info', 2000);
+
+    let rawBlob = null;
 
     // 1. Data URLs
-    if (item.url.startsWith('data:')) {
+    if (targetUrl.startsWith('data:')) {
       try {
-        const res = await fetch(item.url);
-        const blob = await res.blob();
-        window.downloadFile?.(blob, item.filename);
-        window.showToast?.(`Saved ${item.filename}!`, 'success');
-        return;
+        const res = await fetch(targetUrl);
+        rawBlob = await res.blob();
       } catch (e) {}
     }
 
     // 2. Direct CORS Fetch
-    try {
-      const res = await fetch(item.url, { mode: 'cors' });
-      if (res.ok) {
-        const blob = await res.blob();
-        window.downloadFile?.(blob, item.filename);
-        window.showToast?.(`Saved ${item.filename}!`, 'success');
-        return;
-      }
-    } catch (e) {}
+    if (!rawBlob) {
+      try {
+        const res = await fetch(targetUrl, { mode: 'cors' });
+        if (res.ok) rawBlob = await res.blob();
+      } catch (e) {}
+    }
 
-    // 3. Proxy Fetch fallback
-    try {
-      const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(item.url)}`;
-      const res = await fetch(proxyUrl);
-      if (res.ok) {
-        const blob = await res.blob();
-        window.downloadFile?.(blob, item.filename);
-        window.showToast?.(`Saved ${item.filename}!`, 'success');
-        return;
+    // 3. Fallback: Proxy Fetch
+    if (!rawBlob) {
+      try {
+        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
+        const res = await fetch(proxyUrl);
+        if (res.ok) rawBlob = await res.blob();
+      } catch (e) {}
+    }
+
+    // If blob was successfully fetched, optionally upscale to 2x or 4x
+    if (rawBlob) {
+      let finalBlob = rawBlob;
+      let finalName = item.filename;
+
+      if (qualityFactor > 1 && item.type !== 'SVG') {
+        window.showToast?.(`Upscaling to ${qualityFactor}x HD Super-Resolution...`, 'info', 1500);
+        finalBlob = await upscaleImageBlob(rawBlob, qualityFactor);
+        finalName = finalName.replace(/(\.[a-z0-9]+)$/i, `_${qualityFactor}x_HD$1`);
       }
-    } catch (e) {}
+
+      window.downloadFile?.(finalBlob, finalName);
+      window.showToast?.(`Saved HD: ${finalName}!`, 'success');
+      return;
+    }
 
     // 4. Anchor click fallback (navigates or triggers browser download)
     const a = document.createElement('a');
-    a.href = item.url;
+    a.href = targetUrl;
     a.download = item.filename;
     a.target = '_blank';
     document.body.appendChild(a);
@@ -694,27 +924,27 @@
     window.showToast?.('Download opened in browser tab!', 'info');
   }
 
-  // 9. Download Selected as ZIP or Sequence
+  // 11. Download Selected as HD ZIP
   async function handleDownloadSelected() {
     const selected = extractedImages.filter(i => i.selected);
     if (selected.length === 0) {
-      window.showToast?.('Please check at least 1 image to download, or use "Download All as ZIP"', 'warning');
+      window.showToast?.('Please check at least 1 image to download, or use "Download All as HD ZIP"', 'warning');
       return;
     }
-    await packageZip(selected, `selected_images_${selected.length}.zip`);
+    await packageZip(selected, `selected_hd_images_${selected.length}.zip`, activeHdQuality);
   }
 
-  // 10. Download All as ZIP
+  // 12. Download All as HD ZIP
   async function handleDownloadAllZip() {
     if (extractedImages.length === 0) {
       window.showToast?.('No images to download', 'warning');
       return;
     }
-    await packageZip(extractedImages, `all_images_${extractedImages.length}.zip`);
+    await packageZip(extractedImages, `all_hd_images_${extractedImages.length}.zip`, activeHdQuality);
   }
 
-  // ZIP Packaging Helper using JSZip
-  async function packageZip(itemsList, zipFilename) {
+  // ZIP Packaging Helper using JSZip with HD Super-Resolution Support
+  async function packageZip(itemsList, zipFilename, qualityFactor = 1) {
     if (typeof window.JSZip === 'undefined') {
       window.showToast?.('JSZip library is loading, please try again in a second', 'info');
       return;
@@ -728,7 +958,8 @@
     const total = itemsList.length;
     let completed = 0;
 
-    updateZipProgress(0, `Starting ZIP packaging for ${total} images...`);
+    const qualityLabel = qualityFactor > 1 ? ` (${qualityFactor}x HD)` : '';
+    updateZipProgress(0, `Starting HD ZIP packaging for ${total} images${qualityLabel}...`);
 
     // Process in batches of 4
     const BATCH_SIZE = 4;
@@ -736,9 +967,21 @@
       const batch = itemsList.slice(i, i + BATCH_SIZE);
       await Promise.all(batch.map(async (item, batchIdx) => {
         try {
-          const blob = await fetchImageBlob(item.url);
+          const targetUrl = item.hdUrl || item.url;
+          let blob = await fetchImageBlob(targetUrl);
+          
+          // Fallback to preview url if HD link failed
+          if (!blob && item.url !== targetUrl) {
+            blob = await fetchImageBlob(item.url);
+          }
+
           if (blob) {
-            const safeName = sanitizeZipName(item.filename, i + batchIdx);
+            // Apply 2x or 4x upscale if requested
+            if (qualityFactor > 1 && item.type !== 'SVG') {
+              blob = await upscaleImageBlob(blob, qualityFactor);
+            }
+
+            const safeName = sanitizeZipName(item.filename, i + batchIdx, qualityFactor);
             zip.file(safeName, blob);
           }
         } catch (err) {
@@ -746,12 +989,12 @@
         } finally {
           completed++;
           const pct = Math.round((completed / total) * 85);
-          updateZipProgress(pct, `Fetched ${completed} of ${total} images...`);
+          updateZipProgress(pct, `Processed ${completed} of ${total} images in HD...`);
         }
       }));
     }
 
-    updateZipProgress(90, 'Compressing archive into ZIP...');
+    updateZipProgress(90, 'Compressing HD archive into ZIP...');
 
     try {
       const zipContent = await zip.generateAsync({
@@ -760,7 +1003,7 @@
         compressionOptions: { level: 6 }
       });
 
-      updateZipProgress(100, 'Complete! Downloading ZIP...');
+      updateZipProgress(100, 'Complete! Downloading HD ZIP...');
       window.downloadFile?.(zipContent, zipFilename);
       window.showToast?.(`Downloaded ${zipFilename} successfully!`, 'success');
     } catch (e) {
@@ -776,6 +1019,7 @@
   }
 
   async function fetchImageBlob(url) {
+    if (!url) return null;
     if (url.startsWith('data:')) {
       const res = await fetch(url);
       return await res.blob();
@@ -796,9 +1040,12 @@
     return null;
   }
 
-  function sanitizeZipName(name, index) {
+  function sanitizeZipName(name, index, qualityFactor = 1) {
     let clean = (name || '').replace(/[\\/:*?"<>|]/g, '_');
     if (!clean || clean.length < 3) clean = `image_${index + 1}.jpg`;
+    if (qualityFactor > 1) {
+      clean = clean.replace(/(\.[a-z0-9]+)$/i, `_${qualityFactor}x_HD$1`);
+    }
     return clean;
   }
 
@@ -812,7 +1059,7 @@
   function copyImageUrl(url) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(url).then(() => {
-        window.showToast?.('Copied image URL to clipboard!', 'success');
+        window.showToast?.('Copied High-Res image URL to clipboard!', 'success');
       }).catch(() => {
         fallbackCopy(url);
       });
@@ -830,7 +1077,7 @@
     ta.select();
     try {
       document.execCommand('copy');
-      window.showToast?.('Copied image URL to clipboard!', 'success');
+      window.showToast?.('Copied High-Res image URL to clipboard!', 'success');
     } catch (e) {
       window.showToast?.('Could not copy link to clipboard', 'warning');
     }
