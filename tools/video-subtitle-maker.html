@@ -81,7 +81,7 @@
       height: 10px; border-radius: 6px; background: #e2e8f0; overflow: hidden; margin-top: 6px;
     }
     .sub-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #f59e0b, #f97316); transition: width .3s; }
-    .sub-cue-list { max-height: 480px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 2px; }
+    .sub-cue-list { max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 2px; }
     .sub-cue {
       border: 1px solid var(--gray-200); border-radius: 10px; background: #fff; padding: 8px 10px;
       transition: border-color .15s, box-shadow .15s;
@@ -114,13 +114,62 @@
     .sub-video-shell video { width: 100%; max-height: 52vh; display: block; background: #000; }
     .sub-overlay {
       position: absolute; left: 0; right: 0; bottom: 8%; display: flex; justify-content: center;
-      pointer-events: none; padding: 0 5%; z-index: 3;
+      pointer-events: none; padding: 0 5%; z-index: 5; transition: all 0.2s ease;
     }
     .sub-overlay span {
-      background: rgba(2,6,23,.82); color: #fff; font-size: clamp(13px, 1.6vw, 19px);
-      font-family: 'Inter', sans-serif; padding: 4px 12px; border-radius: 6px; text-align: center;
-      max-width: 90%; line-height: 1.35;
+      background: rgba(2,6,23,.82); color: #fff; font-size: clamp(14px, 1.8vw, 24px);
+      font-family: 'Inter', sans-serif; padding: 6px 14px; border-radius: 6px; text-align: center;
+      max-width: 90%; line-height: 1.35; display: inline-block; word-break: break-word;
     }
+
+    /* ── Subtitle Animations & Transitions ── */
+    @keyframes subPop {
+      0% { transform: scale(0.72); opacity: 0; }
+      70% { transform: scale(1.08); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes subFade {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes subSlide {
+      from { transform: translateY(22px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes subBounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-8px); }
+      60% { transform: translateY(-4px); }
+    }
+    .anim-pop { animation: subPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+    .anim-fade { animation: subFade 0.18s ease-out forwards; }
+    .anim-slide { animation: subSlide 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .anim-bounce { animation: subBounce 0.35s ease forwards; }
+
+    /* Word highlight for karaoke mode */
+    .word-active {
+      color: #facc15 !important;
+      display: inline-block;
+      transform: scale(1.12);
+      transition: transform 0.1s ease, color 0.1s ease;
+      text-shadow: 0 0 10px rgba(250, 204, 21, 0.8);
+    }
+
+    /* Style preset cards */
+    .style-preset-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 12px;
+    }
+    .style-preset-btn {
+      border: 1.5px solid var(--gray-200); border-radius: 8px; padding: 8px 6px; text-align: center;
+      background: #fff; cursor: pointer; transition: all 0.15s ease; display: flex; flex-direction: column;
+      align-items: center; gap: 4px; font-size: 11.5px; font-weight: 600; color: var(--gray-700);
+    }
+    .style-preset-btn:hover { border-color: var(--saffron); background: #fffbeb; }
+    .style-preset-btn.active { border-color: var(--saffron); background: #fef3c7; color: #92400e; box-shadow: 0 0 0 2px rgba(245,158,11,0.25); }
+    .style-preset-preview {
+      font-size: 12px; font-weight: 800; padding: 2px 6px; border-radius: 4px;
+    }
+
     .sub-timeline-wrap { margin-top: 12px; }
     .sub-timeline-label { font-size: 11px; color: var(--gray-500); margin-bottom: 4px; display: flex; justify-content: space-between; }
     .sub-timeline {
@@ -148,7 +197,7 @@
     .sub-transport { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
     .sub-transport .tc { font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--gray-600); }
     .sub-empty-hint {
-      text-align: center; color: #94a3b8; font-size: 13px; padding: 60px 16px;
+      text-align: center; color: #94a3b8; font-size: 13px; padding: 40px 16px;
     }
     .sub-lang-pills { display: flex; gap: 6px; flex-wrap: wrap; }
     .sub-lang-pill {
@@ -156,7 +205,7 @@
       font-size: 12px; font-weight: 600; cursor: pointer; color: var(--gray-600);
     }
     .sub-lang-pill.active { border-color: var(--saffron); color: #92400e; background: #fffbeb; }
-    @media (max-width: 992px) { .sub-cue-list { max-height: 320px; } }
+    @media (max-width: 992px) { .sub-cue-list { max-height: 300px; } }
     /* ── dark mode ── */
     body.dark .sub-upload-zone { background: #141B2B; }
     body.dark .sub-upload-zone:hover, body.dark .sub-upload-zone.dragover { background: #1B2436; border-color: var(--saffron); }
@@ -171,6 +220,8 @@
     body.dark .sub-status { background: #16202F !important; color: #93B4FF !important; border-color: #24324B !important; }
     body.dark .sub-lang-pill { background: #16202F; border-color: #24324B; color: #B9C4D8; }
     body.dark .sub-lang-pill.active { border-color: var(--saffron); color: #FFC97E; background: #2A1F0D; }
+    body.dark .style-preset-btn { background: #16202F; border-color: #24324B; color: #B9C4D8; }
+    body.dark .style-preset-btn.active { border-color: var(--saffron); background: #2A1F0D; color: #FFC97E; }
   </style>
 </head>
 <body>
@@ -198,6 +249,11 @@
         <div class="u-icon">🎬</div>
         <h3 style="margin-bottom: 6px;">Drop a video or audio file here, or click to browse</h3>
         <p style="font-size: 13px; color: var(--gray-500);">MP4 / WebM / MP3 / WAV / M4A — the AI model downloads once and then runs fully on your device.</p>
+        <div style="margin-top: 14px;">
+          <button type="button" class="btn btn-outline btn-sm" id="btnLoadDemo" style="background: #fff; pointer-events: auto; font-weight: 600;">
+            ✨ Or Try with Instant Demo Sample Video
+          </button>
+        </div>
         <input type="file" id="subFileInput" accept="video/*,audio/*,.mp4,.webm,.mp3,.wav,.m4a" hidden>
       </div>
 
@@ -277,19 +333,159 @@
 
           <div class="workspace-divider"></div>
 
+          <!-- Subtitle Style & Animation Studio -->
+          <div class="workspace-section">
+            <div class="workspace-section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              Subtitle Styles &amp; Animation Studio
+            </div>
+            
+            <label class="form-label" style="font-weight: 600; font-size: 13px; margin-bottom: 6px;">Viral Style Presets</label>
+            <div class="style-preset-grid" id="stylePresetGrid">
+              <button type="button" class="style-preset-btn active" data-preset="reels">
+                <span class="style-preset-preview" style="background:#000; color:#facc15; font-family:'Impact', sans-serif;">TIKTOK</span>
+                <span>⚡ Viral Reels</span>
+              </button>
+              <button type="button" class="style-preset-btn" data-preset="cinematic">
+                <span class="style-preset-preview" style="background:rgba(0,0,0,0.7); color:#fff; font-family:'Inter', sans-serif;">CINEMA</span>
+                <span>🎬 Cinematic</span>
+              </button>
+              <button type="button" class="style-preset-btn" data-preset="neon">
+                <span class="style-preset-preview" style="background:#090d16; color:#06b6d4; font-family:'Montserrat', sans-serif; text-shadow:0 0 8px #06b6d4;">NEON</span>
+                <span>🔮 Cyberpunk</span>
+              </button>
+              <button type="button" class="style-preset-btn" data-preset="comic">
+                <span class="style-preset-preview" style="background:#fef08a; color:#dc2626; font-family:'Comic Sans MS', cursive;">COMIC</span>
+                <span>💬 Pop Comic</span>
+              </button>
+              <button type="button" class="style-preset-btn" data-preset="pill">
+                <span class="style-preset-preview" style="background:#dc2626; color:#fff; border-radius:999px; font-family:'Poppins', sans-serif;">NEWS</span>
+                <span>🏷️ Solid Pill</span>
+              </button>
+              <button type="button" class="style-preset-btn" data-preset="typewriter">
+                <span class="style-preset-preview" style="background:#1e293b; color:#4ade80; font-family:'JetBrains Mono', monospace;">RETRO</span>
+                <span>📜 Typewriter</span>
+              </button>
+            </div>
+
+            <!-- Custom Controls -->
+            <div class="settings-panel">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="settings-group">
+                  <label class="form-label" for="subFontSelect">Font Family</label>
+                  <select id="subFontSelect" class="form-select">
+                    <option value="'Impact', 'Arial Black', sans-serif" selected>Impact (Reels / TikTok)</option>
+                    <option value="'Montserrat', sans-serif">Montserrat (Bold)</option>
+                    <option value="'Poppins', sans-serif">Poppins (Modern)</option>
+                    <option value="'Inter', sans-serif">Inter (Clean)</option>
+                    <option value="'JetBrains Mono', monospace">JetBrains Mono (Retro)</option>
+                    <option value="'Comic Sans MS', cursive, sans-serif">Comic Pop</option>
+                  </select>
+                </div>
+
+                <div class="settings-group">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label class="form-label" for="subFontSizeSlider" style="margin: 0;">Font Size</label>
+                    <strong id="dispSubFontSize" style="color: var(--primary);">22 px</strong>
+                  </div>
+                  <input type="range" id="subFontSizeSlider" class="range-slider" min="14" max="44" value="22" step="1">
+                </div>
+              </div>
+
+              <!-- Colors & Highlights -->
+              <div class="settings-group">
+                <label class="form-label">Subtitle Text Color</label>
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <input type="color" id="subTextColor" value="#facc15" style="width: 38px; height: 34px; padding: 2px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); cursor: pointer;">
+                  <button type="button" class="color-swatch-sub" data-color="#ffffff" style="background:#ffffff; width:26px; height:26px; border-radius:50%; border:1px solid #cbd5e1; cursor:pointer;" title="White"></button>
+                  <button type="button" class="color-swatch-sub" data-color="#facc15" style="background:#facc15; width:26px; height:26px; border-radius:50%; border:1px solid #cbd5e1; cursor:pointer;" title="Electric Yellow"></button>
+                  <button type="button" class="color-swatch-sub" data-color="#f97316" style="background:#f97316; width:26px; height:26px; border-radius:50%; border:1px solid #cbd5e1; cursor:pointer;" title="Orange"></button>
+                  <button type="button" class="color-swatch-sub" data-color="#22c55e" style="background:#22c55e; width:26px; height:26px; border-radius:50%; border:1px solid #cbd5e1; cursor:pointer;" title="Neon Green"></button>
+                  <button type="button" class="color-swatch-sub" data-color="#06b6d4" style="background:#06b6d4; width:26px; height:26px; border-radius:50%; border:1px solid #cbd5e1; cursor:pointer;" title="Cyan"></button>
+                  <button type="button" class="color-swatch-sub" data-color="#ec4899" style="background:#ec4899; width:26px; height:26px; border-radius:50%; border:1px solid #cbd5e1; cursor:pointer;" title="Hot Pink"></button>
+                </div>
+              </div>
+
+              <!-- Box Style & Position -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="settings-group">
+                  <label class="form-label" for="subBoxStyleSelect">Background / Outline</label>
+                  <select id="subBoxStyleSelect" class="form-select">
+                    <option value="stroke" selected>Heavy Black Outline (Reels)</option>
+                    <option value="box">Dark Glass Box</option>
+                    <option value="pill">Solid Black Pill</option>
+                    <option value="neon">Neon Cyan Glow</option>
+                    <option value="none">Clean (Shadow Only)</option>
+                  </select>
+                </div>
+
+                <div class="settings-group">
+                  <label class="form-label" for="subPositionSelect">Subtitle Position</label>
+                  <select id="subPositionSelect" class="form-select">
+                    <option value="bottom" selected>Bottom (Standard 8%)</option>
+                    <option value="center">Center (Reels Focus)</option>
+                    <option value="top">Top (Headline 10%)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Animation / Transition Effect -->
+              <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 10px;">
+                <div class="settings-group">
+                  <label class="form-label" for="subTransitionSelect">Animation / Transition</label>
+                  <select id="subTransitionSelect" class="form-select">
+                    <option value="pop" selected>⚡ Pop-in / Bounce (Reels)</option>
+                    <option value="fade">🌊 Smooth Fade</option>
+                    <option value="slide">⬆️ Slide Up</option>
+                    <option value="karaoke">🎤 Karaoke (Word Pulse)</option>
+                    <option value="none">⏹️ None (Instant Cut)</option>
+                  </select>
+                </div>
+
+                <div class="settings-group">
+                  <label class="form-label" for="subCaseSelect">Text Case</label>
+                  <select id="subCaseSelect" class="form-select">
+                    <option value="uppercase" selected>ALL CAPS</option>
+                    <option value="normal">Normal Case</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="workspace-divider"></div>
+
           <!-- Export -->
           <div class="workspace-section">
             <div class="workspace-section-title">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Export Subtitles
+              Export &amp; Burn-in Video
             </div>
             <div class="settings-panel">
-              <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button type="button" class="btn btn-primary" id="btnExportSrt">⬇ Download .SRT</button>
+              <!-- Video Burn-in Action -->
+              <button type="button" class="btn btn-primary btn-lg" id="btnExportVideo" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+                <span>🎬 Export Video with Hardcoded Subtitles</span>
+              </button>
+
+              <!-- Video Render Progress Bar -->
+              <div id="videoRenderProgressBox" style="display: none; margin-top: 10px; padding: 12px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-md);">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #1e40af;">
+                  <span id="videoRenderProgressMsg">Rendering video frames with subtitles...</span>
+                  <span id="videoRenderProgressPct">0%</span>
+                </div>
+                <div class="progress-bar-wrap" style="height: 8px; background: #dbeafe; border-radius: 999px; overflow: hidden; margin-top: 6px;">
+                  <div class="progress-bar-fill" id="videoRenderProgressFill" style="height: 100%; background: linear-gradient(90deg, #2563eb, #3b82f6); width: 0%; transition: width 0.15s ease;"></div>
+                </div>
+              </div>
+
+              <!-- Subtitle File Downloads -->
+              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top: 12px;">
+                <button type="button" class="btn btn-outline" id="btnExportSrt">⬇ Download .SRT</button>
                 <button type="button" class="btn btn-outline" id="btnExportVtt">⬇ Download .VTT</button>
                 <button type="button" class="btn btn-outline" id="btnExportTxt">⬇ Transcript .TXT</button>
               </div>
-              <p style="font-size: 11.5px; color: var(--gray-500);">SRT works with YouTube uploads, VLC, Premiere, mobile players; VTT is for web players (HTML5 track tag).</p>
+              <p style="font-size: 11.5px; color: var(--gray-500); margin-top: 6px;">Burn-in renders styled animated subtitles right into your MP4/WebM video ready for Instagram Reels, Shorts &amp; TikTok. SRT is for YouTube captions.</p>
             </div>
           </div>
 
