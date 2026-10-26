@@ -606,8 +606,23 @@
         <div class="ocr-progress-fill animated" id="cardProgressBar_${item.id}" style="width: 0%;"></div>
       </div>
 
-      <div class="ocr-card-body">
-        <textarea class="ocr-textarea" id="textarea_${item.id}" placeholder="Extracted text will appear here. You can edit, type, and format text freely...">${escapeHtml(item.extractedText)}</textarea>
+      <div class="ocr-card-body ocr-split-body">
+        <div class="ocr-image-preview-pane">
+          <div class="ocr-pane-label">Original Document Photo</div>
+          <div class="ocr-image-wrapper">
+            <img src="${item.enhancedDataUrl || item.originalDataUrl}" class="ocr-preview-img" id="bodyThumb_${item.id}" alt="${escapeHtml(item.name)}" title="Click to view full screen">
+          </div>
+          <button type="button" class="btn btn-outline ocr-btn-xs" id="btnViewModal_${item.id}" style="margin-top: 8px; width: 100%; font-size: 11px; padding: 4px 8px;">
+            🔍 View Full Size
+          </button>
+        </div>
+        <div class="ocr-text-pane">
+          <div class="ocr-pane-label" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Editable Extracted Text</span>
+            <span style="font-size: 11px; color: var(--gray-500); font-weight: normal;">Live Edit as you read</span>
+          </div>
+          <textarea class="ocr-textarea" id="textarea_${item.id}" placeholder="Extracted text will appear here. You can edit, type, and format text freely...">${escapeHtml(item.extractedText)}</textarea>
+        </div>
       </div>
 
       <div class="ocr-card-footer">
@@ -641,9 +656,19 @@
     const card = document.getElementById(`card_${item.id}`);
     if (!card) return;
 
-    // Thumbnail zoom
+    // Thumbnail & Body preview zoom
     const thumb = document.getElementById(`thumb_${item.id}`);
     thumb?.addEventListener('click', () => {
+      openModal(item.name, item.enhancedDataUrl || item.originalDataUrl);
+    });
+
+    const bodyThumb = document.getElementById(`bodyThumb_${item.id}`);
+    bodyThumb?.addEventListener('click', () => {
+      openModal(item.name, item.enhancedDataUrl || item.originalDataUrl);
+    });
+
+    const btnViewModal = document.getElementById(`btnViewModal_${item.id}`);
+    btnViewModal?.addEventListener('click', () => {
       openModal(item.name, item.enhancedDataUrl || item.originalDataUrl);
     });
 
