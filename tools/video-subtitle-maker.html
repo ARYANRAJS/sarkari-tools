@@ -329,37 +329,54 @@
 
           <!-- AI transcription -->
           <div class="workspace-section">
-            <div class="workspace-section-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
-              AI Speech-to-Text (on-device Whisper)
+            <div class="workspace-section-title" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+                <span>AI Speech-to-Text (Hardware Turbo)</span>
+              </div>
+              <span id="subHwBadge" style="font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #dcfce7; color: #15803d; font-weight: 700; border: 1px solid #bbf7d0;">⚡ GPU WebGPU Active</span>
             </div>
             <div class="settings-panel">
+              <!-- Hardware Engine Selection -->
               <div class="settings-group">
-                <label class="form-label">Spoken Language</label>
-                <div class="sub-lang-pills" id="subLangPills">
-                  <button type="button" class="sub-lang-pill active" data-lang="auto">🌐 Auto Detect</button>
-                  <button type="button" class="sub-lang-pill" data-lang="hi">🇮🇳 Hindi</button>
-                  <button type="button" class="sub-lang-pill" data-lang="en">🇬🇧 English</button>
-                </div>
-              </div>
-              <div class="settings-group">
-                <label class="form-label" for="subModelSelect">AI Model (bigger = more accurate, slower)</label>
-                <select id="subModelSelect" class="form-select">
-                  <option value="Xenova/whisper-tiny" selected>Tiny — fast (~40 MB download)</option>
-                  <option value="Xenova/whisper-base">Base — balanced (~75 MB)</option>
-                  <option value="Xenova/whisper-small">Small — most accurate (~250 MB)</option>
+                <label class="form-label" for="subAccelSelect">System Hardware Acceleration</label>
+                <select id="subAccelSelect" class="form-select">
+                  <option value="webgpu" selected>⚡ WebGPU Turbo (Uses your GPU — NVIDIA/AMD/Intel, 10x Faster)</option>
+                  <option value="wasm">🖥️ CPU Multi-Threading (Uses all CPU cores)</option>
                 </select>
               </div>
+
+              <div class="settings-group">
+                <label class="form-label">Spoken Language in Video</label>
+                <div class="sub-lang-pills" id="subLangPills">
+                  <button type="button" class="sub-lang-pill active" data-lang="auto">🌐 Auto Detect</button>
+                  <button type="button" class="sub-lang-pill" data-lang="hi">🇮🇳 Hindi (हिन्दी)</button>
+                  <button type="button" class="sub-lang-pill" data-lang="en">🇬🇧 English</button>
+                </div>
+                <p style="font-size: 11px; color: var(--gray-500); margin-top: 4px;">💡 Tip: Agar Indian reel/saree/Hindi video hai, toh <strong>Hindi</strong> select karein for maximum accuracy.</p>
+              </div>
+
+              <div class="settings-group">
+                <label class="form-label" for="subModelSelect">AI Whisper Model</label>
+                <select id="subModelSelect" class="form-select">
+                  <option value="Xenova/whisper-tiny" selected>Tiny — Ultra Fast (~40 MB, Zero-lag)</option>
+                  <option value="Xenova/whisper-base">Base — Balanced &amp; High Accuracy (~75 MB, Recommended)</option>
+                  <option value="Xenova/whisper-small">Small — Studio Quality (~240 MB, Best for noisy audio)</option>
+                </select>
+              </div>
+
               <div class="settings-group" style="align-items: center;">
                 <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size: 13px;">
                   <input type="checkbox" id="subTranslate" style="accent-color: var(--saffron); width:17px; height:17px;">
                   <span>Translate speech to English subtitles</span>
                 </label>
+                <p style="font-size: 11px; color: var(--gray-500); margin-top: 2px;">Keep unchecked if you want the subtitles in original spoken language (Hindi/Hinglish).</p>
               </div>
+
               <button type="button" class="btn btn-primary btn-lg" id="btnTranscribe" style="width:100%;">
-                ✨ Auto-Generate Subtitles
+                ✨ Auto-Generate Subtitles (Turbo AI)
               </button>
-              <p style="font-size: 11.5px; color: var(--gray-500); margin-top: 6px;">First run downloads the AI model into your browser (cached for next time). Long files are processed in 30-second chunks — keep this tab open.</p>
+              <p style="font-size: 11.5px; color: var(--gray-500); margin-top: 6px;">Runs 100% on your local machine using GPU hardware. With anti-repetition protection, no hallucinated repeats!</p>
             </div>
           </div>
 

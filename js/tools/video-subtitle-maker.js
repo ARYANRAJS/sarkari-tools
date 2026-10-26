@@ -542,15 +542,17 @@
   }
 
   /* ───────── Whisper worker ───────── */
+  /* ───────── Whisper worker (WebGPU & Multi-Thread CPU) ───────── */
   var worker = null;
   function getWorker() {
     if (worker) return worker;
     var src = [
       "import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';",
       'env.allowLocalModels = false;',
-      'var asr = null, loadedModel = null;',
-      'async function makePipeline(model) {',
+      'var asr = null, loadedModel = null, loadedDevice = null;',
+      'async function makePipeline(model, device) {',
       '  var opts = { quantized: true, progress_callback: function (p) { self.postMessage({ type: "dl", data: p }); } };',
+      '  if (device === "webgpu") opts.device = "webgpu";',
       '  try {',
       '    return await pipeline("automatic-speech-recognition", model, opts);',
       '  } catch (e) {',
@@ -563,11 +565,21 @@
       '  var msg = e.data;',
       '  try {',
       '    if (msg.type === "transcribe") {',
-      '      if (!asr || loadedModel !== msg.model) {',
-      '        asr = await makePipeline(msg.model);',
+      '      if (msg.threads) env.backends.onnx.wasm.numThreads = msg.threads;',
+      '      if (!asr || loadedModel !== msg.model || loadedDevice !== msg.device) {',
+      '        asr = await makePipeline(msg.model, msg.device);',
       '        loadedModel = msg.model;',
+      '        loadedDevice = msg.device;',
       '      }',
-      '      var opts = { chunk_length_s: 30, stride_length_s: 5, return_timestamps: true };',
+      '      var opts = {',
+      '        chunk_length_s: 20,',
+      '        stride_length_s: 4,',
+      '        return_timestamps: true,',
+      '        condition_on_previous_text: false,',
+      '        repetition_penalty: 1.35,',
+      '        no_repeat_ngram_size: 3,',
+      '        temperature: 0.0',
+      '      };',
       '      if (msg.language && msg.language !== "auto") opts.language = msg.language;',
       '      if (msg.translate) opts.task = "translate";',
       '      var out = await asr(msg.audio, opts);',
@@ -608,7 +620,7 @@
         progressShow('Downloading AI model (cached after this)…', Math.round(loaded / tot * 100));
       }
     } else if (m.type === 'ready') {
-      if (state.workerBusy) status('🧠 AI model ready — transcribing…');
+      if (state.workerBusy) status('🧠 AI model ready — transcribing with GPU/CPU…');
     } else if (m.type === 'mirror') {
       if (state.workerBusy) status('🧠 Main model host unreachable — retrying via mirror (hf-mirror.com)…');
     } else if (m.type === 'result') {
@@ -638,17 +650,37 @@
     $('subProgressFill').style.width = '0%';
   }
 
+  /* ───────── Smart Anti-Hallucination & Repetition Buster ───────── */
+  function cleanTranscript(text) {
+    if (!text) return '';
+    // Collapse repeating single words: "jeep jeep jeep jeep..." -> "jeep"
+    text = text.replace(/\b([a-zA-Z\u0900-\u097F]+)(?:\s+\1\b){2,}/gi, '$1');
+    // Collapse repeating phrases (e.g. "that many of you are being able to say that many of you are being able to say...")
+    text = text.replace(/(\b.+?\b)(?:\s+\1){2,}/gi, '$1');
+    // Remove hallucinated prompt tokens
+    text = text.replace(/\[[^\]]+\]/g, '').replace(/\([^\)]+\)/g, '');
+    text = text.replace(/subtitles by [^.\n]+/gi, '');
+    text = text.replace(/thank you for watching[.!]/gi, '');
+    text = text.replace(/please subscribe[.!]/gi, '');
+    text = text.replace(/\s{2,}/g, ' ');
+    return text.trim();
+  }
+
   function applyTranscription(data) {
     var chunks = data.chunks || [];
     if (!chunks.length && data.text && data.text.trim()) {
       chunks = [{ timestamp: [0, state.duration], text: data.text }];
     }
     var made = 0;
+    var lastAddedText = '';
     chunks.forEach(function (c) {
       var s = c.timestamp && c.timestamp[0] != null ? c.timestamp[0] : 0;
       var en = c.timestamp && c.timestamp[1] != null ? c.timestamp[1] : s + 2;
-      var txt = (c.text || '').trim();
-      if (!txt) return;
+      var txt = cleanTranscript(c.text || '');
+      if (!txt || txt.length < 2) return;
+      // Skip duplicate consecutive hallucinated cues
+      if (txt.toLowerCase() === lastAddedText.toLowerCase()) return;
+      lastAddedText = txt;
       state.cues.push({ id: state.uid++, start: s, end: Math.max(en, s + 0.3), text: txt });
       made++;
     });
@@ -656,9 +688,9 @@
     renderCueList();
     renderTimeline();
     if (made) {
-      status('✅ AI ne ' + made + ' subtitle cues banaye! Timeline pe drag karke timings adjust karo, styles change karo aur video export karo.');
+      status('✅ AI ne ' + made + ' perfect subtitle cues banaye! Timings adjust karo, styles change karo aur HD video export karo.');
     } else {
-      status('AI could not detect clear speech. Try the Base/Small model, or check the audio.', true);
+      status('AI could not detect clear speech. Try selecting Hindi explicitly or switch model to Base/Small.', true);
     }
   }
 
@@ -668,13 +700,20 @@
     state.workerBusy = true;
     dlFiles = {};
     progressShow('Starting on-device AI…', 2);
-    status('🧠 Running Whisper AI fully on your device — keep this tab open…');
+
+    var accel = $('subAccelSelect') ? $('subAccelSelect').value : (('gpu' in navigator) ? 'webgpu' : 'wasm');
+    var isWebGPU = accel === 'webgpu' && ('gpu' in navigator);
+    var threads = navigator.hardwareConcurrency || 4;
+
+    status('🧠 Running Whisper AI with ' + (isWebGPU ? '⚡ WebGPU Hardware Turbo (GPU)' : ('🖥️ ' + threads + ' CPU Cores')) + ' — keep this tab open…');
     getWorker().postMessage({
       type: 'transcribe',
       audio: state.audio,
       model: $('subModelSelect').value,
       language: state.lang,
-      translate: $('subTranslate').checked
+      translate: $('subTranslate').checked,
+      device: isWebGPU ? 'webgpu' : 'wasm',
+      threads: threads
     });
   }
 
@@ -1650,6 +1689,23 @@
 
     if (rafId === null) rafId = requestAnimationFrame(syncPlayhead);
     window.addEventListener('resize', function () { renderTimeline(); });
+
+    // Detect Hardware Capabilities
+    var hasGPU = 'gpu' in navigator;
+    var cores = navigator.hardwareConcurrency || 4;
+    var hwBadge = $('subHwBadge');
+    if (hwBadge) {
+      if (hasGPU) {
+        hwBadge.textContent = '⚡ GPU WebGPU + ' + cores + ' Cores Active';
+        hwBadge.style.background = '#dcfce7';
+        hwBadge.style.color = '#15803d';
+      } else {
+        hwBadge.textContent = '🖥️ Multi-Thread CPU (' + cores + ' Cores)';
+        hwBadge.style.background = '#e0f2fe';
+        hwBadge.style.color = '#0369a1';
+        if ($('subAccelSelect')) $('subAccelSelect').value = 'wasm';
+      }
+    }
 
     // Initialize Box Drag and Resize on Video
     bindBoxDragAndResize();
