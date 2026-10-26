@@ -1163,6 +1163,12 @@
     initFAQ();
     initFeedbackSystem();
 
+    // Live Hero Tool Counter (always dynamically reflects total tools in catalog)
+    const heroToolStat = document.getElementById('heroToolCount') || document.querySelector('.hero-stat:first-child .hero-stat-number');
+    if (heroToolStat) {
+      heroToolStat.textContent = `${TOOLS.length}+`;
+    }
+
     // Initial tool grid render
     if (document.getElementById('toolsGrid')) {
       renderToolsGrid('all');

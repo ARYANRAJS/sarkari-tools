@@ -1,7 +1,7 @@
 {
   "name": "AllToolsInOne — Free Online Tools",
   "short_name": "AllToolsInOne",
-  "description": "40+ free online tools — PDF editor, subtitle maker, image resizer, QR generator. 100% private, in-browser.",
+  "description": "43+ free online tools — PDF editor, subtitle maker, image resizer, QR generator, website analyzer. 100% private, in-browser.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FAFAFA",

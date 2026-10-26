@@ -1,12 +1,13 @@
 # AllToolsInOne 🇮🇳
 
-> A high-performance, mobile-first, client-side web application suite featuring 38+ free online utilities designed for Indian government exam applicants (SSC, UPSC, Railway, State PSC, Banking), students, freelancers, cyber cafes, and digital creators.
+> A high-performance, mobile-first, client-side web application suite featuring 43+ free online utilities designed for Indian government exam applicants (SSC, UPSC, Railway, State PSC, Banking), students, freelancers, cyber cafes, and digital creators.
 
 ---
 
 ## ✨ Features & Tool Catalog
 
 ### 1. 🖼️ Government Exam Photo & Image Tools
+- **Image to Text (OCR) Extractor:** High-accuracy multi-image batch text extraction (English & Hindi) with separate editable result cards and 1-click clipboard copy.
 - **Image Resizer:** Resize by pixels, cm/mm, percentage, or target file size (under 20KB, 50KB, 100KB) with instant preview.
 - **Image Format Converter:** Batch conversion between JPG, PNG, WebP, and BMP.
 - **Photo & Signature Joiner:** Standard horizontal and vertical presets for SSC, UPSC, and State PSC application portals.
@@ -34,7 +35,11 @@
 - **Attendance & Minimum 75% Calculator:** College & school bunk planner to maintain strict minimum attendance.
 - **Password Generator:** Cryptographically secure character generator for portal logins.
 
-### 5. 🔍 SEO & Webmaster Tools
+### 5. 🔍 SEO, Webmaster & Marketing Intelligence Tools
+- **All-in-One Website Analyzer & Auditor:** Full 360° audit: DA/PA (Moz-style), estimated monthly traffic, live Meta & Facebook Ads discovery, social profiles, Google Maps presence, customer support contacts, and tech stack.
+- **Website Tech Stack & Shopify Detector:** Wappalyzer-alternative detecting Shopify apps, WordPress, React, Next.js, hosting, CDN, and 200+ technologies.
+- **Domain Whois & DNS Lookup:** Live lookup for A, MX, NS, TXT records, cloud provider, and domain registration metrics.
+- **DA / PA & Moz Spam Score Checker:** Instant domain authority, page authority, and spam risk calculation.
 - **SEO Meta Tag & Open Graph Generator:** Real-time Google SERP, WhatsApp, Facebook, and Twitter card previews.
 - **Schema Markup (JSON-LD) Generator:** Validated schema for FAQ, Local Business, Article, and Product rich snippets.
 - **Robots.txt & XML Sitemap Builder:** Web crawler directive generator with visual rule testing.
