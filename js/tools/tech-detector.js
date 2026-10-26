@@ -1002,10 +1002,18 @@
 
     showLoading(true, `Connecting to ${domain}...`, 'Fetching live HTML source code & response headers...');
 
+    let htmlResult = { html: '', headers: '' };
+    let proxyFailed = false;
+
     try {
-      // 1. Fetch HTML via fast CORS proxies
-      const htmlResult = await fetchSiteHtml(rawUrl);
-      
+      // 1. Fetch HTML via multi-proxy cascade
+      htmlResult = await fetchSiteHtml(rawUrl);
+    } catch (proxyErr) {
+      console.warn('HTML proxies failed, proceeding with DNS & infrastructure scan:', proxyErr);
+      proxyFailed = true;
+    }
+
+    try {
       // 2. Fetch DNS MX & NS records via Google DoH
       updateLoadingStatus(`Inspecting DNS & Infrastructure for ${domain}...`, 'Looking up MX mail servers, nameservers, and cloud IP records...');
       const dnsData = await fetchDnsRecords(domain);
@@ -1017,11 +1025,15 @@
       // 4. Render UI
       currentScannedData = { domain, rawUrl, ...results };
       renderResults(currentScannedData);
-      showToast(`Scan complete! Detected ${results.detectedList.length} technologies.`, 'success');
+
+      if (proxyFailed) {
+        showToast(`Bot shield protected full HTML. Showing Cloud & DNS tech! Paste source in Tab 2 for deep app scan.`, 'info');
+      } else {
+        showToast(`Scan complete! Detected ${results.detectedList.length} technologies.`, 'success');
+      }
     } catch (err) {
       console.error(err);
-      showLoading(false);
-      showToast(`Unable to fetch site directly: ${err.message}. Try pasting page source in Tab 2.`, 'error');
+      showToast(`Scan error: ${err.message}`, 'error');
     } finally {
       showLoading(false);
     }
@@ -1074,12 +1086,35 @@
     showToast('Loaded demo Shopify store HTML snippet!', 'info');
   }
 
-  // Fetch HTML with Fallbacks
+  // Fetch HTML with multi-proxy fallback cascade
   async function fetchSiteHtml(targetUrl) {
-    // Attempt 1: AllOrigins raw proxy
+    // Attempt 1: Jina AI Reader HTML proxy (bypasses Cloudflare, Akamai & bot challenges)
     try {
-      const proxy1 = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
-      const res = await fetch(proxy1, { timeout: 8000 });
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 7000);
+      const res = await fetch(`https://r.jina.ai/${targetUrl}`, {
+        headers: { 'X-Return-Format': 'html' },
+        signal: controller.signal
+      });
+      clearTimeout(tid);
+      if (res.ok) {
+        const text = await res.text();
+        if (text && text.length > 80) {
+          return { html: text, headers: res.headers.get('content-type') || 'text/html' };
+        }
+      }
+    } catch (e) {
+      console.warn('Proxy 1 (Jina) failed:', e);
+    }
+
+    // Attempt 2: CodeTabs Proxy
+    try {
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`, {
+        signal: controller.signal
+      });
+      clearTimeout(tid);
       if (res.ok) {
         const text = await res.text();
         if (text && text.length > 50) {
@@ -1087,24 +1122,46 @@
         }
       }
     } catch (e) {
-      console.warn('Proxy 1 failed, trying proxy 2...', e);
+      console.warn('Proxy 2 (CodeTabs) failed:', e);
     }
 
-    // Attempt 2: CorsProxy.io
+    // Attempt 3: AllOrigins Raw
     try {
-      const proxy2 = `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`;
-      const res2 = await fetch(proxy2, { timeout: 8000 });
-      if (res2.ok) {
-        const text2 = await res2.text();
-        if (text2 && text2.length > 50) {
-          return { html: text2, headers: res2.headers.get('content-type') || '' };
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`, {
+        signal: controller.signal
+      });
+      clearTimeout(tid);
+      if (res.ok) {
+        const text = await res.text();
+        if (text && text.length > 50) {
+          return { html: text, headers: res.headers.get('content-type') || '' };
         }
       }
     } catch (e) {
-      console.warn('Proxy 2 failed...', e);
+      console.warn('Proxy 3 (AllOrigins Raw) failed:', e);
     }
 
-    throw new Error('Could not fetch URL. The site may be blocking proxy requests.');
+    // Attempt 4: AllOrigins JSON API
+    try {
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`, {
+        signal: controller.signal
+      });
+      clearTimeout(tid);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.contents && data.contents.length > 50) {
+          return { html: data.contents, headers: '' };
+        }
+      }
+    } catch (e) {
+      console.warn('Proxy 4 (AllOrigins JSON) failed:', e);
+    }
+
+    throw new Error('Website bot shield or network timeout prevented live HTML extraction.');
   }
 
   // Fetch DNS DoH Records (Google Public DNS)

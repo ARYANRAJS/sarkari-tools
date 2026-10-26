@@ -244,8 +244,16 @@
     showLoading(true, `Analyzing ${domain}...`, 'Fetching live HTML source, headers, and meta tags...');
 
     try {
-      // Step 1: Fetch HTML via CORS proxy
-      const htmlResult = await fetchSiteHtml(fullUrl);
+      // Step 1: Fetch HTML via multi-proxy cascade
+      let htmlResult = { html: '', headers: '' };
+      let proxyFailed = false;
+
+      try {
+        htmlResult = await fetchSiteHtml(fullUrl);
+      } catch (proxyErr) {
+        console.warn('Live HTML proxies failed, proceeding with DNS & domain audit:', proxyErr);
+        proxyFailed = true;
+      }
 
       // Step 2: Fetch DNS
       updateLoading(
@@ -263,16 +271,15 @@
 
       currentAuditData = audit;
       renderDashboard(audit);
-      showToast(`360° Audit complete for ${domain}!`, 'success');
+
+      if (proxyFailed) {
+        showToast(`Bot shield protected full HTML. Generated DNS & domain audit! Paste source in Tab 2 for full scan.`, 'info');
+      } else {
+        showToast(`360° Audit complete for ${domain}!`, 'success');
+      }
     } catch (err) {
       console.error(err);
-      showToast(`Could not fetch site: ${err.message}. Trying direct DNS audit...`, 'error');
-      // Fallback: run DNS and structural analysis
-      const dns = await fetchDnsRecords(domain);
-      const audit = analyzeWebsite(domain, '', '', dns);
-      currentAuditData = audit;
-      renderDashboard(audit);
-      showToast(`Generated estimated domain audit for ${domain}`, 'info');
+      showToast(`Audit error: ${err.message}`, 'error');
     } finally {
       showLoading(false);
     }
@@ -329,11 +336,35 @@
     showToast('Loaded boAt Lifestyle sample store HTML! Now click "Audit Pasted HTML"', 'info');
   }
 
-  // Fetch Site HTML with proxy fallbacks
+  // Fetch HTML with multi-proxy fallback cascade
   async function fetchSiteHtml(targetUrl) {
+    // Attempt 1: Jina AI Reader HTML proxy (bypasses Cloudflare, Akamai & bot challenges)
     try {
-      const p1 = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
-      const res = await fetch(p1, { timeout: 8000 });
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 7000);
+      const res = await fetch(`https://r.jina.ai/${targetUrl}`, {
+        headers: { 'X-Return-Format': 'html' },
+        signal: controller.signal
+      });
+      clearTimeout(tid);
+      if (res.ok) {
+        const text = await res.text();
+        if (text && text.length > 80) {
+          return { html: text, headers: res.headers.get('content-type') || 'text/html' };
+        }
+      }
+    } catch (e) {
+      console.warn('Proxy 1 (Jina) failed:', e);
+    }
+
+    // Attempt 2: CodeTabs Proxy
+    try {
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`, {
+        signal: controller.signal
+      });
+      clearTimeout(tid);
       if (res.ok) {
         const text = await res.text();
         if (text && text.length > 50) {
@@ -341,23 +372,46 @@
         }
       }
     } catch (e) {
-      console.warn('Proxy 1 failed, trying proxy 2...', e);
+      console.warn('Proxy 2 (CodeTabs) failed:', e);
     }
 
+    // Attempt 3: AllOrigins Raw
     try {
-      const p2 = `https://corsproxy.io/?url=${encodeURIComponent(targetUrl)}`;
-      const res2 = await fetch(p2, { timeout: 8000 });
-      if (res2.ok) {
-        const text2 = await res2.text();
-        if (text2 && text2.length > 50) {
-          return { html: text2, headers: res2.headers.get('content-type') || '' };
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`, {
+        signal: controller.signal
+      });
+      clearTimeout(tid);
+      if (res.ok) {
+        const text = await res.text();
+        if (text && text.length > 50) {
+          return { html: text, headers: res.headers.get('content-type') || '' };
         }
       }
     } catch (e) {
-      console.warn('Proxy 2 failed...', e);
+      console.warn('Proxy 3 (AllOrigins Raw) failed:', e);
     }
 
-    throw new Error('Website proxy timeout or bot verification wall');
+    // Attempt 4: AllOrigins JSON API
+    try {
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`, {
+        signal: controller.signal
+      });
+      clearTimeout(tid);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.contents && data.contents.length > 50) {
+          return { html: data.contents, headers: '' };
+        }
+      }
+    } catch (e) {
+      console.warn('Proxy 4 (AllOrigins JSON) failed:', e);
+    }
+
+    throw new Error('Website bot shield or network timeout prevented live HTML extraction.');
   }
 
   // Fetch DNS DoH Records
