@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Online Background Remover for Passport & Sarkari Photos</title>
-  <meta name="description" content="Remove or replace background of passport photos online for free. Make background transparent or change to white, blue, or red for government exam forms.">
-  <meta name="keywords" content="background remover, remove bg, passport photo background color, make background white, change background to blue online, sarkari photo bg remover">
-  <meta property="og:title" content="Free Passport Photo Background Remover">
-  <meta property="og:description" content="Erase background or replace with standard white/blue for government exam forms. 100% private and in-browser.">
+  <title>Free AI Background Remover for Passport & Sarkari Photos</title>
+  <meta name="description" content="AI pixel-accurate background remover for passport photos. Detect subject, erase background, and replace with formal White or Light Blue for SSC, UPSC, and State exam forms.">
+  <meta name="keywords" content="ai background remover, remove bg, passport photo background color, make background white, change background to blue online, sarkari photo bg remover, mediapipe background removal">
+  <meta property="og:title" content="AI Passport Photo Background Remover">
+  <meta property="og:description" content="Neural pixel auto-detection to remove photo backgrounds or replace with official white/blue for government exams. 100% free and in-browser.">
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://alltoolsinone.com/tools/bg-remover.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,17 +16,123 @@
   <link rel="stylesheet" href="../css/style.css?v=1.3">
   <link rel="stylesheet" href="../css/animations.css?v=1.2">
   <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <!-- MediaPipe Neural Segmentation for In-Browser Subject Detection -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Background Remover for Sarkari Photos",
-    "description": "Remove or change background of photos to white or light blue for SSC, UPSC, and passport applications.",
+    "name": "AI Background Remover for Sarkari Photos",
+    "description": "Neural pixel auto-detection to remove or replace photo backgrounds with formal white or light blue for SSC, UPSC, and passport applications.",
     "applicationCategory": "UtilityApplication",
     "operatingSystem": "All",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
   }
   </script>
+  <style>
+    .checkerboard-bg {
+      background-color: #ffffff;
+      background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%),
+                        linear-gradient(-45deg, #f1f5f9 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, #f1f5f9 75%),
+                        linear-gradient(-45deg, transparent 75%, #f1f5f9 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    }
+    .swatch-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .color-swatch-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      border: 2px solid var(--gray-300);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      background-clip: padding-box;
+    }
+    .color-swatch-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+    .color-swatch-btn.active {
+      border-color: var(--primary, #2563eb);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35);
+      transform: scale(1.08);
+    }
+    .swatch-transparent {
+      background-color: #fff;
+      background-image: linear-gradient(45deg, #cbd5e1 25%, transparent 25%),
+                        linear-gradient(-45deg, #cbd5e1 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, #cbd5e1 75%),
+                        linear-gradient(-45deg, transparent 75%, #cbd5e1 75%);
+      background-size: 10px 10px;
+      background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
+    }
+    .mode-tab-bar {
+      display: flex;
+      gap: 6px;
+      background: var(--gray-100);
+      padding: 4px;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-4);
+      flex-wrap: wrap;
+    }
+    .mode-tab-btn {
+      flex: 1 1 auto;
+      text-align: center;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      background: transparent;
+      border-radius: var(--radius-sm);
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .mode-tab-btn:hover {
+      color: var(--gray-900);
+    }
+    .mode-tab-btn.active {
+      background: var(--white);
+      color: var(--primary, #2563eb);
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 640px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <div id="header-placeholder"></div>
@@ -39,18 +145,18 @@
         <span class="separator">/</span>
         <a href="../index.html#tools">Tools</a>
         <span class="separator">/</span>
-        <span class="current">Background Remover</span>
+        <span class="current">AI Background Remover</span>
       </div>
 
       <div class="tool-hero">
         <div class="tool-icon image-tools">✂️</div>
-        <h1>Passport Photo Background Remover</h1>
-        <p class="tool-description">Easily erase distracting backgrounds or switch to standard White or Light Blue backgrounds required for SSC, UPSC, IBPS and Passport forms.</p>
+        <h1>AI Passport Photo Background Remover</h1>
+        <p class="tool-description">Neural pixel auto-detection separates face, hair, and clothing from the background. Easily switch to standard White or Sky Blue for SSC, UPSC, and Passport forms.</p>
       </div>
 
       <!-- Upload Zone -->
       <div class="upload-zone" id="dropZone">
-        <input type="file" id="fileInput" accept="image/*">
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/jpg">
         <div class="upload-zone-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -59,119 +165,204 @@
           </svg>
         </div>
         <h3>Select or Drag & Drop Photo</h3>
-        <p>Supports JPG, JPEG, PNG, WEBP (Works best with solid or light background)</p>
+        <p>Supports JPG, JPEG, PNG, WEBP (Works with any background, indoor room, or wall)</p>
         <div class="file-types">
-          <span class="file-type-badge">TRANSPARENT PNG</span>
-          <span class="file-type-badge">WHITE BACKGROUND</span>
-          <span class="file-type-badge">BLUE BACKGROUND</span>
+          <span class="file-type-badge">🤖 AI AUTO-DETECT</span>
+          <span class="file-type-badge">FORMAL WHITE (SSC/UPSC)</span>
+          <span class="file-type-badge">SKY BLUE (PASSPORT)</span>
         </div>
       </div>
 
       <!-- Workspace -->
-      <div class="tool-workspace" id="toolWorkspace" style="display: none; margin-top: var(--space-6);">
+      <div class="tool-workspace" id="toolWorkspace" style="display: none; margin-top: var(--space-6); position: relative;">
+
+        <!-- Processing Overlay -->
+        <div id="processingOverlay" style="display: none; position: absolute; inset: 0; background: rgba(255,255,255,0.88); backdrop-filter: blur(4px); z-index: 50; border-radius: var(--radius-xl); flex-direction: column; align-items: center; justify-content: center; gap: 12px;">
+          <div class="spinner" style="width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top-color: #2563eb; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+          <span id="processingMsg" style="font-weight: 600; font-size: 15px; color: #1e293b;">AI Segmenting Pixels...</span>
+        </div>
 
         <div class="tool-split">
-        <div class="tool-split-inputs">
+          <!-- LEFT SIDE: Controls -->
+          <div class="tool-split-inputs">
 
-        <!-- Removal Controls -->
-        <div class="settings-panel">
-          <div class="settings-group">
-            <label class="form-label">Background Color to Remove</label>
-            <div style="display: flex; gap: 8px; align-items: center;">
-              <input type="color" id="bgKeyColor" value="#ffffff" style="width: 44px; height: 44px; padding: 2px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); cursor: pointer;">
-              <button type="button" class="btn btn-sm btn-outline" id="autoDetectBgBtn">🎯 Auto Sample</button>
-              <button type="button" class="btn btn-sm btn-outline" id="pickColorBtn">👆 Click Image to Pick</button>
-            </div>
-            <span class="hint">Click on photo background to select exact color</span>
-          </div>
-
-          <div class="settings-group">
-            <label class="form-label" for="toleranceSlider">Color Tolerance: <strong id="toleranceVal">25%</strong></label>
-            <input type="range" id="toleranceSlider" class="range-slider" min="5" max="80" value="25">
-            <span class="hint">Higher value removes more similar shades</span>
-          </div>
-
-          <div class="settings-group">
-            <label class="form-label" for="newBgSelect">Replace Background With</label>
-            <select id="newBgSelect" class="form-select">
-              <option value="transparent">Transparent (PNG)</option>
-              <option value="#ffffff" selected>Formal White (SSC / Govt Standard)</option>
-              <option value="#3b82f6">Formal Light Blue (Visa / Exam)</option>
-              <option value="#dc2626">Formal Red</option>
-              <option value="custom">Custom Color...</option>
-            </select>
-          </div>
-
-          <div class="settings-group" id="customColorGroup" style="display: none;">
-            <label class="form-label" for="customColorPicker">Choose Custom Background</label>
-            <input type="color" id="customColorPicker" value="#f3f4f6" style="width: 100%; height: 44px; padding: 2px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); cursor: pointer;">
-          </div>
-        </div>
-
-        </div>
-
-        <div class="tool-split-output">
-
-        <!-- Comparison Display -->
-        <div class="workspace-section">
-          <div class="comparison-grid">
-            <div class="comparison-panel">
-              <div class="comparison-panel-header">Original Image (Click to sample color)</div>
-              <div class="comparison-panel-body" style="text-align: center; position: relative;">
-                <canvas id="inputCanvas" style="max-height: 350px; max-width: 100%; cursor: crosshair; border-radius: 4px;"></canvas>
+            <!-- Detection Engine Selector -->
+            <div class="workspace-section">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <label class="form-label" style="margin: 0; font-weight: 600;">Detection Mode</label>
+                <span class="badge-status" id="aiStatusPill" style="background: #dbeafe; color: #1e40af;">🤖 Pixel AI Active</span>
               </div>
-            </div>
 
-            <div class="comparison-panel">
-              <div class="comparison-panel-header">Result Preview</div>
-              <div class="comparison-panel-body" style="text-align: center;">
-                <div class="canvas-container" style="min-height: 250px; padding: 10px;">
-                  <canvas id="outputCanvas" style="max-height: 350px; max-width: 100%; border-radius: 4px;"></canvas>
+              <div class="mode-tab-bar" id="removerModeTabs">
+                <button type="button" class="mode-tab-btn active" data-mode="ai">🤖 AI Auto-Detect</button>
+                <button type="button" class="mode-tab-btn" data-mode="color">🎯 Color Matting</button>
+                <button type="button" class="mode-tab-btn" data-mode="brush">🖌️ Manual Brush</button>
+              </div>
+
+              <!-- AI Options Panel -->
+              <div id="aiOptionsPanel" class="settings-panel">
+                <div class="settings-group">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label class="form-label" for="featherSlider" style="margin: 0;">Edge Feathering / Softness</label>
+                    <strong id="dispFeatherVal" style="color: var(--primary);">1 px</strong>
+                  </div>
+                  <input type="range" id="featherSlider" class="range-slider" min="0" max="8" value="1" step="0.5">
+                  <span class="hint">Smooths hair and shoulder transitions without jagged stair-steps.</span>
+                </div>
+                <div style="margin-top: 8px;">
+                  <button type="button" class="btn btn-sm btn-outline" id="btnRecomputeAi" style="width: 100%;">
+                    🔄 Re-scan with Neural Engine
+                  </button>
                 </div>
               </div>
+
+              <!-- Color Matting Panel (Boundary Flood-Fill) -->
+              <div id="colorOptionsPanel" class="settings-panel" style="display: none;">
+                <div class="settings-group">
+                  <label class="form-label">Sample Background Wall Color</label>
+                  <div style="display: flex; gap: 8px; align-items: center;">
+                    <input type="color" id="bgKeyColor" value="#ffffff" style="width: 44px; height: 40px; padding: 2px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); cursor: pointer;">
+                    <button type="button" class="btn btn-sm btn-outline" id="autoSampleCornerBtn">🎯 Auto Sample</button>
+                    <button type="button" class="btn btn-sm btn-outline" id="pickFromImageBtn">👆 Pick from Image</button>
+                  </div>
+                  <span class="hint">Flood-fill starts strictly from borders, so white shirts & teeth are protected!</span>
+                </div>
+                <div class="settings-group">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label class="form-label" for="toleranceSlider" style="margin: 0;">Color Match Tolerance</label>
+                    <strong id="toleranceVal" style="color: var(--primary);">25%</strong>
+                  </div>
+                  <input type="range" id="toleranceSlider" class="range-slider" min="5" max="80" value="25">
+                  <span class="hint">Increase for uneven lighting or shadows on background.</span>
+                </div>
+              </div>
+
+              <!-- Manual Touch-up Panel -->
+              <div id="brushOptionsPanel" class="settings-panel" style="display: none;">
+                <div class="settings-group">
+                  <label class="form-label">Brush Tool</label>
+                  <div style="display: flex; gap: 8px;">
+                    <button type="button" class="btn btn-primary btn-sm" id="btnBrushErase" style="flex: 1;">🧹 Erase (Remove)</button>
+                    <button type="button" class="btn btn-outline btn-sm" id="btnBrushRestore" style="flex: 1;">🖌️ Restore (Keep)</button>
+                  </div>
+                </div>
+                <div class="settings-group">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label class="form-label" for="brushSizeSlider" style="margin: 0;">Brush Diameter</label>
+                    <strong id="dispBrushSize" style="color: var(--primary);">20 px</strong>
+                  </div>
+                  <input type="range" id="brushSizeSlider" class="range-slider" min="4" max="80" value="20">
+                  <span class="hint">Draw directly on the preview image to clean up stray pixels.</span>
+                </div>
+              </div>
+
             </div>
-          </div>
-        </div>
 
-        <!-- Action Bar -->
-        <div class="action-bar" style="border-top: 1px solid var(--gray-200); margin-top: var(--space-6); padding-top: var(--space-6);">
-          <div class="action-bar-left">
-            <button type="button" class="btn btn-outline" id="resetBtn">Upload Another</button>
-          </div>
-          <div class="action-bar-right" style="gap: 12px;">
-            <button type="button" class="btn btn-secondary" id="downloadPngBtn">
-              Download Transparent PNG
-            </button>
-            <button type="button" class="btn btn-primary btn-lg" id="downloadJpgBtn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download JPG
-            </button>
-          </div>
-        </div>
+            <!-- Replace Background Preset Swatches -->
+            <div class="workspace-section">
+              <label class="form-label" style="font-weight: 600; margin-bottom: 8px;">Official Background Presets</label>
+              <div class="swatch-grid">
+                <!-- Transparent -->
+                <button type="button" class="color-swatch-btn swatch-transparent active" data-bg="transparent" title="Transparent PNG" aria-label="Transparent PNG"></button>
+                <!-- Formal White -->
+                <button type="button" class="color-swatch-btn" data-bg="#ffffff" style="background-color: #ffffff;" title="Formal White (SSC, UPSC, IBPS)" aria-label="White Background"></button>
+                <!-- Passport Light Sky Blue -->
+                <button type="button" class="color-swatch-btn" data-bg="#60a5fa" style="background-color: #60a5fa;" title="Light Sky Blue (Passport / Visa)" aria-label="Sky Blue Background"></button>
+                <!-- Royal Blue -->
+                <button type="button" class="color-swatch-btn" data-bg="#2563eb" style="background-color: #2563eb;" title="Official Blue" aria-label="Blue Background"></button>
+                <!-- Neutral Gray -->
+                <button type="button" class="color-swatch-btn" data-bg="#94a3b8" style="background-color: #94a3b8;" title="Studio Neutral Gray" aria-label="Gray Background"></button>
+                <!-- Red -->
+                <button type="button" class="color-swatch-btn" data-bg="#dc2626" style="background-color: #dc2626;" title="Formal Red" aria-label="Red Background"></button>
+              </div>
 
-        </div>
+              <!-- Custom Color Picker -->
+              <div style="margin-top: 12px; display: flex; align-items: center; gap: 10px;">
+                <label for="customColorPicker" style="font-size: 13px; font-weight: 500; color: var(--gray-600); margin: 0;">Custom Hex Color:</label>
+                <input type="color" id="customColorPicker" value="#ffffff" style="width: 36px; height: 32px; padding: 1px; border: 1px solid var(--gray-300); border-radius: 6px; cursor: pointer;">
+                <span id="dispCustomHex" style="font-size: 12px; font-family: monospace; color: var(--gray-600);">#ffffff</span>
+              </div>
+            </div>
+
+            <!-- Workspace Actions -->
+            <div class="workspace-section" style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button type="button" class="btn btn-sm btn-outline" id="btnToggleView" style="flex: 1;">👁️ Hide Original Photo</button>
+              <button type="button" class="btn btn-sm btn-outline" id="resetBtn" style="flex: 1;">Upload Another Photo</button>
+            </div>
+
+          </div>
+
+          <!-- RIGHT SIDE: Output Preview & Downloads -->
+          <div class="tool-split-output">
+
+            <div class="workspace-section" style="margin-bottom: 0;">
+              <div id="sideBySideWrap" class="comparison-grid">
+                
+                <!-- Original Input Panel -->
+                <div class="comparison-panel" id="origCard">
+                  <div class="comparison-panel-header" style="font-size: 13px; font-weight: 600;">
+                    <span>📷 Original Photo</span>
+                  </div>
+                  <div class="comparison-panel-body" style="text-align: center; position: relative; padding: 8px;">
+                    <canvas id="inputCanvas" style="max-height: 360px; max-width: 100%; border-radius: 6px; cursor: crosshair; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"></canvas>
+                  </div>
+                </div>
+
+                <!-- Result Preview Panel -->
+                <div class="comparison-panel" id="resultCard">
+                  <div class="comparison-panel-header" style="font-size: 13px; font-weight: 600;">
+                    <span>✨ AI Cutout Result</span>
+                  </div>
+                  <div class="comparison-panel-body checkerboard-bg" style="text-align: center; position: relative; padding: 8px; border-radius: 6px; min-height: 250px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <canvas id="outputCanvas" style="max-height: 360px; max-width: 100%; border-radius: 6px; cursor: default;"></canvas>
+                    <!-- Offscreen mask canvas for compositing -->
+                    <canvas id="maskCanvas" style="display: none;"></canvas>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Download Action Buttons -->
+            <div class="action-bar" style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--gray-200); display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: flex; gap: 10px; width: 100%; flex-wrap: wrap;">
+                <button type="button" class="btn btn-secondary" id="downloadPngBtn" style="flex: 1; min-width: 170px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Download PNG (Transparent)
+                </button>
+                <button type="button" class="btn btn-primary btn-lg" id="downloadJpgBtn" style="flex: 1.2; min-width: 200px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Download JPG for Govt / Exams
+                </button>
+              </div>
+              <div style="font-size: 12px; color: var(--gray-500); text-align: center;">
+                💡 <strong>Exam Tip:</strong> SSC CGL, UPSC & Banking portals require plain White or Light Blue backgrounds in JPG format.
+              </div>
+            </div>
+
+          </div>
         </div>
 
       </div>
 
       <!-- How to use -->
-      <section class="how-to-use">
-        <h2>How to Make Background White or Blue for Sarkari Forms</h2>
+      <section class="how-to-use" style="margin-top: var(--space-12);">
+        <h2>How AI Background Removal Works for Sarkari Photos</h2>
         <div class="steps-grid">
           <div class="step-card">
             <div class="step-number">1</div>
             <h3>Upload Portrait</h3>
-            <p>Upload your photograph. Photos taken against any wall or solid background work best.</p>
+            <p>Upload any selfie, studio, or mobile phone photo. No special green screen or backdrop required.</p>
           </div>
           <div class="step-card">
             <div class="step-number">2</div>
-            <h3>Sample Background Color</h3>
-            <p>Click anywhere on the photo background or click "Auto Sample" to instantly pick the wall color.</p>
+            <h3>Pixel Auto-Detection</h3>
+            <p>The in-browser AI instantly segments your face, hair, and clothing down to individual pixels.</p>
           </div>
           <div class="step-card">
             <div class="step-number">3</div>
-            <h3>Pick New Color & Save</h3>
-            <p>Select Formal White or Blue and download the processed JPG or PNG ready for SSC/UPSC application!</p>
+            <h3>Select Exam Preset & Save</h3>
+            <p>Click Formal White or Sky Blue and download official JPG ready for SSC, UPSC, or Visa forms!</p>
           </div>
         </div>
       </section>
@@ -187,18 +378,29 @@
             </button>
             <div class="faq-answer">
               <div class="faq-answer-inner">
-                The Staff Selection Commission (SSC), UPSC, and IBPS explicitly require a plain white or very light off-white background. Dark or patterned backgrounds lead to automatic form rejection.
+                The Staff Selection Commission (SSC), UPSC, and IBPS explicitly require a plain white or very light off-white background. Dark, patterned, or household backgrounds lead to automatic form rejection.
               </div>
             </div>
           </div>
           <div class="faq-item">
             <button class="faq-question">
-              <span>How does the color picker work?</span>
+              <span>Are my photos uploaded to any external server?</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="faq-answer">
               <div class="faq-answer-inner">
-                Click on the original image where the background wall is visible. The algorithm calculates color distance (Euclidean RGB delta) and smoothly replaces all background pixels with your chosen formal background.
+                No! The AI model runs 100% locally in your web browser using WebAssembly. Your photos never leave your device, ensuring complete privacy and zero data leakage.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Why doesn't my white shirt get removed?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Unlike simple color filters that erase all white pixels across the image, our AI uses neural semantic segmentation to recognize your clothes and body. In color matting mode, our boundary flood-fill algorithm only removes pixels connected to outer borders, safeguarding internal elements.
               </div>
             </div>
           </div>
@@ -211,6 +413,6 @@
   <div id="footer-placeholder"></div>
 
   <script src="../js/app.js?v=1.3"></script>
-  <script src="../js/tools/bg-remover.js?v=1.1"></script>
+  <script src="../js/tools/bg-remover.js?v=2.0"></script>
 </body>
 </html>
