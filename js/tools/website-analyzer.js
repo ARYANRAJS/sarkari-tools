@@ -24,17 +24,15 @@
   const dispDomain = document.getElementById('dispDomain');
   const dispTitle = document.getElementById('dispTitle');
   const siteFavicon = document.getElementById('siteFavicon');
-  const scoreDa = document.getElementById('scoreDa');
-  const scorePa = document.getElementById('scorePa');
-  const scoreSpam = document.getElementById('scoreSpam');
-  const badgeDa = document.getElementById('badgeDa');
-  const scoreTraffic = document.getElementById('scoreTraffic');
-  const scoreRankTier = document.getElementById('scoreRankTier');
-  const scoreBounce = document.getElementById('scoreBounce');
+  const scoreMetaStatus = document.getElementById('scoreMetaStatus');
+  const badgeMetaStatus = document.getElementById('badgeMetaStatus');
+  const scorePixelIdText = document.getElementById('scorePixelIdText');
   const scorePlatform = document.getElementById('scorePlatform');
   const scoreCdn = document.getElementById('scoreCdn');
-  const scoreAdsCount = document.getElementById('scoreAdsCount');
-  const scoreAdsDesc = document.getElementById('scoreAdsDesc');
+  const scoreSocialCount = document.getElementById('scoreSocialCount');
+  const scoreMapsFound = document.getElementById('scoreMapsFound');
+  const scoreMailHost = document.getElementById('scoreMailHost');
+  const scoreNameserver = document.getElementById('scoreNameserver');
   const pixelIdBadge = document.getElementById('pixelIdBadge');
   const googleAdsBadge = document.getElementById('googleAdsBadge');
   const btnMetaAdLibrary = document.getElementById('btnMetaAdLibrary');
@@ -56,18 +54,7 @@
   const countSchema = document.getElementById('countSchema');
   const statCanonical = document.getElementById('statCanonical');
   const analyzerTechGrid = document.getElementById('analyzerTechGrid');
-  const statMonthlyVisits = document.getElementById('statMonthlyVisits');
-  const statGlobalTier = document.getElementById('statGlobalTier');
-  const statDuration = document.getElementById('statDuration');
-  const statBounceRate = document.getElementById('statBounceRate');
-  const pctSearch = document.getElementById('pctSearch');
-  const barSearch = document.getElementById('barSearch');
-  const pctDirect = document.getElementById('pctDirect');
-  const barDirect = document.getElementById('barDirect');
-  const pctSocial = document.getElementById('pctSocial');
-  const barSocial = document.getElementById('barSocial');
-  const pctReferral = document.getElementById('pctReferral');
-  const barReferral = document.getElementById('barReferral');
+// Removed estimated traffic elements (guaranteeing 100% genuine data)
   const dnsNameserversList = document.getElementById('dnsNameserversList');
   const dnsMxList = document.getElementById('dnsMxList');
   const auditTabs = document.getElementById('auditTabs');
@@ -472,11 +459,25 @@
     // 6. Technologies Stack
     const tech = extractTechStack(html, headers, dns);
 
-    // 7. Domain Authority & SEO Scoring
-    const seoMetrics = calculateDaPa(domain, html, dns, schemaTypes);
+    // 7. Corporate Mail & DNS Host Extraction (100% Genuine from Google DoH DNS)
+    const mailHost = (dns.mx && dns.mx.length > 0)
+      ? (dns.mx.some(m => m.includes('google') || m.includes('l.google.com')) ? 'Google Workspace'
+        : (dns.mx.some(m => m.includes('outlook') || m.includes('microsoft')) ? 'Microsoft 365'
+        : (dns.mx.some(m => m.includes('zoho')) ? 'Zoho Mail'
+        : (dns.mx.some(m => m.includes('pphosted') || m.includes('proofpoint')) ? 'Proofpoint'
+        : (dns.mx.some(m => m.includes('migx.in')) ? 'Rediff Mail'
+        : 'Active Mail Exchange')))))
+      : 'No MX Configured';
 
-    // 8. Traffic Estimates
-    const traffic = estimateTraffic(seoMetrics.da, domain);
+    const nsHost = (dns.ns && dns.ns.length > 0)
+      ? (dns.ns.some(n => n.includes('cloudflare')) ? 'Cloudflare DNS'
+        : (dns.ns.some(n => n.includes('awsdns')) ? 'AWS Route 53'
+        : (dns.ns.some(n => n.includes('domaincontrol') || n.includes('godaddy')) ? 'GoDaddy DNS'
+        : (dns.ns.some(n => n.includes('hostinger')) ? 'Hostinger DNS'
+        : (dns.ns.some(n => n.includes('namecheap')) ? 'Namecheap DNS'
+        : (dns.ns.some(n => n.includes('google')) ? 'Google Cloud DNS'
+        : 'Authoritative DNS'))))))
+      : 'Standard DNS';
 
     return {
       domain,
@@ -494,8 +495,8 @@
       maps,
       ads,
       tech,
-      seoMetrics,
-      traffic,
+      mailHost,
+      nsHost,
       dns
     };
   }
@@ -687,70 +688,6 @@
     };
   }
 
-  // Calculate DA / PA & SEO Score
-  function calculateDaPa(domain, html, dns, schemaTypes) {
-    let da = 35; // base
-
-    // TLD Weight
-    if (domain.endsWith('.gov.in') || domain.endsWith('.edu') || domain.endsWith('.gov')) da += 35;
-    else if (domain.endsWith('.org') || domain.endsWith('.ac.in')) da += 20;
-    else if (domain.endsWith('.com') || domain.endsWith('.in')) da += 15;
-
-    // Domain length & brand power
-    const namePart = domain.split('.')[0];
-    if (namePart.length <= 6) da += 10;
-    else if (namePart.length <= 10) da += 5;
-
-    // Technical signals
-    if (html.length > 50000) da += 10;
-    if (schemaTypes.length > 0) da += 8;
-    if (html.includes('google-analytics') || html.includes('gtag')) da += 5;
-    if (dns.ns.length >= 2) da += 5;
-
-    da = Math.min(95, Math.max(12, da));
-    const pa = Math.min(98, Math.max(15, Math.round(da * 0.92 + 4)));
-    const spam = da > 60 ? '1% (Low Risk)' : (da > 30 ? '2% (Low Risk)' : '6% (Medium Risk)');
-
-    return { da, pa, spam };
-  }
-
-  // Estimate Monthly Traffic & Ranks
-  function estimateTraffic(da, domain) {
-    let monthlyVisits = '15K - 30K';
-    let globalTier = 'Top 500K';
-    let duration = '1m 50s';
-    let bounce = '48.2%';
-
-    if (da >= 80) {
-      monthlyVisits = '50M - 150M+';
-      globalTier = 'Top 1,000';
-      duration = '4m 30s';
-      bounce = '34.5%';
-    } else if (da >= 65) {
-      monthlyVisits = '5M - 20M';
-      globalTier = 'Top 15,000';
-      duration = '3m 15s';
-      bounce = '38.0%';
-    } else if (da >= 50) {
-      monthlyVisits = '500K - 2.5M';
-      globalTier = 'Top 50,000';
-      duration = '2m 45s';
-      bounce = '41.8%';
-    } else if (da >= 35) {
-      monthlyVisits = '80K - 300K';
-      globalTier = 'Top 150,000';
-      duration = '2m 10s';
-      bounce = '45.0%';
-    }
-
-    return {
-      monthlyVisits,
-      globalTier,
-      duration,
-      bounce
-    };
-  }
-
   // Render Dashboard
   function renderDashboard(d) {
     if (!analyzerDashboard) return;
@@ -761,24 +698,34 @@
     dispTitle.innerText = d.title || 'Untitled Document';
     siteFavicon.innerHTML = `<img src="https://www.google.com/s2/favicons?domain=${d.domain}&sz=64" alt="Favicon" style="width: 28px; height: 28px; border-radius: 6px;" onerror="this.src=''; this.innerText='🌐';">`;
 
-    // Bento 1: DA / PA
-    scoreDa.innerText = d.seoMetrics.da;
-    scorePa.innerText = d.seoMetrics.pa;
-    scoreSpam.innerText = d.seoMetrics.spam;
-    badgeDa.innerText = d.seoMetrics.da >= 60 ? '🌟 High Authority' : (d.seoMetrics.da >= 35 ? '👍 Good' : '🌱 Growing');
+    // Bento 1: Meta Ads & Tracking Status (100% Genuine)
+    if (scoreMetaStatus) {
+      scoreMetaStatus.innerText = d.ads.hasMetaPixel ? 'Active Pixel' : 'No Pixel';
+      scoreMetaStatus.style.color = d.ads.hasMetaPixel ? '#1877f2' : '#6b7280';
+    }
+    if (badgeMetaStatus) {
+      badgeMetaStatus.innerText = d.ads.hasMetaPixel ? 'Live Tracker' : 'Inactive';
+      badgeMetaStatus.style.background = d.ads.hasMetaPixel ? '#eef2ff' : '#f3f4f6';
+      badgeMetaStatus.style.color = d.ads.hasMetaPixel ? '#4338ca' : '#6b7280';
+    }
+    if (scorePixelIdText) {
+      scorePixelIdText.innerText = d.ads.pixelId || 'None';
+    }
 
-    // Bento 2: Traffic
-    scoreTraffic.innerText = d.traffic.monthlyVisits;
-    scoreRankTier.innerText = d.traffic.globalTier;
-    scoreBounce.innerText = d.traffic.bounce;
+    // Bento 2: Core Platform & E-commerce (100% Genuine)
+    if (scorePlatform) scorePlatform.innerText = d.tech.platform || 'Custom';
+    if (scoreCdn) scoreCdn.innerText = d.tech.cdn || 'Standard Web Server';
 
-    // Bento 3: Platform
-    scorePlatform.innerText = d.tech.platform;
-    scoreCdn.innerText = d.tech.cdn;
+    // Bento 3: Social & Google Maps Presence (100% Genuine)
+    if (scoreSocialCount) scoreSocialCount.innerText = d.socials.length;
+    if (scoreMapsFound) {
+      scoreMapsFound.innerText = d.maps.hasMaps ? 'Google Maps Found' : 'Not Embedded';
+      scoreMapsFound.style.color = d.maps.hasMaps ? '#16a34a' : 'var(--navy)';
+    }
 
-    // Bento 4: Meta Ads
-    scoreAdsCount.innerText = d.ads.totalPixelsCount;
-    scoreAdsDesc.innerText = d.ads.hasMetaPixel ? 'Meta Pixel Active' : 'No Meta Pixel Found';
+    // Bento 4: Mail Server & Cloud DNS (100% Genuine from Google DoH DNS)
+    if (scoreMailHost) scoreMailHost.innerText = d.mailHost;
+    if (scoreNameserver) scoreNameserver.innerText = d.nsHost;
 
     // Meta Ads Banner Links
     if (btnMetaAdLibrary) btnMetaAdLibrary.href = d.ads.metaAdLibraryUrl;
@@ -796,37 +743,35 @@
     renderContacts(d.emails, d.phones);
 
     // Tab 2: SEO Tags
-    seoTitleBox.innerText = d.title;
-    titleCharCount.innerText = `${(d.title || '').length} chars`;
-    seoDescBox.innerText = d.description;
-    descCharCount.innerText = `${(d.description || '').length} chars`;
+    if (seoTitleBox) seoTitleBox.innerText = d.title;
+    if (titleCharCount) titleCharCount.innerText = `${(d.title || '').length} chars`;
+    if (seoDescBox) seoDescBox.innerText = d.description;
+    if (descCharCount) descCharCount.innerText = `${(d.description || '').length} chars`;
 
-    serpSiteName.innerText = d.domain;
-    serpBreadcrumb.innerText = `https://${d.domain}`;
-    serpTitle.innerText = d.title;
-    serpDesc.innerText = d.description;
+    if (serpSiteName) serpSiteName.innerText = d.domain;
+    if (serpBreadcrumb) serpBreadcrumb.innerText = `https://${d.domain}`;
+    if (serpTitle) serpTitle.innerText = d.title;
+    if (serpDesc) serpDesc.innerText = d.description;
 
-    countH1.innerText = d.h1Count;
-    countH2.innerText = d.h2Count;
-    countSchema.innerText = d.schemaTypes.length > 0 ? d.schemaTypes.join(', ') : 'None';
+    if (countH1) countH1.innerText = d.h1Count;
+    if (countH2) countH2.innerText = d.h2Count;
+    if (countSchema) countSchema.innerText = d.schemaTypes.length > 0 ? d.schemaTypes.join(', ') : 'None';
 
     // Tab 3: Tech Stack Grid
     renderTechGrid(d.tech.list);
 
-    // Tab 4: Traffic Tab
-    statMonthlyVisits.innerText = d.traffic.monthlyVisits;
-    statGlobalTier.innerText = d.traffic.globalTier;
-    statDuration.innerText = d.traffic.duration;
-    statBounceRate.innerText = d.traffic.bounce;
+    // Tab 4: DNS (Google Public DoH)
+    if (dnsNameserversList) {
+      dnsNameserversList.innerHTML = d.dns.ns && d.dns.ns.length > 0
+        ? d.dns.ns.map(n => `<div>• ${escapeHtml(n)}</div>`).join('')
+        : '<div>No public NS records found.</div>';
+    }
 
-    // Tab 5: DNS
-    dnsNameserversList.innerHTML = d.dns.ns.length > 0
-      ? d.dns.ns.map(n => `<div>• ${escapeHtml(n)}</div>`).join('')
-      : '<div>No public NS records found.</div>';
-
-    dnsMxList.innerHTML = d.dns.mx.length > 0
-      ? d.dns.mx.map(m => `<div>• ${escapeHtml(m)}</div>`).join('')
-      : '<div>No public MX mail records found.</div>';
+    if (dnsMxList) {
+      dnsMxList.innerHTML = d.dns.mx && d.dns.mx.length > 0
+        ? d.dns.mx.map(m => `<div>• ${escapeHtml(m)}</div>`).join('')
+        : '<div>No public MX mail records found.</div>';
+    }
   }
 
   // Render Social Profiles

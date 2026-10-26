@@ -36,7 +36,7 @@
 - **Password Generator:** Cryptographically secure character generator for portal logins.
 
 ### 5. 🔍 SEO, Webmaster & Marketing Intelligence Tools
-- **All-in-One Website Analyzer & Auditor:** Full 360° audit: DA/PA (Moz-style), estimated monthly traffic, live Meta & Facebook Ads discovery, social profiles, Google Maps presence, customer support contacts, and tech stack.
+- **All-in-One Website Analyzer & Auditor:** 360° verified intelligence audit: live Meta & Facebook Ads discovery (Meta Ad Library), official social media handles, Google Maps presence, customer support contacts, technology stack, and cloud DNS.
 - **Website Tech Stack & Shopify Detector:** Wappalyzer-alternative detecting Shopify apps, WordPress, React, Next.js, hosting, CDN, and 200+ technologies.
 - **Domain Whois & DNS Lookup:** Live lookup for A, MX, NS, TXT records, cloud provider, and domain registration metrics.
 - **DA / PA & Moz Spam Score Checker:** Instant domain authority, page authority, and spam risk calculation.

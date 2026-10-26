@@ -406,13 +406,13 @@
             {
       id: 'website-analyzer',
       name: 'All-in-One Website Analyzer & Auditor',
-      description: 'Full 360° audit: DA/PA, estimated traffic, live Meta & Facebook ads, social profiles, Google Maps, and tech stack',
+      description: '360° verified audit: active Meta & Facebook ads, social profiles, Google Maps, contact details, tech stack & DNS',
       category: 'seo',
       categoryLabel: 'SEO & Marketing',
       icon: '🔬',
       iconBg: 'calc-tools',
       url: 'tools/website-analyzer.html',
-      keywords: ['website analyzer', 'site audit', 'da pa', 'meta ads', 'facebook ads library', 'instagram finder', 'google maps', 'traffic estimate', 'competitor analysis', 'tech stack'],
+      keywords: ['website analyzer', 'site audit', 'meta ads', 'facebook ads library', 'instagram finder', 'google maps', 'tech stack', 'competitor analysis', 'email finder', 'phone finder'],
       badge: 'Popular'
     },
     {
