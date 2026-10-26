@@ -1163,6 +1163,9 @@
     initBackToTop();
     initFAQ();
     initFeedbackSystem();
+    // Universal smooth scroll chaining & wheel trap prevention
+    initScrollChaining();
+
 
     // Live Hero Tool Counter (always dynamically reflects total tools in catalog)
     const heroToolStat = document.getElementById('heroToolCount') || document.querySelector('.hero-stat:first-child .hero-stat-number');
@@ -1181,6 +1184,29 @@
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
+  }
+
+  
+  // ── Universal Smooth Scroll Chaining & Wheel Trap Prevention ──
+  function initScrollChaining() {
+    window.addEventListener('wheel', function (e) {
+      // 1. If active element is a number input, blur it so wheel doesn't get trapped changing values
+      if (document.activeElement && document.activeElement.type === 'number') {
+        document.activeElement.blur();
+      }
+
+      // 2. If scrolling over a sticky preview/output container or preview panel
+      const stickyCol = e.target.closest && e.target.closest('.split-layout > :nth-child(2), .tool-split-output, .qr-preview-column, .preview-panel');
+      if (stickyCol) {
+        const isAtBottom = stickyCol.scrollTop + stickyCol.clientHeight >= stickyCol.scrollHeight - 2;
+        const isAtTop = stickyCol.scrollTop <= 0;
+        const cannotScroll = stickyCol.scrollHeight <= stickyCol.clientHeight;
+
+        if (cannotScroll || (e.deltaY > 0 && isAtBottom) || (e.deltaY < 0 && isAtTop)) {
+          window.scrollBy({ top: e.deltaY, left: 0, behavior: 'auto' });
+        }
+      }
+    }, { passive: true });
   }
 
   // Expose TOOLS for other scripts

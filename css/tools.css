@@ -835,7 +835,7 @@
   top: calc(var(--header-height, 72px) + 16px);
   max-height: calc(100vh - var(--header-height, 72px) - 24px);
   overflow-y: auto;
-  overscroll-behavior: contain;
+  overscroll-behavior: auto;
   padding-right: 4px;
   scrollbar-width: thin;
 }
@@ -908,7 +908,7 @@
   top: calc(var(--header-height, 72px) + 16px);
   max-height: calc(100vh - var(--header-height, 72px) - 24px);
   overflow-y: auto;
-  overscroll-behavior: contain;
+  overscroll-behavior: auto;
   padding-right: 4px;
   scrollbar-width: thin;
 }
@@ -1794,7 +1794,7 @@ table {
     top: calc(var(--header-height, 72px) + 16px);
     max-height: calc(100vh - var(--header-height, 72px) - 24px);
     overflow-y: auto;
-    overscroll-behavior: contain;
+    overscroll-behavior: auto;
     padding-right: 4px;
     scrollbar-width: thin;
   }
@@ -3840,4 +3840,15 @@ body.dark .ocr-pane-label {
   .ocr-image-wrapper {
     max-height: 220px;
   }
+}
+
+
+/* ───────── PREVENT MOUSE WHEEL TRAPPING ───────── */
+.split-layout > :nth-child(2),
+.qr-preview-column,
+.tool-split-output,
+.preview-panel,
+.tool-workspace,
+.ocr-card {
+  overscroll-behavior: auto !important;
 }

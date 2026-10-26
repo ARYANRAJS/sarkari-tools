@@ -1834,3 +1834,14 @@ body.dark div[style*="background: #f1f5f9"],
 body.dark div[style*="background: #e5e7eb"] {
   background: #24324B !important;
 }
+
+
+/* Prevent number inputs from capturing wheel when scrolling over forms */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
