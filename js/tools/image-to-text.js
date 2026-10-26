@@ -1,7 +1,8 @@
 /**
  * AllToolsInOne - Multi-Image to Text (OCR) Converter
  * High-accuracy client-side Optical Character Recognition
- * Supports Batch processing, English, Hindi (हिंदी), and Live Text Editing
+ * Powered by Tesseract.js v5 with Sauvola Adaptive Preprocessing,
+ * Auto-Deskew, Blacklist Filters, and AI-grade Post-Processing Cleaner
  */
 
 (function () {
@@ -10,7 +11,7 @@
   // State
   let items = [];
   let activeWorker = null;
-  let activeWorkerLang = null;
+  let activeWorkerKey = null;
   let isProcessingBatch = false;
 
   // DOM Elements
@@ -39,9 +40,16 @@
   const replaceInput = document.getElementById('replaceInput');
   const btnApplyReplace = document.getElementById('btnApplyReplace');
   const replaceCountMsg = document.getElementById('replaceCountMsg');
+
+  // Controls
   const ocrLanguage = document.getElementById('ocrLanguage');
   const ocrPreprocessMode = document.getElementById('ocrPreprocessMode');
+  const ocrCleanMode = document.getElementById('ocrCleanMode');
+  const ocrPsmMode = document.getElementById('ocrPsmMode');
+  const ocrDeskew = document.getElementById('ocrDeskew');
   const ocrDelimiter = document.getElementById('ocrDelimiter');
+
+  // Modal
   const imageModal = document.getElementById('imageModal');
   const modalImg = document.getElementById('modalImg');
   const modalTitle = document.getElementById('modalTitle');
@@ -149,15 +157,19 @@
             dimensions: { width: img.naturalWidth, height: img.naturalHeight },
             originalDataUrl: dataUrl,
             enhancedDataUrl: null,
-            status: 'ready', // 'ready', 'processing', 'done', 'error'
-            progress: 0,
-            statusText: 'Ready',
             extractedText: '',
+            rawText: '',
+            cleanedText: '',
+            isShowingClean: true,
+            status: 'ready', // 'ready' | 'processing' | 'done' | 'error'
+            statusText: 'Ready to extract',
+            progress: 0,
             confidence: 0,
             wordsCount: 0,
             charsCount: 0,
             error: null
           };
+
           items.push(item);
           renderCard(item);
           updateBatchBar();
@@ -166,114 +178,116 @@
       };
       reader.readAsDataURL(file);
     });
+
+    showToast(`Added ${validImageFiles.length} image${validImageFiles.length > 1 ? 's' : ''}`, 'info');
   }
 
-  // Clipboard Paste
+  // Paste from clipboard
   async function pasteFromClipboard() {
     try {
       const clipboardItems = await navigator.clipboard.read();
       let foundImage = false;
-      for (const cbItem of clipboardItems) {
-        for (const type of cbItem.types) {
-          if (type.startsWith('image/')) {
-            const blob = await cbItem.getType(type);
-            const file = new File([blob], `pasted_image_${Date.now()}.${type.split('/')[1] || 'png'}`, { type });
-            handleFiles([file]);
-            foundImage = true;
-          }
+
+      for (const item of clipboardItems) {
+        const imageType = item.types.find(type => type.startsWith('image/'));
+        if (imageType) {
+          const blob = await item.getType(imageType);
+          const file = new File([blob], `Pasted_Image_${Date.now()}.${imageType.split('/')[1] || 'png'}`, { type: imageType });
+          handleFiles([file]);
+          foundImage = true;
+          break;
         }
       }
+
       if (!foundImage) {
-        showToast('No image found in clipboard. Use PrintScreen or Copy Image first.', 'error');
+        showToast('No image data found in clipboard. Copy an image and try again.', 'error');
       }
     } catch (err) {
-      showToast('Clipboard access denied or unsupported. Use Ctrl+V on the page.', 'error');
+      showToast('Clipboard access denied or not supported in this browser.', 'error');
     }
   }
 
   function handleGlobalPaste(e) {
-    if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
-    const itemsList = e.clipboardData ? e.clipboardData.items : [];
-    const files = [];
-    for (let i = 0; i < itemsList.length; i++) {
-      if (itemsList[i].type.indexOf('image') !== -1) {
-        const file = itemsList[i].getAsFile();
-        if (file) files.push(file);
+    if (!e.clipboardData || !e.clipboardData.items) return;
+    const pastedFiles = [];
+    for (let i = 0; i < e.clipboardData.items.length; i++) {
+      const item = e.clipboardData.items[i];
+      if (item.type.indexOf('image') !== -1) {
+        const file = item.getAsFile();
+        if (file) pastedFiles.push(file);
       }
     }
-    if (files.length > 0) {
-      handleFiles(files);
-      showToast(`Pasted ${files.length} image(s) from clipboard!`, 'success');
+    if (pastedFiles.length > 0) {
+      e.preventDefault();
+      handleFiles(pastedFiles);
     }
   }
 
-  // Load Sample Images (1 English Document + 1 Hindi Form)
+  // Load High-Res Sample Images (English Exam Notice & Hindi Admit Card)
   function loadSampleImages() {
-    // Generate Sample 1: English Certificate / Notice
     const c1 = document.createElement('canvas');
-    c1.width = 900;
-    c1.height = 420;
+    c1.width = 1200;
+    c1.height = 550;
     const ctx1 = c1.getContext('2d');
     ctx1.fillStyle = '#ffffff';
     ctx1.fillRect(0, 0, c1.width, c1.height);
 
-    // Decorative header
     ctx1.fillStyle = '#0f172a';
-    ctx1.font = 'bold 26px sans-serif';
-    ctx1.fillText('GOVERNMENT OF INDIA — STAFF SELECTION COMMISSION', 40, 50);
+    ctx1.font = 'bold 30px sans-serif';
+    ctx1.fillText('GOVERNMENT OF INDIA — STAFF SELECTION COMMISSION', 50, 60);
 
-    ctx1.fillStyle = '#f59e0b';
-    ctx1.fillRect(40, 65, 820, 3);
+    ctx1.fillStyle = '#2563eb';
+    ctx1.fillRect(50, 75, 1100, 4);
 
     ctx1.fillStyle = '#1e293b';
-    ctx1.font = 'bold 20px sans-serif';
-    ctx1.fillText('OFFICIAL NOTICE: Combined Graduate Level Examination (CGL 2026)', 40, 105);
+    ctx1.font = 'bold 24px sans-serif';
+    ctx1.fillText('OFFICIAL NOTICE: Combined Graduate Level Examination (CGL 2026)', 50, 120);
 
     ctx1.fillStyle = '#334155';
-    ctx1.font = '16px sans-serif';
-    ctx1.fillText('1. Online Registration Commences: 15-November-2026', 40, 150);
-    ctx1.fillText('2. Closing Date for Submission: 15-December-2026 (23:00 Hrs)', 40, 185);
-    ctx1.fillText('3. Minimum Age Requirement: 18 Years as on Cutoff Date', 40, 220);
-    ctx1.fillText('4. Essential Educational Qualification: Bachelor Degree in Any Stream', 40, 255);
-    ctx1.fillText('5. Candidate must upload passport photograph and digital signature.', 40, 290);
+    ctx1.font = '19px sans-serif';
+    ctx1.fillText('• 1. Online Registration Commences: 15-November-2026', 50, 180);
+    ctx1.fillText('• 2. Closing Date for Submission: 15-December-2026 (23:00 Hrs)', 50, 225);
+    ctx1.fillText('• 3. Minimum Age Requirement: 18 Years as on Cutoff Date', 50, 270);
+    ctx1.fillText('• 4. Essential Educational Qualification: Bachelor Degree in Any Stream', 50, 315);
+    ctx1.fillText('• 5. Candidate must upload passport photograph and digital signature.', 50, 360);
 
     ctx1.fillStyle = '#64748b';
-    ctx1.font = 'italic 14px sans-serif';
-    ctx1.fillText('For official syllabus and exam centers visit: https://sarkaritools.in', 40, 350);
+    ctx1.font = 'italic 16px sans-serif';
+    ctx1.fillText('For official syllabus and exam centers visit: https://sarkaritools.in', 50, 440);
 
     c1.toBlob(blob => {
       const file1 = new File([blob], 'Sample_English_Notice.png', { type: 'image/png' });
 
-      // Generate Sample 2: Hindi Sarkari Exam Application Form
+      // Sample 2: Hindi Form
       const c2 = document.createElement('canvas');
-      c2.width = 900;
-      c2.height = 420;
+      c2.width = 1200;
+      c2.height = 550;
       const ctx2 = c2.getContext('2d');
       ctx2.fillStyle = '#ffffff';
       ctx2.fillRect(0, 0, c2.width, c2.height);
 
       ctx2.fillStyle = '#0f172a';
-      ctx2.font = 'bold 26px sans-serif';
-      ctx2.fillText('कर्मचारी चयन आयोग — भारत सरकार (प्रवेश पत्र)', 40, 50);
+      ctx2.font = 'bold 30px sans-serif';
+      ctx2.fillText('कर्मचारी चयन आयोग — भारत सरकार (प्रवेश पत्र)', 50, 60);
 
       ctx2.fillStyle = '#16a34a';
-      ctx2.fillRect(40, 65, 820, 3);
+      ctx2.fillRect(50, 75, 1100, 4);
 
       ctx2.fillStyle = '#1e293b';
-      ctx2.font = 'bold 20px sans-serif';
-      ctx2.fillText('उम्मीदवार विवरण एवं महत्वपूर्ण दिशा-निर्देश 2026', 40, 105);
+      ctx2.font = 'bold 24px sans-serif';
+      ctx2.fillText('उम्मीदवार विवरण एवं महत्वपूर्ण दिशा-निर्देश 2026', 50, 120);
 
       ctx2.fillStyle = '#334155';
-      ctx2.font = '16px sans-serif';
-      ctx2.fillText('१. अभ्यर्थी का नाम: राहुल कुमार शर्मा (Rahul Kumar Sharma)', 40, 150);
-      ctx2.fillText('२. अनुक्रमांक / रोल नंबर: 220108945672', 40, 185);
-      ctx2.fillText('३. परीक्षा केंद्र: राजकीय इंटर कॉलेज, सिविल लाइंस', 40, 220);
-      ctx2.fillText('४. परीक्षा समय: प्रातः 09:30 बजे से 11:30 बजे तक', 40, 255);
-      ctx2.fillText('५. आवश्यक दस्तावेज: मूल आधार कार्ड एवं दो पासपोर्ट साइज फोटो अनिवार्य हैं।', 40, 290);
+      ctx2.font = '19px sans-serif';
+      ctx2.fillText('• १. अभ्यर्थी का नाम: राहुल कुमार शर्मा (Rahul Kumar Sharma)', 50, 180);
+      ctx2.fillText('• २. अनुक्रमांक / रोल नंबर: 220108945672', 50, 225);
+      ctx2.fillText('• ३. परीक्षा केंद्र: राजकीय इंटर कॉलेज, सिविल लाइंस', 50, 270);
+      ctx2.fillText('• ४. परीक्षा समय: प्रातः 09:30 बजे से 11:30 बजे तक', 50, 315);
+      ctx2.fillText('• ५. आवश्यक दस्तावेज: मूल आधार कार्ड एवं दो पासपोर्ट साइज फोटो अनिवार्य हैं।', 50, 360);
 
       ctx2.fillStyle = '#dc2626';
-      ctx2.font = 'bold 15px sans-serif';
-      ctx2.fillText('विशेष सूचना: परीक्षा कक्ष में मोबाइल फोन एवं इलेक्ट्रॉनिक घड़ी पूर्णतः वर्जित है।', 40, 350);
+      ctx2.font = 'bold 17px sans-serif';
+      ctx2.fillText('विशेष सूचना: परीक्षा कक्ष में मोबाइल फोन एवं इलेक्ट्रॉनिक घड़ी पूर्णतः वर्जित है।', 50, 440);
 
       c2.toBlob(blob2 => {
         const file2 = new File([blob2], 'Sample_Hindi_Form.png', { type: 'image/png' });
@@ -283,96 +297,232 @@
     }, 'image/png');
   }
 
-  // Preprocessing Pipeline (Grayscale, Contrast Stretch, Binarization, Sharpening, Upscaling)
-  async function preprocessImage(imgUrl, mode) {
-    if (mode === 'none') {
-      return imgUrl;
+  // ════════════════════════════════════════════════════════════════
+  // IMAGE PREPROCESSING ENGINE (Sauvola Adaptive, Deskew, Shadows)
+  // ════════════════════════════════════════════════════════════════
+
+  // Sauvola Thresholding with 64-bit Integral Image
+  function applySauvolaThreshold(grayData, w, h, r = 25, k = 0.22, R = 128) {
+    const integral = new Float64Array((w + 1) * (h + 1));
+    const sqIntegral = new Float64Array((w + 1) * (h + 1));
+    const rowStride = w + 1;
+
+    for (let y = 0; y < h; y++) {
+      let rowSum = 0;
+      let rowSqSum = 0;
+      const grayOffset = y * w;
+      const intOffset = (y + 1) * rowStride;
+      const prevIntOffset = y * rowStride;
+
+      for (let x = 0; x < w; x++) {
+        const val = grayData[grayOffset + x];
+        rowSum += val;
+        rowSqSum += val * val;
+
+        integral[intOffset + x + 1] = integral[prevIntOffset + x + 1] + rowSum;
+        sqIntegral[intOffset + x + 1] = sqIntegral[prevIntOffset + x + 1] + rowSqSum;
+      }
     }
+
+    const binarized = new Uint8Array(w * h);
+
+    for (let y = 0; y < h; y++) {
+      const y1 = Math.max(0, y - r);
+      const y2 = Math.min(h - 1, y + r);
+
+      for (let x = 0; x < w; x++) {
+        const x1 = Math.max(0, x - r);
+        const x2 = Math.min(w - 1, x + r);
+        const count = (x2 - x1 + 1) * (y2 - y1 + 1);
+
+        const iA = y1 * rowStride + x1;
+        const iB = y1 * rowStride + (x2 + 1);
+        const iC = (y2 + 1) * rowStride + x1;
+        const iD = (y2 + 1) * rowStride + (x2 + 1);
+
+        const sum = integral[iD] - integral[iB] - integral[iC] + integral[iA];
+        const sqSum = sqIntegral[iD] - sqIntegral[iB] - sqIntegral[iC] + sqIntegral[iA];
+
+        const mean = sum / count;
+        const variance = Math.max(0, (sqSum / count) - (mean * mean));
+        const stdDev = Math.sqrt(variance);
+
+        const threshold = mean * (1.0 + k * (stdDev / R - 1.0));
+        binarized[y * w + x] = grayData[y * w + x] < threshold ? 0 : 255;
+      }
+    }
+
+    return binarized;
+  }
+
+  // Auto-Deskew Angle Estimator via Horizontal Projection Profile
+  function estimateSkewAngle(binarized, w, h) {
+    let bestAngle = 0;
+    let maxVariance = -1;
+
+    // Scan angles from -8 to +8 degrees in steps of 1 degree
+    for (let angle = -8; angle <= 8; angle += 1) {
+      const rad = (angle * Math.PI) / 180;
+      const cos = Math.cos(rad);
+      const sin = Math.sin(rad);
+
+      const rowCounts = new Float64Array(h);
+      const step = 3; // Fast sample grid
+
+      for (let y = 0; y < h; y += step) {
+        for (let x = 0; x < w; x += step) {
+          if (binarized[y * w + x] === 0) { // Black pixel (text)
+            const cx = x - w / 2;
+            const cy = y - h / 2;
+            const rotY = Math.round(cy * cos - cx * sin + h / 2);
+            if (rotY >= 0 && rotY < h) {
+              rowCounts[rotY]++;
+            }
+          }
+        }
+      }
+
+      let sum = 0;
+      let sqSum = 0;
+      for (let y = 0; y < h; y++) {
+        sum += rowCounts[y];
+        sqSum += rowCounts[y] * rowCounts[y];
+      }
+      const mean = sum / h;
+      const variance = (sqSum / h) - (mean * mean);
+
+      if (variance > maxVariance) {
+        maxVariance = variance;
+        bestAngle = angle;
+      }
+    }
+
+    return bestAngle;
+  }
+
+  // Master Preprocessor
+  async function preprocessImage(imgUrl, mode = 'sauvola', shouldDeskew = true) {
+    if (mode === 'none') return imgUrl;
 
     return new Promise((resolve) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
       img.onload = () => {
-        let targetWidth = img.naturalWidth;
-        let targetHeight = img.naturalHeight;
+        let origW = img.naturalWidth;
+        let origH = img.naturalHeight;
 
-        // Upscale small images to guarantee optimal character height (min 30-35px per character)
-        const minDim = Math.min(targetWidth, targetHeight);
-        let scale = 1;
+        // Optimal dimension scaling (1600px - 2200px max, min 900px for small fonts)
+        let scale = 1.0;
+        const maxDim = Math.max(origW, origH);
+        const minDim = Math.min(origW, origH);
+
         if (mode === 'upscale' || minDim < 800) {
           scale = minDim < 500 ? 2.2 : (minDim < 800 ? 1.6 : 1.3);
+        } else if (maxDim > 2200) {
+          scale = 2000 / maxDim;
         }
 
-        targetWidth = Math.round(targetWidth * scale);
-        targetHeight = Math.round(targetHeight * scale);
+        const targetW = Math.round(origW * scale);
+        const targetH = Math.round(origH * scale);
 
         const canvas = preprocessCanvas || document.createElement('canvas');
-        canvas.width = targetWidth;
-        canvas.height = targetHeight;
+        canvas.width = targetW;
+        canvas.height = targetH;
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
-        ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+        ctx.drawImage(img, 0, 0, targetW, targetH);
 
-        const imgData = ctx.getImageData(0, 0, targetWidth, targetHeight);
+        const imgData = ctx.getImageData(0, 0, targetW, targetH);
         const data = imgData.data;
-        const len = data.length;
+        const totalPixels = targetW * targetH;
 
-        // Step 1: Grayscale + Find min/max for contrast stretching
-        let minLum = 255;
-        let maxLum = 0;
-        const lumValues = new Uint8Array(targetWidth * targetHeight);
-
-        for (let i = 0, p = 0; i < len; i += 4, p++) {
-          // Standard ITU-R BT.601 luminance
-          const lum = Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
-          lumValues[p] = lum;
-          if (lum < minLum) minLum = lum;
-          if (lum > maxLum) maxLum = lum;
+        // Grayscale conversion
+        const gray = new Uint8Array(totalPixels);
+        for (let i = 0, p = 0; i < data.length; i += 4, p++) {
+          gray[p] = Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
         }
 
-        // Contrast Stretch Normalization
-        const lumRange = maxLum - minLum || 1;
-        for (let p = 0; p < lumValues.length; p++) {
-          lumValues[p] = Math.min(255, Math.max(0, Math.round(((lumValues[p] - minLum) / lumRange) * 255)));
-        }
+        let finalBinary = null;
 
-        // Step 2: Mode-specific filtering
-        if (mode === 'binarize') {
-          // Otsu's optimal global thresholding
-          const threshold = computeOtsuThreshold(lumValues);
-          for (let i = 0, p = 0; i < len; i += 4, p++) {
-            const val = lumValues[p] < threshold ? 0 : 255;
-            data[i] = val;
-            data[i + 1] = val;
-            data[i + 2] = val;
+        if (mode === 'sauvola' || mode === 'upscale') {
+          // Sauvola Adaptive Binarization (Eliminates all shadows, keeps sharp black letters)
+          const radius = Math.max(15, Math.min(32, Math.round(targetW / 40)));
+          finalBinary = applySauvolaThreshold(gray, targetW, targetH, radius, 0.22, 128);
+
+          for (let p = 0, i = 0; p < totalPixels; p++, i += 4) {
+            const v = finalBinary[p];
+            data[i] = v;
+            data[i + 1] = v;
+            data[i + 2] = v;
           }
-        } else if (mode === 'photo') {
-          // Shadow reduction + adaptive contrast
-          for (let i = 0, p = 0; i < len; i += 4, p++) {
-            let val = lumValues[p];
-            // S-curve contrast boost
-            val = val < 128 ? (2 * val * val) / 255 : 255 - (2 * (255 - val) * (255 - val)) / 255;
-            data[i] = val;
-            data[i + 1] = val;
-            data[i + 2] = val;
+        } else if (mode === 'camera') {
+          // Camera Photo Illumination Flattener (Local Background Division)
+          const step = 8;
+          const bgW = Math.ceil(targetW / step);
+          const bgH = Math.ceil(targetH / step);
+          const bg = new Float32Array(bgW * bgH);
+
+          // Subsampled mean
+          for (let by = 0; by < bgH; by++) {
+            for (let bx = 0; bx < bgW; bx++) {
+              let sum = 0, count = 0;
+              for (let sy = 0; sy < step && by * step + sy < targetH; sy++) {
+                for (let sx = 0; sx < step && bx * step + sx < targetW; sx++) {
+                  sum += gray[(by * step + sy) * targetW + (bx * step + sx)];
+                  count++;
+                }
+              }
+              bg[by * bgW + bx] = sum / (count || 1);
+            }
           }
-        } else {
-          // 'auto' or 'upscale': Grayscale with enhanced contrast & sharpening
-          for (let i = 0, p = 0; i < len; i += 4, p++) {
-            const val = lumValues[p];
-            data[i] = val;
-            data[i + 1] = val;
-            data[i + 2] = val;
+
+          // Division & contrast stretch
+          for (let y = 0; y < targetH; y++) {
+            const by = Math.min(bgH - 1, Math.floor(y / step));
+            for (let x = 0; x < targetW; x++) {
+              const bx = Math.min(bgW - 1, Math.floor(x / step));
+              const localBg = Math.max(30, bg[by * bgW + bx]);
+              const p = y * targetW + x;
+              const normalized = Math.min(255, Math.max(0, Math.round((gray[p] / localBg) * 235)));
+              const idx = p * 4;
+              data[idx] = normalized;
+              data[idx + 1] = normalized;
+              data[idx + 2] = normalized;
+            }
+          }
+        } else if (mode === 'binarize') {
+          // Otsu's Global Threshold
+          const threshold = computeOtsuThreshold(gray);
+          for (let p = 0, i = 0; p < totalPixels; p++, i += 4) {
+            const v = gray[p] < threshold ? 0 : 255;
+            data[i] = v;
+            data[i + 1] = v;
+            data[i + 2] = v;
           }
         }
 
         ctx.putImageData(imgData, 0, 0);
 
-        // Optional Step 3: Apply Sharpen Convolution for crisp Hindi matras & English fonts
-        if (mode === 'auto' || mode === 'upscale') {
-          applySharpenKernel(ctx, targetWidth, targetHeight);
+        // Auto-Deskew & Leveling
+        if (shouldDeskew && finalBinary) {
+          const skewAngle = estimateSkewAngle(finalBinary, targetW, targetH);
+          if (Math.abs(skewAngle) >= 1) {
+            const rotCanvas = document.createElement('canvas');
+            rotCanvas.width = targetW;
+            rotCanvas.height = targetH;
+            const rotCtx = rotCanvas.getContext('2d');
+            rotCtx.fillStyle = '#ffffff';
+            rotCtx.fillRect(0, 0, targetW, targetH);
+
+            rotCtx.translate(targetW / 2, targetH / 2);
+            rotCtx.rotate((-skewAngle * Math.PI) / 180);
+            rotCtx.drawImage(canvas, -targetW / 2, -targetH / 2);
+
+            resolve(rotCanvas.toDataURL('image/png'));
+            return;
+          }
         }
 
         resolve(canvas.toDataURL('image/png'));
@@ -382,22 +532,15 @@
   }
 
   // Otsu's Threshold Algorithm
-  function computeOtsuThreshold(lumArray) {
+  function computeOtsuThreshold(grayArray) {
     const histogram = new Array(256).fill(0);
-    const total = lumArray.length;
-    for (let i = 0; i < total; i++) {
-      histogram[lumArray[i]]++;
-    }
+    const total = grayArray.length;
+    for (let i = 0; i < total; i++) histogram[grayArray[i]]++;
 
     let sum = 0;
     for (let t = 0; t < 256; t++) sum += t * histogram[t];
 
-    let sumB = 0;
-    let wB = 0;
-    let wF = 0;
-    let varMax = 0;
-    let threshold = 128;
-
+    let sumB = 0, wB = 0, wF = 0, varMax = 0, threshold = 128;
     for (let t = 0; t < 256; t++) {
       wB += histogram[t];
       if (wB === 0) continue;
@@ -417,40 +560,83 @@
     return threshold;
   }
 
-  // 3x3 Convolution Sharpening Kernel
-  function applySharpenKernel(ctx, w, h) {
-    try {
-      const src = ctx.getImageData(0, 0, w, h);
-      const dst = ctx.createImageData(w, h);
-      const s = src.data;
-      const d = dst.data;
+  // ════════════════════════════════════════════════════════════════
+  // AI-GRADE POST-PROCESSING TEXT CLEANER (Symbol Sanitizer & Line Preserver)
+  // ════════════════════════════════════════════════════════════════
 
-      // Sharpen kernel: [0, -1, 0, -1, 5, -1, 0, -1, 0]
-      for (let y = 1; y < h - 1; y++) {
-        for (let x = 1; x < w - 1; x++) {
-          const idx = (y * w + x) * 4;
-          const up = ((y - 1) * w + x) * 4;
-          const down = ((y + 1) * w + x) * 4;
-          const left = (y * w + (x - 1)) * 4;
-          const right = (y * w + (x + 1)) * 4;
+  function cleanOcrText(rawText, mode = 'strict') {
+    if (!rawText) return '';
+    if (mode === 'raw') return rawText;
 
-          const val = 5 * s[idx] - (s[up] + s[down] + s[left] + s[right]);
-          const clamped = Math.min(255, Math.max(0, val));
-          d[idx] = clamped;
-          d[idx + 1] = clamped;
-          d[idx + 2] = clamped;
-          d[idx + 3] = 255;
-        }
+    const lines = rawText.split(/\r?\n/);
+    const cleanedLines = [];
+
+    for (let rawLine of lines) {
+      let line = rawLine;
+
+      // 1. Remove non-printable / control characters
+      line = line.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
+
+      // 2. Strip noise symbols that Tesseract hallucinates
+      if (mode === 'strict') {
+        line = line.replace(/[~^\\|<>{}[\x5D_=+§©®¢¥°±µ¿¡]/g, ' ');
       }
-      ctx.putImageData(dst, 0, 0);
-    } catch (e) {
-      // Fallback silently if canvas security prevents convolution
+
+      // 3. Normalize quotes and apostrophes
+      line = line.replace(/[`‘’‛]/g, "'").replace(/[“”‟«»]/g, '"');
+
+      // 4. Normalize multiple punctuation
+      line = line.replace(/,{2,}/g, ',');
+      line = line.replace(/;{2,}/g, ';');
+      line = line.replace(/:{2,}/g, ':');
+      line = line.replace(/-{3,}/g, '—');
+
+      // 5. Clean up bullet points & numbers at line starts
+      line = line.replace(/^[\s]*[+*•o\-\u2022\u25E6\u25AA\u25AB\u2023"'`~^|><]\s*(\d+[.)])\s*/u, '$1 ');
+      line = line.replace(/^[\s]*[+*•o\-\u2022\u25E6\u25AA\u25AB\u2023"'`~^|><]\s+/u, '• ');
+
+      // 6. Fix spacing before punctuation (e.g. "Polity , Social" -> "Polity, Social")
+      line = line.replace(/\s+([.,;:?!%])/g, '$1');
+
+      // 7. Collapse multiple horizontal spaces
+      line = line.replace(/[ \t]+/g, ' ').trim();
+
+      // 8. Filter noise lines & strip edge junk
+      line = line.replace(/^[^a-zA-Z0-9\u0900-\u097F•"'(]+/, '').replace(/[^a-zA-Z0-9\u0900-\u097F.)"']+$/, '').trim();
+
+      // Skip lines with <= 3 chars containing no letters/digits
+      if (line.length <= 3 && !/[a-zA-Z0-9\u0900-\u097F]/.test(line)) {
+        continue;
+      }
+
+      // Skip isolated tiny garbage lines (e.g. "ie c" or border noise)
+      const words = line.split(/\s+/).filter(Boolean);
+      const hasLongWord = words.some(w => w.length >= 3);
+      const hasNumber = /\d/.test(line);
+      if (words.length <= 2 && !hasLongWord && !hasNumber) {
+        continue;
+      }
+
+      cleanedLines.push(line);
     }
+
+    let result = cleanedLines.join('\n');
+    result = result.replace(/\n{3,}/g, '\n\n').trim();
+    return result;
   }
 
-  // Get or Initialize Tesseract Worker
-  async function getTesseractWorker(lang) {
-    if (activeWorker && activeWorkerLang === lang) {
+  // ════════════════════════════════════════════════════════════════
+  // TESSERACT WORKER MANAGEMENT
+  // ════════════════════════════════════════════════════════════════
+
+  async function getTesseractWorker(lang, psmMode = 'auto') {
+    let psmCode = window.Tesseract.PSM.AUTO;
+    if (psmMode === 'single_block') psmCode = window.Tesseract.PSM.SINGLE_BLOCK;
+    else if (psmMode === 'single_column') psmCode = window.Tesseract.PSM.SINGLE_COLUMN;
+
+    const workerKey = `${lang}_${psmCode}`;
+
+    if (activeWorker && activeWorkerKey === workerKey) {
       return activeWorker;
     }
 
@@ -461,20 +647,18 @@
       activeWorker = null;
     }
 
-    // Languages: 'eng', 'hin', or 'eng+hin'
     const langArray = lang.includes('+') ? lang.split('+') : [lang];
 
     activeWorker = await window.Tesseract.createWorker(langArray, 1, {
       logger: (m) => {
-        // Broadcast logger messages to currently processing item
         if (window.__currentProcessingItem) {
           const item = window.__currentProcessingItem;
           if (m.status === 'recognizing text') {
-            item.progress = Math.round((m.progress || 0) * 100);
-            item.statusText = `Recognizing text... ${item.progress}%`;
+            item.progress = 30 + Math.round((m.progress || 0) * 65);
+            item.statusText = `Recognizing text... ${Math.round((m.progress || 0) * 100)}%`;
           } else if (m.status === 'loading language traineddata') {
-            item.progress = Math.round((m.progress || 0) * 100);
-            item.statusText = `Downloading OCR model... ${item.progress}%`;
+            item.progress = Math.round((m.progress || 0) * 25);
+            item.statusText = `Downloading OCR language model...`;
           } else if (m.status) {
             item.statusText = m.status;
           }
@@ -483,39 +667,57 @@
       }
     });
 
-    activeWorkerLang = lang;
+    // Configure Worker Parameters (Eliminates junk symbols and preserves word spacing)
+    await activeWorker.setParameters({
+      tessedit_pageseg_mode: psmCode,
+      preserve_interword_spaces: '1',
+      tessedit_char_blacklist: '§©®¢¥°±µ¿¡~^`\\|<>{}[]_=',
+    });
+
+    activeWorkerKey = workerKey;
     return activeWorker;
   }
 
-  // Process a single item
+  // ════════════════════════════════════════════════════════════════
+  // RECOGNITION PIPELINE (Process Single Item)
+  // ════════════════════════════════════════════════════════════════
+
   async function processItem(item) {
     if (item.status === 'processing') return;
 
     item.status = 'processing';
     item.progress = 5;
-    item.statusText = 'Enhancing image quality...';
+    item.statusText = 'Enhancing image & removing shadows...';
     updateCardProgress(item);
 
     window.__currentProcessingItem = item;
 
     try {
-      const mode = ocrPreprocessMode ? ocrPreprocessMode.value : 'auto';
-      const lang = ocrLanguage ? ocrLanguage.value : 'eng+hin';
+      const mode = ocrPreprocessMode ? ocrPreprocessMode.value : 'sauvola';
+      const lang = ocrLanguage ? ocrLanguage.value : 'eng';
+      const cleanMode = ocrCleanMode ? ocrCleanMode.value : 'strict';
+      const psmVal = ocrPsmMode ? ocrPsmMode.value : 'auto';
+      const shouldDeskew = ocrDeskew ? ocrDeskew.checked : true;
 
-      // 1. Run Preprocessing
-      const enhancedUrl = await preprocessImage(item.originalDataUrl, mode);
+      // 1. Run Preprocessing (Sauvola + Deskew)
+      const enhancedUrl = await preprocessImage(item.originalDataUrl, mode, shouldDeskew);
       item.enhancedDataUrl = enhancedUrl;
-      item.progress = 20;
-      item.statusText = 'Initializing OCR neural net...';
+      item.progress = 30;
+      item.statusText = 'Running neural OCR...';
       updateCardProgress(item);
 
-      // 2. Run OCR
-      const worker = await getTesseractWorker(lang);
+      // 2. Run OCR with Tesseract.js Worker
+      const worker = await getTesseractWorker(lang, psmVal);
       const ret = await worker.recognize(enhancedUrl);
 
-      // 3. Process Result
-      const text = (ret.data.text || '').trim();
-      item.extractedText = text;
+      // 3. Process & Clean Output
+      const raw = (ret.data.text || '').trim();
+      const cleaned = cleanOcrText(raw, cleanMode);
+
+      item.rawText = raw;
+      item.cleanedText = cleaned;
+      item.extractedText = cleanMode === 'raw' ? raw : cleaned;
+      item.isShowingClean = cleanMode !== 'raw';
       item.confidence = Math.round(ret.data.confidence || 0);
       item.status = 'done';
       item.progress = 100;
@@ -534,7 +736,7 @@
     }
   }
 
-  // Extract All (Batch)
+  // Batch: Extract All Text
   async function extractAllText() {
     if (items.length === 0) {
       showToast('No images to extract. Please add images first.', 'error');
@@ -571,7 +773,10 @@
     isProcessingBatch = false;
   }
 
-  // Render individual card
+  // ════════════════════════════════════════════════════════════════
+  // UI CARD RENDERING & EVENT BINDING
+  // ════════════════════════════════════════════════════════════════
+
   function renderCard(item) {
     if (emptyState) emptyState.style.display = 'none';
 
@@ -601,14 +806,14 @@
         </div>
       </div>
 
-      <!-- Individual Item Progress Bar -->
+      <!-- Item Progress Bar -->
       <div class="ocr-progress-container" id="cardProgressWrapper_${item.id}" style="display: none; height: 4px; border-radius: 0;">
         <div class="ocr-progress-fill animated" id="cardProgressBar_${item.id}" style="width: 0%;"></div>
       </div>
 
       <div class="ocr-card-body ocr-split-body">
         <div class="ocr-image-preview-pane">
-          <div class="ocr-pane-label">Original Document Photo</div>
+          <div class="ocr-pane-label">Document Photo (Preprocessed Preview)</div>
           <div class="ocr-image-wrapper">
             <img src="${item.enhancedDataUrl || item.originalDataUrl}" class="ocr-preview-img" id="bodyThumb_${item.id}" alt="${escapeHtml(item.name)}" title="Click to view full screen">
           </div>
@@ -618,10 +823,14 @@
         </div>
         <div class="ocr-text-pane">
           <div class="ocr-pane-label" style="display:flex; justify-content:space-between; align-items:center;">
-            <span>Editable Extracted Text</span>
-            <span style="font-size: 11px; color: var(--gray-500); font-weight: normal;">Live Edit as you read</span>
+            <span>Clean Extracted Text</span>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn btn-outline ocr-btn-xs" id="btnToggleClean_${item.id}" style="font-size: 11px; padding: 2px 8px; background: #eff6ff; color: #2563eb; border-color: #93c5fd;" title="Switch between Clean and Raw OCR">
+                ✨ Cleaned
+              </button>
+            </div>
           </div>
-          <textarea class="ocr-textarea" id="textarea_${item.id}" placeholder="Extracted text will appear here. You can edit, type, and format text freely...">${escapeHtml(item.extractedText)}</textarea>
+          <textarea class="ocr-textarea" id="textarea_${item.id}" placeholder="Extracted text will appear here. Clean words, line breaks, and bullet points are preserved..."></textarea>
         </div>
       </div>
 
@@ -640,8 +849,8 @@
           <button type="button" class="btn btn-outline ocr-btn-sm" id="btnDownloadSingle_${item.id}">
             ⬇️ .txt
           </button>
-          <button type="button" class="btn btn-outline ocr-btn-sm" id="btnCleanSingle_${item.id}" title="Fix spaces & line breaks">
-            🧹 Clean
+          <button type="button" class="btn btn-outline ocr-btn-sm" id="btnCleanSingle_${item.id}" title="Remove all remaining symbols and align lines">
+            🧹 Clean Symbols
           </button>
         </div>
       </div>
@@ -656,26 +865,41 @@
     const card = document.getElementById(`card_${item.id}`);
     if (!card) return;
 
-    // Thumbnail & Body preview zoom
+    // Zoom preview
     const thumb = document.getElementById(`thumb_${item.id}`);
-    thumb?.addEventListener('click', () => {
-      openModal(item.name, item.enhancedDataUrl || item.originalDataUrl);
-    });
+    thumb?.addEventListener('click', () => openModal(item.name, item.enhancedDataUrl || item.originalDataUrl));
 
     const bodyThumb = document.getElementById(`bodyThumb_${item.id}`);
-    bodyThumb?.addEventListener('click', () => {
-      openModal(item.name, item.enhancedDataUrl || item.originalDataUrl);
-    });
+    bodyThumb?.addEventListener('click', () => openModal(item.name, item.enhancedDataUrl || item.originalDataUrl));
 
     const btnViewModal = document.getElementById(`btnViewModal_${item.id}`);
-    btnViewModal?.addEventListener('click', () => {
-      openModal(item.name, item.enhancedDataUrl || item.originalDataUrl);
-    });
+    btnViewModal?.addEventListener('click', () => openModal(item.name, item.enhancedDataUrl || item.originalDataUrl));
 
-    // Textarea live editing
+    // Textarea editing
     const textarea = document.getElementById(`textarea_${item.id}`);
     textarea?.addEventListener('input', (e) => {
       item.extractedText = e.target.value;
+      updateCounts(item);
+    });
+
+    // Toggle Clean vs Raw
+    const btnToggleClean = document.getElementById(`btnToggleClean_${item.id}`);
+    btnToggleClean?.addEventListener('click', () => {
+      if (!item.rawText) return;
+      if (item.isShowingClean) {
+        item.extractedText = item.rawText;
+        item.isShowingClean = false;
+        btnToggleClean.innerText = '📜 Raw Text';
+        btnToggleClean.style.background = '#fef3c7';
+        btnToggleClean.style.color = '#92400e';
+      } else {
+        item.extractedText = item.cleanedText || cleanOcrText(item.rawText, 'strict');
+        item.isShowingClean = true;
+        btnToggleClean.innerText = '✨ Cleaned';
+        btnToggleClean.style.background = '#eff6ff';
+        btnToggleClean.style.color = '#2563eb';
+      }
+      if (textarea) textarea.value = item.extractedText;
       updateCounts(item);
     });
 
@@ -708,21 +932,16 @@
       downloadFile(safeName, text, 'text/plain;charset=utf-8');
     });
 
-    // Clean formatting
+    // Deep Clean button
     const btnClean = document.getElementById(`btnCleanSingle_${item.id}`);
     btnClean?.addEventListener('click', () => {
-      let t = item.extractedText || '';
-      // Clean multiple horizontal spaces
-      t = t.replace(/[ \t]+/g, ' ');
-      // Clean 3+ consecutive linebreaks into 2
-      t = t.replace(/\n{3,}/g, '\n\n');
-      // Trim lines
-      t = t.split('\n').map(l => l.trim()).join('\n');
-
+      let t = textarea ? textarea.value : (item.extractedText || '');
+      t = cleanOcrText(t, 'strict');
       item.extractedText = t;
+      item.cleanedText = t;
       if (textarea) textarea.value = t;
       updateCounts(item);
-      showToast('Cleaned whitespace and line breaks!', 'success');
+      showToast('Sanitized symbols & aligned line formatting!', 'success');
     });
 
     // Delete item
@@ -737,7 +956,7 @@
     });
   }
 
-  // Update Progress on Card
+  // Update Card Progress UI
   function updateCardProgress(item) {
     const pWrap = document.getElementById(`cardProgressWrapper_${item.id}`);
     const pBar = document.getElementById(`cardProgressBar_${item.id}`);
@@ -746,7 +965,7 @@
     if (pWrap && pBar) {
       if (item.status === 'processing') {
         pWrap.style.display = 'block';
-        pBar.style.width = Math.max(5, item.progress) + '%';
+        pBar.style.width = `${item.progress}%`;
       } else {
         pWrap.style.display = 'none';
       }
@@ -765,6 +984,11 @@
     const textarea = document.getElementById(`textarea_${item.id}`);
     if (textarea) {
       textarea.value = item.extractedText || '';
+    }
+
+    const bodyThumb = document.getElementById(`bodyThumb_${item.id}`);
+    if (bodyThumb && item.enhancedDataUrl) {
+      bodyThumb.src = item.enhancedDataUrl;
     }
 
     const confBadge = document.getElementById(`confBadge_${item.id}`);
@@ -884,7 +1108,6 @@
       return;
     }
 
-    // Wrap in standard Word HTML format
     const htmlContent = `
       <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
       <head>
@@ -923,12 +1146,11 @@
     btnDownloadZip.innerText = '⏳ Zipping...';
     try {
       const zip = new window.JSZip();
-      doneItems.forEach((item, idx) => {
+      doneItems.forEach((item) => {
         const safeName = item.name.replace(/\.[^/.]+$/, '') + `_extracted.txt`;
         zip.file(safeName, item.extractedText);
       });
 
-      // Add a summary file
       zip.file('_ALL_EXTRACTED_COMBINED.txt', getCombinedText());
 
       const content = await zip.generateAsync({ type: 'blob' });
@@ -947,23 +1169,22 @@
     }
   }
 
-  // Find and Replace in all textareas
+  // Find & Replace in all textareas
   function applyFindAndReplace() {
-    const findVal = findInput ? findInput.value : '';
-    const replaceVal = replaceInput ? replaceInput.value : '';
+    const findStr = findInput ? findInput.value : '';
+    const replaceStr = replaceInput ? replaceInput.value : '';
 
-    if (!findVal) {
-      showToast('Enter text to find.', 'error');
+    if (!findStr) {
+      showToast('Please enter text to find.', 'error');
       return;
     }
 
-    let matchCount = 0;
+    let totalReplaced = 0;
     items.forEach(item => {
-      if (item.extractedText && item.extractedText.includes(findVal)) {
-        const regex = new RegExp(escapeRegex(findVal), 'g');
-        const matches = (item.extractedText.match(regex) || []).length;
-        matchCount += matches;
-        item.extractedText = item.extractedText.replace(regex, replaceVal);
+      if (item.extractedText && item.extractedText.includes(findStr)) {
+        const count = (item.extractedText.split(findStr).length - 1);
+        totalReplaced += count;
+        item.extractedText = item.extractedText.replaceAll(findStr, replaceStr);
 
         const textarea = document.getElementById(`textarea_${item.id}`);
         if (textarea) textarea.value = item.extractedText;
@@ -972,40 +1193,37 @@
     });
 
     if (replaceCountMsg) {
-      replaceCountMsg.innerText = `Replaced ${matchCount} occurrence(s) across all cards.`;
+      replaceCountMsg.innerText = `Replaced ${totalReplaced} match${totalReplaced !== 1 ? 'es' : ''}`;
     }
-    showToast(`Replaced ${matchCount} occurrence(s)!`, 'success');
+    showToast(`Replaced ${totalReplaced} occurrences across all cards!`, 'success');
   }
 
   // Clear All
   function clearAll() {
     if (items.length === 0) return;
-    if (confirm('Are you sure you want to remove all uploaded images and extracted text?')) {
-      items = [];
-      ocrCardsContainer.innerHTML = '';
-      if (emptyState) {
-        ocrCardsContainer.appendChild(emptyState);
-        emptyState.style.display = 'block';
-      }
-      updateBatchBar();
-      showToast('Cleared all images.', 'info');
-    }
+    if (!confirm('Are you sure you want to remove all images and extracted text?')) return;
+
+    items = [];
+    ocrCardsContainer.innerHTML = '';
+    if (emptyState) emptyState.style.display = 'block';
+    ocrCardsContainer.appendChild(emptyState);
+    updateBatchBar();
+    showToast('Cleared all images and text.', 'info');
   }
 
-  // Modal Functions
-  function openModal(title, url) {
+  // Modal Image Viewer
+  function openModal(title, src) {
     if (!imageModal || !modalImg) return;
-    modalImg.src = url;
+    modalImg.src = src;
     if (modalTitle) modalTitle.innerText = title;
     imageModal.style.display = 'flex';
   }
 
   function closeModal() {
-    if (!imageModal) return;
-    imageModal.style.display = 'none';
+    if (imageModal) imageModal.style.display = 'none';
   }
 
-  // Helpers
+  // Clipboard copy helper
   function copyToClipboard(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text);
@@ -1021,73 +1239,42 @@
     }
   }
 
-  function downloadFile(filename, content, mimeType) {
-    const blob = new Blob([content], { type: mimeType });
+  // File download helper
+  function downloadFile(filename, content, mime) {
+    const blob = new Blob([content], { type: mime });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = filename;
-    document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
 
+  // Format bytes
   function formatBytes(bytes) {
-    if (bytes === 0) return '0 B';
+    if (!bytes || bytes === 0) return '0 B';
     const k = 1024;
     const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
   }
 
-  function escapeHtml(str) {
-    return (str || '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  function escapeRegex(string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
   }
 
   function showToast(msg, type = 'info') {
     if (window.showToast) {
       window.showToast(msg, type);
     } else {
-      // Fallback banner
-      let toast = document.getElementById('ocrToast');
-      if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'ocrToast';
-        toast.style.position = 'fixed';
-        toast.style.bottom = '24px';
-        toast.style.right = '24px';
-        toast.style.padding = '12px 20px';
-        toast.style.borderRadius = '8px';
-        toast.style.color = '#fff';
-        toast.style.fontWeight = '600';
-        toast.style.fontSize = '14px';
-        toast.style.zIndex = '99999';
-        toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-        toast.style.transition = 'opacity 0.3s';
-        document.body.appendChild(toast);
-      }
-      toast.style.background = type === 'error' ? '#ef4444' : (type === 'success' ? '#10b981' : '#3b82f6');
-      toast.innerText = msg;
-      toast.style.opacity = '1';
-      toast.style.display = 'block';
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => { toast.style.display = 'none'; }, 300);
-      }, 3000);
+      console.log(`[${type.toUpperCase()}] ${msg}`);
     }
   }
 
-  // Launch on DOM ready
+  // Initialize on load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
