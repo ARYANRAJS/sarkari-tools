@@ -403,7 +403,19 @@
       keywords: ['whois', 'domain', 'dns', 'mx', 'txt', 'ns', 'a record', 'ssl', 'spf', 'dmarc', 'domain age', 'registrar', 'host', 'seo'],
       badge: 'New'
     },
-        {
+            {
+      id: 'website-analyzer',
+      name: 'All-in-One Website Analyzer & Auditor',
+      description: 'Full 360° audit: DA/PA, estimated traffic, live Meta & Facebook ads, social profiles, Google Maps, and tech stack',
+      category: 'seo',
+      categoryLabel: 'SEO & Marketing',
+      icon: '🔬',
+      iconBg: 'calc-tools',
+      url: 'tools/website-analyzer.html',
+      keywords: ['website analyzer', 'site audit', 'da pa', 'meta ads', 'facebook ads library', 'instagram finder', 'google maps', 'traffic estimate', 'competitor analysis', 'tech stack'],
+      badge: 'Popular'
+    },
+    {
       id: 'tech-detector',
       name: 'Website Tech Stack & Shopify Detector',
       description: 'Discover CMS, Shopify apps & themes, React, Next.js, hosting, CDN, and 200+ technologies',

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All-in-One Website Analyzer — DA/PA, Traffic, Meta Ads, Socials &amp; Tech Stack | AllToolsInOne</title>
+  <meta name="description" content="Free 360-degree website analyzer. Check Domain Authority (DA/PA), estimated traffic, active Meta &amp; Facebook ads, Instagram links, Google Maps location, emails, and full technology stack.">
+  <meta name="keywords" content="website analyzer, site auditor, domain authority checker, meta ad library checker, find social media of website, extract email from website, google maps finder, tech stack lookup, website traffic estimate">
+  <meta property="og:title" content="All-in-One Website Analyzer &amp; Intelligence Auditor">
+  <meta property="og:description" content="Instant 360° website audit: DA/PA, estimated monthly traffic, live Meta/Facebook Ad Library search, social media profiles, Google Maps, emails, and tech stack.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/website-analyzer.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.2">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css?v=3.4">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "All-in-One Website Analyzer",
+    "description": "Comprehensive website intelligence tool that analyzes Domain Authority, traffic estimates, Meta ads, social media handles, Google Maps presence, and tech stack.",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container">
+      
+      <!-- Breadcrumb -->
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Website Analyzer</span>
+      </div>
+
+      <!-- Hero Header -->
+      <div class="tool-hero">
+        <div class="tool-icon" style="background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff;">🔬</div>
+        <h1>All-in-One Website Analyzer &amp; Auditor</h1>
+        <p class="tool-description">Complete 360° intelligence audit for any website or store. Inspect <strong>Domain Authority (DA/PA)</strong>, estimated traffic, <strong>active Meta &amp; Facebook Ads</strong>, Instagram &amp; social profiles, Google Maps presence, contact emails, and full technology stack.</p>
+      </div>
+
+      <!-- Input Workspace -->
+      <div class="tool-workspace" style="padding: 24px; margin-bottom: 24px;">
+        <!-- Input Mode Tabs -->
+        <div class="tool-tabs" id="analyzerInputTabs" style="margin-bottom: 20px;">
+          <button type="button" class="tool-tab active" data-mode="url">🌐 Scan Live Website URL</button>
+          <button type="button" class="tool-tab" data-mode="source">📄 Paste Page Source (HTML)</button>
+        </div>
+
+        <!-- Mode 1: URL Input -->
+        <div id="modeUrlWrap">
+          <label class="form-label" for="inpDomain" style="font-weight: 600; font-size: 14px;">Enter Website URL or Domain to Analyze *</label>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <input type="text" id="inpDomain" class="form-input" placeholder="e.g. boat-lifestyle.com, mamaearth.in, zomato.com, or zerodha.com" style="flex: 1; min-width: 240px; font-size: 15px; padding: 12px 16px;">
+            <button type="button" id="btnAnalyze" class="btn btn-primary" style="font-size: 14px; padding: 12px 26px; min-width: 150px; background: #4f46e5; border-color: #4f46e5;">
+              ⚡ Run 360° Audit
+            </button>
+          </div>
+
+          <!-- Quick Sample Sites -->
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 14px; font-size: 12px;">
+            <span style="color: var(--gray-500); font-weight: 600;">💡 Try Popular Brands:</span>
+            <button type="button" class="btn btn-outline sample-site-btn" data-url="boat-lifestyle.com" style="font-size: 11px; padding: 4px 10px;">🎧 boAt Lifestyle</button>
+            <button type="button" class="btn btn-outline sample-site-btn" data-url="mamaearth.in" style="font-size: 11px; padding: 4px 10px;">🧴 Mamaearth</button>
+            <button type="button" class="btn btn-outline sample-site-btn" data-url="zomato.com" style="font-size: 11px; padding: 4px 10px;">🍔 Zomato</button>
+            <button type="button" class="btn btn-outline sample-site-btn" data-url="zerodha.com" style="font-size: 11px; padding: 4px 10px;">📈 Zerodha</button>
+          </div>
+        </div>
+
+        <!-- Mode 2: HTML Source Paste -->
+        <div id="modeSourceWrap" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
+            <label class="form-label" for="inpSourceCode" style="font-weight: 600; font-size: 14px; margin: 0;">Paste Website HTML Source Code (Ctrl+U)</label>
+            <button type="button" id="btnLoadSampleStore" class="btn btn-outline" style="font-size: 11px; padding: 3px 10px;">Load Sample boAt Store HTML</button>
+          </div>
+          <div style="display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
+            <input type="text" id="inpSourceDomain" class="form-input" placeholder="Website Domain (e.g. boat-lifestyle.com)" style="max-width: 320px; font-size: 13px;">
+          </div>
+          <textarea id="inpSourceCode" class="form-textarea" rows="7" placeholder="Press Ctrl+U on any website -> Copy page source -> Paste here for instant offline 360° audit (Social links, Meta ads, Tech stack, SEO, Google maps)..." style="font-family: var(--font-mono, monospace); font-size: 13px;"></textarea>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; flex-wrap: wrap; gap: 10px;">
+            <div style="font-size: 12px; color: var(--gray-500);">Tip: Guarantees 100% extraction for sites with Cloudflare bot challenges or private intranet portals.</div>
+            <button type="button" id="btnAnalyzeSource" class="btn btn-primary" style="font-size: 14px; padding: 10px 22px; background: #4f46e5; border-color: #4f46e5;">
+              🔍 Audit Pasted HTML
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div id="analyzerLoading" style="display: none; text-align: center; padding: 48px 16px; background: var(--white); border-radius: var(--radius-xl); border: 1px solid var(--gray-200); margin-bottom: 24px;">
+        <div style="display: inline-block; width: 44px; height: 44px; border: 4px solid #e2e8f0; border-top-color: #4f46e5; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 14px;"></div>
+        <div style="font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px;" id="loadingTitle">Running Full 360° Audit...</div>
+        <div style="font-size: 13px; color: var(--gray-500);" id="loadingSubtitle">Inspecting HTML, Meta Ads, social profiles, and domain metrics...</div>
+      </div>
+
+      <!-- Results Dashboard -->
+      <div id="analyzerDashboard" style="display: none;">
+        
+        <!-- Header Info Bar -->
+        <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: 18px 22px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+          <div style="display: flex; align-items: center; gap: 14px; min-width: 0;">
+            <div id="siteFavicon" style="width: 44px; height: 44px; border-radius: 10px; background: #eef2ff; display: flex; align-items: center; justify-content: center; font-size: 22px; border: 1px solid #c7d2fe; flex-shrink: 0;">
+              🌐
+            </div>
+            <div style="min-width: 0;">
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <h2 id="dispDomain" style="font-size: 20px; font-weight: 700; color: var(--navy); margin: 0;">example.com</h2>
+                <span class="ocr-badge status-done" id="dispSslBadge">🔒 HTTPS Secure</span>
+              </div>
+              <div id="dispTitle" style="font-size: 13px; color: var(--gray-600); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 550px;">
+                Page Title will appear here...
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" id="btnCopyAudit" class="btn btn-outline" style="font-size: 12px; padding: 7px 14px;">
+              📋 Copy Report
+            </button>
+            <button type="button" id="btnDownloadJson" class="btn btn-outline" style="font-size: 12px; padding: 7px 14px;">
+              ⬇️ Export (.json)
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Bento Metric Cards -->
+        <div class="analyzer-bento-grid">
+          
+          <!-- Bento 1: Domain Authority (DA) -->
+          <div class="analyzer-bento-card">
+            <div class="analyzer-bento-header">
+              <span class="analyzer-bento-title">Domain Authority (DA)</span>
+              <span class="analyzer-score-badge" id="badgeDa" style="background: #e0f2fe; color: #0369a1;">Good</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 6px;">
+              <span class="analyzer-score-num" id="scoreDa">--</span>
+              <span style="font-size: 14px; color: var(--gray-400); font-weight: 600;">/ 100</span>
+            </div>
+            <div style="font-size: 12px; color: var(--gray-500); margin-top: 8px;">
+              Page Authority (PA): <strong id="scorePa" style="color: var(--navy);">--</strong> • Spam Score: <strong id="scoreSpam" style="color: #16a34a;">1% (Low)</strong>
+            </div>
+          </div>
+
+          <!-- Bento 2: Estimated Traffic -->
+          <div class="analyzer-bento-card">
+            <div class="analyzer-bento-header">
+              <span class="analyzer-bento-title">Est. Monthly Traffic</span>
+              <span class="analyzer-score-badge" style="background: #f0fdf4; color: #15803d;">Active</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 6px;">
+              <span class="analyzer-score-num" id="scoreTraffic" style="color: #16a34a;">--</span>
+            </div>
+            <div style="font-size: 12px; color: var(--gray-500); margin-top: 8px;">
+              Global Tier: <strong id="scoreRankTier" style="color: var(--navy);">Top 50K</strong> • Bounce: <strong id="scoreBounce">~42%</strong>
+            </div>
+          </div>
+
+          <!-- Bento 3: Core Platform & E-commerce -->
+          <div class="analyzer-bento-card">
+            <div class="analyzer-bento-header">
+              <span class="analyzer-bento-title">Platform &amp; CMS</span>
+              <span class="analyzer-score-badge" id="badgePlatform" style="background: #fef3c7; color: #b45309;">Detected</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 6px;">
+              <span class="analyzer-score-num" id="scorePlatform" style="font-size: 22px; color: var(--navy);">--</span>
+            </div>
+            <div style="font-size: 12px; color: var(--gray-500); margin-top: 8px;">
+              Hosting/CDN: <strong id="scoreCdn" style="color: var(--navy);">Cloudflare</strong>
+            </div>
+          </div>
+
+          <!-- Bento 4: Advertising & Pixels -->
+          <div class="analyzer-bento-card">
+            <div class="analyzer-bento-header">
+              <span class="analyzer-bento-title">Meta Ads &amp; Pixels</span>
+              <span class="analyzer-score-badge" id="badgeAds" style="background: #eef2ff; color: #4338ca;">Active</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 6px;">
+              <span class="analyzer-score-num" id="scoreAdsCount" style="color: #4f46e5;">--</span>
+              <span style="font-size: 14px; color: var(--gray-400); font-weight: 600;">Pixels</span>
+            </div>
+            <div style="font-size: 12px; color: var(--gray-500); margin-top: 8px;" id="scoreAdsDesc">
+              Meta Pixel Active
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Meta Ads Callout Card -->
+        <div class="analyzer-ads-banner">
+          <div>
+            <div class="analyzer-ads-title">📣 Active Meta &amp; Facebook Ads Discovery</div>
+            <div class="analyzer-ads-desc">
+              Discover all live ads, creative videos, copy, and promotions this website is running on Facebook &amp; Instagram.
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+              <span id="pixelIdBadge" class="ocr-badge status-ready" style="font-size: 11px;">Meta Pixel: Detected</span>
+              <span id="googleAdsBadge" class="ocr-badge status-ready" style="font-size: 11px;">Google Tag: Active</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="#" target="_blank" rel="noopener" id="btnMetaAdLibrary" class="btn btn-primary" style="font-size: 13px; padding: 10px 18px; text-decoration: none; background: #1877f2; border-color: #1877f2; display: inline-flex; align-items: center; gap: 6px;">
+              <span>👁️ View Live Ads in Meta Ad Library</span>
+            </a>
+            <a href="#" target="_blank" rel="noopener" id="btnGoogleAdCenter" class="btn btn-outline" style="font-size: 13px; padding: 10px 16px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+              <span>🔍 Google Ad Center</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Detail Tabs -->
+        <div class="tool-tabs" id="auditTabs" style="margin-bottom: 24px;">
+          <button type="button" class="tool-tab active" data-tab="tabSocials">📱 Socials &amp; Google Maps</button>
+          <button type="button" class="tool-tab" data-tab="tabSeo">🚀 SEO &amp; Meta Tags</button>
+          <button type="button" class="tool-tab" data-tab="tabTech">🛠️ Tech Stack &amp; Apps</button>
+          <button type="button" class="tool-tab" data-tab="tabTraffic">📈 Traffic &amp; Audience</button>
+          <button type="button" class="tool-tab" data-tab="tabDns">☁️ DNS &amp; Hosting</button>
+        </div>
+
+        <!-- Tab 1: Socials, Google Maps & Contact Info -->
+        <div class="tab-panel active" id="tabSocials">
+          <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: 22px; margin-bottom: 20px;">
+            <div style="font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px;">
+              📱 Detected Social Media Profiles
+            </div>
+            <div style="font-size: 13px; color: var(--gray-500); margin-bottom: 14px;">
+              Direct links to official social profiles found in website source code and footer:
+            </div>
+
+            <div class="analyzer-social-grid" id="socialProfilesGrid">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+
+          <!-- Google Maps & Physical Location Presence -->
+          <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: 22px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+              <div>
+                <div style="font-size: 16px; font-weight: 700; color: var(--navy);">
+                  📍 Google Maps &amp; Local Business Presence
+                </div>
+                <div style="font-size: 13px; color: var(--gray-500);">
+                  Physical office, retail store or headquarters mapped on Google:
+                </div>
+              </div>
+              <a href="#" target="_blank" rel="noopener" id="btnSearchMaps" class="btn btn-outline" style="font-size: 12px; padding: 7px 14px; text-decoration: none;">
+                🗺️ Search on Google Maps
+              </a>
+            </div>
+
+            <div id="mapsContainer">
+              <!-- Maps Embed or Map Search Info -->
+            </div>
+          </div>
+
+          <!-- Contact Information (Emails & Phones) -->
+          <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: 22px;">
+            <div style="font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px;">
+              📞 Extracted Contact Details
+            </div>
+            <div style="font-size: 13px; color: var(--gray-500);">
+              Public support emails and phone numbers discovered on the website:
+            </div>
+            <div class="analyzer-contact-list" id="contactDetailsList">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: SEO & Meta Tags -->
+        <div class="tab-panel" id="tabSeo" style="display: none;">
+          <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: 22px; margin-bottom: 20px;">
+            <div style="font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 16px;">
+              🔍 Essential SEO Tags &amp; Snippet Previews
+            </div>
+
+            <!-- Page Title -->
+            <div class="form-group" style="margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+                <label class="form-label" style="font-weight: 600; margin: 0;">SEO Title Tag</label>
+                <span id="titleCharCount" style="color: var(--gray-500);">0 chars</span>
+              </div>
+              <div id="seoTitleBox" style="padding: 12px 14px; background: var(--gray-50); border-radius: 8px; border: 1px solid var(--gray-200); font-weight: 600; color: #1e293b; font-size: 14px;">
+                --
+              </div>
+            </div>
+
+            <!-- Meta Description -->
+            <div class="form-group" style="margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+                <label class="form-label" style="font-weight: 600; margin: 0;">Meta Description</label>
+                <span id="descCharCount" style="color: var(--gray-500);">0 chars</span>
+              </div>
+              <div id="seoDescBox" style="padding: 12px 14px; background: var(--gray-50); border-radius: 8px; border: 1px solid var(--gray-200); color: var(--gray-700); font-size: 13px; line-height: 1.5;">
+                --
+              </div>
+            </div>
+
+            <!-- Google SERP Card Preview -->
+            <div style="margin-top: 20px;">
+              <div style="font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 8px;">Google Search Result Preview:</div>
+              <div class="serp-card" style="max-width: 600px;">
+                <div class="serp-url-row">
+                  <div class="serp-favicon">🌐</div>
+                  <div>
+                    <div class="serp-site-name" id="serpSiteName">example.com</div>
+                    <div class="serp-breadcrumb" id="serpBreadcrumb">https://example.com</div>
+                  </div>
+                </div>
+                <div class="serp-title" id="serpTitle">Website Title</div>
+                <div class="serp-desc" id="serpDesc">Meta description snippet will be displayed here in Google format.</div>
+              </div>
+            </div>
+
+            <!-- Heading & Schema Tags Summary -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 20px;">
+              <div style="background: var(--gray-50); padding: 12px; border-radius: 8px; border: 1px solid var(--gray-200); text-align: center;">
+                <div style="font-size: 20px; font-weight: 700; color: var(--navy);" id="countH1">0</div>
+                <div style="font-size: 12px; color: var(--gray-500);">H1 Headings</div>
+              </div>
+              <div style="background: var(--gray-50); padding: 12px; border-radius: 8px; border: 1px solid var(--gray-200); text-align: center;">
+                <div style="font-size: 20px; font-weight: 700; color: var(--navy);" id="countH2">0</div>
+                <div style="font-size: 12px; color: var(--gray-500);">H2 Headings</div>
+              </div>
+              <div style="background: var(--gray-50); padding: 12px; border-radius: 8px; border: 1px solid var(--gray-200); text-align: center;">
+                <div style="font-size: 20px; font-weight: 700; color: var(--navy);" id="countSchema">None</div>
+                <div style="font-size: 12px; color: var(--gray-500);">Schema.org Markup</div>
+              </div>
+              <div style="background: var(--gray-50); padding: 12px; border-radius: 8px; border: 1px solid var(--gray-200); text-align: center;">
+                <div style="font-size: 20px; font-weight: 700; color: #16a34a;" id="statCanonical">Valid</div>
+                <div style="font-size: 12px; color: var(--gray-500);">Canonical Tag</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Tab 3: Tech Stack & Shopify Apps -->
+        <div class="tab-panel" id="tabTech" style="display: none;">
+          <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: 22px;">
+            <div style="font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px;">
+              🛠️ Detected Technologies &amp; E-commerce Apps
+            </div>
+            <div style="font-size: 13px; color: var(--gray-500); margin-bottom: 16px;">
+              Full tech stack running on this domain:
+            </div>
+            <div class="tech-cards-grid" id="analyzerTechGrid">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Traffic & Audience Metrics -->
+        <div class="tab-panel" id="tabTraffic" style="display: none;">
+          <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: 22px;">
+            <div style="font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 16px;">
+              📈 Traffic Estimates &amp; Engagement Overview
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;">
+              <div style="padding: 16px; background: var(--gray-50); border-radius: 10px; border: 1px solid var(--gray-200);">
+                <div style="font-size: 12px; color: var(--gray-500); font-weight: 600;">EST. MONTHLY VISITS</div>
+                <div style="font-size: 24px; font-weight: 800; color: #16a34a; margin-top: 4px;" id="statMonthlyVisits">--</div>
+                <div style="font-size: 11px; color: var(--gray-500); margin-top: 4px;">Based on search index &amp; domain rank</div>
+              </div>
+              <div style="padding: 16px; background: var(--gray-50); border-radius: 10px; border: 1px solid var(--gray-200);">
+                <div style="font-size: 12px; color: var(--gray-500); font-weight: 600;">GLOBAL RANK TIER</div>
+                <div style="font-size: 24px; font-weight: 800; color: #0284c7; margin-top: 4px;" id="statGlobalTier">--</div>
+                <div style="font-size: 11px; color: var(--gray-500); margin-top: 4px;">Tranco &amp; Open PageRank rank tier</div>
+              </div>
+              <div style="padding: 16px; background: var(--gray-50); border-radius: 10px; border: 1px solid var(--gray-200);">
+                <div style="font-size: 12px; color: var(--gray-500); font-weight: 600;">AVG. VISIT DURATION</div>
+                <div style="font-size: 24px; font-weight: 800; color: #9333ea; margin-top: 4px;" id="statDuration">2m 45s</div>
+                <div style="font-size: 11px; color: var(--gray-500); margin-top: 4px;">Desktop &amp; mobile average</div>
+              </div>
+              <div style="padding: 16px; background: var(--gray-50); border-radius: 10px; border: 1px solid var(--gray-200);">
+                <div style="font-size: 12px; color: var(--gray-500); font-weight: 600;">BOUNCE RATE</div>
+                <div style="font-size: 24px; font-weight: 800; color: #e11d48; margin-top: 4px;" id="statBounceRate">41.8%</div>
+                <div style="font-size: 11px; color: var(--gray-500); margin-top: 4px;">Estimated single-page sessions</div>
+              </div>
+            </div>
+
+            <!-- Traffic Sources Breakdown -->
+            <div style="font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 10px;">Traffic Acquisition Channels (Estimated):</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                  <span>🔍 Organic Search</span>
+                  <span id="pctSearch">55%</span>
+                </div>
+                <div style="height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                  <div style="width: 55%; height: 100%; background: #0284c7;" id="barSearch"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                  <span>🌐 Direct Traffic</span>
+                  <span id="pctDirect">28%</span>
+                </div>
+                <div style="height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                  <div style="width: 28%; height: 100%; background: #16a34a;" id="barDirect"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                  <span>📱 Social Media</span>
+                  <span id="pctSocial">12%</span>
+                </div>
+                <div style="height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                  <div style="width: 12%; height: 100%; background: #ec4899;" id="barSocial"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                  <span>🔗 Referrals &amp; Ads</span>
+                  <span id="pctReferral">5%</span>
+                </div>
+                <div style="height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden;">
+                  <div style="width: 5%; height: 100%; background: #f59e0b;" id="barReferral"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Tab 5: DNS & Infrastructure -->
+        <div class="tab-panel" id="tabDns" style="display: none;">
+          <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: 22px;">
+            <div style="font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 16px;">
+              ☁️ DNS Servers, Mail Configuration &amp; Security
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+              <div style="padding: 16px; background: var(--gray-50); border-radius: 10px; border: 1px solid var(--gray-200);">
+                <div style="font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px;">🏢 Nameservers (DNS Hosting)</div>
+                <div id="dnsNameserversList" style="font-family: var(--font-mono, monospace); font-size: 12px; color: var(--gray-700); line-height: 1.6;">
+                  --
+                </div>
+              </div>
+
+              <div style="padding: 16px; background: var(--gray-50); border-radius: 10px; border: 1px solid var(--gray-200);">
+                <div style="font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 8px;">✉️ Mail Exchange (MX) Records</div>
+                <div id="dnsMxList" style="font-family: var(--font-mono, monospace); font-size: 12px; color: var(--gray-700); line-height: 1.6;">
+                  --
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 16px; padding: 14px 16px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; font-size: 13px; color: #166534; display: flex; align-items: center; gap: 10px;">
+              <span>🔒</span>
+              <span><strong>SSL Security Status:</strong> Encrypted HTTPS protocol is active. Strict-Transport-Security supported.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SEO Educational Guide Section -->
+      <div class="tool-info-section" style="margin-top: var(--space-8); background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-8);">
+        <h2 style="font-size: 20px; color: var(--navy); margin-bottom: 12px;">Why Run a Full 360° Website &amp; Competitor Audit?</h2>
+        <p style="color: var(--gray-600); line-height: 1.6; font-size: 14px; margin-bottom: 16px;">
+          Whether you are an e-commerce entrepreneur researching competing D2C brands, a digital marketer analyzing Meta advertising campaigns, or an SEO specialist auditing domain authority, this tool brings all vital intelligence into a single consolidated view.
+        </p>
+
+        <h3 style="font-size: 16px; color: var(--navy); margin: 16px 0 8px;">What You Can Uncover:</h3>
+        <ul style="color: var(--gray-600); font-size: 13px; line-height: 1.7; padding-left: 20px; margin-bottom: 16px;">
+          <li><strong>Meta &amp; Facebook Ads Discovery:</strong> Jump straight into the Meta Ad Library to view all live ads, creative angles, copy, and promotions any brand is running on Instagram and Facebook.</li>
+          <li><strong>Shopify &amp; App Architecture:</strong> Discover what Shopify theme, review apps (Loox/Judge.me), email popups (Klaviyo), and page builders they use to drive conversions.</li>
+          <li><strong>Domain &amp; Page Authority:</strong> Check Moz-style DA (1-100), Page Authority (PA), and Spam risk score to estimate search engine ranking power.</li>
+          <li><strong>Traffic &amp; Channel Breakdown:</strong> Estimate monthly visitors, bounce rate, global rank tier, and traffic distribution (Search vs Direct vs Social).</li>
+          <li><strong>Social &amp; Local Business Presence:</strong> Instantly discover customer support emails, phone numbers, verified Instagram handles, YouTube channels, and Google Maps physical location.</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.2"></script>
+  <script src="../js/tools/website-analyzer.js?v=1.0"></script>
+</body>
+</html>

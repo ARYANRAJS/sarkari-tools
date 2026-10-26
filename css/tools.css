@@ -2608,3 +2608,216 @@ body.dark .shopify-alert-title {
 body.dark .shopify-alert-desc {
   color: #bbf7d0;
 }
+
+
+/* ───────── WEBSITE ANALYZER STYLES ───────── */
+.analyzer-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.analyzer-bento-card {
+  background: var(--white, #ffffff);
+  border: 1px solid var(--gray-200, #e2e8f0);
+  border-radius: var(--radius-xl, 12px);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  transition: all 0.2s ease;
+}
+
+body.dark .analyzer-bento-card {
+  background: #111a28;
+  border-color: #24324B;
+}
+
+.analyzer-bento-card:hover {
+  border-color: #93c5fd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.08);
+}
+
+body.dark .analyzer-bento-card:hover {
+  border-color: #3b82f6;
+}
+
+.analyzer-bento-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.analyzer-bento-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-500, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+body.dark .analyzer-bento-title {
+  color: #94A3B8;
+}
+
+.analyzer-score-num {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--navy, #0f172a);
+  line-height: 1.1;
+  font-family: var(--font-heading, sans-serif);
+}
+
+body.dark .analyzer-score-num {
+  color: #F8FAFC;
+}
+
+.analyzer-score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Social links pill grid */
+.analyzer-social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.analyzer-social-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--gray-50, #f8fafc);
+  border: 1px solid var(--gray-200, #e2e8f0);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--navy, #0f172a);
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+body.dark .analyzer-social-pill {
+  background: #16202F;
+  border-color: #24324B;
+  color: #F8FAFC;
+}
+
+.analyzer-social-pill:hover {
+  transform: translateY(-2px);
+  border-color: #3b82f6;
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.12);
+}
+
+.analyzer-social-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  color: #ffffff;
+}
+
+.analyzer-social-handle {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--gray-500, #64748b);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+body.dark .analyzer-social-handle {
+  color: #94A3B8;
+}
+
+/* Meta Ads Callout Card */
+.analyzer-ads-banner {
+  background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+  border: 1.5px solid #93c5fd;
+  border-radius: var(--radius-xl, 12px);
+  padding: 18px 22px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+body.dark .analyzer-ads-banner {
+  background: linear-gradient(135deg, #1e3a8a22 0%, #0369a122 100%);
+  border-color: #1d4ed8;
+}
+
+.analyzer-ads-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 4px;
+}
+
+body.dark .analyzer-ads-title {
+  color: #93c5fd;
+}
+
+.analyzer-ads-desc {
+  font-size: 13px;
+  color: #1e3a8a;
+  line-height: 1.4;
+}
+
+body.dark .analyzer-ads-desc {
+  color: #bfdbfe;
+}
+
+/* Contact Details List */
+.analyzer-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.analyzer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--gray-50, #f8fafc);
+  border-radius: 8px;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+body.dark .analyzer-contact-item {
+  background: #16202F;
+  border: 1px solid #24324B;
+}
+
+@media (max-width: 600px) {
+  .analyzer-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .analyzer-ads-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
