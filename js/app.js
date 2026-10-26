@@ -536,6 +536,7 @@
   /* ───────── PATH HELPERS FOR ROOT VS /tools/ ───────── */
   const isInsideTools = window.location.pathname.includes('/tools/') || window.location.href.includes('/tools/');
   const homeUrl = isInsideTools ? '../index.html' : 'index.html';
+  const toolsDirUrl = isInsideTools ? '../tools.html' : 'tools.html';
   function getToolUrl(tool) {
     return isInsideTools ? `${tool.id}.html` : `tools/${tool.id}.html`;
   }
@@ -566,7 +567,7 @@
         <nav>
           <ul class="nav-links">
             <li><a href="${homeUrl}">Home</a></li>
-            <li><a href="${homeUrl}#tools">All Tools</a></li>
+            <li><a href="${toolsDirUrl}">All Tools</a></li>
             <li><a href="${homeUrl}#features">Why Us</a></li>
           </ul>
         </nav>
@@ -648,7 +649,7 @@
           <p>&copy; ${new Date().getFullYear()} AllToolsInOne. 100% Free &amp; Private — No Google / Gmail Login Required.</p>
           <div class="footer-bottom-links">
             <a href="${homeUrl}">Home</a>
-            <a href="${homeUrl}#tools">All Tools</a>
+            <a href="${toolsDirUrl}">All Tools</a>
             <a href="javascript:void(0)" class="open-feedback-trigger" style="color: var(--saffron-dark); font-weight: 600;">💬 Anonymous Feedback Box</a>
           </div>
         </div>
