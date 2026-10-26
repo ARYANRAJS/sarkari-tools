@@ -38,7 +38,7 @@
 
   // Curated Popular Tags
   const POPULAR_TAGS = [
-    'PDF', 'Shopify', 'QR Code', 'OCR', 'Calculator', 'Resume', 
+    'Speed', 'Notes', 'EMI', 'PDF', 'Shopify', 'QR Code', 'OCR', 'Calculator', 'Resume', 
     'Image', 'Meta Ads', 'Typing', 'Whois', 'Video', 'Barcode'
   ];
 
@@ -354,6 +354,10 @@
 
   // Chronological hierarchy of recently added tools (newest first)
   const NEWEST_TOOL_IDS = [
+    'internet-speed-test',
+    'quick-notes',
+    'emi-calculator',
+    'unit-converter',
     'website-analyzer',
     'tech-detector',
     'image-to-text',

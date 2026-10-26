@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Notes & Task Keeper | Free Offline Notes with Local CRUD</title>
+  <meta name="description" content="Free offline notes and checklist manager with 100% local CRUD storage. Create, edit, search, pin, categorize notes and export to TXT/JSON without sign-up.">
+  <meta name="keywords" content="quick notes, local notes, offline notepad, crud notes app, todo checklist, task keeper, notes manager, browser notepad">
+  <meta property="og:title" content="Quick Notes & Task Keeper | 100% Local Browser Notepad">
+  <meta property="og:description" content="Manage private notes, checklists and cyber cafe memos locally in your browser. Instant search, color tags, auto-save and backup export.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/quick-notes.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Quick Notes & Task Keeper",
+    "description": "Offline-first notepad and todo manager with complete local CRUD operations.",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    .notes-toolbar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .notes-toolbar button {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 13px;
+      cursor: pointer;
+      color: var(--gray-700);
+      transition: all 0.15s;
+    }
+    .notes-toolbar button:hover {
+      background: #eff6ff;
+      border-color: #3b82f6;
+      color: #1d4ed8;
+    }
+    body.dark .notes-toolbar button {
+      background: #1e293b;
+      color: #cbd5e1;
+    }
+    .color-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .color-dot.active {
+      transform: scale(1.15);
+      border-color: #0f172a;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8);
+    }
+    .note-card {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md, 10px);
+      padding: 14px;
+      margin-bottom: 12px;
+      background: var(--bg-card);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+      overflow: hidden;
+    }
+    .note-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    }
+    .note-card.active-note {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+    .note-card-strip {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+    }
+    .note-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-left: 4px;
+    }
+    .note-card-body {
+      font-size: 13px;
+      color: var(--gray-600);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      padding-left: 4px;
+      white-space: pre-line;
+    }
+    .note-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      padding-left: 4px;
+      font-size: 11px;
+      color: var(--gray-500);
+    }
+    .note-tag-chip {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      background: #e2e8f0;
+      color: #334155;
+    }
+    body.dark .note-tag-chip {
+      background: #334155;
+      color: #cbd5e1;
+    }
+    .category-filter-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+      scrollbar-width: none;
+    }
+    .cat-pill {
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--gray-700);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .cat-pill.active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+    .task-checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 4px 0;
+      font-size: 13px;
+    }
+    .task-checkbox-item input[type="checkbox"] {
+      cursor: pointer;
+      width: 15px;
+      height: 15px;
+      accent-color: #2563eb;
+    }
+    .task-checkbox-item.checked span {
+      text-decoration: line-through;
+      color: var(--gray-400);
+    }
+    .empty-notes-view {
+      text-align: center;
+      padding: 36px 16px;
+      color: var(--gray-500);
+    }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Quick Notes & Task Keeper</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon utility-tools">📝</div>
+        <h1>Quick Notes & Local Task Keeper</h1>
+        <p class="tool-description">Fast, private offline notepad with complete Local CRUD operations. Create notes, checklists, manage cyber cafe customer lists, color-code, and export anytime. 100% saved locally on your device.</p>
+      </div>
+
+      <div class="tool-workspace">
+        <div class="tool-split">
+
+          <!-- Left Panel: Note Editor (Create & Update) -->
+          <div class="tool-split-inputs">
+            <div class="settings-panel">
+              
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3 style="margin: 0; font-size: 16px; font-weight: 600;" id="editorTitle">✍️ New Note</h3>
+                <span id="autoSaveIndicator" style="font-size: 11px; color: #16a34a; font-weight: 600;">
+                  ● Ready
+                </span>
+              </div>
+
+              <!-- Note Title -->
+              <div class="settings-group">
+                <input type="text" id="noteTitleInput" class="form-input" placeholder="Note Title (e.g., Cyber Cafe Pending Forms...)" style="font-size: 16px; font-weight: 600;">
+              </div>
+
+              <!-- Category & Color Row -->
+              <div style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                <div style="flex: 1 1 160px;">
+                  <select id="noteCategorySelect" class="form-select" style="font-size: 12px; padding: 6px 10px;">
+                    <option value="General">📁 General</option>
+                    <option value="Sarkari">🏛️ Sarkari / Exam Form</option>
+                    <option value="Todo">✅ To-Do / Tasks</option>
+                    <option value="CyberCafe">🖥️ Cyber Cafe / Client</option>
+                    <option value="Personal">🔐 Personal & Pin</option>
+                    <option value="Idea">💡 Ideas</option>
+                  </select>
+                </div>
+
+                <!-- Color Palette -->
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <span class="color-dot active" data-color="#2563eb" style="background: #2563eb;" title="Blue"></span>
+                  <span class="color-dot" data-color="#10b981" style="background: #10b981;" title="Emerald"></span>
+                  <span class="color-dot" data-color="#f59e0b" style="background: #f59e0b;" title="Amber"></span>
+                  <span class="color-dot" data-color="#ec4899" style="background: #ec4899;" title="Rose"></span>
+                  <span class="color-dot" data-color="#8b5cf6" style="background: #8b5cf6;" title="Purple"></span>
+                  <span class="color-dot" data-color="#64748b" style="background: #64748b;" title="Slate"></span>
+                </div>
+              </div>
+
+              <!-- Formatting Toolbar -->
+              <div class="notes-toolbar">
+                <button type="button" id="btnBold" title="Bold"><b>B</b></button>
+                <button type="button" id="btnItalic" title="Italic"><i>I</i></button>
+                <button type="button" id="btnHeading" title="Heading">H2</button>
+                <button type="button" id="btnBullet" title="Bullet List">• List</button>
+                <button type="button" id="btnTodo" title="Add Checkbox task">☑ Checkbox</button>
+                <button type="button" id="btnInsertTime" title="Insert Timestamp">⏰ Time</button>
+                <button type="button" id="btnClearEditor" title="Clear Editor">🧹 Clear</button>
+              </div>
+
+              <!-- Content Textarea -->
+              <div class="settings-group">
+                <textarea id="noteContentInput" class="form-input" rows="12" placeholder="Write your note or tasks here...
+- Use ☑ Checkbox button to insert checklist items
+- Everything is auto-saved locally in your browser!" style="resize: vertical; font-family: inherit; line-height: 1.6; font-size: 14px;"></textarea>
+              </div>
+
+              <!-- Editor Stats & Pin Toggle -->
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--gray-500); margin-bottom: 16px;">
+                <div>
+                  <span id="charCount">0</span> chars | <span id="wordCount">0</span> words
+                </div>
+                <label style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                  <input type="checkbox" id="notePinCheckbox" style="accent-color: #2563eb;">
+                  <span style="font-weight: 600;">📌 Pin Note</span>
+                </label>
+              </div>
+
+              <!-- Action Buttons -->
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button type="button" id="btnSaveNote" class="btn btn-primary" style="flex: 2; font-weight: 600;">
+                  💾 Save Note
+                </button>
+                <button type="button" id="btnNewNote" class="btn btn-outline" style="flex: 1;">
+                  ➕ New Note
+                </button>
+                <button type="button" id="btnDeleteCurrent" class="btn btn-outline" style="color: #dc2626; border-color: #fca5a5; display: none;">
+                  🗑️ Delete
+                </button>
+              </div>
+
+              <!-- Backup / Restore -->
+              <div style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 14px; display: flex; gap: 8px; justify-content: space-between;">
+                <button type="button" id="btnExportJson" class="btn btn-outline" style="font-size: 11px; padding: 4px 10px;">
+                  📥 Backup All (JSON)
+                </button>
+                <label class="btn btn-outline" style="font-size: 11px; padding: 4px 10px; cursor: pointer; margin: 0;">
+                  📤 Restore (JSON)
+                  <input type="file" id="importJsonInput" accept=".json" style="display: none;">
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right Panel: Notes Library & Live View -->
+          <div class="tool-split-output">
+            <div class="preview-panel" style="padding: var(--space-6);">
+              
+              <!-- Search & Filters -->
+              <div style="margin-bottom: 12px;">
+                <input type="text" id="notesSearchInput" class="form-input" placeholder="🔍 Search notes by keyword, tag or title..." style="font-size: 13px;">
+              </div>
+
+              <!-- Category Filter Pills -->
+              <div class="category-filter-bar" id="categoryFilterBar">
+                <button type="button" class="cat-pill active" data-filter="all">All Notes (<span id="countAll">0</span>)</button>
+                <button type="button" class="cat-pill" data-filter="pinned">📌 Pinned (<span id="countPinned">0</span>)</button>
+                <button type="button" class="cat-pill" data-filter="Sarkari">🏛️ Sarkari</button>
+                <button type="button" class="cat-pill" data-filter="Todo">✅ To-Do</button>
+                <button type="button" class="cat-pill" data-filter="CyberCafe">🖥️ Cyber Cafe</button>
+                <button type="button" class="cat-pill" data-filter="Personal">🔐 Personal</button>
+                <button type="button" class="cat-pill" data-filter="General">📁 General</button>
+              </div>
+
+              <!-- Action Bar -->
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px;">
+                <strong style="color: var(--gray-700);" id="notesLibraryHeading">Your Saved Notes</strong>
+                <button type="button" id="btnExportTxtCurrent" class="btn btn-outline" style="font-size: 11px; padding: 2px 8px;">
+                  📄 Export Note (.txt)
+                </button>
+              </div>
+
+              <!-- Notes List / Container -->
+              <div id="notesContainer" style="min-height: 250px;">
+                <!-- Populated dynamically -->
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Feature Details & Privacy Callout -->
+      <section style="margin-top: 40px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: var(--space-8);">
+        <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 12px;">🔒 100% Client-Side Privacy Guarantee</h2>
+        <p style="color: var(--gray-600); line-height: 1.7;">
+          Your notes, checklists, and sensitive records are stored strictly in your local browser’s <strong>LocalStorage</strong>. No server databases, no accounts, and zero cloud uploads. Your data stays safely on your machine.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Elements
+      const noteTitleInput = document.getElementById('noteTitleInput');
+      const noteContentInput = document.getElementById('noteContentInput');
+      const noteCategorySelect = document.getElementById('noteCategorySelect');
+      const notePinCheckbox = document.getElementById('notePinCheckbox');
+      const editorTitle = document.getElementById('editorTitle');
+      const autoSaveIndicator = document.getElementById('autoSaveIndicator');
+      const charCount = document.getElementById('charCount');
+      const wordCount = document.getElementById('wordCount');
+
+      const btnSaveNote = document.getElementById('btnSaveNote');
+      const btnNewNote = document.getElementById('btnNewNote');
+      const btnDeleteCurrent = document.getElementById('btnDeleteCurrent');
+      const btnClearEditor = document.getElementById('btnClearEditor');
+      const btnExportTxtCurrent = document.getElementById('btnExportTxtCurrent');
+
+      const notesContainer = document.getElementById('notesContainer');
+      const notesSearchInput = document.getElementById('notesSearchInput');
+      const categoryFilterBar = document.getElementById('categoryFilterBar');
+      const countAll = document.getElementById('countAll');
+      const countPinned = document.getElementById('countPinned');
+
+      const btnExportJson = document.getElementById('btnExportJson');
+      const importJsonInput = document.getElementById('importJsonInput');
+
+      // Formatting buttons
+      const btnBold = document.getElementById('btnBold');
+      const btnItalic = document.getElementById('btnItalic');
+      const btnHeading = document.getElementById('btnHeading');
+      const btnBullet = document.getElementById('btnBullet');
+      const btnTodo = document.getElementById('btnTodo');
+      const btnInsertTime = document.getElementById('btnInsertTime');
+
+      let currentEditingId = null;
+      let selectedColor = '#2563eb';
+      let activeFilter = 'all';
+      let autoSaveTimer = null;
+
+      // Color picker selection
+      document.querySelectorAll('.color-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+          document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+          dot.classList.add('active');
+          selectedColor = dot.getAttribute('data-color');
+          scheduleAutoSave();
+        });
+      });
+
+      // LocalStorage Helper
+      function getStoredNotes() {
+        try {
+          return JSON.parse(localStorage.getItem('sarkari_local_notes') || '[]');
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveStoredNotes(notes) {
+        try {
+          localStorage.setItem('sarkari_local_notes', JSON.stringify(notes));
+          updateCounts();
+        } catch (e) {
+          console.error('Storage full or error:', e);
+        }
+      }
+
+      // Counts
+      function updateCounts() {
+        const notes = getStoredNotes();
+        countAll.textContent = notes.length;
+        countPinned.textContent = notes.filter(n => n.pinned).length;
+      }
+
+      // Word & Char counter
+      function updateStats() {
+        const text = noteContentInput.value || '';
+        charCount.textContent = text.length;
+        const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+        wordCount.textContent = words;
+      }
+
+      // Insert text helper
+      function insertAtCursor(prefix, suffix = '') {
+        const start = noteContentInput.selectionStart;
+        const end = noteContentInput.selectionEnd;
+        const val = noteContentInput.value;
+        const selected = val.substring(start, end);
+        const replacement = prefix + selected + suffix;
+        noteContentInput.value = val.substring(0, start) + replacement + val.substring(end);
+        noteContentInput.focus();
+        noteContentInput.selectionStart = start + prefix.length;
+        noteContentInput.selectionEnd = end + prefix.length;
+        updateStats();
+        scheduleAutoSave();
+      }
+
+      btnBold.addEventListener('click', () => insertAtCursor('**', '**'));
+      btnItalic.addEventListener('click', () => insertAtCursor('*', '*'));
+      btnHeading.addEventListener('click', () => insertAtCursor('\n## '));
+      btnBullet.addEventListener('click', () => insertAtCursor('\n• '));
+      btnTodo.addEventListener('click', () => insertAtCursor('\n[ ] '));
+      btnInsertTime.addEventListener('click', () => {
+        const now = new Date().toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+        insertAtCursor(` [${now}] `);
+      });
+
+      btnClearEditor.addEventListener('click', () => {
+        if (confirm('Clear editor fields?')) {
+          resetEditor();
+        }
+      });
+
+      // Auto-save logic
+      function scheduleAutoSave() {
+        autoSaveIndicator.textContent = '● Saving...';
+        autoSaveIndicator.style.color = '#eab308';
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = setTimeout(() => {
+          saveCurrentNote(true);
+        }, 800);
+      }
+
+      noteTitleInput.addEventListener('input', () => {
+        updateStats();
+        scheduleAutoSave();
+      });
+
+      noteContentInput.addEventListener('input', () => {
+        updateStats();
+        scheduleAutoSave();
+      });
+
+      noteCategorySelect.addEventListener('change', scheduleAutoSave);
+      notePinCheckbox.addEventListener('change', scheduleAutoSave);
+
+      // Save Current Note
+      function saveCurrentNote(isAuto = false) {
+        const title = noteTitleInput.value.trim();
+        const content = noteContentInput.value.trim();
+
+        if (!title && !content) {
+          autoSaveIndicator.textContent = '● Ready';
+          autoSaveIndicator.style.color = '#16a34a';
+          return;
+        }
+
+        const notes = getStoredNotes();
+        const now = new Date();
+        const dateStr = now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+
+        if (currentEditingId) {
+          const idx = notes.findIndex(n => n.id === currentEditingId);
+          if (idx !== -1) {
+            notes[idx] = {
+              ...notes[idx],
+              title: title || 'Untitled Note',
+              content: content,
+              category: noteCategorySelect.value,
+              color: selectedColor,
+              pinned: notePinCheckbox.checked,
+              updatedAt: dateStr
+            };
+          }
+        } else {
+          const newNote = {
+            id: 'note_' + Date.now(),
+            title: title || 'Untitled Note',
+            content: content,
+            category: noteCategorySelect.value,
+            color: selectedColor,
+            pinned: notePinCheckbox.checked,
+            createdAt: dateStr,
+            updatedAt: dateStr
+          };
+          notes.unshift(newNote);
+          currentEditingId = newNote.id;
+          btnDeleteCurrent.style.display = 'block';
+          editorTitle.textContent = '✍️ Edit Note';
+        }
+
+        saveStoredNotes(notes);
+        renderNotes();
+
+        autoSaveIndicator.textContent = '● Saved';
+        autoSaveIndicator.style.color = '#16a34a';
+
+        if (!isAuto && window.showToast) {
+          window.showToast('Note saved successfully!', 'success');
+        }
+      }
+
+      btnSaveNote.addEventListener('click', () => saveCurrentNote(false));
+
+      // Reset Editor
+      function resetEditor() {
+        currentEditingId = null;
+        noteTitleInput.value = '';
+        noteContentInput.value = '';
+        noteCategorySelect.value = 'General';
+        notePinCheckbox.checked = false;
+        editorTitle.textContent = '✍️ New Note';
+        btnDeleteCurrent.style.display = 'none';
+        autoSaveIndicator.textContent = '● Ready';
+        autoSaveIndicator.style.color = '#16a34a';
+
+        document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+        document.querySelector('.color-dot[data-color="#2563eb"]').classList.add('active');
+        selectedColor = '#2563eb';
+        updateStats();
+        renderNotes();
+      }
+
+      btnNewNote.addEventListener('click', resetEditor);
+
+      // Delete Current
+      btnDeleteCurrent.addEventListener('click', () => {
+        if (!currentEditingId) return;
+        if (confirm('Are you sure you want to delete this note?')) {
+          deleteNote(currentEditingId);
+        }
+      });
+
+      function deleteNote(id) {
+        let notes = getStoredNotes();
+        notes = notes.filter(n => n.id !== id);
+        saveStoredNotes(notes);
+        if (currentEditingId === id) resetEditor();
+        renderNotes();
+        if (window.showToast) window.showToast('Note deleted', 'info');
+      }
+
+      // Toggle Checklist Task directly from note
+      window.toggleNoteTask = function(noteId, lineIndex) {
+        const notes = getStoredNotes();
+        const note = notes.find(n => n.id === noteId);
+        if (!note) return;
+
+        const lines = note.content.split('\n');
+        if (lines[lineIndex]) {
+          if (lines[lineIndex].startsWith('[ ] ')) {
+            lines[lineIndex] = '[x] ' + lines[lineIndex].substring(4);
+          } else if (lines[lineIndex].startsWith('[x] ')) {
+            lines[lineIndex] = '[ ] ' + lines[lineIndex].substring(4);
+          }
+        }
+        note.content = lines.join('\n');
+        saveStoredNotes(notes);
+        if (currentEditingId === noteId) {
+          noteContentInput.value = note.content;
+          updateStats();
+        }
+        renderNotes();
+      };
+
+      // Load Note into Editor
+      function loadNoteToEditor(note) {
+        currentEditingId = note.id;
+        noteTitleInput.value = note.title;
+        noteContentInput.value = note.content;
+        noteCategorySelect.value = note.category || 'General';
+        notePinCheckbox.checked = !!note.pinned;
+        selectedColor = note.color || '#2563eb';
+
+        document.querySelectorAll('.color-dot').forEach(d => {
+          if (d.getAttribute('data-color') === selectedColor) d.classList.add('active');
+          else d.classList.remove('active');
+        });
+
+        editorTitle.textContent = '✍️ Edit Note';
+        btnDeleteCurrent.style.display = 'block';
+        updateStats();
+        renderNotes();
+      }
+
+      // Render Notes List
+      function renderNotes() {
+        const notes = getStoredNotes();
+        const search = (notesSearchInput.value || '').toLowerCase().trim();
+
+        let filtered = notes.filter(n => {
+          // Category/Filter Match
+          if (activeFilter === 'pinned' && !n.pinned) return false;
+          if (activeFilter !== 'all' && activeFilter !== 'pinned' && n.category !== activeFilter) return false;
+
+          // Search Match
+          if (search) {
+            const matchTitle = (n.title || '').toLowerCase().includes(search);
+            const matchContent = (n.content || '').toLowerCase().includes(search);
+            const matchTag = (n.category || '').toLowerCase().includes(search);
+            return matchTitle || matchContent || matchTag;
+          }
+          return true;
+        });
+
+        // Sort: Pinned first, then latest
+        filtered.sort((a, b) => {
+          if (a.pinned && !b.pinned) return -1;
+          if (!a.pinned && b.pinned) return 1;
+          return 0;
+        });
+
+        if (filtered.length === 0) {
+          notesContainer.innerHTML = `
+            <div class="empty-notes-view">
+              <div style="font-size: 32px; margin-bottom: 8px;">📭</div>
+              <strong style="color: var(--gray-700); font-size: 14px;">No notes found</strong>
+              <p style="font-size: 12px; margin-top: 4px;">Click "New Note" or adjust your search filters to view your notes.</p>
+            </div>
+          `;
+          return;
+        }
+
+        notesContainer.innerHTML = filtered.map(n => {
+          const isActive = n.id === currentEditingId ? 'active-note' : '';
+          const pinBadge = n.pinned ? '<span title="Pinned" style="font-size: 13px;">📌</span>' : '';
+          
+          // Render checklist items if any
+          const lines = (n.content || '').split('\n');
+          const hasChecklist = lines.some(l => l.startsWith('[ ] ') || l.startsWith('[x] '));
+          
+          let bodyPreviewHtml = '';
+          if (hasChecklist) {
+            bodyPreviewHtml = lines.slice(0, 4).map((line, idx) => {
+              if (line.startsWith('[ ] ')) {
+                return `<div class="task-checkbox-item"><input type="checkbox" onclick="event.stopPropagation(); toggleNoteTask('${n.id}', ${idx})"><span>${escapeHtml(line.substring(4))}</span></div>`;
+              } else if (line.startsWith('[x] ')) {
+                return `<div class="task-checkbox-item checked"><input type="checkbox" checked onclick="event.stopPropagation(); toggleNoteTask('${n.id}', ${idx})"><span>${escapeHtml(line.substring(4))}</span></div>`;
+              } else if (line.trim()) {
+                return `<div>${escapeHtml(line)}</div>`;
+              }
+              return '';
+            }).join('');
+          } else {
+            bodyPreviewHtml = escapeHtml(n.content || 'Empty note');
+          }
+
+          return `
+            <div class="note-card ${isActive}" data-id="${n.id}" style="border-left: 4px solid ${n.color || '#2563eb'};">
+              <div class="note-card-title">
+                <span>${escapeHtml(n.title)}</span>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  ${pinBadge}
+                  <button type="button" onclick="event.stopPropagation(); deleteNoteById('${n.id}')" title="Delete" style="background: none; border: none; cursor: pointer; font-size: 12px; opacity: 0.6;">🗑️</button>
+                </div>
+              </div>
+              <div class="note-card-body">
+                ${bodyPreviewHtml}
+              </div>
+              <div class="note-card-footer">
+                <span class="note-tag-chip">${n.category || 'General'}</span>
+                <span>${n.updatedAt || n.createdAt || ''}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Card Click Listener
+        document.querySelectorAll('.note-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const id = card.getAttribute('data-id');
+            const note = notes.find(n => n.id === id);
+            if (note) loadNoteToEditor(note);
+          });
+        });
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      window.deleteNoteById = function(id) {
+        if (confirm('Delete this note?')) {
+          deleteNote(id);
+        }
+      };
+
+      // Filter pills
+      categoryFilterBar.addEventListener('click', (e) => {
+        const pill = e.target.closest('.cat-pill');
+        if (!pill) return;
+        document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeFilter = pill.getAttribute('data-filter');
+        renderNotes();
+      });
+
+      // Search
+      notesSearchInput.addEventListener('input', renderNotes);
+
+      // Export Single Note as TXT
+      btnExportTxtCurrent.addEventListener('click', () => {
+        const title = noteTitleInput.value.trim() || 'Untitled_Note';
+        const content = noteContentInput.value;
+        const textBlob = new Blob([`${title}\nCategory: ${noteCategorySelect.value}\nDate: ${new Date().toLocaleString()}\n\n${content}`], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(textBlob);
+        a.download = `${title.replace(/\s+/g, '_')}.txt`;
+        a.click();
+      });
+
+      // Export All as JSON Backup
+      btnExportJson.addEventListener('click', () => {
+        const notes = getStoredNotes();
+        const jsonBlob = new Blob([JSON.stringify(notes, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(jsonBlob);
+        a.download = `sarkari_notes_backup_${Date.now()}.json`;
+        a.click();
+      });
+
+      // Import JSON Backup
+      importJsonInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          try {
+            const imported = JSON.parse(evt.target.result);
+            if (Array.isArray(imported)) {
+              const current = getStoredNotes();
+              // Merge unique by ID
+              const mergedMap = new Map();
+              imported.forEach(n => mergedMap.set(n.id, n));
+              current.forEach(n => mergedMap.set(n.id, n));
+              const finalNotes = Array.from(mergedMap.values());
+              saveStoredNotes(finalNotes);
+              renderNotes();
+              if (window.showToast) window.showToast(`Restored ${imported.length} notes successfully!`, 'success');
+            } else {
+              alert('Invalid backup JSON file.');
+            }
+          } catch (err) {
+            alert('Error parsing JSON backup file.');
+          }
+        };
+        reader.readAsText(file);
+      });
+
+      // Initial load
+      updateCounts();
+      renderNotes();
+    });
+  </script>
+</body>
+</html>

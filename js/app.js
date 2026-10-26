@@ -518,6 +518,54 @@
       url: 'tools/domain-checker.html',
       keywords: ['domain', 'domain availability', 'domain checker', 'check domain', 'is domain available', 'buy domain', 'godaddy', 'in domain', 'com domain', 'bulk domain', 'whois', 'seo'],
       badge: 'Popular'
+    },
+    {
+      id: 'internet-speed-test',
+      name: 'Internet Speed Test & Net Performance',
+      description: 'Test live broadband, 5G & Wi-Fi internet speeds, download & upload throughput, latency ping, and jitter with speedometer gauge',
+      category: 'utility',
+      categoryLabel: 'Utility Tools',
+      icon: '⚡',
+      iconBg: 'utility-tools',
+      url: 'tools/internet-speed-test.html',
+      keywords: ['internet speed test', 'net speed checker', 'speedtest', 'wifi speed', 'broadband test', '5g speed', 'ping', 'jitter', 'download speed', 'upload speed', 'mbps', 'speed'],
+      badge: 'New'
+    },
+    {
+      id: 'quick-notes',
+      name: 'Quick Notes & Local Task Keeper',
+      description: 'Fast offline notepad with complete local CRUD operations, interactive checklist tasks, tags, auto-save, and JSON backup',
+      category: 'utility',
+      categoryLabel: 'Utility Tools',
+      icon: '📝',
+      iconBg: 'utility-tools',
+      url: 'tools/quick-notes.html',
+      keywords: ['quick notes', 'notes', 'notepad', 'local notes', 'crud notes', 'todo', 'checklist', 'task keeper', 'offline notepad', 'memo', 'cyber cafe records'],
+      badge: 'New'
+    },
+    {
+      id: 'emi-calculator',
+      name: 'Loan & EMI Calculator (Home, Car, Personal)',
+      description: 'Calculate monthly loan EMI, total interest payable, visual principal-interest donut chart, and complete yearly amortization schedule',
+      category: 'calculator',
+      categoryLabel: 'Calculators',
+      icon: '💰',
+      iconBg: 'calc-tools',
+      url: 'tools/emi-calculator.html',
+      keywords: ['emi calculator', 'loan emi', 'home loan emi', 'car loan', 'personal loan', 'interest calculator', 'amortization table', 'bank emi', 'sbi emi', 'loan schedule', 'emi'],
+      badge: 'New'
+    },
+    {
+      id: 'unit-converter',
+      name: 'Land Area & Smart Unit Converter',
+      description: 'Convert Indian land units (Bigha, Gaj, Biswa, Katha, Acre, Sq.Ft) along with Length, Weight (Tola), and Digital Data (MB/GB)',
+      category: 'calculator',
+      categoryLabel: 'Calculators',
+      icon: '📐',
+      iconBg: 'calc-tools',
+      url: 'tools/unit-converter.html',
+      keywords: ['unit converter', 'land converter', 'bigha to sq ft', 'bigha to gaj', 'biswa', 'katha', 'acre', 'tola to gram', 'digital storage', 'length converter', 'bhulekh'],
+      badge: 'New'
     }
   ];
 
