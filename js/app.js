@@ -18,6 +18,18 @@
   /* ───────── TOOL REGISTRY ───────── */
   const TOOLS = [
     {
+      id: 'image-extractor',
+      name: 'Webpage Image Extractor',
+      description: 'Extract and download all photos, SVGs, and background images from any website URL or HTML in bulk or ZIP',
+      category: 'image',
+      categoryLabel: 'Image Tools',
+      icon: '📥',
+      iconBg: 'image-tools',
+      url: 'tools/image-extractor.html',
+      keywords: ['image extractor', 'extract images', 'website image downloader', 'scrape images', 'bulk image download', 'zip images', 'save images from link', 'svg extractor', 'photo scraper'],
+      badge: 'New'
+    },
+    {
       id: 'image-to-text',
       name: 'Image to Text (OCR)',
       description: 'Extract editable text from multiple images in English & Hindi with high accuracy',

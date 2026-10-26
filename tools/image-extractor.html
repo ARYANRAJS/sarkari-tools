@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Webpage Image Extractor &amp; Bulk Downloader | AllToolsInOne</title>
+  <meta name="description" content="Extract, view, and download all images, photos, SVG vectors, and backgrounds from any website URL or raw HTML. Download individually or as a single ZIP file for free.">
+  <meta name="keywords" content="image extractor, extract images from url, website image downloader, scrape images from website, bulk image downloader, download all images from webpage, extract svg from website">
+  <meta property="og:title" content="Webpage Image Extractor &amp; Bulk Downloader">
+  <meta property="og:description" content="Extract, filter, and download all images, icons, and SVG graphics from any webpage URL or HTML in 1-click or as a ZIP archive.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/image-extractor.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <!-- JSZip for Bulk Image ZIP Downloads -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Webpage Image Extractor & Downloader",
+    "description": "Extract, preview, and bulk-download all images, icons, and SVG graphics from any webpage URL.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    .checkerboard-bg {
+      background-color: #ffffff;
+      background-image: linear-gradient(45deg, #f1f5f9 25%, transparent 25%),
+                        linear-gradient(-45deg, #f1f5f9 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, #f1f5f9 75%),
+                        linear-gradient(-45deg, transparent 75%, #f1f5f9 75%);
+      background-size: 14px 14px;
+      background-position: 0 0, 0 7px, 7px -7px, -7px 0px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 16px;
+      width: 100%;
+    }
+    .img-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .img-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.08);
+      border-color: var(--gray-300);
+    }
+    .img-card.selected {
+      border-color: var(--primary, #2563eb);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+    }
+    .img-preview-box {
+      height: 160px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .img-preview-box img,
+    .img-preview-box svg {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      transition: transform 0.2s ease;
+    }
+    .img-card:hover .img-preview-box img {
+      transform: scale(1.04);
+    }
+    .img-card-checkbox {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 5;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--primary, #2563eb);
+    }
+    .img-card-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 5;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: rgba(15, 23, 42, 0.75);
+      color: #fff;
+      backdrop-filter: blur(4px);
+    }
+    .img-dim-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      z-index: 5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--gray-700);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .img-card-info {
+      padding: 10px 12px;
+      border-top: 1px solid var(--gray-100);
+      background: var(--white);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .img-card-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-800);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+    }
+    .img-card-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .img-btn-sm {
+      padding: 5px 8px;
+      font-size: 11px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex: 1;
+      cursor: pointer;
+      border: 1px solid var(--gray-300);
+      background: var(--white);
+      color: var(--gray-700);
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+    .img-btn-sm:hover {
+      background: var(--gray-50);
+      color: var(--primary, #2563eb);
+      border-color: var(--primary, #2563eb);
+    }
+    .img-btn-primary {
+      background: var(--primary, #2563eb);
+      color: #fff;
+      border-color: var(--primary, #2563eb);
+    }
+    .img-btn-primary:hover {
+      background: #1d4ed8;
+      color: #fff;
+    }
+    .filter-chip-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .filter-chip-btn {
+      padding: 5px 11px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--gray-200);
+      background: var(--gray-50);
+      color: var(--gray-600);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .filter-chip-btn:hover {
+      border-color: var(--gray-300);
+      color: var(--gray-900);
+    }
+    .filter-chip-btn.active {
+      background: var(--primary, #2563eb);
+      color: #fff;
+      border-color: var(--primary, #2563eb);
+    }
+    .progress-bar-wrap {
+      width: 100%;
+      height: 8px;
+      background: var(--gray-200);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #3b82f6);
+      width: 0%;
+      transition: width 0.2s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container">
+      
+      <!-- Breadcrumb -->
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Webpage Image Extractor</span>
+      </div>
+
+      <!-- Hero Header -->
+      <div class="tool-hero">
+        <div class="tool-icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">📥</div>
+        <h1>Webpage Image Extractor &amp; Bulk Downloader</h1>
+        <p class="tool-description">Enter any website link to extract all photos, icons, SVG vectors, and background images. Filter by resolution or format and download individually or in a <strong>single ZIP file</strong>.</p>
+      </div>
+
+      <!-- Main Workspace -->
+      <div class="tool-workspace" style="padding: 24px; margin-bottom: 24px;">
+        
+        <!-- Scan Mode Tabs -->
+        <div class="tool-tabs" id="extractTabs" style="margin-bottom: 20px;">
+          <button type="button" class="tool-tab active" data-mode="url">🌐 Extract from Live URL</button>
+          <button type="button" class="tool-tab" data-mode="source">📄 Paste Page HTML (Bypass Bot Shields)</button>
+        </div>
+
+        <!-- Mode 1: URL Input -->
+        <div id="modeUrlSection">
+          <label class="form-label" for="inpTargetUrl" style="font-weight: 600; font-size: 14px;">Enter Webpage URL *</label>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <input type="url" id="inpTargetUrl" class="form-input" placeholder="e.g. https://en.wikipedia.org/wiki/India or blog.example.com" style="flex: 1; min-width: 250px; font-size: 15px; padding: 12px 16px;">
+            <button type="button" id="btnExtractUrl" class="btn btn-primary" style="font-size: 14px; padding: 12px 24px; min-width: 150px;">
+              🔍 Extract Images
+            </button>
+          </div>
+
+          <!-- Quick Samples -->
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 14px; font-size: 12px;">
+            <span style="color: var(--gray-500); font-weight: 600;">💡 Try Popular Sample Pages:</span>
+            <button type="button" class="btn btn-outline sample-url-btn" data-url="https://en.wikipedia.org/wiki/Taj_Mahal" style="font-size: 11px; padding: 4px 10px;">🏛️ Taj Mahal (Wiki)</button>
+            <button type="button" class="btn btn-outline sample-url-btn" data-url="https://unsplash.com" style="font-size: 11px; padding: 4px 10px;">📸 Unsplash Gallery</button>
+            <button type="button" class="btn btn-outline sample-url-btn" data-url="https://github.com" style="font-size: 11px; padding: 4px 10px;">🐙 GitHub Home</button>
+          </div>
+        </div>
+
+        <!-- Mode 2: Source HTML Paste -->
+        <div id="modeSourceSection" style="display: none;">
+          <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+            <div>
+              <label class="form-label" for="inpSourceBaseUrl" style="font-weight: 600; font-size: 14px;">Page Website Base URL (Optional - for resolving relative image links)</label>
+              <input type="url" id="inpSourceBaseUrl" class="form-input" placeholder="https://example.com" style="font-size: 14px; padding: 10px 14px;">
+            </div>
+            <div>
+              <label class="form-label" for="txtSourceHtml" style="font-weight: 600; font-size: 14px;">Paste Full Page Source HTML *</label>
+              <textarea id="txtSourceHtml" class="form-input" rows="7" placeholder="Right-click on any webpage -> View Page Source -> Ctrl+A -> Ctrl+C -> Paste here..." style="font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.5;"></textarea>
+            </div>
+            <div>
+              <button type="button" id="btnExtractSource" class="btn btn-primary" style="font-size: 14px; padding: 12px 24px;">
+                🔍 Extract Images from HTML
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Extraction Options Checkboxes -->
+        <div style="margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--gray-200); display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="checkbox" id="chkImgTags" checked style="accent-color: var(--primary);">
+            <span>Photos (&lt;img&gt; &amp; &lt;picture&gt;)</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="checkbox" id="chkSvgTags" checked style="accent-color: var(--primary);">
+            <span>SVG Vectors &amp; Icons</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="checkbox" id="chkBgImages" checked style="accent-color: var(--primary);">
+            <span>CSS Background Images</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="checkbox" id="chkMetaImages" checked style="accent-color: var(--primary);">
+            <span>Social / Meta (OG &amp; Twitter)</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <input type="checkbox" id="chkLinkedImages" checked style="accent-color: var(--primary);">
+            <span>Linked Photos (&lt;a href&gt;)</span>
+          </label>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loadingStatusWrap" style="display: none; margin-top: 20px; padding: 16px; background: #eff6ff; border-radius: var(--radius-md); border: 1px solid #bfdbfe;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="spinner" style="width: 22px; height: 22px; border: 3px solid #bfdbfe; border-top-color: #2563eb; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+            <div>
+              <strong id="loadingTitle" style="color: #1e3a8a; font-size: 14px;">Fetching webpage content...</strong>
+              <div id="loadingSubtitle" style="color: #3b82f6; font-size: 12px;">Connecting through multi-proxy network...</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Results Workspace (Hidden initially) -->
+      <div class="tool-workspace" id="resultsWorkspace" style="display: none; padding: 24px;">
+        
+        <div class="tool-split">
+          
+          <!-- LEFT SIDE: Controls & Filters -->
+          <div class="tool-split-inputs">
+
+            <!-- Stats Bar -->
+            <div class="workspace-section" style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 14px 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 13px; font-weight: 600; color: var(--gray-700);">Extracted Total:</span>
+                <span id="statTotalImages" style="font-size: 16px; font-weight: 700; color: var(--primary);">0</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                <span style="font-size: 12px; color: var(--gray-500);">Showing Filtered:</span>
+                <span id="statShowingImages" style="font-size: 12px; font-weight: 600; color: var(--gray-800);">0</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                <span style="font-size: 12px; color: var(--gray-500);">Selected:</span>
+                <span id="statSelectedImages" style="font-size: 12px; font-weight: 600; color: #16a34a;">0</span>
+              </div>
+            </div>
+
+            <!-- Search Filter -->
+            <div class="workspace-section">
+              <label class="form-label" for="inpSearchFilter" style="font-weight: 600; font-size: 13px;">Search by Name or URL</label>
+              <input type="text" id="inpSearchFilter" class="form-input" placeholder="e.g. logo, banner, avatar..." style="font-size: 13px; padding: 8px 12px;">
+            </div>
+
+            <!-- Format Filter Chips -->
+            <div class="workspace-section">
+              <label class="form-label" style="font-weight: 600; font-size: 13px;">Filter by Format</label>
+              <div class="filter-chip-bar" id="formatChipBar">
+                <button type="button" class="filter-chip-btn active" data-fmt="all">All Formats</button>
+                <button type="button" class="filter-chip-btn" data-fmt="jpg">JPG</button>
+                <button type="button" class="filter-chip-btn" data-fmt="png">PNG</button>
+                <button type="button" class="filter-chip-btn" data-fmt="webp">WEBP</button>
+                <button type="button" class="filter-chip-btn" data-fmt="svg">SVG</button>
+                <button type="button" class="filter-chip-btn" data-fmt="gif">GIF</button>
+              </div>
+            </div>
+
+            <!-- Dimension / Size Filter -->
+            <div class="workspace-section">
+              <label class="form-label" for="selSizeFilter" style="font-weight: 600; font-size: 13px;">Filter by Dimensions</label>
+              <select id="selSizeFilter" class="form-select" style="font-size: 13px; padding: 8px 12px;">
+                <option value="all" selected>All Dimensions (Any Size)</option>
+                <option value="large">High-Res Large (&gt; 800px)</option>
+                <option value="medium">Medium Size (200px – 800px)</option>
+                <option value="small">Icons &amp; Small (&lt; 200px)</option>
+              </select>
+            </div>
+
+            <!-- Sort Option -->
+            <div class="workspace-section">
+              <label class="form-label" for="selSortOrder" style="font-weight: 600; font-size: 13px;">Sort Images</label>
+              <select id="selSortOrder" class="form-select" style="font-size: 13px; padding: 8px 12px;">
+                <option value="original" selected>Page Original Order</option>
+                <option value="largest">Largest Dimensions First</option>
+                <option value="smallest">Smallest Dimensions First</option>
+                <option value="type">Group by Format Type</option>
+              </select>
+            </div>
+
+            <!-- Bulk Actions -->
+            <div class="workspace-section" style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: flex; gap: 8px;">
+                <button type="button" class="btn btn-outline btn-sm" id="btnSelectAll" style="flex: 1;">
+                  Select All
+                </button>
+                <button type="button" class="btn btn-outline btn-sm" id="btnDeselectAll" style="flex: 1;">
+                  Deselect All
+                </button>
+              </div>
+
+              <button type="button" class="btn btn-primary" id="btnDownloadSelected" style="width: 100%; font-size: 13px; padding: 10px 14px;">
+                📦 Download Selected (<span id="btnSelectedCount">0</span>)
+              </button>
+
+              <button type="button" class="btn btn-secondary" id="btnDownloadAllZip" style="width: 100%; font-size: 13px; padding: 10px 14px;">
+                🗂️ Download All as ZIP (<span id="btnAllZipCount">0</span>)
+              </button>
+
+              <!-- ZIP Progress Box -->
+              <div id="zipProgressBox" style="display: none; padding: 10px 12px; background: #f8fafc; border: 1px solid var(--gray-200); border-radius: var(--radius-md);">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: var(--gray-700);">
+                  <span id="zipProgressMsg">Packaging images into ZIP...</span>
+                  <span id="zipProgressPct">0%</span>
+                </div>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" id="zipProgressBarFill"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT SIDE: Gallery Grid -->
+          <div class="tool-split-output">
+            
+            <div id="galleryEmptyNotice" style="display: none; text-align: center; padding: 40px 20px; color: var(--gray-500);">
+              <div style="font-size: 40px; margin-bottom: 8px;">🔍</div>
+              <h3 style="margin: 0 0 6px; color: var(--gray-800);">No images match your filter</h3>
+              <p style="font-size: 13px; margin: 0;">Try selecting "All Formats" or clearing the search box.</p>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+              <!-- Dynamically populated image cards -->
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- How to use -->
+      <section class="how-to-use" style="margin-top: var(--space-12);">
+        <h2>How to Extract and Download Images from Any Website</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Paste Website URL</h3>
+            <p>Paste the webpage address (or switch to Tab 2 to paste raw HTML source for bot-protected pages).</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Scan &amp; Filter</h3>
+            <p>Our engine automatically resolves all image paths, social tags, SVGs, and backgrounds with instant dimensions.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Download in 1-Click</h3>
+            <p>Download individual high-res images directly or click "Download All as ZIP" to archive the entire gallery.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>What if a website blocks the live URL scanner?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Some platforms (like Amazon or Cloudflare-protected stores) block external proxy requests. Simply right-click on the webpage, click <strong>"View Page Source"</strong> (or press Ctrl+U), select all and copy the HTML, then paste it into <strong>Tab 2 ("Paste Page HTML")</strong>. All images will be extracted instantly!
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Can I extract and download SVG vectors and CSS backgrounds?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Yes! Our tool scans inline &lt;svg&gt; tags, CSS background-image declarations, OpenGraph meta images, and &lt;picture&gt; elements, enabling you to download scalable SVGs and banner backgrounds.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Is this tool safe and private?</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Yes, 100%. Image parsing, dimension probing, and ZIP packaging run entirely client-side inside your browser. No extracted images are ever stored on our servers.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/image-extractor.js?v=1.0"></script>
+</body>
+</html>
