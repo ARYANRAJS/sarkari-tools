@@ -236,9 +236,14 @@
       position: absolute; top: 8px; height: 30px; background: linear-gradient(180deg, #fbbf24, #f59e0b);
       border-radius: 5px; opacity: .92; cursor: grab; border: 1px solid #b45309;
       display: flex; align-items: center; justify-content: center; overflow: hidden; z-index: 2;
+      box-sizing: border-box; padding: 0 6px;
     }
     .sub-tl-cue:active { cursor: grabbing; }
-    .sub-tl-cue span { font-size: 9px; color: #451a03; white-space: nowrap; padding: 0 3px; pointer-events: none; font-weight: 600; }
+    .sub-tl-cue span {
+      font-size: 9px; color: #451a03; white-space: nowrap; padding: 0 2px; pointer-events: none;
+      font-weight: 600; overflow: hidden !important; text-overflow: ellipsis !important;
+      max-width: 100% !important; display: block !important;
+    }
     .sub-tl-cue .hL, .sub-tl-cue .hR {
       position: absolute; top: 0; bottom: 0; width: 8px; cursor: ew-resize; z-index: 3;
     }
@@ -259,6 +264,83 @@
     }
     .sub-lang-pill.active { border-color: var(--saffron); color: #92400e; background: #fffbeb; }
     @media (max-width: 992px) { .sub-cue-list { max-height: 300px; } }
+
+    /* ── Responsive & Anti-Overflow Button Enforcements ── */
+    .settings-panel > .btn,
+    .settings-panel > button,
+    .settings-panel > .sub-size-panel,
+    .settings-panel > p,
+    .settings-panel > div[style*="display: grid"],
+    .settings-panel > #videoRenderProgressBox,
+    .settings-panel > .sub-export-actions,
+    #btnTranscribe,
+    #btnExportVideo {
+      grid-column: 1 / -1 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    .tool-workspace .btn,
+    .tool-workspace button.btn,
+    .settings-panel .btn,
+    .settings-panel button,
+    .sub-upload-zone .btn {
+      white-space: normal !important;
+      word-break: normal !important;
+      overflow-wrap: break-word !important;
+      text-align: center !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    #btnTranscribe, #btnExportVideo {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      padding: 13px 18px !important;
+      font-size: 15px !important;
+      font-weight: 700 !important;
+      line-height: 1.35 !important;
+      border-radius: var(--radius-md, 8px) !important;
+      min-height: 48px !important;
+    }
+
+    #btnTranscribe span, #btnExportVideo span {
+      display: inline-block;
+      white-space: normal !important;
+      text-align: center;
+    }
+
+    .sub-export-actions {
+      grid-column: 1 / -1 !important;
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important;
+      gap: 8px !important;
+      width: 100% !important;
+      margin-top: 12px !important;
+    }
+
+    .sub-export-actions .btn {
+      width: 100% !important;
+      padding: 10px 12px !important;
+      font-size: 12.5px !important;
+      font-weight: 600 !important;
+    }
+
+    .sub-tl-cue span {
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      max-width: 100% !important;
+      display: block !important;
+    }
+
+    .sub-timeline-label {
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+    }
+
     /* ── dark mode ── */
     body.dark .sub-upload-zone { background: #141B2B; }
     body.dark .sub-upload-zone:hover, body.dark .sub-upload-zone.dragover { background: #1B2436; border-color: var(--saffron); }
@@ -374,7 +456,7 @@
               </div>
 
               <button type="button" class="btn btn-primary btn-lg" id="btnTranscribe" style="width:100%;">
-                ✨ Auto-Generate Subtitles (Turbo AI)
+                <span>✨ Auto-Generate Subtitles (Turbo AI)</span>
               </button>
               <p style="font-size: 11.5px; color: var(--gray-500); margin-top: 6px;">Runs 100% on your local machine using GPU hardware. With anti-repetition protection, no hallucinated repeats!</p>
             </div>
@@ -599,8 +681,8 @@
             <div class="settings-panel">
               <!-- Video Burn-in Action -->
               <button type="button" class="btn btn-primary btn-lg" id="btnExportVideo" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
-                <span>🎬 Export Video with Hardcoded Subtitles</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="7" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+                <span>🎬 Export Subtitled Video (HD Burn-in)</span>
               </button>
 
               <!-- Video Render Progress Bar -->
@@ -615,7 +697,7 @@
               </div>
 
               <!-- Subtitle File Downloads -->
-              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top: 12px;">
+              <div class="sub-export-actions">
                 <button type="button" class="btn btn-outline" id="btnExportSrt">⬇ Download .SRT</button>
                 <button type="button" class="btn btn-outline" id="btnExportVtt">⬇ Download .VTT</button>
                 <button type="button" class="btn btn-outline" id="btnExportTxt">⬇ Transcript .TXT</button>
