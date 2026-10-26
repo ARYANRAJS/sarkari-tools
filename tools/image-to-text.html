@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Image to Text (OCR) Converter — Multi-Image, English &amp; Hindi | AllToolsInOne</title>
+  <meta name="description" content="Extract editable text from multiple images at once with high-accuracy OCR. Full support for English and Hindi (हिंदी). 100% free, private &amp; client-side.">
+  <meta name="keywords" content="image to text, ocr online, extract text from photo, hindi ocr, english ocr, photo to text converter, batch ocr, picture to text, scanned document to word">
+  <meta property="og:title" content="Multi-Image to Text (OCR) Converter — English &amp; Hindi">
+  <meta property="og:description" content="Convert multiple images to text simultaneously with high accuracy, live editing, Hindi &amp; English language support, and one-click export.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/image-to-text.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.2">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tools.css?v=3.2">
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image to Text (OCR) Converter",
+    "description": "Extract text from single or multiple images in English and Hindi with high-accuracy preprocessing, live text editor, and instant download.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container">
+      
+      <!-- Breadcrumb -->
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Image to Text (OCR)</span>
+      </div>
+
+      <!-- Hero Header -->
+      <div class="tool-hero">
+        <div class="tool-icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">🔤</div>
+        <h1>Multi-Image to Text (OCR) Converter</h1>
+        <p class="tool-description">Upload multiple photos, documents, book pages, notes or receipts at once. Extracts text separately for each image with high accuracy in English and Hindi. Fully editable textboxes with instant copy and download.</p>
+      </div>
+
+      <!-- OCR Settings Bar -->
+      <div class="tool-workspace" style="margin-bottom: 24px; padding: 20px;">
+        <div style="font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+          <span>⚙️</span> OCR &amp; Language Settings
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+          
+          <!-- Language Selector -->
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label" for="ocrLanguage" style="font-weight: 600; display: flex; align-items: center; gap: 6px;">
+              <span>🌐</span> Recognition Language *
+            </label>
+            <select id="ocrLanguage" class="form-select" style="font-weight: 500;">
+              <option value="eng+hin" selected>🌐 English + Hindi (Bilingual / Hinglish) — Recommended</option>
+              <option value="eng">🇬🇧 English Only (Fastest &amp; High Accuracy)</option>
+              <option value="hin">🇮🇳 Hindi Only (हिंदी)</option>
+            </select>
+            <div style="font-size: 11px; color: var(--gray-500); margin-top: 4px;">Supports mixed Hindi &amp; English text in certificates, books and forms.</div>
+          </div>
+
+          <!-- Enhancement & Preprocessing Mode -->
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label" for="ocrPreprocessMode" style="font-weight: 600; display: flex; align-items: center; gap: 6px;">
+              <span>⚡</span> Quality &amp; Accuracy Preprocessing
+            </label>
+            <select id="ocrPreprocessMode" class="form-select" style="font-weight: 500;">
+              <option value="auto" selected>✨ Smart Auto-Enhance (Contrast + Denoise + Sharpen)</option>
+              <option value="binarize">📄 Document / High-Contrast B&amp;W (Best for Books &amp; Scans)</option>
+              <option value="photo">📷 Camera / Shadow Remover (For phone photos)</option>
+              <option value="upscale">🔍 Small Text / Receipt Booster (2x Resolution Boost)</option>
+              <option value="none">🚫 Raw / Original Image (No filter)</option>
+            </select>
+            <div style="font-size: 11px; color: var(--gray-500); margin-top: 4px;">Canvas filters enhance text clarity before feeding to AI neural network.</div>
+          </div>
+
+          <!-- Combined Export Delimiter -->
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label" for="ocrDelimiter" style="font-weight: 600; display: flex; align-items: center; gap: 6px;">
+              <span>📑</span> Combined Output Separator
+            </label>
+            <select id="ocrDelimiter" class="form-select" style="font-weight: 500;">
+              <option value="filename" selected>File Header (--- Image: filename.jpg ---)</option>
+              <option value="page">Page Numbers ([Page 1], [Page 2])</option>
+              <option value="newline">Double Line Breaks Only</option>
+            </select>
+            <div style="font-size: 11px; color: var(--gray-500); margin-top: 4px;">Applied when using "Copy All" or "Download All".</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Upload Zone -->
+      <div class="upload-zone" id="dropZone" style="margin-bottom: 24px;">
+        <input type="file" id="fileInput" accept="image/png, image/jpeg, image/jpg, image/webp, image/bmp, image/tiff" multiple>
+        <div class="upload-zone-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <div class="upload-zone-title">Drop Multiple Images Here or Browse</div>
+        <div class="upload-zone-desc">Select 1 or 50+ images at once. Supports JPG, PNG, WebP, BMP</div>
+        
+        <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 14px; position: relative; z-index: 2;">
+          <button type="button" class="btn btn-primary" id="btnBrowse" style="font-size: 13px; padding: 8px 18px;">
+            📁 Select Images
+          </button>
+          <button type="button" class="btn btn-outline" id="btnPasteClipboard" style="font-size: 13px; padding: 8px 16px;">
+            📋 Paste (Ctrl+V)
+          </button>
+          <button type="button" class="btn btn-outline" id="btnSampleDoc" style="font-size: 13px; padding: 8px 16px;">
+            💡 Try Sample Images
+          </button>
+        </div>
+      </div>
+
+      <!-- Hidden canvas for preprocessing -->
+      <canvas id="preprocessCanvas" style="display: none;"></canvas>
+
+      <!-- Batch Master Control Bar -->
+      <div id="batchBar" class="ocr-batch-bar" style="display: none;">
+        <div>
+          <div class="ocr-batch-stats">
+            <span id="batchCountBadge" style="background: #e0f2fe; color: #0284c7; padding: 3px 10px; border-radius: 12px; font-size: 12px;">0 Images</span>
+            <span id="batchStatusText" style="font-size: 13px;">Ready to extract</span>
+          </div>
+          <!-- Progress bar -->
+          <div id="batchProgressWrapper" class="ocr-progress-container" style="display: none; width: 280px; max-width: 100%;">
+            <div id="batchProgressBar" class="ocr-progress-fill animated"></div>
+          </div>
+        </div>
+
+        <div class="ocr-batch-actions">
+          <button type="button" id="btnExtractAll" class="btn btn-primary" style="font-size: 13px; padding: 8px 16px; background: #16a34a; border-color: #16a34a;">
+            ⚡ Extract All Text
+          </button>
+          <button type="button" id="btnCopyAll" class="btn btn-outline" style="font-size: 13px; padding: 8px 14px;">
+            📋 Copy All
+          </button>
+          <button type="button" id="btnDownloadAllTxt" class="btn btn-outline" style="font-size: 13px; padding: 8px 14px;">
+            ⬇️ Download All (.txt)
+          </button>
+          <button type="button" id="btnDownloadWord" class="btn btn-outline" style="font-size: 13px; padding: 8px 14px;">
+            📄 Word (.doc)
+          </button>
+          <button type="button" id="btnDownloadZip" class="btn btn-outline" style="font-size: 13px; padding: 8px 14px;">
+            📦 ZIP
+          </button>
+          <button type="button" id="btnToggleFindReplace" class="btn btn-outline" style="font-size: 13px; padding: 8px 12px;" title="Find &amp; Replace across all cards">
+            🔍 Find &amp; Replace
+          </button>
+          <button type="button" id="btnClearAll" class="btn btn-outline" style="font-size: 13px; padding: 8px 12px; color: #dc2626; border-color: #fca5a5;">
+            🗑️ Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Find & Replace Toolbar (Collapsible) -->
+      <div id="findReplaceBar" style="display: none; background: var(--gray-50); border: 1px dashed var(--gray-300); border-radius: var(--radius-lg); padding: 12px 16px; margin-bottom: 20px;">
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <div style="font-weight: 600; font-size: 13px; color: var(--navy);">🔍 Find &amp; Replace:</div>
+          <input type="text" id="findInput" class="form-input" placeholder="Find text or typo..." style="width: 200px; padding: 6px 10px; font-size: 13px;">
+          <input type="text" id="replaceInput" class="form-input" placeholder="Replace with..." style="width: 200px; padding: 6px 10px; font-size: 13px;">
+          <button type="button" id="btnApplyReplace" class="btn btn-primary" style="font-size: 12px; padding: 6px 14px;">Replace in All Boxes</button>
+          <span id="replaceCountMsg" style="font-size: 12px; color: var(--gray-600);"></span>
+        </div>
+      </div>
+
+      <!-- Container for Image Cards -->
+      <div id="ocrCardsContainer">
+        <!-- Injected dynamically by image-to-text.js -->
+        <div id="emptyState" style="text-align: center; padding: 48px 16px; background: var(--white); border: 1px dashed var(--gray-300); border-radius: var(--radius-xl); color: var(--gray-500);">
+          <div style="font-size: 44px; margin-bottom: 12px;">🖼️ ➔ 📝</div>
+          <div style="font-size: 17px; font-weight: 600; color: var(--navy); margin-bottom: 6px;">No Images Uploaded Yet</div>
+          <p style="font-size: 13px; max-width: 440px; margin: 0 auto 18px;">Drop or select multiple images above. Every image will get its own separate editable text box with confidence metrics, formatting tools, and instant copy/download.</p>
+          <button type="button" class="btn btn-outline" id="btnEmptySample" style="font-size: 13px;">💡 Load Sample Document &amp; Hindi Form</button>
+        </div>
+      </div>
+
+      <!-- Modal Image Viewer -->
+      <div id="imageModal" class="ocr-modal-overlay" style="display: none;">
+        <div class="ocr-modal-content">
+          <button type="button" class="ocr-modal-close" id="modalCloseBtn">&times;</button>
+          <div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;" id="modalTitle">Image Preview</div>
+          <img id="modalImg" src="" alt="Full Preview" style="max-width: 100%; max-height: 75vh; border-radius: 8px; display: block; margin: 0 auto;">
+        </div>
+      </div>
+
+      <!-- SEO Educational Info & Guide -->
+      <div class="tool-info-section" style="margin-top: var(--space-8); background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-8);">
+        <h2 style="font-size: 20px; color: var(--navy); margin-bottom: 12px;">High-Accuracy Multi-Image to Text (OCR) Converter</h2>
+        <p style="color: var(--gray-600); line-height: 1.6; font-size: 14px; margin-bottom: 16px;">
+          This optical character recognition (OCR) utility allows students, researchers, office administrators, and cyber cafe operators to convert printed or handwritten text from multiple photos into fully editable digital text. Unlike cloud services that send your sensitive certificates and notes to external servers, this tool runs <strong>100% locally inside your web browser</strong> using WebAssembly-accelerated neural networks.
+        </p>
+
+        <h3 style="font-size: 16px; color: var(--navy); margin: 16px 0 8px;">Key Capabilities:</h3>
+        <ul style="color: var(--gray-600); font-size: 13px; line-height: 1.7; padding-left: 20px; margin-bottom: 16px;">
+          <li><strong>Simultaneous Batch OCR:</strong> Drop dozens of images at once; each image receives its own dedicated, independent editable text box.</li>
+          <li><strong>Dual English &amp; Hindi Support:</strong> Trained neural models effortlessly recognize Devanagari script (हिंदी) and Latin script (English), including mixed bilingual text (Hinglish).</li>
+          <li><strong>Client-Side Image Enhancement:</strong> Contrast normalization, sharpening, adaptive binarization, and auto-upscaling maximize character edge clarity before recognition.</li>
+          <li><strong>Interactive Text Editor:</strong> Edit, correct typos, format, and adjust text directly in the box before exporting.</li>
+          <li><strong>Flexible Export Options:</strong> Copy single text, Copy all with file dividers, download as individual <code>.txt</code> files, combined text, Word document (<code>.doc</code>), or complete ZIP archive.</li>
+        </ul>
+
+        <h3 style="font-size: 16px; color: var(--navy); margin: 16px 0 8px;">Tips for 100% OCR Accuracy:</h3>
+        <ul style="color: var(--gray-600); font-size: 13px; line-height: 1.7; padding-left: 20px;">
+          <li>Ensure adequate lighting when taking photos with a smartphone to eliminate harsh diagonal shadows.</li>
+          <li>Keep the document or book page as flat and straight as possible.</li>
+          <li>For faded prints or old books, select <em>"Document / High-Contrast B&amp;W"</em> mode.</li>
+          <li>For small text on receipts or identity cards, select <em>"Small Text / Receipt Booster"</em> to apply 2x super-resolution.</li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.2"></script>
+  <script src="../js/tools/image-to-text.js?v=1.0"></script>
+</body>
+</html>

@@ -18,6 +18,18 @@
   /* ───────── TOOL REGISTRY ───────── */
   const TOOLS = [
     {
+      id: 'image-to-text',
+      name: 'Image to Text (OCR)',
+      description: 'Extract editable text from multiple images in English & Hindi with high accuracy',
+      category: 'image',
+      categoryLabel: 'Image Tools',
+      icon: '🔤',
+      iconBg: 'image-tools',
+      url: 'tools/image-to-text.html',
+      keywords: ['ocr', 'image to text', 'extract text', 'photo to text', 'hindi ocr', 'english ocr', 'scan to text', 'picture to text', 'text scanner', 'batch ocr'],
+      badge: 'New'
+    },
+    {
       id: 'image-resizer',
       name: 'Image Resizer',
       description: 'Resize images by pixel, percentage or preset sizes for government forms',
