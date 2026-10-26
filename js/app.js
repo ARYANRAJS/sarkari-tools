@@ -403,6 +403,18 @@
       keywords: ['whois', 'domain', 'dns', 'mx', 'txt', 'ns', 'a record', 'ssl', 'spf', 'dmarc', 'domain age', 'registrar', 'host', 'seo'],
       badge: 'New'
     },
+        {
+      id: 'tech-detector',
+      name: 'Website Tech Stack & Shopify Detector',
+      description: 'Discover CMS, Shopify apps & themes, React, Next.js, hosting, CDN, and 200+ technologies',
+      category: 'seo',
+      categoryLabel: 'SEO & Marketing',
+      icon: '🔎',
+      iconBg: 'calc-tools',
+      url: 'tools/tech-detector.html',
+      keywords: ['wappalyzer', 'tech stack', 'shopify detector', 'what cms', 'builtwith', 'ecommerce detector', 'technology lookup', 'shopify apps', 'wordpress detector', 'website technologies'],
+      badge: 'New'
+    },
     {
       id: 'da-pa-checker',
       name: 'Domain Authority (DA) & PA Checker',
