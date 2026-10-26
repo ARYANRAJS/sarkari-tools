@@ -4,7 +4,8 @@
    Worker. WebAudio extracts 16 kHz mono audio for ASR.
    Timeline editor: drag / retime cue blocks. SRT/VTT/TXT export.
    Style & Animation Studio: Viral Reels styles, custom fonts,
-   transitions, karaoke word highlight, and hardsub video export.
+   drag & resize on video, width & position controls, transitions,
+   karaoke word highlight, and hardsub video export.
    ═══════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -15,6 +16,11 @@
     reels: {
       font: "'Impact', 'Arial Black', sans-serif",
       size: 26,
+      widthPct: 85,
+      posY: 85,
+      posX: 50,
+      padding: 'standard',
+      lineHeight: '1.35',
       color: '#facc15',
       boxStyle: 'stroke',
       position: 'bottom',
@@ -24,6 +30,11 @@
     cinematic: {
       font: "'Inter', sans-serif",
       size: 18,
+      widthPct: 75,
+      posY: 88,
+      posX: 50,
+      padding: 'standard',
+      lineHeight: '1.35',
       color: '#ffffff',
       boxStyle: 'box',
       position: 'bottom',
@@ -33,6 +44,11 @@
     neon: {
       font: "'Montserrat', sans-serif",
       size: 24,
+      widthPct: 85,
+      posY: 85,
+      posX: 50,
+      padding: 'standard',
+      lineHeight: '1.35',
       color: '#06b6d4',
       boxStyle: 'neon',
       position: 'bottom',
@@ -42,6 +58,11 @@
     comic: {
       font: "'Comic Sans MS', cursive, sans-serif",
       size: 24,
+      widthPct: 85,
+      posY: 85,
+      posX: 50,
+      padding: 'standard',
+      lineHeight: '1.35',
       color: '#dc2626',
       boxStyle: 'box',
       position: 'bottom',
@@ -51,6 +72,11 @@
     pill: {
       font: "'Poppins', sans-serif",
       size: 20,
+      widthPct: 80,
+      posY: 86,
+      posX: 50,
+      padding: 'spacious',
+      lineHeight: '1.35',
       color: '#ffffff',
       boxStyle: 'pill',
       position: 'bottom',
@@ -60,6 +86,11 @@
     typewriter: {
       font: "'JetBrains Mono', monospace",
       size: 20,
+      widthPct: 85,
+      posY: 86,
+      posX: 50,
+      padding: 'standard',
+      lineHeight: '1.35',
       color: '#4ade80',
       boxStyle: 'box',
       position: 'bottom',
@@ -85,6 +116,11 @@
       preset: 'reels',
       font: "'Impact', 'Arial Black', sans-serif",
       size: 24,
+      widthPct: 85,
+      posX: 50,
+      posY: 85,
+      padding: 'standard',
+      lineHeight: '1.35',
       color: '#facc15',
       boxStyle: 'stroke',
       position: 'bottom',
@@ -200,30 +236,27 @@
 
   /* ───────── Styling & Overlay Configuration ───────── */
   function applyOverlayStyle() {
-    var ov = $('subOverlay');
+    var box = $('subOverlayBox');
     var span = $('subOverlayText');
-    if (!ov || !span) return;
+    if (!box || !span) return;
 
-    // Subtitle Position
-    if (state.style.position === 'top') {
-      ov.style.top = '10%';
-      ov.style.bottom = 'auto';
-      ov.style.transform = 'none';
-    } else if (state.style.position === 'center') {
-      ov.style.top = '50%';
-      ov.style.bottom = 'auto';
-      ov.style.transform = 'translateY(-50%)';
-    } else {
-      ov.style.bottom = '8%';
-      ov.style.top = 'auto';
-      ov.style.transform = 'none';
-    }
+    // Subtitle Position X and Y
+    box.style.left = state.style.posX + '%';
+    box.style.top = state.style.posY + '%';
+    box.style.maxWidth = state.style.widthPct + '%';
 
     // Typography
     span.style.fontFamily = state.style.font;
     span.style.fontSize = state.style.size + 'px';
     span.style.color = state.style.color;
     span.style.textTransform = state.style.textCase === 'uppercase' ? 'uppercase' : 'none';
+    span.style.lineHeight = state.style.lineHeight || '1.35';
+
+    // Padding values
+    var padH = 16, padV = 6;
+    if (state.style.padding === 'compact') { padH = 10; padV = 3; }
+    else if (state.style.padding === 'spacious') { padH = 24; padV = 9; }
+    else if (state.style.padding === 'none') { padH = 4; padV = 2; }
 
     // Box & Outline Style
     if (state.style.boxStyle === 'stroke') {
@@ -231,7 +264,7 @@
       span.style.webkitTextStroke = '2px #000';
       span.style.textShadow = '2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 4px 8px rgba(0,0,0,0.8)';
       span.style.borderRadius = '0';
-      span.style.padding = '4px 8px';
+      span.style.padding = '2px 4px';
       span.style.border = 'none';
       span.style.boxShadow = 'none';
     } else if (state.style.boxStyle === 'box') {
@@ -239,7 +272,7 @@
       span.style.webkitTextStroke = '0';
       span.style.textShadow = '0 1px 3px rgba(0,0,0,0.7)';
       span.style.borderRadius = '8px';
-      span.style.padding = '6px 16px';
+      span.style.padding = padV + 'px ' + padH + 'px';
       span.style.border = '1px solid rgba(255,255,255,0.12)';
       span.style.boxShadow = '0 4px 12px rgba(0,0,0,0.4)';
     } else if (state.style.boxStyle === 'pill') {
@@ -247,7 +280,7 @@
       span.style.webkitTextStroke = '0';
       span.style.textShadow = 'none';
       span.style.borderRadius = '999px';
-      span.style.padding = '8px 24px';
+      span.style.padding = (padV + 2) + 'px ' + (padH + 8) + 'px';
       span.style.border = 'none';
       span.style.boxShadow = '0 4px 14px rgba(0,0,0,0.5)';
     } else if (state.style.boxStyle === 'neon') {
@@ -255,7 +288,7 @@
       span.style.webkitTextStroke = '0';
       span.style.textShadow = '0 0 10px ' + state.style.color + ', 0 0 20px ' + state.style.color;
       span.style.borderRadius = '8px';
-      span.style.padding = '6px 18px';
+      span.style.padding = padV + 'px ' + padH + 'px';
       span.style.border = '1px solid ' + state.style.color;
       span.style.boxShadow = '0 0 16px rgba(6, 182, 212, 0.3)';
     } else { // 'none'
@@ -263,7 +296,7 @@
       span.style.webkitTextStroke = '0';
       span.style.textShadow = '0 2px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(0,0,0,0.9)';
       span.style.borderRadius = '0';
-      span.style.padding = '4px 8px';
+      span.style.padding = '2px 4px';
       span.style.border = 'none';
       span.style.boxShadow = 'none';
     }
@@ -275,9 +308,14 @@
     state.style.preset = name;
     state.style.font = p.font;
     state.style.size = p.size;
+    state.style.widthPct = p.widthPct || 85;
+    state.style.posX = p.posX || 50;
+    state.style.posY = p.posY || 85;
+    state.style.padding = p.padding || 'standard';
+    state.style.lineHeight = p.lineHeight || '1.35';
     state.style.color = p.color;
     state.style.boxStyle = p.boxStyle;
-    state.style.position = p.position;
+    state.style.position = p.position || 'bottom';
     state.style.transition = p.transition;
     state.style.textCase = p.textCase;
 
@@ -287,9 +325,19 @@
       $('subFontSizeSlider').value = p.size;
       if ($('dispSubFontSize')) $('dispSubFontSize').textContent = p.size + ' px';
     }
+    if ($('subBoxWidthSlider')) {
+      $('subBoxWidthSlider').value = state.style.widthPct;
+      if ($('dispSubBoxWidth')) $('dispSubBoxWidth').textContent = state.style.widthPct + '%';
+    }
+    if ($('subPositionSelect')) $('subPositionSelect').value = state.style.position;
+    if ($('subPosYSlider')) {
+      $('subPosYSlider').value = state.style.posY;
+      if ($('dispSubPosY')) $('dispSubPosY').textContent = state.style.posY + '%';
+    }
+    if ($('subPaddingSelect')) $('subPaddingSelect').value = state.style.padding;
+    if ($('subLineHeightSelect')) $('subLineHeightSelect').value = state.style.lineHeight;
     if ($('subTextColor')) $('subTextColor').value = p.color;
     if ($('subBoxStyleSelect')) $('subBoxStyleSelect').value = p.boxStyle;
-    if ($('subPositionSelect')) $('subPositionSelect').value = p.position;
     if ($('subTransitionSelect')) $('subTransitionSelect').value = p.transition;
     if ($('subCaseSelect')) $('subCaseSelect').value = p.textCase;
 
@@ -300,6 +348,18 @@
         btn.classList.toggle('active', btn.dataset.preset === name);
       });
     }
+
+    // Sync quick size pills
+    var qSizes = document.querySelectorAll('#quickFontSizeWrap .quick-size-pill');
+    Array.prototype.forEach.call(qSizes, function (pill) {
+      pill.classList.toggle('active', +pill.dataset.size === p.size);
+    });
+
+    // Sync quick width pills
+    var qWidths = document.querySelectorAll('#quickWidthWrap .quick-size-pill');
+    Array.prototype.forEach.call(qWidths, function (pill) {
+      pill.classList.toggle('active', +pill.dataset.width === state.style.widthPct);
+    });
 
     applyOverlayStyle();
   }
@@ -848,7 +908,7 @@
     if (!v || !state.duration) return;
     if ($('subTlPlayhead')) $('subTlPlayhead').style.left = (clamp(v.currentTime / state.duration, 0, 1) * 100) + '%';
     if ($('subTimecode')) $('subTimecode').textContent = fmtShort(v.currentTime) + ' / ' + fmtShort(state.duration);
-    
+
     // Find active cue
     var cur = null;
     for (var i = 0; i < state.cues.length; i++) {
@@ -861,16 +921,16 @@
     var ov = $('subOverlay');
     var span = $('subOverlayText');
     if (cur && ov && span) {
-      ov.style.display = 'flex';
+      ov.style.display = 'block';
       var txt = displayText(cur);
 
       // Trigger transition animation on cue entrance
       if (cur.id !== lastCueId) {
         lastCueId = cur.id;
-        span.className = '';
+        span.className = 'sub-overlay-content';
         void span.offsetWidth; // force DOM reflow to restart animation keyframe
         if (state.style.transition && state.style.transition !== 'none' && state.style.transition !== 'karaoke') {
-          span.className = 'anim-' + state.style.transition;
+          span.className = 'sub-overlay-content anim-' + state.style.transition;
         }
       }
 
@@ -942,27 +1002,29 @@
     var text = state.style.textCase === 'uppercase' ? rawText.toUpperCase() : rawText;
 
     var scale = width / 720; // scale typography to video resolution
-    var fontSize = Math.max(16, Math.round(state.style.size * scale));
+    var fontSize = Math.max(12, Math.round(state.style.size * scale));
     var fontFam = state.style.font;
+    var lineHeightRatio = parseFloat(state.style.lineHeight) || 1.35;
+    var lineHeight = Math.round(fontSize * lineHeightRatio);
+
     ctx.font = 'bold ' + fontSize + 'px ' + fontFam;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
-    var maxTextWidth = width * 0.84;
+    // Subtitle Max Width
+    var maxTextWidth = width * ((state.style.widthPct || 85) / 100);
     var lines = wrapTextLines(ctx, text, maxTextWidth);
-    var lineHeight = Math.round(fontSize * 1.34);
     var totalBlockHeight = lines.length * lineHeight;
 
-    var yBase;
-    if (state.style.position === 'top') {
-      yBase = Math.round(height * 0.12);
-    } else if (state.style.position === 'center') {
-      yBase = Math.round(height * 0.5 - totalBlockHeight / 2);
-    } else {
-      yBase = Math.round(height * 0.88 - totalBlockHeight);
-    }
+    // Center X & Y Position
+    var cx = Math.round(width * ((state.style.posX || 50) / 100));
+    var cyCenter = Math.round(height * ((state.style.posY || 85) / 100));
+    var yBase = Math.round(cyCenter - totalBlockHeight / 2);
 
-    var cx = Math.round(width / 2);
+    // Padding scale
+    var padScaleH = 0.55, padScaleV = 0.22;
+    if (state.style.padding === 'compact') { padScaleH = 0.35; padScaleV = 0.14; }
+    else if (state.style.padding === 'spacious') { padScaleH = 0.85; padScaleV = 0.32; }
 
     for (var i = 0; i < lines.length; i++) {
       var line = lines[i];
@@ -972,15 +1034,15 @@
       if (state.style.boxStyle === 'stroke') {
         ctx.lineJoin = 'round';
         ctx.miterLimit = 2;
-        ctx.lineWidth = Math.max(4, Math.round(fontSize * 0.18));
+        ctx.lineWidth = Math.max(3, Math.round(fontSize * 0.18));
         ctx.strokeStyle = '#000000';
         ctx.strokeText(line, cx, cy);
 
         ctx.fillStyle = state.style.color;
         ctx.fillText(line, cx, cy);
       } else if (state.style.boxStyle === 'box') {
-        var padX = Math.round(fontSize * 0.55);
-        var padY = Math.round(fontSize * 0.22);
+        var padX = Math.round(fontSize * padScaleH);
+        var padY = Math.round(fontSize * padScaleV);
         ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
         roundRect(ctx, cx - lw / 2 - padX, cy - lineHeight / 2 - padY, lw + padX * 2, lineHeight + padY * 2, 8 * scale);
         ctx.fill();
@@ -988,8 +1050,8 @@
         ctx.fillStyle = state.style.color;
         ctx.fillText(line, cx, cy);
       } else if (state.style.boxStyle === 'pill') {
-        var padX = Math.round(fontSize * 0.8);
-        var padY = Math.round(fontSize * 0.24);
+        var padX = Math.round(fontSize * (padScaleH + 0.3));
+        var padY = Math.round(fontSize * (padScaleV + 0.08));
         ctx.fillStyle = '#000000';
         roundRect(ctx, cx - lw / 2 - padX, cy - lineHeight / 2 - padY, lw + padX * 2, lineHeight + padY * 2, 999);
         ctx.fill();
@@ -1217,6 +1279,90 @@
     return (state.fileName || 'subtitles').replace(/\.[^.]+$/, '');
   }
 
+  /* ───────── Interactive On-Video Subtitle Box Drag & Resize ───────── */
+  function bindBoxDragAndResize() {
+    var shell = $('subVideoShell');
+    var box = $('subOverlayBox');
+    var handle = $('subResizeHandle');
+    if (!shell || !box || !handle) return;
+
+    var isDragging = false;
+    var isResizing = false;
+    var startX = 0, startY = 0;
+    var startSize = 24, startWidth = 85;
+
+    box.addEventListener('pointerdown', function (e) {
+      if (e.target === handle) return;
+      e.preventDefault();
+      e.stopPropagation();
+      isDragging = true;
+      box.classList.add('dragging');
+      document.addEventListener('pointermove', onDragMove);
+      document.addEventListener('pointerup', onDragUp);
+    });
+
+    function onDragMove(e) {
+      if (!isDragging) return;
+      var rect = shell.getBoundingClientRect();
+      var x = clamp(Math.round(((e.clientX - rect.left) / rect.width) * 100), 10, 90);
+      var y = clamp(Math.round(((e.clientY - rect.top) / rect.height) * 100), 8, 92);
+      state.style.posX = x;
+      state.style.posY = y;
+      state.style.position = 'custom';
+      if ($('subPositionSelect')) $('subPositionSelect').value = 'custom';
+      if ($('subPosYSlider')) $('subPosYSlider').value = y;
+      if ($('dispSubPosY')) $('dispSubPosY').textContent = y + '%';
+      applyOverlayStyle();
+    }
+
+    function onDragUp() {
+      isDragging = false;
+      box.classList.remove('dragging');
+      document.removeEventListener('pointermove', onDragMove);
+      document.removeEventListener('pointerup', onDragUp);
+    }
+
+    handle.addEventListener('pointerdown', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      isResizing = true;
+      box.classList.add('resizing');
+      startX = e.clientX;
+      startY = e.clientY;
+      startSize = state.style.size;
+      startWidth = state.style.widthPct;
+      document.addEventListener('pointermove', onResizeMove);
+      document.addEventListener('pointerup', onResizeUp);
+    });
+
+    function onResizeMove(e) {
+      if (!isResizing) return;
+      var dx = e.clientX - startX;
+      var dy = e.clientY - startY;
+      var deltaSize = Math.round(dy * 0.22 + dx * 0.14);
+      var newSize = clamp(startSize + deltaSize, 10, 64);
+      var deltaWidth = Math.round(dx * 0.2);
+      var newWidth = clamp(startWidth + deltaWidth, 30, 100);
+
+      state.style.size = newSize;
+      state.style.widthPct = newWidth;
+
+      if ($('subFontSizeSlider')) $('subFontSizeSlider').value = newSize;
+      if ($('dispSubFontSize')) $('dispSubFontSize').textContent = newSize + ' px';
+      if ($('subBoxWidthSlider')) $('subBoxWidthSlider').value = newWidth;
+      if ($('dispSubBoxWidth')) $('dispSubBoxWidth').textContent = newWidth + '%';
+
+      applyOverlayStyle();
+    }
+
+    function onResizeUp() {
+      isResizing = false;
+      box.classList.remove('resizing');
+      document.removeEventListener('pointermove', onResizeMove);
+      document.removeEventListener('pointerup', onResizeUp);
+    }
+  }
+
   /* ───────── Event Listeners & Wiring ───────── */
   function bind() {
     var zone = $('subUploadZone');
@@ -1295,7 +1441,7 @@
       });
     }
 
-    // Subtitle Style & Animation Studio Controls
+    // Subtitle Style Presets
     var presetGrid = $('stylePresetGrid');
     if (presetGrid) {
       presetGrid.addEventListener('click', function (e) {
@@ -1312,10 +1458,96 @@
       });
     }
 
+    // Font size slider & quick buttons
     if ($('subFontSizeSlider')) {
       $('subFontSizeSlider').addEventListener('input', function () {
-        state.style.size = +this.value;
-        if ($('dispSubFontSize')) $('dispSubFontSize').textContent = this.value + ' px';
+        var sz = +this.value;
+        state.style.size = sz;
+        if ($('dispSubFontSize')) $('dispSubFontSize').textContent = sz + ' px';
+        var qSizes = document.querySelectorAll('#quickFontSizeWrap .quick-size-pill');
+        Array.prototype.forEach.call(qSizes, function (p) {
+          p.classList.toggle('active', +p.dataset.size === sz);
+        });
+        applyOverlayStyle();
+      });
+    }
+
+    var qSizes = document.querySelectorAll('#quickFontSizeWrap .quick-size-pill');
+    Array.prototype.forEach.call(qSizes, function (pill) {
+      pill.addEventListener('click', function () {
+        var sz = +this.dataset.size;
+        if (!sz) return;
+        state.style.size = sz;
+        if ($('subFontSizeSlider')) $('subFontSizeSlider').value = sz;
+        if ($('dispSubFontSize')) $('dispSubFontSize').textContent = sz + ' px';
+        Array.prototype.forEach.call(qSizes, function (p) { p.classList.toggle('active', p === pill); });
+        applyOverlayStyle();
+      });
+    });
+
+    // Box max width slider & quick buttons
+    if ($('subBoxWidthSlider')) {
+      $('subBoxWidthSlider').addEventListener('input', function () {
+        var w = +this.value;
+        state.style.widthPct = w;
+        if ($('dispSubBoxWidth')) $('dispSubBoxWidth').textContent = w + '%';
+        var qWidths = document.querySelectorAll('#quickWidthWrap .quick-size-pill');
+        Array.prototype.forEach.call(qWidths, function (p) {
+          p.classList.toggle('active', +p.dataset.width === w);
+        });
+        applyOverlayStyle();
+      });
+    }
+
+    var qWidths = document.querySelectorAll('#quickWidthWrap .quick-size-pill');
+    Array.prototype.forEach.call(qWidths, function (pill) {
+      pill.addEventListener('click', function () {
+        var w = +this.dataset.width;
+        if (!w) return;
+        state.style.widthPct = w;
+        if ($('subBoxWidthSlider')) $('subBoxWidthSlider').value = w;
+        if ($('dispSubBoxWidth')) $('dispSubBoxWidth').textContent = w + '%';
+        Array.prototype.forEach.call(qWidths, function (p) { p.classList.toggle('active', p === pill); });
+        applyOverlayStyle();
+      });
+    });
+
+    // Position preset & vertical Y slider
+    if ($('subPositionSelect')) {
+      $('subPositionSelect').addEventListener('change', function () {
+        var p = this.value;
+        state.style.position = p;
+        if (p === 'bottom') { state.style.posY = 85; state.style.posX = 50; }
+        else if (p === 'lower_third') { state.style.posY = 72; state.style.posX = 50; }
+        else if (p === 'center') { state.style.posY = 50; state.style.posX = 50; }
+        else if (p === 'top') { state.style.posY = 15; state.style.posX = 50; }
+        if ($('subPosYSlider')) $('subPosYSlider').value = state.style.posY;
+        if ($('dispSubPosY')) $('dispSubPosY').textContent = state.style.posY + '%';
+        applyOverlayStyle();
+      });
+    }
+
+    if ($('subPosYSlider')) {
+      $('subPosYSlider').addEventListener('input', function () {
+        var y = +this.value;
+        state.style.posY = y;
+        if ($('dispSubPosY')) $('dispSubPosY').textContent = y + '%';
+        state.style.position = 'custom';
+        if ($('subPositionSelect')) $('subPositionSelect').value = 'custom';
+        applyOverlayStyle();
+      });
+    }
+
+    if ($('subPaddingSelect')) {
+      $('subPaddingSelect').addEventListener('change', function () {
+        state.style.padding = this.value;
+        applyOverlayStyle();
+      });
+    }
+
+    if ($('subLineHeightSelect')) {
+      $('subLineHeightSelect').addEventListener('change', function () {
+        state.style.lineHeight = this.value;
         applyOverlayStyle();
       });
     }
@@ -1340,13 +1572,6 @@
     if ($('subBoxStyleSelect')) {
       $('subBoxStyleSelect').addEventListener('change', function () {
         state.style.boxStyle = this.value;
-        applyOverlayStyle();
-      });
-    }
-
-    if ($('subPositionSelect')) {
-      $('subPositionSelect').addEventListener('change', function () {
-        state.style.position = this.value;
         applyOverlayStyle();
       });
     }
@@ -1425,6 +1650,9 @@
 
     if (rafId === null) rafId = requestAnimationFrame(syncPlayhead);
     window.addEventListener('resize', function () { renderTimeline(); });
+
+    // Initialize Box Drag and Resize on Video
+    bindBoxDragAndResize();
 
     // Initialize default overlay style
     applyOverlayStyle();

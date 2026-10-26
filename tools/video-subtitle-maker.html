@@ -113,14 +113,67 @@
     }
     .sub-video-shell video { width: 100%; max-height: 52vh; display: block; background: #000; }
     .sub-overlay {
-      position: absolute; left: 0; right: 0; bottom: 8%; display: flex; justify-content: center;
-      pointer-events: none; padding: 0 5%; z-index: 5; transition: all 0.2s ease;
+      position: absolute; inset: 0; pointer-events: none; z-index: 5;
+      overflow: hidden;
     }
-    .sub-overlay span {
-      background: rgba(2,6,23,.82); color: #fff; font-size: clamp(14px, 1.8vw, 24px);
-      font-family: 'Inter', sans-serif; padding: 6px 14px; border-radius: 6px; text-align: center;
-      max-width: 90%; line-height: 1.35; display: inline-block; word-break: break-word;
+    .sub-overlay-box {
+      position: absolute; pointer-events: auto; cursor: grab;
+      user-select: none; text-align: center;
+      touch-action: none; transform: translate(-50%, -50%);
+      transition: outline 0.12s ease;
+      left: 50%; top: 85%; max-width: 85%;
     }
+    .sub-overlay-box:active { cursor: grabbing; }
+    .sub-overlay-box:hover, .sub-overlay-box.dragging, .sub-overlay-box.resizing {
+      outline: 2px dashed #facc15;
+      outline-offset: 4px;
+    }
+    .sub-overlay-content {
+      display: inline-block; word-break: break-word; line-height: 1.35;
+      width: 100%; text-align: center;
+    }
+    /* FIX: child spans (individual karaoke words) must NEVER have background or block padding */
+    .sub-overlay-content span {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      padding: 0 2px !important;
+      margin: 0 !important;
+      display: inline-block;
+      box-shadow: none !important;
+    }
+    .sub-overlay-content span.word-active {
+      color: #facc15 !important;
+      transform: scale(1.15);
+      text-shadow: 0 0 12px rgba(250, 204, 21, 0.95);
+      transition: transform 0.1s ease, color 0.1s ease;
+    }
+    .sub-resize-handle {
+      position: absolute; right: -8px; bottom: -8px; width: 20px; height: 20px;
+      background: #facc15; color: #000; border-radius: 4px;
+      font-size: 13px; font-weight: 900; line-height: 18px; text-align: center;
+      cursor: nwse-resize; opacity: 0; transition: opacity 0.15s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5); z-index: 10;
+    }
+    .sub-overlay-box:hover .sub-resize-handle, .sub-overlay-box.dragging .sub-resize-handle, .sub-overlay-box.resizing .sub-resize-handle {
+      opacity: 1;
+    }
+    .sub-box-hint {
+      position: absolute; top: -24px; left: 50%; transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.9); color: #facc15; font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 4px; white-space: nowrap; pointer-events: none;
+      opacity: 0; transition: opacity 0.15s ease; letter-spacing: 0.3px;
+    }
+    .sub-overlay-box:hover .sub-box-hint, .sub-overlay-box.dragging .sub-box-hint {
+      opacity: 1;
+    }
+    .quick-size-pill {
+      font-size: 11px; padding: 3px 8px; border: 1px solid var(--gray-200);
+      background: #fff; border-radius: 4px; cursor: pointer; color: var(--gray-600);
+      font-weight: 500; transition: all 0.12s ease;
+    }
+    .quick-size-pill:hover { border-color: var(--saffron); color: var(--saffron); }
+    .quick-size-pill.active { background: #fef3c7; border-color: var(--saffron); color: #92400e; font-weight: 700; }
 
     /* ── Subtitle Animations & Transitions ── */
     @keyframes subPop {
@@ -222,6 +275,9 @@
     body.dark .sub-lang-pill.active { border-color: var(--saffron); color: #FFC97E; background: #2A1F0D; }
     body.dark .style-preset-btn { background: #16202F; border-color: #24324B; color: #B9C4D8; }
     body.dark .style-preset-btn.active { border-color: var(--saffron); background: #2A1F0D; color: #FFC97E; }
+    body.dark .quick-size-pill { background: #16202F; border-color: #24324B; color: #B9C4D8; }
+    body.dark .quick-size-pill.active { border-color: var(--saffron); background: #2A1F0D; color: #FFC97E; }
+    body.dark .sub-size-panel { background: #141B2B !important; border-color: #24324B !important; }
   </style>
 </head>
 <body>
@@ -384,11 +440,14 @@
                 </div>
 
                 <div class="settings-group">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <label class="form-label" for="subFontSizeSlider" style="margin: 0;">Font Size</label>
-                    <strong id="dispSubFontSize" style="color: var(--primary);">22 px</strong>
-                  </div>
-                  <input type="range" id="subFontSizeSlider" class="range-slider" min="14" max="44" value="22" step="1">
+                  <label class="form-label" for="subBoxStyleSelect">Background / Outline</label>
+                  <select id="subBoxStyleSelect" class="form-select">
+                    <option value="stroke" selected>Heavy Black Outline (Reels)</option>
+                    <option value="box">Dark Glass Box</option>
+                    <option value="pill">Solid Black Pill</option>
+                    <option value="neon">Neon Cyan Glow</option>
+                    <option value="none">Clean (Shadow Only)</option>
+                  </select>
                 </div>
               </div>
 
@@ -406,26 +465,85 @@
                 </div>
               </div>
 
-              <!-- Box Style & Position -->
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div class="settings-group">
-                  <label class="form-label" for="subBoxStyleSelect">Background / Outline</label>
-                  <select id="subBoxStyleSelect" class="form-select">
-                    <option value="stroke" selected>Heavy Black Outline (Reels)</option>
-                    <option value="box">Dark Glass Box</option>
-                    <option value="pill">Solid Black Pill</option>
-                    <option value="neon">Neon Cyan Glow</option>
-                    <option value="none">Clean (Shadow Only)</option>
-                  </select>
+              <!-- NEW: Comprehensive Size, Width & Screen Position Panel -->
+              <div class="settings-group sub-size-panel" style="background: #f8fafc; border: 1.5px solid var(--gray-200); border-radius: 9px; padding: 12px;">
+                <div style="font-weight: 700; font-size: 12.5px; color: var(--gray-700); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+                  <span>📐 Size, Width &amp; Screen Position</span>
+                  <span style="font-size: 11px; color: var(--saffron); font-weight: 600;">✨ Drag &amp; resize directly on video</span>
                 </div>
 
-                <div class="settings-group">
-                  <label class="form-label" for="subPositionSelect">Subtitle Position</label>
-                  <select id="subPositionSelect" class="form-select">
-                    <option value="bottom" selected>Bottom (Standard 8%)</option>
-                    <option value="center">Center (Reels Focus)</option>
-                    <option value="top">Top (Headline 10%)</option>
-                  </select>
+                <!-- Font Size Slider & Quick Buttons -->
+                <div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <label class="form-label" for="subFontSizeSlider" style="margin: 0; font-size: 12px; font-weight: 600;">Font Size</label>
+                    <strong id="dispSubFontSize" style="color: var(--primary); font-size: 12.5px;">24 px</strong>
+                  </div>
+                  <input type="range" id="subFontSizeSlider" class="range-slider" min="10" max="64" value="24" step="1">
+                  <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px;" id="quickFontSizeWrap">
+                    <button type="button" class="quick-size-pill" data-size="14">XS (14px)</button>
+                    <button type="button" class="quick-size-pill" data-size="18">S (18px)</button>
+                    <button type="button" class="quick-size-pill active" data-size="24">M (24px)</button>
+                    <button type="button" class="quick-size-pill" data-size="32">L (32px)</button>
+                    <button type="button" class="quick-size-pill" data-size="42">XL (42px)</button>
+                    <button type="button" class="quick-size-pill" data-size="54">Reels (54px)</button>
+                  </div>
+                </div>
+
+                <!-- Box Max-Width Slider -->
+                <div style="margin-top: 12px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <label class="form-label" for="subBoxWidthSlider" style="margin: 0; font-size: 12px; font-weight: 600;">Subtitle Box Width</label>
+                    <strong id="dispSubBoxWidth" style="color: var(--primary); font-size: 12.5px;">85%</strong>
+                  </div>
+                  <input type="range" id="subBoxWidthSlider" class="range-slider" min="30" max="100" value="85" step="1">
+                  <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px;" id="quickWidthWrap">
+                    <button type="button" class="quick-size-pill" data-width="50">Narrow (50%)</button>
+                    <button type="button" class="quick-size-pill" data-width="70">Compact (70%)</button>
+                    <button type="button" class="quick-size-pill active" data-width="85">Standard (85%)</button>
+                    <button type="button" class="quick-size-pill" data-width="98">Wide (98%)</button>
+                  </div>
+                </div>
+
+                <!-- Position Preset & Exact Y-Slider -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px;">
+                  <div>
+                    <label class="form-label" for="subPositionSelect" style="font-size: 12px; font-weight: 600;">Screen Position</label>
+                    <select id="subPositionSelect" class="form-select" style="font-size: 12px; padding: 6px 8px;">
+                      <option value="bottom" selected>Bottom (85%)</option>
+                      <option value="lower_third">Lower Third (72%)</option>
+                      <option value="center">Center (50%)</option>
+                      <option value="top">Top (15%)</option>
+                      <option value="custom">Custom (Drag on video)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" for="subPosYSlider" style="margin: 0; font-size: 12px; font-weight: 600;">Vertical Y</label>
+                      <strong id="dispSubPosY" style="color: var(--primary); font-size: 12.5px;">85%</strong>
+                    </div>
+                    <input type="range" id="subPosYSlider" class="range-slider" min="8" max="92" value="85" step="1">
+                  </div>
+                </div>
+
+                <!-- Padding & Line Spacing -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px;">
+                  <div>
+                    <label class="form-label" for="subPaddingSelect" style="font-size: 12px; font-weight: 600;">Box Padding</label>
+                    <select id="subPaddingSelect" class="form-select" style="font-size: 12px; padding: 6px 8px;">
+                      <option value="compact">Compact (Tight)</option>
+                      <option value="standard" selected>Standard</option>
+                      <option value="spacious">Spacious (Pill)</option>
+                      <option value="none">None (Text Only)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label" for="subLineHeightSelect" style="font-size: 12px; font-weight: 600;">Line Spacing</label>
+                    <select id="subLineHeightSelect" class="form-select" style="font-size: 12px; padding: 6px 8px;">
+                      <option value="1.15">Tight (1.15)</option>
+                      <option value="1.35" selected>Standard (1.35)</option>
+                      <option value="1.6">Relaxed (1.6)</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
@@ -496,7 +614,13 @@
           <!-- Video preview -->
           <div class="sub-video-shell" id="subVideoShell">
             <video id="subVideo" controls playsinline></video>
-            <div class="sub-overlay" id="subOverlay" style="display:none;"><span id="subOverlayText"></span></div>
+            <div class="sub-overlay" id="subOverlay" style="display:none;">
+              <div class="sub-overlay-box" id="subOverlayBox" title="Drag to move · Pull corner to resize">
+                <div class="sub-overlay-content" id="subOverlayText"></div>
+                <div class="sub-resize-handle" id="subResizeHandle" title="Pull to resize font &amp; width">⇲</div>
+                <div class="sub-box-hint">✋ Drag to position · ⇲ Resize</div>
+              </div>
+            </div>
           </div>
 
           <!-- Timeline -->
