@@ -159,7 +159,7 @@
 
             <!-- QR DESIGN MODE: Standard vs Full Image as QR -->
             <div class="settings-group" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: var(--radius-lg); padding: 14px; margin-bottom: var(--space-4);">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 8px;">
                 <label class="form-label" style="margin: 0; font-weight: 700; color: var(--navy); font-size: 13px;">
                   🎨 QR Visual Design Mode (Photo Art / Logo)
                 </label>
@@ -213,14 +213,14 @@
                 <!-- Sliders -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                   <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
                       <span>Photo Visibility:</span>
                       <span id="valPhotoOpacity" style="font-weight: 600;">70%</span>
                     </div>
                     <input type="range" id="sliderPhotoOpacity" min="30" max="95" value="70" style="width: 100%; accent-color: var(--navy);">
                   </div>
                   <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
                       <span>QR Dots Darkness:</span>
                       <span id="valDotIntensity" style="font-weight: 600;">85%</span>
                     </div>
@@ -248,7 +248,7 @@
                 <button type="button" class="btn btn-outline logo-preset-btn" data-logo="bhim" style="font-size: 11px; padding: 4px 10px;">BHIM UPI</button>
                 <button type="button" class="btn btn-outline logo-preset-btn" data-logo="whatsapp" style="font-size: 11px; padding: 4px 10px;">WhatsApp</button>
               </div>
-              <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">
                 <span style="font-size: 12px; color: var(--gray-600);">Or Upload Custom Logo:</span>
                 <input type="file" id="customLogoUpload" accept="image/*" style="font-size: 12px;">
               </div>
@@ -304,7 +304,7 @@
               </div>
 
               <!-- Main Canvas -->
-              <div style="display: flex; justify-content: center; align-items: center; margin: 10px 0; min-height: 230px;">
+              <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; margin: 10px 0; min-height: 230px;">
                 <canvas id="mainQrCanvas" width="220" height="220" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.06);"></canvas>
               </div>
 

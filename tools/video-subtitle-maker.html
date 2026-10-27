@@ -408,7 +408,7 @@
 
       <div class="sub-status" id="subStatus"></div>
       <div class="sub-progress-wrap" id="subProgressWrap">
-        <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--gray-600);">
+        <div style="display: flex; flex-wrap: wrap; justify-content:space-between; font-size:12px; color:var(--gray-600);">
           <span id="subProgressLabel">Preparing…</span><span id="subProgressPct">0%</span>
         </div>
         <div class="sub-progress"><div class="sub-progress-fill" id="subProgressFill"></div></div>
@@ -423,7 +423,7 @@
           <!-- AI transcription -->
           <div class="workspace-section">
             <div class="workspace-section-title" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
-              <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
                 <span>AI Speech-to-Text (Hardware Turbo)</span>
               </div>
@@ -459,7 +459,7 @@
               </div>
 
               <div class="settings-group" style="align-items: center;">
-                <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size: 13px;">
+                <label style="display: flex; flex-wrap: wrap; align-items:center; gap:8px; cursor:pointer; font-size: 13px;">
                   <input type="checkbox" id="subTranslate" style="accent-color: var(--saffron); width:17px; height:17px;">
                   <span>Translate speech to English subtitles</span>
                 </label>
@@ -584,7 +584,7 @@
 
                 <!-- Font Size Slider & Quick Buttons -->
                 <div>
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                     <label class="form-label" for="subFontSizeSlider" style="margin: 0; font-size: 12px; font-weight: 600;">Font Size</label>
                     <strong id="dispSubFontSize" style="color: var(--primary); font-size: 12.5px;">24 px</strong>
                   </div>
@@ -601,7 +601,7 @@
 
                 <!-- Box Max-Width Slider -->
                 <div style="margin-top: 12px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                     <label class="form-label" for="subBoxWidthSlider" style="margin: 0; font-size: 12px; font-weight: 600;">Subtitle Box Width</label>
                     <strong id="dispSubBoxWidth" style="color: var(--primary); font-size: 12.5px;">85%</strong>
                   </div>
@@ -627,7 +627,7 @@
                     </select>
                   </div>
                   <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" for="subPosYSlider" style="margin: 0; font-size: 12px; font-weight: 600;">Vertical Y</label>
                       <strong id="dispSubPosY" style="color: var(--primary); font-size: 12.5px;">85%</strong>
                     </div>
@@ -698,7 +698,7 @@
 
               <!-- Video Render Progress Bar -->
               <div id="videoRenderProgressBox" style="display: none; margin-top: 10px; padding: 12px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-md);">
-                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #1e40af;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 12px; font-weight: 600; color: #1e40af;">
                   <span id="videoRenderProgressMsg">Rendering video frames with subtitles...</span>
                   <span id="videoRenderProgressPct">0%</span>
                 </div>

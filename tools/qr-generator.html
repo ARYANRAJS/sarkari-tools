@@ -295,7 +295,7 @@ ITEM-104</textarea>
 
             <!-- QR DESIGN MODE: Standard vs Full Image as QR -->
             <div class="settings-group" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: var(--radius-lg); padding: 14px; margin-bottom: var(--space-4);">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 8px;">
                 <label class="form-label" style="margin: 0; font-weight: 700; color: var(--navy); font-size: 13px;">
                   ✨ QR Visual Design Mode (QR डिज़ाइन स्टाइल)
                 </label>
@@ -349,14 +349,14 @@ ITEM-104</textarea>
                 <!-- Sliders -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                   <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
                       <span>Photo Visibility:</span>
                       <span id="valPhotoOpacity" style="font-weight: 600;">70%</span>
                     </div>
                     <input type="range" id="sliderPhotoOpacity" min="30" max="95" value="70" style="width: 100%; accent-color: var(--navy);">
                   </div>
                   <div>
-                    <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 11px; margin-bottom: 2px;">
                       <span>QR Dots Darkness:</span>
                       <span id="valDotIntensity" style="font-weight: 600;">85%</span>
                     </div>
@@ -384,7 +384,7 @@ ITEM-104</textarea>
                 <button type="button" class="btn btn-outline logo-preset-btn" data-logo="bhim" style="font-size: 11px; padding: 4px 10px;">BHIM UPI</button>
                 <button type="button" class="btn btn-outline logo-preset-btn" data-logo="whatsapp" style="font-size: 11px; padding: 4px 10px;">WhatsApp</button>
               </div>
-              <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">
                 <span style="font-size: 12px; color: var(--gray-600);">Or Upload Custom Logo:</span>
                 <input type="file" id="customLogoUpload" accept="image/*" style="font-size: 12px;">
               </div>
@@ -394,7 +394,7 @@ ITEM-104</textarea>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
               <div class="settings-group">
                 <label class="form-label" for="qrFgColor">QR Color</label>
-                <div style="display: flex; gap: 6px; align-items: center;">
+                <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
                   <input type="color" id="qrFgColor" value="#1A237E" style="width: 44px; height: 38px; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;">
                   <select id="colorPresets" class="form-select" style="flex: 1; font-size: 12px;">
                     <option value="#1A237E" selected>Sarkari Navy</option>
@@ -454,10 +454,10 @@ ITEM-104</textarea>
 
             <!-- Action Buttons -->
             <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); width: 100%; justify-content: center;">
-              <button type="button" id="btnDownloadQr" class="btn btn-primary" style="flex: 1; min-width: 140px;">
+              <button type="button" id="btnDownloadQr" class="btn btn-primary" style="flex: 1; min-width: 0;">
                 📥 Download PNG
               </button>
-              <button type="button" id="btnPrintStandee" class="btn btn-secondary" style="flex: 1; min-width: 140px;">
+              <button type="button" id="btnPrintStandee" class="btn btn-secondary" style="flex: 1; min-width: 0;">
                 🖨️ Print Standee
               </button>
             </div>
@@ -473,7 +473,7 @@ ITEM-104</textarea>
             Point your webcam/phone camera at any QR code, or upload a screenshot/image file to decode it instantly.
           </p>
 
-          <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px;">
             <button type="button" id="btnStartCamera" class="btn btn-primary">🎥 Start Camera Scan</button>
             <button type="button" id="btnStopCamera" class="btn btn-outline" style="display: none;">⏹️ Stop Camera</button>
             <label class="btn btn-secondary" style="cursor: pointer; margin: 0;">
@@ -492,7 +492,7 @@ ITEM-104</textarea>
 
           <!-- Decoded Output Result Card -->
           <div id="scanResultCard" style="display: none; max-width: 550px; margin: 20px auto 0; background: #ffffff; border: 2px solid #22c55e; border-radius: var(--radius-lg); padding: 20px; text-align: left;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 8px;">
               <span class="badge badge-success">✓ QR Code Decoded</span>
               <span id="scanTypeBadge" style="font-size: 11px; font-weight: 700; color: var(--navy); text-transform: uppercase;">URL Link</span>
             </div>
@@ -508,7 +508,7 @@ ITEM-104</textarea>
 
         <!-- BULK GALLERY CONTAINER (Shown when Bulk generated) -->
         <div id="bulkGallerySection" style="display: none; margin-top: var(--space-8); border-top: 2px dashed var(--border-color); padding-top: var(--space-6);">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <h3 style="margin: 0; color: var(--navy);">📦 Generated Bulk QR Codes (<span id="bulkCount">0</span>)</h3>
             <button type="button" id="btnDownloadAllBulk" class="btn btn-primary" style="font-size: 12px; padding: 6px 12px;">
               📥 Download All Images (ZIP)

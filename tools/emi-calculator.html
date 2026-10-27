@@ -182,14 +182,14 @@
 
               <!-- 1. Loan Amount -->
               <div class="settings-group">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
                   <label class="form-label" for="loanAmountInput" style="margin: 0;">Loan Amount (₹)</label>
                   <span id="loanAmountWords" style="font-size: 11px; color: #2563eb; font-weight: 600;">₹ 25 Lakhs</span>
                 </div>
                 <input type="number" id="loanAmountInput" class="form-input" value="2500000" min="10000" max="100000000" step="10000">
                 <div class="range-slider-wrap">
                   <input type="range" id="loanAmountRange" min="50000" max="10000000" step="50000" value="2500000">
-                  <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--gray-500);">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 10px; color: var(--gray-500);">
                     <span>₹50K</span>
                     <span>₹50L</span>
                     <span>₹1 Cr</span>
@@ -207,14 +207,14 @@
 
               <!-- 2. Interest Rate -->
               <div class="settings-group">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
                   <label class="form-label" for="interestRateInput" style="margin: 0;">Interest Rate (% p.a.)</label>
                   <span id="dispRateVal" style="font-size: 12px; font-weight: 600; color: var(--gray-800);">8.5%</span>
                 </div>
                 <input type="number" id="interestRateInput" class="form-input" value="8.5" min="1" max="30" step="0.1">
                 <div class="range-slider-wrap">
                   <input type="range" id="interestRateRange" min="4" max="25" step="0.1" value="8.5">
-                  <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--gray-500);">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 10px; color: var(--gray-500);">
                     <span>4%</span>
                     <span>15%</span>
                     <span>25%</span>
@@ -224,7 +224,7 @@
 
               <!-- 3. Loan Tenure -->
               <div class="settings-group">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
                   <label class="form-label" for="tenureInput" style="margin: 0;">Loan Tenure (Years)</label>
                   <div style="display: flex; gap: 4px; flex-wrap: wrap;">
                     <button type="button" id="btnTenureYears" class="chip-btn active" style="font-size: 10px; padding: 2px 8px;">Years</button>
@@ -234,7 +234,7 @@
                 <input type="number" id="tenureInput" class="form-input" value="20" min="1" max="360" step="1">
                 <div class="range-slider-wrap">
                   <input type="range" id="tenureRange" min="1" max="30" step="1" value="20">
-                  <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--gray-500);">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 10px; color: var(--gray-500);">
                     <span>1 Yr</span>
                     <span>15 Yrs</span>
                     <span>30 Yrs</span>
@@ -297,19 +297,19 @@
 
                 <!-- Numerical Breakdown -->
                 <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
                     <span style="color: var(--gray-600); display: flex; align-items: center; gap: 6px;">
                       <span style="width: 10px; height: 10px; background: #2563eb; border-radius: 50%; display: inline-block;"></span> Principal Amount:
                     </span>
                     <strong id="dispPrincipalAmount" style="color: var(--gray-900);">₹25,00,000</strong>
                   </div>
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
                     <span style="color: var(--gray-600); display: flex; align-items: center; gap: 6px;">
                       <span style="width: 10px; height: 10px; background: #f59e0b; border-radius: 50%; display: inline-block;"></span> Total Interest:
                     </span>
                     <strong id="dispTotalInterest" style="color: #d97706;">₹27,06,704</strong>
                   </div>
-                  <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border-color); padding-top: 6px;">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border-color); padding-top: 6px;">
                     <span style="color: var(--gray-800); font-weight: 600;">Total Amount Payable:</span>
                     <strong id="dispTotalPayment" style="color: var(--gray-900);">₹52,06,704</strong>
                   </div>
@@ -318,7 +318,7 @@
 
               <!-- Yearly Amortization Schedule Table -->
               <div style="margin-top: 10px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                   <strong style="font-size: 13px; color: var(--gray-700);">Amortization Schedule (Year-by-Year)</strong>
                   <span style="font-size: 11px; color: var(--gray-500);">Balance Payoff</span>
                 </div>

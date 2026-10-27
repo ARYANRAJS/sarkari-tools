@@ -83,16 +83,16 @@
         <!-- Control Filters -->
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; background: var(--gray-50); padding: 12px 16px; border-radius: var(--radius-md); border: 1px solid var(--gray-200);">
           <div style="display: flex; gap: 18px; align-items: center; flex-wrap: wrap;">
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; color: var(--gray-700); font-weight: 500;">
+            <label style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; color: var(--gray-700); font-weight: 500;">
               <input type="checkbox" id="chkFilterStopwords" checked style="accent-color: var(--navy); width: 16px; height: 16px;">
               <span>Exclude Stop Words (the, is, and, in...)</span>
             </label>
-            <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; color: var(--gray-700); font-weight: 500;">
+            <label style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; color: var(--gray-700); font-weight: 500;">
               <input type="checkbox" id="chkCaseSensitive" style="accent-color: var(--navy); width: 16px; height: 16px;">
               <span>Case Sensitive</span>
             </label>
           </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px;">
             <label for="selMinLength" style="font-size: 13px; color: var(--gray-600);">Min Word Length:</label>
             <select id="selMinLength" class="form-input" style="width: auto; padding: 4px 10px; font-size: 12px; height: 32px;">
               <option value="2">2+ chars</option>

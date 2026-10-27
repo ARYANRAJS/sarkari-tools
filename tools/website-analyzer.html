@@ -73,8 +73,8 @@
         <div id="modeUrlWrap">
           <label class="form-label" for="inpDomain" style="font-weight: 600; font-size: 14px;">Enter Website URL or Domain to Analyze *</label>
           <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <input type="text" id="inpDomain" class="form-input" placeholder="e.g. boat-lifestyle.com, mamaearth.in, zomato.com, or zerodha.com" style="flex: 1; min-width: 240px; font-size: 15px; padding: 12px 16px;">
-            <button type="button" id="btnAnalyze" class="btn btn-primary" style="font-size: 14px; padding: 12px 26px; min-width: 150px; background: #4f46e5; border-color: #4f46e5;">
+            <input type="text" id="inpDomain" class="form-input" placeholder="e.g. boat-lifestyle.com, mamaearth.in, zomato.com, or zerodha.com" style="flex: 1; min-width: 0; font-size: 15px; padding: 12px 16px;">
+            <button type="button" id="btnAnalyze" class="btn btn-primary" style="font-size: 14px; padding: 12px 26px; min-width: 0; background: #4f46e5; border-color: #4f46e5;">
               ⚡ Run 360° Audit
             </button>
           </div>
@@ -120,7 +120,7 @@
         
         <!-- Header Info Bar -->
         <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: 18px 22px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
-          <div style="display: flex; align-items: center; gap: 14px; min-width: 0;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; min-width: 0;">
             <div id="siteFavicon" style="width: 44px; height: 44px; border-radius: 10px; background: #eef2ff; display: flex; align-items: center; justify-content: center; font-size: 22px; border: 1px solid #c7d2fe; flex-shrink: 0;">
               🌐
             </div>
@@ -154,7 +154,7 @@
               <span class="analyzer-bento-title">Meta Ads Tracking</span>
               <span class="analyzer-score-badge" id="badgeMetaStatus" style="background: #eef2ff; color: #4338ca;">Live Pixel</span>
             </div>
-            <div style="display: flex; align-items: baseline; gap: 6px;">
+            <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;">
               <span class="analyzer-score-num" id="scoreMetaStatus" style="font-size: 20px; color: #1877f2;">Detected</span>
             </div>
             <div style="font-size: 12px; color: var(--gray-500); margin-top: 8px;">
@@ -168,7 +168,7 @@
               <span class="analyzer-bento-title">E-commerce / CMS</span>
               <span class="analyzer-score-badge" id="badgePlatform" style="background: #ecfdf5; color: #15803d;">Verified</span>
             </div>
-            <div style="display: flex; align-items: baseline; gap: 6px;">
+            <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;">
               <span class="analyzer-score-num" id="scorePlatform" style="font-size: 22px; color: var(--navy);">Custom</span>
             </div>
             <div style="font-size: 12px; color: var(--gray-500); margin-top: 8px;">
@@ -182,7 +182,7 @@
               <span class="analyzer-bento-title">Social &amp; Maps Presence</span>
               <span class="analyzer-score-badge" id="badgeSocial" style="background: #fdf2f8; color: #db2777;">Verified</span>
             </div>
-            <div style="display: flex; align-items: baseline; gap: 6px;">
+            <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;">
               <span class="analyzer-score-num" id="scoreSocialCount" style="color: #db2777;">0</span>
               <span style="font-size: 14px; color: var(--gray-400); font-weight: 600;">Profiles</span>
             </div>
@@ -197,7 +197,7 @@
               <span class="analyzer-bento-title">Mail Server &amp; DNS</span>
               <span class="analyzer-score-badge" id="badgeDns" style="background: #fef3c7; color: #b45309;">Live DNS</span>
             </div>
-            <div style="display: flex; align-items: baseline; gap: 6px;">
+            <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;">
               <span class="analyzer-score-num" id="scoreMailHost" style="font-size: 18px; color: var(--navy);">Checking...</span>
             </div>
             <div style="font-size: 12px; color: var(--gray-500); margin-top: 8px;">
@@ -296,7 +296,7 @@
 
             <!-- Page Title -->
             <div class="form-group" style="margin-bottom: 16px;">
-              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+              <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
                 <label class="form-label" style="font-weight: 600; margin: 0;">SEO Title Tag</label>
                 <span id="titleCharCount" style="color: var(--gray-500);">0 chars</span>
               </div>
@@ -307,7 +307,7 @@
 
             <!-- Meta Description -->
             <div class="form-group" style="margin-bottom: 16px;">
-              <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+              <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
                 <label class="form-label" style="font-weight: 600; margin: 0;">Meta Description</label>
                 <span id="descCharCount" style="color: var(--gray-500);">0 chars</span>
               </div>

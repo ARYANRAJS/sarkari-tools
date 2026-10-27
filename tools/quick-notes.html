@@ -224,7 +224,7 @@
           <div class="tool-split-inputs">
             <div class="settings-panel">
               
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <h3 style="margin: 0; font-size: 16px; font-weight: 600;" id="editorTitle">✍️ New Note</h3>
                 <span id="autoSaveIndicator" style="font-size: 11px; color: #16a34a; font-weight: 600;">
                   ● Ready
@@ -250,7 +250,7 @@
                 </div>
 
                 <!-- Color Palette -->
-                <div style="display: flex; gap: 8px; align-items: center;">
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
                   <span class="color-dot active" data-color="#2563eb" style="background: #2563eb;" title="Blue"></span>
                   <span class="color-dot" data-color="#10b981" style="background: #10b981;" title="Emerald"></span>
                   <span class="color-dot" data-color="#f59e0b" style="background: #f59e0b;" title="Amber"></span>
@@ -279,7 +279,7 @@
               </div>
 
               <!-- Editor Stats & Pin Toggle -->
-              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--gray-500); margin-bottom: 16px;">
+              <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 12px; color: var(--gray-500); margin-bottom: 16px;">
                 <div>
                   <span id="charCount">0</span> chars | <span id="wordCount">0</span> words
                 </div>
@@ -337,7 +337,7 @@
               </div>
 
               <!-- Action Bar -->
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px;">
+              <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px;">
                 <strong style="color: var(--gray-700);" id="notesLibraryHeading">Your Saved Notes</strong>
                 <button type="button" id="btnExportTxtCurrent" class="btn btn-outline" style="font-size: 11px; padding: 2px 8px;">
                   📄 Export Note (.txt)
@@ -711,7 +711,7 @@
             <div class="note-card ${isActive}" data-id="${n.id}" style="border-left: 4px solid ${n.color || '#2563eb'};">
               <div class="note-card-title">
                 <span>${escapeHtml(n.title)}</span>
-                <div style="display: flex; gap: 6px; align-items: center;">
+                <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
                   ${pinBadge}
                   <button type="button" onclick="event.stopPropagation(); deleteNoteById('${n.id}')" title="Delete" style="background: none; border: none; cursor: pointer; font-size: 12px; opacity: 0.6;">🗑️</button>
                 </div>

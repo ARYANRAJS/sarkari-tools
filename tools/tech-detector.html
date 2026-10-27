@@ -74,8 +74,8 @@
         <div id="modeUrlSection">
           <label class="form-label" for="inpTargetUrl" style="font-weight: 600; font-size: 14px;">Enter Website Domain or URL *</label>
           <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <input type="text" id="inpTargetUrl" class="form-input" placeholder="e.g. boat-lifestyle.com, mamaearth.in, or https://wordpress.org" style="flex: 1; min-width: 240px; font-size: 15px; padding: 12px 16px;">
-            <button type="button" id="btnScanUrl" class="btn btn-primary" style="font-size: 14px; padding: 12px 24px; min-width: 140px;">
+            <input type="text" id="inpTargetUrl" class="form-input" placeholder="e.g. boat-lifestyle.com, mamaearth.in, or https://wordpress.org" style="flex: 1; min-width: 0; font-size: 15px; padding: 12px 16px;">
+            <button type="button" id="btnScanUrl" class="btn btn-primary" style="font-size: 14px; padding: 12px 24px; min-width: 0;">
               🚀 Scan Website
             </button>
           </div>
@@ -92,7 +92,7 @@
 
         <!-- Mode 2: Source Code Paste (Hidden by default) -->
         <div id="modeSourceSection" style="display: none;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <label class="form-label" for="inpSourceCode" style="font-weight: 600; font-size: 14px; margin: 0;">Paste Website HTML Source Code (Ctrl+U)</label>
             <button type="button" id="btnLoadDemoSource" class="btn btn-outline" style="font-size: 11px; padding: 3px 10px;">Load Sample Shopify HTML</button>
           </div>

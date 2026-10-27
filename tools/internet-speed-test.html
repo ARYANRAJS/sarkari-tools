@@ -196,7 +196,7 @@
           <!-- Left Side: Controls & Connection Status -->
           <div class="tool-split-inputs">
             <div class="settings-panel">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 16px;">
                 <h3 style="margin: 0; font-size: 16px; font-weight: 600;">Connection Details</h3>
                 <span class="quality-pill good" id="connStatusBadge">
                   <span class="pulse-dot"></span> Online
@@ -205,15 +205,15 @@
 
               <!-- Connection Info Cards -->
               <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; margin-bottom: 18px;">
-                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
                   <span style="color: var(--gray-600);">Network Type:</span>
                   <strong id="dispNetworkType" style="color: var(--gray-900);">Detecting...</strong>
                 </div>
-                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
                   <span style="color: var(--gray-600);">Estimated Latency (RTT):</span>
                   <strong id="dispRtt" style="color: var(--gray-900);">-- ms</strong>
                 </div>
-                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 13px;">
                   <span style="color: var(--gray-600);">Test Server Region:</span>
                   <strong id="dispServerRegion" style="color: var(--gray-900);">Asia / Fast CDN</strong>
                 </div>
@@ -244,15 +244,15 @@
               <div style="margin-top: 24px; border-top: 1px solid var(--border-color); padding-top: 18px;">
                 <h4 style="font-size: 13px; font-weight: 600; text-transform: uppercase; color: var(--gray-600); margin-bottom: 12px;">App Experience Rating</h4>
                 <div style="display: flex; flex-direction: column; gap: 8px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px;">
                     <span>🎮 Online Gaming:</span>
                     <span id="gamingScore" class="quality-pill">Waiting for test</span>
                   </div>
-                  <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px;">
                     <span>📺 4K UHD Streaming:</span>
                     <span id="streamingScore" class="quality-pill">Waiting for test</span>
                   </div>
-                  <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px;">
                     <span>📹 Video Calls (Zoom/Meet):</span>
                     <span id="videoCallScore" class="quality-pill">Waiting for test</span>
                   </div>
@@ -261,7 +261,7 @@
 
               <!-- Test History -->
               <div style="margin-top: 24px; border-top: 1px solid var(--border-color); padding-top: 18px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                   <h4 style="font-size: 13px; font-weight: 600; text-transform: uppercase; color: var(--gray-600); margin: 0;">Recent Test History</h4>
                   <button type="button" id="btnClearHistory" class="btn btn-outline" style="font-size: 11px; padding: 2px 8px;">Clear</button>
                 </div>

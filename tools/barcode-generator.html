@@ -117,7 +117,7 @@
               <div class="settings-group">
                 <label class="form-label" for="barHeight">Bar Height (px)</label>
                 <input type="range" id="barHeight" min="30" max="150" value="80" class="form-range">
-                <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--gray-500);">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 11px; color: var(--gray-500);">
                   <span>30px</span><span id="valBarHeight">80px</span><span>150px</span>
                 </div>
               </div>
@@ -145,7 +145,7 @@
 
             <!-- Text label settings -->
             <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-top: 10px;">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 8px;">
                 <label style="font-size: 13px; font-weight: 600; color: var(--gray-800); cursor: pointer;">
                   <input type="checkbox" id="chkDisplayValue" checked style="margin-right: 6px;"> Show Text Below Barcode
                 </label>
@@ -195,13 +195,13 @@
 
             <!-- Download & Print Actions -->
             <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); width: 100%; justify-content: center;">
-              <button type="button" id="btnDownloadSvg" class="btn btn-outline" style="flex: 1; min-width: 120px;">
+              <button type="button" id="btnDownloadSvg" class="btn btn-outline" style="flex: 1; min-width: 0;">
                 📐 Download SVG
               </button>
-              <button type="button" id="btnDownloadPng" class="btn btn-primary" style="flex: 1; min-width: 120px;">
+              <button type="button" id="btnDownloadPng" class="btn btn-primary" style="flex: 1; min-width: 0;">
                 📥 Download PNG
               </button>
-              <button type="button" id="btnPrintLabels" class="btn btn-secondary" style="flex: 1; min-width: 140px;">
+              <button type="button" id="btnPrintLabels" class="btn btn-secondary" style="flex: 1; min-width: 0;">
                 🖨️ Print A4 Label Sheet
               </button>
             </div>

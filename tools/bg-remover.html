@@ -199,7 +199,7 @@
 
             <!-- Detection Engine Selector -->
             <div class="workspace-section">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <label class="form-label" style="margin: 0; font-weight: 600;">Detection Mode</label>
                 <span class="badge-status" id="aiStatusPill" style="background: #dbeafe; color: #1e40af;">🤖 Pixel AI Active</span>
               </div>
@@ -213,7 +213,7 @@
               <!-- AI Options Panel -->
               <div id="aiOptionsPanel" class="settings-panel">
                 <div class="settings-group">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
                     <label class="form-label" for="featherSlider" style="margin: 0;">Edge Feathering / Softness</label>
                     <strong id="dispFeatherVal" style="color: var(--primary);">1 px</strong>
                   </div>
@@ -231,7 +231,7 @@
               <div id="colorOptionsPanel" class="settings-panel" style="display: none;">
                 <div class="settings-group">
                   <label class="form-label">Sample Background Wall Color</label>
-                  <div style="display: flex; gap: 8px; align-items: center;">
+                  <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
                     <input type="color" id="bgKeyColor" value="#ffffff" style="width: 44px; height: 40px; padding: 2px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); cursor: pointer;">
                     <button type="button" class="btn btn-sm btn-outline" id="autoSampleCornerBtn">🎯 Auto Sample</button>
                     <button type="button" class="btn btn-sm btn-outline" id="pickFromImageBtn">👆 Pick from Image</button>
@@ -239,7 +239,7 @@
                   <span class="hint">Flood-fill starts strictly from borders, so white shirts & teeth are protected!</span>
                 </div>
                 <div class="settings-group">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
                     <label class="form-label" for="toleranceSlider" style="margin: 0;">Color Match Tolerance</label>
                     <strong id="toleranceVal" style="color: var(--primary);">25%</strong>
                   </div>
@@ -258,7 +258,7 @@
                   </div>
                 </div>
                 <div class="settings-group">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
                     <label class="form-label" for="brushSizeSlider" style="margin: 0;">Brush Diameter</label>
                     <strong id="dispBrushSize" style="color: var(--primary);">20 px</strong>
                   </div>
@@ -335,13 +335,13 @@
             </div>
 
             <!-- Download Action Buttons -->
-            <div class="action-bar" style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--gray-200); display: flex; flex-direction: column; gap: 10px;">
+            <div class="action-bar" style="flex-wrap: wrap; margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--gray-200); display: flex; flex-direction: column; gap: 10px;">
               <div style="display: flex; gap: 10px; width: 100%; flex-wrap: wrap;">
-                <button type="button" class="btn btn-secondary" id="downloadPngBtn" style="flex: 1; min-width: 170px;">
+                <button type="button" class="btn btn-secondary" id="downloadPngBtn" style="flex: 1; min-width: 0;">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   Download PNG (Transparent)
                 </button>
-                <button type="button" class="btn btn-primary btn-lg" id="downloadJpgBtn" style="flex: 1.2; min-width: 200px;">
+                <button type="button" class="btn btn-primary btn-lg" id="downloadJpgBtn" style="flex: 1.2; min-width: 0;">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   Download JPG for Govt / Exams
                 </button>
