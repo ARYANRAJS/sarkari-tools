@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merge PDF & Split PDF Online | Free PDF Combiner & Page Extractor</title>
+  <meta name="description" content="Free online PDF Merge & Split Tool. Combine multiple PDF files into one or split PDF pages and page ranges with 100% client-side privacy. No file size limits.">
+  <meta name="keywords" content="merge pdf, split pdf, combine pdf files, separate pdf pages, pdf joiner, pdf page extractor, pdf splitter online">
+  <meta property="og:title" content="Merge PDF & Split PDF Online — 100% Client-Side">
+  <meta property="og:description" content="Combine multiple PDFs or extract custom page ranges without uploading to remote servers.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/pdf-merger-splitter.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <!-- pdf-lib & JSZip for client side PDF manipulation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "PDF Merge & Split Tool",
+    "description": "Combine and split PDF documents client-side in your browser.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    .pdf-file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .pdf-file-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .pdf-item-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1050px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Merge & Split PDF</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon pdf-tools">📑</div>
+        <h1>Merge PDF & Split PDF Pages</h1>
+        <p class="tool-description">Combine multiple PDF documents into a single organized file or extract specific page ranges from large documents. 100% private in-browser execution with zero file uploads.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Mode Tabs -->
+        <div style="display: flex; gap: 10px; margin-bottom: var(--space-4); border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">
+          <button type="button" id="tabMergeMode" class="btn btn-primary" style="font-size: 14px;">
+            📑 Merge PDFs (Combine)
+          </button>
+          <button type="button" id="tabSplitMode" class="btn btn-outline" style="font-size: 14px;">
+            ✂️ Split PDF (Extract Pages)
+          </button>
+        </div>
+
+        <!-- Merge Mode -->
+        <div id="mergeSection">
+          <div class="drop-zone" id="mergeDropZone" style="border: 2px dashed var(--border-color); border-radius: 12px; padding: 28px; text-align: center; cursor: pointer; background: #f8fafc;">
+            <div style="font-size: 36px; margin-bottom: 6px;">📄</div>
+            <div style="font-weight: 600; color: var(--navy); font-size: 15px; margin-bottom: 4px;">Choose or Drop Multiple PDF Files</div>
+            <div style="font-size: 12px; color: var(--gray-600); margin-bottom: 12px;">Drag to reorder after adding</div>
+            <label class="btn btn-primary" style="display: inline-block; cursor: pointer; font-size: 13px;">
+              Select PDF Files
+              <input type="file" id="mergeFileInput" accept=".pdf" multiple style="display: none;">
+            </label>
+          </div>
+
+          <div id="mergeListArea" style="display: none; margin-top: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-weight: 600; color: var(--navy); font-size: 14px;">Files to Merge (<span id="mergeCount">0</span>):</span>
+              <button type="button" id="btnClearMerge" class="btn btn-outline" style="padding: 2px 8px; font-size: 11px; color: #b91c1c; border-color: #fca5a5;">Clear All</button>
+            </div>
+            
+            <div class="pdf-file-list" id="mergeFileList"></div>
+
+            <button type="button" id="btnExecuteMerge" class="btn btn-primary" style="margin-top: 16px; width: 100%; padding: 12px; font-size: 15px;">
+              ⚡ Merge & Download PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- Split Mode -->
+        <div id="splitSection" style="display: none;">
+          <div class="drop-zone" id="splitDropZone" style="border: 2px dashed var(--border-color); border-radius: 12px; padding: 28px; text-align: center; cursor: pointer; background: #f8fafc;">
+            <div style="font-size: 36px; margin-bottom: 6px;">✂️</div>
+            <div style="font-weight: 600; color: var(--navy); font-size: 15px; margin-bottom: 4px;">Upload Single PDF to Split</div>
+            <div style="font-size: 12px; color: var(--gray-600); margin-bottom: 12px;">Select document to extract pages from</div>
+            <label class="btn btn-primary" style="display: inline-block; cursor: pointer; font-size: 13px;">
+              Select PDF
+              <input type="file" id="splitFileInput" accept=".pdf" style="display: none;">
+            </label>
+          </div>
+
+          <div id="splitOptionsArea" style="display: none; margin-top: 16px; background: #ffffff; border: 1px solid var(--border-color); border-radius: 10px; padding: 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+              <span id="splitFileName" style="font-weight: 600; color: var(--navy);">document.pdf</span>
+              <span id="splitTotalPages" style="font-size: 13px; font-weight: 600; color: var(--saffron);">Total Pages: 0</span>
+            </div>
+
+            <div class="settings-group" style="margin-bottom: 14px;">
+              <label style="font-weight: 600; font-size: 13px; color: var(--gray-700); display: block; margin-bottom: 6px;">Split Mode:</label>
+              <div style="display: flex; gap: 12px;">
+                <label style="font-size: 13px; display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                  <input type="radio" name="splitType" value="range" checked> Page Range (e.g. 1-3, 5)
+                </label>
+                <label style="font-size: 13px; display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                  <input type="radio" name="splitType" value="all"> All Individual Pages (as ZIP)
+                </label>
+              </div>
+            </div>
+
+            <div id="rangeInputGroup" class="settings-group" style="margin-bottom: 16px;">
+              <label for="pageRangeStr" style="font-size: 12px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">Specify Page Ranges (1-based index):</label>
+              <input type="text" id="pageRangeStr" class="form-input" placeholder="e.g. 1-2, 4, 7-10" style="font-size: 14px;">
+            </div>
+
+            <button type="button" id="btnExecuteSplit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 15px;">
+              ✂️ Split & Download
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Why Use In-Browser PDF Processing?</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Zero Upload Privacy</h3>
+            <p>Documents like Aadhaar cards, bank statements, and tax returns are never sent to external servers. All byte manipulation is handled via WebAssembly in your browser.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>No File Size Restrictions</h3>
+            <p>Unlike commercial tools that lock you out above 50MB, local processing handles large PDF scans at maximum system hardware speed.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Preserves Vector Quality</h3>
+            <p>Text layers, hyperlinks, form fields, and vector geometries remain sharp and searchable with zero resolution compression.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/pdf-merger-splitter.js?v=1.0"></script>
+</body>
+</html>

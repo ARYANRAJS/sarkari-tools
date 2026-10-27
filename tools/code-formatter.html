@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Formatter & Minifier | HTML, CSS, JS & JSON Beautifier Online</title>
+  <meta name="description" content="Free online Code Formatter & Minifier. Beautify and compress HTML, CSS, JavaScript, and JSON code instantly. Reduce file sizes, fix indentations and validate syntax.">
+  <meta name="keywords" content="code formatter, code beautifier, css minifier, html beautifier, js minifier, json formatter, minify code online, clean code">
+  <meta property="og:title" content="Code Formatter & Minifier — HTML, CSS, JS, JSON">
+  <meta property="og:description" content="Beautify and minify HTML, CSS, JavaScript, and JSON with one click. Clean, fast, 100% private.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/code-formatter.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Code Formatter & Minifier",
+    "description": "Beautify and compress HTML, CSS, JavaScript, and JSON source code.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1150px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Code Formatter & Minifier</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon utility-tools">💻</div>
+        <h1>Code Formatter & Minifier</h1>
+        <p class="tool-description">Beautify unformatted code with neat indentations or minify HTML, CSS, JavaScript, and JSON to dramatically reduce file payload and speed up website load times.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Language & Action Selectors -->
+        <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px 16px; margin-bottom: var(--space-4); display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between;">
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <label style="font-size: 13px; font-weight: 600; color: var(--gray-700);">Language:</label>
+            <button type="button" class="btn btn-primary btn-lang" data-lang="json" style="padding: 3px 10px; font-size: 12px;">JSON</button>
+            <button type="button" class="btn btn-outline btn-lang" data-lang="html" style="padding: 3px 10px; font-size: 12px;">HTML</button>
+            <button type="button" class="btn btn-outline btn-lang" data-lang="css" style="padding: 3px 10px; font-size: 12px;">CSS</button>
+            <button type="button" class="btn btn-outline btn-lang" data-lang="js" style="padding: 3px 10px; font-size: 12px;">JavaScript</button>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <label style="font-size: 13px; font-weight: 600; color: var(--gray-700);">Indent:</label>
+            <select id="indentSelect" class="form-select" style="padding: 3px 8px; font-size: 12px;">
+              <option value="2">2 Spaces</option>
+              <option value="4">4 Spaces</option>
+              <option value="tab">1 Tab</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tool-split">
+          
+          <!-- Code Input -->
+          <div class="tool-split-inputs">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-weight: 600; color: var(--navy); font-size: 14px;">Input Source Code:</span>
+              <span id="inputSizeStats" style="font-size: 12px; color: var(--gray-600);">0 chars | 0 bytes</span>
+            </div>
+
+            <textarea id="srcCode" class="form-textarea" rows="14" placeholder="Paste your messy HTML, CSS, JS or JSON code here..." style="font-size: 13px; line-height: 1.5; font-family: 'Fira Code', monospace;"></textarea>
+
+            <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+              <button type="button" id="btnFormat" class="btn btn-primary" style="font-size: 13px;">
+                ✨ Format / Beautify
+              </button>
+              <button type="button" id="btnMinify" class="btn btn-outline" style="font-size: 13px; border-color: var(--navy); color: var(--navy);">
+                🗜️ Minify / Compress
+              </button>
+              <button type="button" id="btnSampleCode" class="btn btn-outline" style="font-size: 13px;">
+                💡 Sample Code
+              </button>
+              <button type="button" id="btnClearCode" class="btn btn-outline" style="font-size: 13px; color: #b91c1c; border-color: #fca5a5;">
+                🗑️ Clear
+              </button>
+            </div>
+          </div>
+
+          <!-- Code Output -->
+          <div class="tool-split-output">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-weight: 600; color: var(--saffron); font-size: 14px;">Output Result:</span>
+              <span id="outputStats" style="font-size: 12px; color: var(--gray-600);">0 chars (0% savings)</span>
+            </div>
+
+            <textarea id="destCode" class="form-textarea" rows="14" readonly placeholder="Formatted or minified code will appear here..." style="font-size: 13px; line-height: 1.5; background: #f8fafc; font-family: 'Fira Code', monospace;"></textarea>
+
+            <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+              <button type="button" id="btnCopyCode" class="btn btn-primary" style="font-size: 13px; flex: 1;">
+                📋 Copy Code
+              </button>
+              <button type="button" id="btnDownloadCode" class="btn btn-outline" style="font-size: 13px;">
+                💾 Download File
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- FAQ -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Why Minify & Beautify Web Code?</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Faster Page Speeds</h3>
+            <p>Minifying removes unnecessary line breaks, comments, and spacing, reducing CSS and JS assets by up to 50% for improved Google PageSpeed scores.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Developer Readability</h3>
+            <p>Beautify restores messy, single-line API JSON or compressed stylesheets into neat, human-readable indented structures for easy debugging.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Zero Server Data Leakage</h3>
+            <p>Every parse and regex transformation executes strictly on your local browser machine without sending code to third-party endpoints.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/code-formatter.js?v=1.0"></script>
+</body>
+</html>

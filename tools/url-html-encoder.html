@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL & HTML Entity Encoder / Decoder | Web Developer Utility</title>
+  <meta name="description" content="Free online URL and HTML entity encoder & decoder. Encode URLs for query parameters and escape HTML characters (&lt;, &gt;, &amp;, &quot;) safely.">
+  <meta name="keywords" content="url encode, url decode, html entity encoder, html escape, percent encoding, url decoder online">
+  <meta property="og:title" content="URL & HTML Entity Encoder / Decoder">
+  <meta property="og:description" content="Encode and decode URLs and HTML entities instantly. 100% private, client-side developer tool.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/url-html-encoder.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "URL & HTML Encoder",
+    "description": "Encode and decode URLs and HTML entities for secure web development.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1100px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">URL & HTML Encoder</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon utility-tools">🌐</div>
+        <h1>URL & HTML Entity Encoder / Decoder</h1>
+        <p class="tool-description">Escape and sanitize special characters for web URLs, query parameters, and HTML templates. Protect against XSS and URL parameter truncation with instant bidirectional encoding.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Mode Tabs -->
+        <div style="display: flex; gap: 10px; margin-bottom: var(--space-4); border-bottom: 2px solid var(--border-color); padding-bottom: 8px; flex-wrap: wrap;">
+          <button type="button" id="tabUrlMode" class="btn btn-primary" style="font-size: 14px;">
+            🔗 URL Encode / Decode
+          </button>
+          <button type="button" id="tabHtmlMode" class="btn btn-outline" style="font-size: 14px;">
+            📄 HTML Entity Encode / Decode
+          </button>
+        </div>
+
+        <!-- Action Selection -->
+        <div style="display: flex; gap: 8px; margin-bottom: 14px; align-items: center;">
+          <button type="button" id="btnModeEncode" class="btn btn-primary" style="padding: 4px 14px; font-size: 13px;">Encode (Text ➔ Escaped)</button>
+          <button type="button" id="btnModeDecode" class="btn btn-outline" style="padding: 4px 14px; font-size: 13px;">Decode (Escaped ➔ Text)</button>
+        </div>
+
+        <div class="tool-split">
+          
+          <div class="tool-split-inputs">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span id="inputLabel" style="font-weight: 600; color: var(--navy); font-size: 14px;">Input Text:</span>
+              <span id="inputStats" style="font-size: 12px; color: var(--gray-600);">0 chars</span>
+            </div>
+
+            <textarea id="srcInput" class="form-textarea" rows="11" placeholder="Type or paste here to encode..." style="font-size: 14px; line-height: 1.5; font-family: 'Fira Code', monospace;"></textarea>
+
+            <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+              <button type="button" id="btnSample" class="btn btn-outline" style="font-size: 12px;">💡 Sample</button>
+              <button type="button" id="btnClear" class="btn btn-outline" style="font-size: 12px; color: #b91c1c; border-color: #fca5a5;">🗑️ Clear</button>
+              <button type="button" id="btnSwap" class="btn btn-outline" style="font-size: 12px;">⇄ Swap</button>
+            </div>
+          </div>
+
+          <div class="tool-split-output">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span id="outputLabel" style="font-weight: 600; color: var(--saffron); font-size: 14px;">Encoded Output:</span>
+              <span id="outputStats" style="font-size: 12px; color: var(--gray-600);">0 chars</span>
+            </div>
+
+            <textarea id="destOutput" class="form-textarea" rows="11" readonly placeholder="Output will appear here..." style="font-size: 14px; line-height: 1.5; background: #f8fafc; font-family: 'Fira Code', monospace;"></textarea>
+
+            <div style="display: flex; gap: 8px; margin-top: 10px;">
+              <button type="button" id="btnCopy" class="btn btn-primary" style="font-size: 13px; flex: 1;">📋 Copy Output</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- FAQ -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Why URL & HTML Encoding is Critical for Developers</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Percent Encoding in URLs</h3>
+            <p>Characters like spaces (`%20`), `?`, `&`, and `#` have special syntactic meanings in HTTP requests. Encoding prevents broken query strings.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Cross-Site Scripting (XSS) Prevention</h3>
+            <p>Escaping user inputs to HTML entities (`&lt;` for `<`, `&gt;` for `>`) stops malicious script injection in web templates.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Instant Client-Side Encoding</h3>
+            <p>Runs directly using JavaScript `encodeURIComponent` and DOM entity mappers without leaking search queries to third parties.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/url-html-encoder.js?v=1.0"></script>
+</body>
+</html>

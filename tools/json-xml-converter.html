@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON to XML & XML to JSON Converter | Online Data Conversion Tool</title>
+  <meta name="description" content="Free online JSON to XML and XML to JSON Converter. Transform structured data formats seamlessly with syntax validation, custom root tags, and instant download.">
+  <meta name="keywords" content="json to xml, xml to json, json xml converter, convert json to xml online, xml parser, json converter">
+  <meta property="og:title" content="JSON to XML & XML to JSON Converter">
+  <meta property="og:description" content="Convert JSON to XML and XML to JSON instantly with validation and clean indentation. 100% private.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/json-xml-converter.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JSON to XML Converter",
+    "description": "Convert JSON to XML and XML to JSON with validation and formatting.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1100px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">JSON to XML Converter</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon utility-tools">🔄</div>
+        <h1>JSON to XML & XML to JSON Converter</h1>
+        <p class="tool-description">Seamlessly convert structured data between JSON and XML with syntax validation, custom root node naming, automatic array handling, and instant file export.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Mode Tabs -->
+        <div style="display: flex; gap: 10px; margin-bottom: var(--space-4); border-bottom: 2px solid var(--border-color); padding-bottom: 8px; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+          <div style="display: flex; gap: 8px;">
+            <button type="button" id="tabJsonToXml" class="btn btn-primary" style="font-size: 14px;">
+              JSON ➔ XML
+            </button>
+            <button type="button" id="tabXmlToJson" class="btn btn-outline" style="font-size: 14px;">
+              XML ➔ JSON
+            </button>
+          </div>
+
+          <div id="rootTagWrapper" style="display: flex; align-items: center; gap: 6px;">
+            <label style="font-size: 12px; font-weight: 600; color: var(--gray-700);">Root Tag:</label>
+            <input type="text" id="rootTagName" class="form-input" value="root" style="padding: 2px 8px; font-size: 12px; width: 100px;">
+          </div>
+        </div>
+
+        <div class="tool-split">
+          
+          <!-- Source Column -->
+          <div class="tool-split-inputs">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span id="srcLabel" style="font-weight: 600; color: var(--navy); font-size: 14px;">Input JSON:</span>
+              <span id="srcStats" style="font-size: 12px; color: var(--gray-600);">0 chars</span>
+            </div>
+
+            <textarea id="srcInput" class="form-textarea" rows="14" placeholder="Paste your input here..." style="font-size: 13px; line-height: 1.5; font-family: 'Fira Code', monospace;"></textarea>
+
+            <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+              <button type="button" id="btnConvert" class="btn btn-primary" style="font-size: 13px;">
+                🔄 Convert Now
+              </button>
+              <button type="button" id="btnSample" class="btn btn-outline" style="font-size: 13px;">
+                💡 Sample Data
+              </button>
+              <button type="button" id="btnClear" class="btn btn-outline" style="font-size: 13px; color: #b91c1c; border-color: #fca5a5;">
+                🗑️ Clear
+              </button>
+            </div>
+          </div>
+
+          <!-- Destination Column -->
+          <div class="tool-split-output">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span id="destLabel" style="font-weight: 600; color: var(--saffron); font-size: 14px;">Converted XML:</span>
+              <span id="destStats" style="font-size: 12px; color: var(--gray-600);">0 chars</span>
+            </div>
+
+            <textarea id="destOutput" class="form-textarea" rows="14" readonly placeholder="Converted output will appear here..." style="font-size: 13px; line-height: 1.5; background: #f8fafc; font-family: 'Fira Code', monospace;"></textarea>
+
+            <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
+              <button type="button" id="btnCopyResult" class="btn btn-primary" style="font-size: 13px; flex: 1;">
+                📋 Copy Result
+              </button>
+              <button type="button" id="btnDownloadResult" class="btn btn-outline" style="font-size: 13px;">
+                💾 Download File
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Guide -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Understanding JSON and XML Conversions</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>REST vs SOAP APIs</h3>
+            <p>Modern web services rely on JSON, while legacy enterprise banking, government portals, and SOAP APIs require structured XML schemas.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Automatic Array Nesting</h3>
+            <p>Lists and arrays are cleanly mapped to repeating child elements (e.g. `<item>` or `<element>`) to maintain hierarchy fidelity.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Client-Side Privacy</h3>
+            <p>Conversions run entirely through JavaScript DOMParser and native object traversal without sending your data to external webhooks.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/json-xml-converter.js?v=1.0"></script>
+</body>
+</html>

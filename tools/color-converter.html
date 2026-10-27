@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEX to RGB Color Converter | HSL, CMYK & Palette Studio Online</title>
+  <meta name="description" content="Free online Color Converter & Palette Studio. Convert between HEX, RGB, HSL, and CMYK. Check WCAG accessibility contrast ratio and generate complementary color schemes.">
+  <meta name="keywords" content="color converter, hex to rgb, rgb to hex, hex to hsl, cmyk converter, color picker online, wcag contrast checker, color scheme generator">
+  <meta property="og:title" content="HEX to RGB Color Converter & Palette Studio">
+  <meta property="og:description" content="Convert HEX, RGB, HSL, and CMYK color codes with real-time accessibility contrast ratings.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/color-converter.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Color Converter & Palette Studio",
+    "description": "Convert HEX, RGB, HSL, and CMYK colors with WCAG accessibility contrast checking.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    .color-swatch-large {
+      width: 100%;
+      height: 140px;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 20px;
+      transition: background-color 0.15s ease;
+    }
+    .color-field-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      background: #ffffff;
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .palette-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+    .palette-card:hover {
+      transform: translateY(-2px);
+    }
+    .palette-card-preview {
+      height: 60px;
+      width: 100%;
+    }
+    .palette-card-label {
+      padding: 6px;
+      font-size: 11px;
+      font-family: monospace;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1100px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Color Converter</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon utility-tools">🎨</div>
+        <h1>Color Converter & Palette Studio</h1>
+        <p class="tool-description">Convert seamlessly between HEX, RGB, RGBA, HSL, and CMYK color models. Check WCAG accessibility contrast ratios and explore harmonious complementary color schemes.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <div class="tool-split">
+          
+          <!-- Picker & Values Column -->
+          <div class="tool-split-inputs" style="flex: 1.1;">
+            
+            <!-- Large Swatch -->
+            <div id="mainColorSwatch" class="color-swatch-large" style="background-color: #2563eb; color: #ffffff;">
+              <span id="swatchLabelText">#2563EB</span>
+            </div>
+
+            <!-- Native Picker + HEX Input -->
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 16px;">
+              <input type="color" id="nativeColorPicker" value="#2563eb" style="width: 50px; height: 46px; border: none; border-radius: 8px; cursor: pointer; padding: 0; background: none;">
+              <div style="flex: 1;">
+                <label style="font-size: 12px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 2px;">HEX Code</label>
+                <input type="text" id="inputHex" class="form-input" value="#2563EB" style="font-family: 'Fira Code', monospace; font-size: 15px; font-weight: 600;">
+              </div>
+            </div>
+
+            <!-- RGB / HSL / CMYK Inputs -->
+            <div class="color-field-row">
+              <div>
+                <span style="font-size: 11px; font-weight: 600; color: var(--gray-600); display: block;">RGB (Red, Green, Blue)</span>
+                <input type="text" id="valRgb" class="form-input" value="rgb(37, 99, 235)" style="border: none; padding: 0; font-family: monospace; font-weight: 600; font-size: 14px; background: transparent;" readonly>
+              </div>
+              <button type="button" class="btn btn-outline btn-copy-color" data-target="valRgb" style="padding: 2px 8px; font-size: 11px;">📋 Copy</button>
+            </div>
+
+            <div class="color-field-row">
+              <div>
+                <span style="font-size: 11px; font-weight: 600; color: var(--gray-600); display: block;">HSL (Hue, Saturation, Lightness)</span>
+                <input type="text" id="valHsl" class="form-input" value="hsl(221, 83%, 53%)" style="border: none; padding: 0; font-family: monospace; font-weight: 600; font-size: 14px; background: transparent;" readonly>
+              </div>
+              <button type="button" class="btn btn-outline btn-copy-color" data-target="valHsl" style="padding: 2px 8px; font-size: 11px;">📋 Copy</button>
+            </div>
+
+            <div class="color-field-row">
+              <div>
+                <span style="font-size: 11px; font-weight: 600; color: var(--gray-600); display: block;">CMYK (Cyan, Magenta, Yellow, Black)</span>
+                <input type="text" id="valCmyk" class="form-input" value="cmyk(84%, 58%, 0%, 8%)" style="border: none; padding: 0; font-family: monospace; font-weight: 600; font-size: 14px; background: transparent;" readonly>
+              </div>
+              <button type="button" class="btn btn-outline btn-copy-color" data-target="valCmyk" style="padding: 2px 8px; font-size: 11px;">📋 Copy</button>
+            </div>
+
+          </div>
+
+          <!-- Accessibility & Harmony Schemes Column -->
+          <div class="tool-split-output" style="flex: 1.1;">
+            
+            <!-- WCAG Contrast Box -->
+            <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-bottom: 20px;">
+              <h3 style="margin: 0 0 10px 0; font-size: 15px; color: var(--navy);">WCAG Accessibility Contrast Ratings:</h3>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div id="boxContrastWhite" style="padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); background: #2563eb; color: #ffffff;">
+                  <div style="font-size: 14px; font-weight: 700;">White Text</div>
+                  <div id="ratioWhite" style="font-size: 18px; font-weight: 800; margin: 4px 0;">4.5:1</div>
+                  <div id="badgeWhite" style="font-size: 11px; font-weight: 600; text-transform: uppercase;">Pass AA</div>
+                </div>
+
+                <div id="boxContrastBlack" style="padding: 12px; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); background: #2563eb; color: #000000;">
+                  <div style="font-size: 14px; font-weight: 700;">Black Text</div>
+                  <div id="ratioBlack" style="font-size: 18px; font-weight: 800; margin: 4px 0;">4.6:1</div>
+                  <div id="badgeBlack" style="font-size: 11px; font-weight: 600; text-transform: uppercase;">Pass AA</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Harmonious Palette Grid -->
+            <div>
+              <h3 style="margin: 0; font-size: 15px; color: var(--navy);">Harmonious Color Palette:</h3>
+              <div class="palette-grid" id="paletteGrid">
+                <!-- Generated dynamically -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Why Color Accessibility (WCAG 2.1) Matters</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>WCAG AA Compliance (4.5:1)</h3>
+            <p>Normal text must have at least a 4.5:1 contrast ratio against the background to be readable for individuals with visual impairments or color blindness.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Digital Display vs Print Standards</h3>
+            <p>RGB/HEX powers backlit digital monitors and web pages, while CMYK is required for professional offset printing and brochure publishing.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Color Psychology in Branding</h3>
+            <p>Using mathematically balanced complementary and triadic harmonies creates high-converting, professional user interfaces.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/color-converter.js?v=1.0"></script>
+</body>
+</html>

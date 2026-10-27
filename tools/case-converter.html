@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Case Converter | UPPERCASE, lowercase, Title Case & camelCase</title>
+  <meta name="description" content="Free online Text Case Converter. Convert text to UPPERCASE, lowercase, Title Case, Sentence case, camelCase, snake_case, kebab-case, or reverse text instantly.">
+  <meta name="keywords" content="case converter, uppercase to lowercase, title case converter, camelcase generator, snake case converter, capitalizer, text tools online">
+  <meta property="og:title" content="Text Case Converter — All Cases & String Utilities">
+  <meta property="og:description" content="Convert text cases in one click. Sentence case, Title Case, camelCase, kebab-case, and text transforms.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/case-converter.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Text Case Converter",
+    "description": "Convert text into UPPERCASE, lowercase, Title Case, and developer cases instantly.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1050px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Text Case Converter</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon utility-tools">🔠</div>
+        <h1>Text Case Converter & String Tools</h1>
+        <p class="tool-description">Easily switch between Sentence case, UPPERCASE, lowercase, Title Case, and developer formats like camelCase, snake_case, and CONSTANT_CASE. Includes reverse text, alternate case, and extra space cleaner.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Text Area -->
+        <div class="settings-group" style="margin-bottom: var(--space-4);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label for="caseInput" style="font-weight: 600; color: var(--navy); font-size: 14px;">Your Text:</label>
+            <span id="caseStats" style="font-size: 12px; color: var(--gray-600);">0 words | 0 chars</span>
+          </div>
+          <textarea id="caseInput" class="form-textarea" rows="10" placeholder="Type or paste your text here..." style="font-size: 15px; line-height: 1.6;"></textarea>
+        </div>
+
+        <!-- Buttons Grid -->
+        <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-bottom: var(--space-4);">
+          <div style="font-size: 12px; font-weight: 700; color: var(--gray-700); text-transform: uppercase; margin-bottom: 8px;">Standard Cases:</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
+            <button type="button" class="btn btn-primary btn-case" data-action="sentence">Sentence case</button>
+            <button type="button" class="btn btn-outline btn-case" data-action="upper">UPPERCASE</button>
+            <button type="button" class="btn btn-outline btn-case" data-action="lower">lowercase</button>
+            <button type="button" class="btn btn-outline btn-case" data-action="title">Title Case</button>
+            <button type="button" class="btn btn-outline btn-case" data-action="capitalize">Capitalize Each Word</button>
+          </div>
+
+          <div style="font-size: 12px; font-weight: 700; color: var(--gray-700); text-transform: uppercase; margin-bottom: 8px;">Developer & Code Cases:</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
+            <button type="button" class="btn btn-outline btn-case" data-action="camel">camelCase</button>
+            <button type="button" class="btn btn-outline btn-case" data-action="snake">snake_case</button>
+            <button type="button" class="btn btn-outline btn-case" data-action="kebab">kebab-case</button>
+            <button type="button" class="btn btn-outline btn-case" data-action="pascal">PascalCase</button>
+            <button type="button" class="btn btn-outline btn-case" data-action="constant">CONSTANT_CASE</button>
+          </div>
+
+          <div style="font-size: 12px; font-weight: 700; color: var(--gray-700); text-transform: uppercase; margin-bottom: 8px;">Clean & Transform:</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <button type="button" class="btn btn-outline btn-case" data-action="alternate">aLtErNaTe cAsE</button>
+            <button type="button" class="btn btn-outline btn-case" data-action="reverse">esreveR txeT</button>
+            <button type="button" class="btn btn-outline btn-case" data-action="clean">🧹 Remove Extra Spaces</button>
+          </div>
+        </div>
+
+        <!-- Action Footer -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <button type="button" id="btnClear" class="btn btn-outline" style="color: #b91c1c; border-color: #fca5a5;">
+            🗑️ Clear Text
+          </button>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" id="btnDownload" class="btn btn-outline">
+              💾 Download .txt
+            </button>
+            <button type="button" id="btnCopy" class="btn btn-primary">
+              📋 Copy Text
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Why Clean & Convert Text Cases?</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Fix Accidental Caps Lock</h3>
+            <p>Accidentally wrote an entire paragraph with Caps Lock on? One click converts it back into natural Sentence case.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Programmer Naming Conventions</h3>
+            <p>Convert database column names, API JSON keys, and CSS classes effortlessly between camelCase, snake_case, and kebab-case.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Government Application Cleanliness</h3>
+            <p>Remove trailing double spaces and clean up messy form inputs before pasting into official Sarkari portals.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/case-converter.js?v=1.0"></script>
+</body>
+</html>

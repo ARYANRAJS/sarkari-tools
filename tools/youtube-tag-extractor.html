@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Tags & Keyword Extractor | Extract Video Tags & SEO Keywords</title>
+  <meta name="description" content="Free online YouTube Tag Extractor. Extract tags, SEO keywords, title, and metadata from any YouTube video or Shorts link in seconds. Copy all tags for YouTube Studio.">
+  <meta name="keywords" content="youtube tag extractor, extract youtube tags, youtube keyword tool, find youtube tags, youtube seo tags finder, copy youtube tags">
+  <meta property="og:title" content="YouTube Tags & SEO Keyword Extractor">
+  <meta property="og:description" content="Discover ranking tags and keywords from competitor YouTube videos. 100% free tool for creators and SEOs.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/youtube-tag-extractor.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "YouTube Tag Extractor",
+    "description": "Extract tags, keywords, and SEO metadata from YouTube videos and Shorts.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    .tag-chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+      min-height: 80px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .tag-chip {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      color: var(--navy);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .tag-chip:hover {
+      border-color: var(--navy);
+      background: #f1f5f9;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1050px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">YouTube Tag Extractor</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon seo-tools">🏷️</div>
+        <h1>YouTube Tags & SEO Keyword Extractor</h1>
+        <p class="tool-description">Find and extract hidden tags, keywords, video titles, and SEO metadata from any YouTube video or Shorts. Analyze competitor rankings and copy comma-separated tags ready to paste into YouTube Studio.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: var(--space-4);">
+          <label for="ytUrlInput" style="font-weight: 600; color: var(--navy); display: block; margin-bottom: 8px; font-size: 15px;">
+            Paste YouTube Video URL:
+          </label>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <input type="text" id="ytUrlInput" class="form-input" placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/..." style="flex: 1; min-width: 260px; font-size: 15px; padding: 12px 14px;">
+            <button type="button" id="btnExtractTags" class="btn btn-primary" style="padding: 12px 24px; font-size: 15px;">
+              🏷️ Extract Tags
+            </button>
+            <button type="button" id="btnPasteUrl" class="btn btn-outline" style="padding: 12px 18px; font-size: 14px;">
+              📋 Paste
+            </button>
+          </div>
+          <div id="extractError" style="color: #b91c1c; font-size: 13px; font-weight: 500; margin-top: 8px; display: none;"></div>
+        </div>
+
+        <!-- Video Info Header & Results -->
+        <div id="tagsResultsArea" style="display: none;">
+          
+          <!-- Video Card Header -->
+          <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-bottom: var(--space-4); display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+            <img id="vidThumb" src="" alt="Thumbnail" style="width: 140px; aspect-ratio: 16/9; object-fit: cover; border-radius: 6px; background: #0f172a;">
+            <div style="flex: 1; min-width: 220px;">
+              <h3 id="vidTitle" style="margin: 0 0 6px 0; font-size: 16px; color: var(--navy);">Video Title</h3>
+              <div style="font-size: 13px; color: var(--gray-600);">
+                Channel: <b id="vidAuthor" style="color: var(--gray-800);">-</b>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tags Container -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span style="font-weight: 700; color: var(--navy); font-size: 16px;">Extracted Video Tags (<span id="tagsCount">0</span>):</span>
+              <span id="charCountTagBox" style="font-size: 12px; color: var(--gray-600); margin-left: 8px;">0 / 500 YouTube chars</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button type="button" id="btnCopyAllTags" class="btn btn-primary" style="font-size: 13px;">
+                📋 Copy All Tags (Comma Separated)
+              </button>
+            </div>
+          </div>
+
+          <div id="tagChips" class="tag-chips-container">
+            <!-- Chips inserted here -->
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SEO Guide -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Why YouTube Video Tags Matter for Search Rankings</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Discovers Common Misspellings</h3>
+            <p>Tags help the YouTube algorithm match your video even when users misspell query terms or search in phonetic Hindi/English.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Suggested Videos Algorithm</h3>
+            <p>Using matching high-relevance tags with top ranking videos in your niche signals YouTube to recommend your video in the "Up Next" rail.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>500-Character Optimization</h3>
+            <p>Keep your total tag character count within YouTube's 500-character ceiling for optimal indexing without keyword stuffing penalties.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/youtube-tag-extractor.js?v=1.0"></script>
+</body>
+</html>

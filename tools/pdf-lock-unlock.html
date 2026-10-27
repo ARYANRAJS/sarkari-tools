@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protect PDF & Unlock PDF Online | Password Encrypt & Decrypt PDF</title>
+  <meta name="description" content="Free online PDF Protect and Unlock Tool. Add strong password encryption to confidential PDFs or remove password protection securely in your browser. 100% client-side.">
+  <meta name="keywords" content="protect pdf, unlock pdf, encrypt pdf, remove pdf password, password protect pdf online, decrypt pdf, secure pdf">
+  <meta property="og:title" content="Protect PDF & Unlock PDF Online — 100% Client-Side">
+  <meta property="og:description" content="Encrypt or unlock PDF documents directly in your browser. No files uploaded to servers.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/pdf-lock-unlock.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <!-- pdf-lib -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "PDF Password Protect & Unlock Tool",
+    "description": "Add or remove password encryption on PDF documents in your browser.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 950px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Protect & Unlock PDF</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon pdf-tools">🔒</div>
+        <h1>PDF Password Protect & Unlock Tool</h1>
+        <p class="tool-description">Secure sensitive bank statements, Aadhaar cards, and confidential documents with robust password protection, or permanently remove known passwords from PDFs for hassle-free printing.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Mode Tabs -->
+        <div style="display: flex; gap: 10px; margin-bottom: var(--space-4); border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">
+          <button type="button" id="tabProtectMode" class="btn btn-primary" style="font-size: 14px;">
+            🔒 Protect PDF (Set Password)
+          </button>
+          <button type="button" id="tabUnlockMode" class="btn btn-outline" style="font-size: 14px;">
+            🔓 Unlock PDF (Remove Password)
+          </button>
+        </div>
+
+        <!-- Protect Tab -->
+        <div id="protectSection">
+          <div class="drop-zone" id="protectDropZone" style="border: 2px dashed var(--border-color); border-radius: 12px; padding: 26px; text-align: center; cursor: pointer; background: #f8fafc; margin-bottom: 16px;">
+            <div style="font-size: 36px; margin-bottom: 6px;">🔐</div>
+            <div style="font-weight: 600; color: var(--navy); font-size: 15px; margin-bottom: 4px;">Upload PDF to Password Protect</div>
+            <div style="font-size: 12px; color: var(--gray-600); margin-bottom: 10px;">Select document to encrypt</div>
+            <label class="btn btn-primary" style="display: inline-block; cursor: pointer; font-size: 13px;">
+              Choose PDF
+              <input type="file" id="protectFileInput" accept=".pdf" style="display: none;">
+            </label>
+          </div>
+
+          <div id="protectFormArea" style="display: none; background: #ffffff; border: 1px solid var(--border-color); border-radius: 10px; padding: 18px;">
+            <div style="font-weight: 600; color: var(--navy); margin-bottom: 12px;" id="protectFileName">-</div>
+            
+            <div class="settings-group" style="margin-bottom: 12px;">
+              <label for="pdfUserPass" style="font-size: 13px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">Set Document Open Password:</label>
+              <input type="password" id="pdfUserPass" class="form-input" placeholder="Enter strong password..." style="font-size: 14px;">
+            </div>
+
+            <button type="button" id="btnEncryptPdf" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 15px;">
+              🔒 Encrypt & Download PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- Unlock Tab -->
+        <div id="unlockSection" style="display: none;">
+          <div class="drop-zone" id="unlockDropZone" style="border: 2px dashed var(--border-color); border-radius: 12px; padding: 26px; text-align: center; cursor: pointer; background: #f8fafc; margin-bottom: 16px;">
+            <div style="font-size: 36px; margin-bottom: 6px;">🔓</div>
+            <div style="font-weight: 600; color: var(--navy); font-size: 15px; margin-bottom: 4px;">Upload Password-Protected PDF</div>
+            <div style="font-size: 12px; color: var(--gray-600); margin-bottom: 10px;">Select document to remove password</div>
+            <label class="btn btn-primary" style="display: inline-block; cursor: pointer; font-size: 13px;">
+              Choose Locked PDF
+              <input type="file" id="unlockFileInput" accept=".pdf" style="display: none;">
+            </label>
+          </div>
+
+          <div id="unlockFormArea" style="display: none; background: #ffffff; border: 1px solid var(--border-color); border-radius: 10px; padding: 18px;">
+            <div style="font-weight: 600; color: var(--navy); margin-bottom: 12px;" id="unlockFileName">-</div>
+            
+            <div class="settings-group" style="margin-bottom: 12px;">
+              <label for="pdfUnlockPass" style="font-size: 13px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">Enter Current PDF Password:</label>
+              <input type="password" id="pdfUnlockPass" class="form-input" placeholder="Enter password to unlock..." style="font-size: 14px;">
+            </div>
+
+            <button type="button" id="btnDecryptPdf" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 15px;">
+              🔓 Decrypt & Download Unlocked PDF
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Why Encrypt & Decrypt PDFs Locally?</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Financial Privacy Protection</h3>
+            <p>Never upload salary slips, tax audits, or bank statement PDFs to untrusted third-party servers. Local processing guarantees 100% confidentiality.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Government ID Security</h3>
+            <p>Adding a password to Aadhaar or passport PDF copies before emailing them prevents unauthorized identity theft.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Permanent Password Removal</h3>
+            <p>Tired of typing your birth date or PAN number every time you open an e-Aadhaar or bank statement? Decrypt it once and store it unlocked.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/pdf-lock-unlock.js?v=1.0"></script>
+</body>
+</html>

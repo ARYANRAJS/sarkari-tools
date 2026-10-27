@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Post Generator | Create Realistic Instagram Post Mockups</title>
+  <meta name="description" content="Free online Instagram Post Mockup Generator. Create realistic Instagram feed posts with profile avatar, photo, likes count, caption, and verified badge. Download as PNG.">
+  <meta name="keywords" content="instagram post generator, fake instagram post maker, ig post mockup, instagram meme generator, social media mockup">
+  <meta property="og:title" content="Instagram Post Mockup Generator — Realistic Feed Posts">
+  <meta property="og:description" content="Generate realistic Instagram feed posts for presentations, ads, and memes. Export high-res PNG.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/instagram-post-generator.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Instagram Post Generator",
+    "description": "Create realistic Instagram feed post mockups with custom photos, captions, and like counts.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    /* Instagram Card Styling */
+    .ig-card {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      border: 1px solid #dbdbdb;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      color: #262626;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .ig-dark {
+      background: #000000;
+      color: #f5f5f5;
+      border-color: #262626;
+    }
+    .ig-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+    }
+    .ig-user-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ig-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #e2e8f0;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      outline: 2px solid #e1306c;
+    }
+    .ig-names {
+      line-height: 1.25;
+    }
+    .ig-username {
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .ig-location {
+      font-size: 11px;
+      color: #8e8e8e;
+    }
+    .ig-dark .ig-location { color: #a8a8a8; }
+    .ig-photo-container {
+      width: 100%;
+      background: #1e293b;
+      position: relative;
+      overflow: hidden;
+    }
+    .ig-photo-container.ratio-sq { aspect-ratio: 1 / 1; }
+    .ig-photo-container.ratio-port { aspect-ratio: 4 / 5; }
+    .ig-photo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .ig-actions {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 14px 6px;
+      font-size: 20px;
+    }
+    .ig-left-actions {
+      display: flex;
+      gap: 16px;
+    }
+    .ig-body {
+      padding: 0 14px 14px;
+      font-size: 14px;
+    }
+    .ig-likes {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .ig-caption {
+      line-height: 1.45;
+      margin-bottom: 6px;
+      word-break: break-word;
+    }
+    .ig-caption span.user { font-weight: 600; margin-right: 6px; }
+    .ig-caption span.tag { color: #00376b; }
+    .ig-dark .ig-caption span.tag { color: #e0f1ff; }
+    .ig-time {
+      font-size: 11px;
+      color: #8e8e8e;
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1200px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Instagram Post Generator</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon social-tools">📸</div>
+        <h1>Instagram Post Mockup Generator</h1>
+        <p class="tool-description">Design realistic Instagram feed post mockups with custom profile picture, username, photo, verified badge, likes count, and caption. Download high-resolution PNG for ads, pitches, and creative memes.</p>
+      </div>
+
+      <div class="tool-workspace">
+        <div class="tool-split">
+          
+          <!-- Inputs Column -->
+          <div class="tool-split-inputs" style="flex: 1.1; min-width: 320px;">
+            
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; margin-bottom: var(--space-3); display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <label style="font-size: 12px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">Instagram Username</label>
+                <input type="text" id="inputUsername" class="form-input" value="alltoolsinone" style="font-size: 13px;">
+              </div>
+              <div>
+                <label style="font-size: 12px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">Location Geotag</label>
+                <input type="text" id="inputLocation" class="form-input" value="New Delhi, India" style="font-size: 13px;">
+              </div>
+              <div>
+                <label style="font-size: 12px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">Verified Badge</label>
+                <select id="inputVerified" class="form-select" style="font-size: 13px; width: 100%;">
+                  <option value="yes">Verified Blue Badge</option>
+                  <option value="no">No Badge</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 12px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">Profile Avatar</label>
+                <input type="file" id="inputAvatarFile" accept="image/*" class="form-input" style="font-size: 11px; padding: 5px;">
+              </div>
+            </div>
+
+            <!-- Post Photo -->
+            <div class="settings-group" style="margin-bottom: var(--space-3);">
+              <label style="font-weight: 600; color: var(--navy); display: block; margin-bottom: 4px;">Upload Post Photo</label>
+              <input type="file" id="inputPostPhoto" accept="image/*" class="form-input" style="font-size: 13px; padding: 8px;">
+            </div>
+
+            <!-- Caption -->
+            <div class="settings-group" style="margin-bottom: var(--space-3);">
+              <label style="font-weight: 600; color: var(--navy); display: block; margin-bottom: 4px;">Caption with Hashtags</label>
+              <textarea id="inputCaption" class="form-textarea" rows="3" style="font-size: 14px; line-height: 1.5;">Simplicity is the ultimate sophistication. ✨ Explore 50+ free online web utilities without registration! #Tools #Tech #Design #AllToolsInOne</textarea>
+            </div>
+
+            <!-- Metrics -->
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; margin-bottom: var(--space-3); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 2px;">Likes Count</label>
+                <input type="text" id="inputLikes" class="form-input" value="48,290" style="font-size: 12px;">
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 2px;">Aspect Ratio</label>
+                <select id="inputRatio" class="form-select" style="font-size: 12px; width: 100%;">
+                  <option value="ratio-sq">Square (1:1)</option>
+                  <option value="ratio-port">Portrait (4:5)</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 2px;">Theme</label>
+                <select id="inputTheme" class="form-select" style="font-size: 12px; width: 100%;">
+                  <option value="light">Light Mode</option>
+                  <option value="dark">Dark Mode</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Action -->
+            <div style="display: flex; gap: 8px;">
+              <button type="button" id="btnDownloadPost" class="btn btn-primary" style="font-size: 13px; flex: 1;">
+                📸 Download Instagram Mockup (PNG)
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Live Mockup Column -->
+          <div class="tool-split-output" style="flex: 1.1; min-width: 320px; display: flex; flex-direction: column; align-items: center;">
+            <div style="align-self: flex-start; margin-bottom: 8px; font-weight: 600; color: var(--navy); font-size: 14px;">
+              Live Instagram Feed Preview:
+            </div>
+
+            <!-- IG Post Element -->
+            <div id="igCard" class="ig-card">
+              
+              <div class="ig-header">
+                <div class="ig-user-wrap">
+                  <img id="igAvatar" class="ig-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='38' height='38' viewBox='0 0 24 24' fill='%2394a3b8'><circle cx='12' cy='8' r='4'/><path d='M4 20c0-4 4-7 8-7s8 3 8 7'/></svg>" alt="Avatar">
+                  <div class="ig-names">
+                    <div class="ig-username">
+                      <span id="igUsername">alltoolsinone</span>
+                      <span id="igBadge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="#0095f6"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7l-4.1-4.1 1.4-1.4 2.7 2.7 6.7-6.7 1.4 1.4-8.1 8.1z"/></svg>
+                      </span>
+                    </div>
+                    <div id="igLocation" class="ig-location">New Delhi, India</div>
+                  </div>
+                </div>
+                <div style="font-weight: 700; letter-spacing: 2px;">•••</div>
+              </div>
+
+              <!-- Photo -->
+              <div id="igPhotoContainer" class="ig-photo-container ratio-sq">
+                <img id="igPhoto" src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop&q=80" alt="Post photo">
+              </div>
+
+              <!-- Action Bar -->
+              <div class="ig-actions">
+                <div class="ig-left-actions">
+                  <span style="color: #ed4956;">❤️</span>
+                  <span>💬</span>
+                  <span>✈️</span>
+                </div>
+                <span>🔖</span>
+              </div>
+
+              <!-- Body Details -->
+              <div class="ig-body">
+                <div class="ig-likes"><span id="igLikes">48,290</span> likes</div>
+                <div class="ig-caption">
+                  <span id="igCaptionUser" class="user">alltoolsinone</span>
+                  <span id="igCaptionText">Simplicity is the ultimate sophistication. ✨ Explore 50+ free online web utilities without registration! <span class="tag">#Tools</span> <span class="tag">#AllToolsInOne</span></span>
+                </div>
+                <div class="ig-time">2 hours ago</div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/instagram-post-generator.js?v=1.0"></script>
+</body>
+</html>

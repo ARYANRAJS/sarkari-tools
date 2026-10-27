@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Handwriting Converter | Turn Typed Notes to Handwritten Pages</title>
+  <meta name="description" content="Free online Text to Handwriting Converter. Convert typed assignments, essays, and notes into realistic handwritten notebook pages with custom ink colors and paper styles. Export as PDF or Image.">
+  <meta name="keywords" content="text to handwriting, typed to handwritten converter, handwriting generator, online assignment maker, notes to handwriting, handwriting font, ruled paper assignment">
+  <meta property="og:title" content="Text to Handwriting Converter — Realistic Notebook Pages">
+  <meta property="og:description" content="Convert any text into realistic handwriting on lined notebook paper. Download as high-res PNG or PDF. 100% private in-browser.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/text-to-handwriting.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Indie+Flower&family=Kalam:wght@400;700&family=Patrick+Hand&family=Shadows+Into+Light&family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <!-- jsPDF for PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Text to Handwriting Converter",
+    "description": "Convert typed text into realistic handwritten notebook pages with custom inks and papers.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    .paper-preview-container {
+      background: #e2e8f0;
+      padding: 16px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-x: auto;
+      min-height: 500px;
+    }
+    .handwriting-canvas {
+      background: #fff;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border-radius: 4px;
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1200px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Text to Handwriting Converter</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon document-tools">📝</div>
+        <h1>Text to Handwriting Converter</h1>
+        <p class="tool-description">Convert typed homework, assignments, projects, or letters into realistic handwritten pages. Customize paper lines, red margins, handwriting styles, and ink colors with real-time preview and instant PDF/Image export.</p>
+      </div>
+
+      <div class="tool-workspace">
+        <div class="tool-split">
+          
+          <!-- Controls & Input Column -->
+          <div class="tool-split-inputs" style="flex: 1; min-width: 320px;">
+            
+            <div class="settings-group" style="margin-bottom: var(--space-3);">
+              <label style="font-weight: 600; color: var(--navy); display: flex; justify-content: space-between;">
+                <span>Your Text / Assignment:</span>
+                <span id="charCountDisplay" style="font-size: 12px; color: var(--gray-600);">0 chars</span>
+              </label>
+              <textarea id="textInput" class="form-textarea" rows="8" placeholder="Type or paste your essay, assignment, or notes here..." style="font-size: 14px; line-height: 1.5;"></textarea>
+            </div>
+
+            <!-- Customization Settings -->
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; margin-bottom: var(--space-3); display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              
+              <div>
+                <label style="font-size: 12px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">✍️ Handwriting Font</label>
+                <select id="fontSelect" class="form-select" style="font-size: 13px; width: 100%;">
+                  <option value="'Caveat', cursive">Caveat (Natural Fluid)</option>
+                  <option value="'Kalam', cursive">Kalam (Clean Indian Style)</option>
+                  <option value="'Indie Flower', cursive">Indie Flower (Casual Playful)</option>
+                  <option value="'Patrick Hand', cursive">Patrick Hand (Neat School)</option>
+                  <option value="'Shadows Into Light', cursive">Shadows (Fast Jotted)</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="font-size: 12px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">🖊️ Ink Color</label>
+                <select id="inkSelect" class="form-select" style="font-size: 13px; width: 100%;">
+                  <option value="#0d2b6b">Royal Blue Ballpen</option>
+                  <option value="#1c3d94">Bright Gel Blue</option>
+                  <option value="#1a1a1a">Black Gel Pen</option>
+                  <option value="#333333">Pencil Dark Gray</option>
+                  <option value="#8b0000">Red Ballpoint</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="font-size: 12px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">📄 Paper Style</label>
+                <select id="paperSelect" class="form-select" style="font-size: 13px; width: 100%;">
+                  <option value="ruled_margin">Blue Ruled + Red Margin</option>
+                  <option value="ruled">Blue Ruled (No Margin)</option>
+                  <option value="legal">Yellow Legal Pad</option>
+                  <option value="blank">Plain White Sheet</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="font-size: 12px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">📏 Font Size (<span id="fontSizeVal">22</span>px)</label>
+                <input type="range" id="fontSizeRange" min="16" max="32" value="22" style="width: 100%;">
+              </div>
+
+              <div>
+                <label style="font-size: 12px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">📐 Line Spacing (<span id="lineHeightVal">36</span>px)</label>
+                <input type="range" id="lineHeightRange" min="26" max="50" value="36" style="width: 100%;">
+              </div>
+
+              <div>
+                <label style="font-size: 12px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">🎲 Letter Tilt Jitter</label>
+                <input type="range" id="jitterRange" min="0" max="5" value="2" style="width: 100%;">
+              </div>
+
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button type="button" id="btnSampleText" class="btn btn-outline" style="font-size: 12px;">
+                💡 Sample Assignment
+              </button>
+              <button type="button" id="btnClear" class="btn btn-outline" style="font-size: 12px; color: #b91c1c; border-color: #fca5a5;">
+                🗑️ Clear
+              </button>
+              <button type="button" id="btnDownloadImage" class="btn btn-primary" style="font-size: 13px;">
+                🖼️ Download Page (PNG)
+              </button>
+              <button type="button" id="btnDownloadPDF" class="btn btn-outline" style="font-size: 13px;">
+                📄 Download as PDF
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Page Preview Output Column -->
+          <div class="tool-split-output" style="flex: 1.2; min-width: 320px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-weight: 600; color: var(--navy); font-size: 14px;">Live Notebook Preview</span>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <button type="button" id="btnPrevPage" class="btn btn-outline" style="padding: 2px 8px; font-size: 12px;" disabled>◀ Prev</button>
+                <span id="pageIndicator" style="font-size: 12px; font-weight: 600; color: var(--gray-700);">Page 1 / 1</span>
+                <button type="button" id="btnNextPage" class="btn btn-outline" style="padding: 2px 8px; font-size: 12px;" disabled>Next ▶</button>
+              </div>
+            </div>
+
+            <div class="paper-preview-container">
+              <canvas id="paperCanvas" width="800" height="1100" class="handwriting-canvas"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Features Guide -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Why Students & Professionals Love This Handwriting Converter</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Realistic Pen Stroke Variation</h3>
+            <p>Letter baseline jitter and ink opacity simulation replicate authentic human hand movements on standard Indian classwork paper.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Auto-Paginated Multi-Page Flow</h3>
+            <p>Got a long essay or multi-paragraph project? The converter automatically splits your text cleanly across multiple consecutive pages.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Print-Ready A4 Resolution</h3>
+            <p>Exports at ultra-sharp resolution so your printed assignments or PDF submissions look crisp and authentic.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/text-to-handwriting.js?v=1.0"></script>
+</body>
+</html>

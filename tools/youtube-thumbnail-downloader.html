@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Thumbnail Downloader | Download HD 1080p & 4K Cover Images</title>
+  <meta name="description" content="Free online YouTube Thumbnail Downloader. Download Full HD 1080p, 720p, HQ, and WebP YouTube cover thumbnails and Shorts covers in one click.">
+  <meta name="keywords" content="youtube thumbnail downloader, download yt thumbnail, 1080p youtube thumbnail, youtube shorts thumbnail download, save youtube cover image, get maxresdefault">
+  <meta property="og:title" content="YouTube Thumbnail Downloader — Full HD 1080p">
+  <meta property="og:description" content="Grab high resolution 1080p YouTube video & Shorts thumbnails instantly. Free, no registration required.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/youtube-thumbnail-downloader.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "YouTube Thumbnail Downloader",
+    "description": "Download 1080p HD, 720p, and HQ thumbnail images from YouTube videos and Shorts.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    .thumbnail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .thumb-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .thumb-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    .thumb-img-wrapper {
+      position: relative;
+      background: #0f172a;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .thumb-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .thumb-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      backdrop-filter: blur(4px);
+    }
+    .thumb-card-body {
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border-top: 1px solid var(--border-color);
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1100px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">YouTube Thumbnail Downloader</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon utility-tools">📺</div>
+        <h1>YouTube Thumbnail Downloader</h1>
+        <p class="tool-description">Grab, preview, and download HD 1080p (MaxRes), High Quality 720p, Standard, and Shorts thumbnails from any YouTube video in one click. 100% free with direct image downloads.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <!-- Input Bar -->
+        <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: var(--space-4);">
+          <label for="ytUrl" style="font-weight: 600; color: var(--navy); display: block; margin-bottom: 8px; font-size: 15px;">
+            Paste YouTube Video or Shorts URL:
+          </label>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <input type="text" id="ytUrl" class="form-input" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ or https://youtu.be/..." style="flex: 1; min-width: 260px; font-size: 15px; padding: 12px 14px;">
+            <button type="button" id="btnFetch" class="btn btn-primary" style="padding: 12px 24px; font-size: 15px;">
+              🔍 Get Thumbnails
+            </button>
+            <button type="button" id="btnPaste" class="btn btn-outline" style="padding: 12px 18px; font-size: 14px;">
+              📋 Paste
+            </button>
+          </div>
+          <div id="urlError" style="color: #b91c1c; font-size: 13px; font-weight: 500; margin-top: 8px; display: none;"></div>
+        </div>
+
+        <!-- Results Grid -->
+        <div id="resultsContainer" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+            <h3 style="margin: 0; color: var(--navy); font-size: 18px;">Available Thumbnail Resolutions:</h3>
+            <span id="videoIdLabel" style="font-size: 13px; color: var(--gray-600); font-family: monospace;">Video ID: -</span>
+          </div>
+
+          <div class="thumbnail-grid" id="thumbGrid">
+            <!-- Dynamically populated cards -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>How to Download High Quality YouTube Thumbnails</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Copy YouTube Video Link</h3>
+            <p>From your browser or mobile YouTube app, tap "Share" and click "Copy link" for any standard video or YouTube Short.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Pick Maximum Resolution</h3>
+            <p>Choose <b>1080p (Full HD)</b> for presentations and design moodboards, or 720p for faster website embedding.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Direct Browser Download</h3>
+            <p>Click "Download Image" to instantly save the JPEG directly to your device storage with no watermarks.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/youtube-thumbnail-downloader.js?v=1.0"></script>
+</body>
+</html>

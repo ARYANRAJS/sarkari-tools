@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hash Generator & Checksum Verifier | MD5, SHA256, SHA1, SHA512 Online</title>
+  <meta name="description" content="Free online Hash Generator and Checksum Verifier. Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes from text or files. Verify download file integrity.">
+  <meta name="keywords" content="hash generator, md5 hash, sha256 generator, sha1 hash, checksum verifier, file hash checker, sha512 online">
+  <meta property="og:title" content="Hash Generator & Checksum Verifier — MD5, SHA-256, SHA-512">
+  <meta property="og:description" content="Generate cryptographic hashes and verify checksum integrity in your browser. 100% private.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/hash-generator.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <!-- CryptoJS for MD5 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Hash Generator & Checksum Verifier",
+    "description": "Calculate and verify MD5, SHA-256, and SHA-512 checksums for text and files.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    .hash-row {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .hash-row:hover {
+      border-color: var(--navy);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .hash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hash-name {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 13px;
+    }
+    .hash-val-wrap {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .hash-input {
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      background: #f8fafc;
+      color: #0f172a;
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1100px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Hash Generator</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon utility-tools">🛡️</div>
+        <h1>Hash Generator & Checksum Verifier</h1>
+        <p class="tool-description">Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 cryptographic hashes from plain text or any uploaded file. Verify downloaded file checksums to ensure zero corruption or tampering.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: var(--space-4);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <label for="hashTextInput" style="font-weight: 600; color: var(--navy); font-size: 15px;">
+              Enter Text or Drop a File:
+            </label>
+            <label class="btn btn-outline" style="font-size: 12px; padding: 4px 10px; cursor: pointer; margin: 0;">
+              📁 Hash a File
+              <input type="file" id="hashFileInput" style="display: none;">
+            </label>
+          </div>
+
+          <textarea id="hashTextInput" class="form-textarea" rows="4" placeholder="Type or paste any text to hash in real-time, or choose a file above..." style="font-size: 14px;"></textarea>
+
+          <div id="fileInfoNotice" style="display: none; margin-top: 8px; font-size: 13px; color: var(--navy); background: #e0f2fe; padding: 6px 12px; border-radius: 6px;">
+            Hashed File: <b id="hashedFileName">-</b> (<span id="hashedFileSize">0 KB</span>)
+          </div>
+        </div>
+
+        <!-- Checksum Matcher -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 10px; padding: 14px 16px; margin-bottom: var(--space-4);">
+          <label style="font-size: 13px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 4px;">
+            🔍 Checksum Matcher (Optional): Paste an expected hash to verify match:
+          </label>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <input type="text" id="expectedHashInput" class="form-input" placeholder="e.g. 5d41402abc4b2a76b9719d911017c592" style="font-size: 13px; font-family: monospace;">
+            <div id="matchStatusBadge" style="font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 6px; display: none;"></div>
+          </div>
+        </div>
+
+        <!-- Output Hashes List -->
+        <div>
+          <h3 style="margin-bottom: 12px; font-size: 16px; color: var(--navy);">Calculated Hashes:</h3>
+
+          <!-- SHA-256 -->
+          <div class="hash-row" id="row-sha256">
+            <div class="hash-header">
+              <span class="hash-name">SHA-256 (Industry Standard)</span>
+              <button type="button" class="btn btn-outline btn-copy-hash" data-target="out-sha256" style="padding: 2px 8px; font-size: 11px;">📋 Copy</button>
+            </div>
+            <input type="text" id="out-sha256" class="hash-input" readonly value="">
+          </div>
+
+          <!-- MD5 -->
+          <div class="hash-row" id="row-md5">
+            <div class="hash-header">
+              <span class="hash-name">MD5 (128-bit Checksum)</span>
+              <button type="button" class="btn btn-outline btn-copy-hash" data-target="out-md5" style="padding: 2px 8px; font-size: 11px;">📋 Copy</button>
+            </div>
+            <input type="text" id="out-md5" class="hash-input" readonly value="">
+          </div>
+
+          <!-- SHA-1 -->
+          <div class="hash-row" id="row-sha1">
+            <div class="hash-header">
+              <span class="hash-name">SHA-1 (160-bit Git Hash)</span>
+              <button type="button" class="btn btn-outline btn-copy-hash" data-target="out-sha1" style="padding: 2px 8px; font-size: 11px;">📋 Copy</button>
+            </div>
+            <input type="text" id="out-sha1" class="hash-input" readonly value="">
+          </div>
+
+          <!-- SHA-512 -->
+          <div class="hash-row" id="row-sha512">
+            <div class="hash-header">
+              <span class="hash-name">SHA-512 (Ultra Secure 512-bit)</span>
+              <button type="button" class="btn btn-outline btn-copy-hash" data-target="out-sha512" style="padding: 2px 8px; font-size: 11px;">📋 Copy</button>
+            </div>
+            <input type="text" id="out-sha512" class="hash-input" readonly value="">
+          </div>
+
+          <!-- SHA-384 -->
+          <div class="hash-row" id="row-sha384">
+            <div class="hash-header">
+              <span class="hash-name">SHA-384 (384-bit)</span>
+              <button type="button" class="btn btn-outline btn-copy-hash" data-target="out-sha384" style="padding: 2px 8px; font-size: 11px;">📋 Copy</button>
+            </div>
+            <input type="text" id="out-sha384" class="hash-input" readonly value="">
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Why Are Cryptographic Hashes Important?</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Verify Download Integrity</h3>
+            <p>Software developers and OS distributors provide SHA-256 checksums to prove a downloaded file hasn't been corrupted or altered by hackers.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>One-Way Irreversible Function</h3>
+            <p>Hashes cannot be reversed to discover the original password or input text, making them ideal for secure authentication checks.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Web Crypto Client-Side Speed</h3>
+            <p>Uses native hardware acceleration via the browser's `crypto.subtle` API. No files or strings leave your local device.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/hash-generator.js?v=1.0"></script>
+</body>
+</html>

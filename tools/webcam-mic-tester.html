@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webcam & Microphone Tester | Test Camera, Mic & Audio Online Free</title>
+  <meta name="description" content="Free online Webcam and Microphone Tester. Test your web camera resolution, FPS, mic audio volume meter, and speakers before online interviews, exams, and Zoom calls.">
+  <meta name="keywords" content="webcam test, mic test, microphone tester, camera test online, test webcam resolution, test audio online, zoom mic check">
+  <meta property="og:title" content="Webcam & Microphone Hardware Tester — Online Check">
+  <meta property="og:description" content="Check your camera, microphone, and speakers online before important exams and interviews. 100% private.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/webcam-mic-tester.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.3">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.3">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Webcam & Microphone Tester",
+    "description": "Test webcam resolution, microphone audio decibel levels, and speaker output online.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+  <style>
+    .video-viewport {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0f172a;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .video-viewport video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-viewport video.mirrored {
+      transform: scaleX(-1);
+    }
+    .video-overlay-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      backdrop-filter: blur(4px);
+    }
+    .mic-level-meter {
+      width: 100%;
+      height: 12px;
+      background: #e2e8f0;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .mic-level-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #10b981, #f59e0b, #ef4444);
+      transition: width 0.05s ease;
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div id="header-placeholder"></div>
+
+  <main class="tool-page">
+    <div class="tool-container" style="max-width: 1100px;">
+      
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="separator">/</span>
+        <a href="../index.html#tools">Tools</a>
+        <span class="separator">/</span>
+        <span class="current">Webcam & Mic Tester</span>
+      </div>
+
+      <div class="tool-hero">
+        <div class="tool-icon utility-tools">🎥</div>
+        <h1>Webcam & Microphone Hardware Tester</h1>
+        <p class="tool-description">Verify your camera resolution, real-time FPS, microphone audio volume, and stereo speakers before government proctored exams, job interviews, and Zoom conferences.</p>
+      </div>
+
+      <div class="tool-workspace">
+        
+        <div class="tool-split">
+          
+          <!-- Live Video Viewport -->
+          <div class="tool-split-inputs" style="flex: 1.2;">
+            <div class="video-viewport">
+              <span id="videoStatusBadge" class="video-overlay-badge">Camera Inactive</span>
+              <video id="webcamVideo" autoplay playsinline muted></video>
+              <div id="cameraPrompt" style="color: #94a3b8; text-align: center; padding: 20px;">
+                <div style="font-size: 40px; margin-bottom: 8px;">📷</div>
+                <div style="font-size: 15px; font-weight: 600;">Click "Start Camera" to test your webcam</div>
+              </div>
+            </div>
+
+            <!-- Video Controls -->
+            <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
+              <button type="button" id="btnStartCam" class="btn btn-primary" style="font-size: 13px;">
+                ▶️ Start Camera & Mic
+              </button>
+              <button type="button" id="btnStopCam" class="btn btn-outline" style="font-size: 13px; color: #b91c1c; border-color: #fca5a5;" disabled>
+                ⏹️ Stop
+              </button>
+              <button type="button" id="btnMirror" class="btn btn-outline" style="font-size: 13px;">
+                🪞 Mirror Mode
+              </button>
+              <button type="button" id="btnTakeSnap" class="btn btn-outline" style="font-size: 13px;" disabled>
+                📸 Take Snapshot
+              </button>
+            </div>
+          </div>
+
+          <!-- Hardware Diagnostics Info -->
+          <div class="tool-split-output" style="flex: 1;">
+            
+            <!-- Camera Specs -->
+            <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-bottom: 16px;">
+              <h3 style="margin: 0 0 10px 0; font-size: 15px; color: var(--navy);">📹 Camera Diagnostics:</h3>
+              <div style="font-size: 13px; display: grid; gap: 6px;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--gray-600);">Resolution:</span>
+                  <b id="specRes" style="color: var(--navy);">-</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--gray-600);">Frame Rate:</span>
+                  <b id="specFps" style="color: var(--navy);">- FPS</b>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--gray-600);">Aspect Ratio:</span>
+                  <b id="specRatio" style="color: var(--navy);">-</b>
+                </div>
+              </div>
+            </div>
+
+            <!-- Microphone Volume Level -->
+            <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; margin-bottom: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0; font-size: 15px; color: var(--navy);">🎙️ Microphone Level:</h3>
+                <span id="micDbLevel" style="font-size: 12px; font-weight: 700; color: #10b981;">0%</span>
+              </div>
+              <div class="mic-level-meter">
+                <div id="micLevelBar" class="mic-level-bar"></div>
+              </div>
+              <p style="font-size: 11px; color: var(--gray-600); margin: 6px 0 0 0;">Speak into your microphone to test volume sensitivity.</p>
+            </div>
+
+            <!-- Audio Speaker Test -->
+            <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: 10px; padding: 16px;">
+              <h3 style="margin: 0 0 8px 0; font-size: 15px; color: var(--navy);">🔊 Speaker Sound Test:</h3>
+              <p style="font-size: 12px; color: var(--gray-600); margin-bottom: 10px;">Play a clean stereo audio chime to ensure your laptop or headphone speakers are working.</p>
+              <button type="button" id="btnTestAudio" class="btn btn-outline" style="font-size: 12px;">
+                🔔 Play Test Tone (440Hz Chime)
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="how-to-use" style="margin-top: var(--space-8);">
+        <h2>Pre-Exam & Interview Hardware Check Tips</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Government Exam Proctored Requirements</h3>
+            <p>Remote examinations (NTA, TCS iON, corporate interviews) require at least 720p resolution and a clear microphone feed without background distortion.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Browser Permission Management</h3>
+            <p>Ensure your browser popup allows "Camera and Microphone access" on <code>alltoolsinone.com</code>. We never record or store any stream.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>100% Client-Side Privacy</h3>
+            <p>Your video and audio streams run purely in local memory via HTML5 WebRTC. Zero frames or audio bytes are ever transmitted over the network.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../js/app.js?v=1.3"></script>
+  <script src="../js/tools/webcam-mic-tester.js?v=1.0"></script>
+</body>
+</html>
