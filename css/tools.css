@@ -815,7 +815,7 @@
 /* Split layout for resume / biodata / letter / editor tools */
 .split-layout {
   display: grid;
-  grid-template-columns: minmax(420px, 1.15fr) minmax(380px, 1fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   gap: var(--space-6);
   align-items: start;
   width: 100%;
@@ -3851,4 +3851,131 @@ body.dark .ocr-pane-label {
 .tool-workspace,
 .ocr-card {
   overscroll-behavior: auto !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM ALIGNMENT & ZERO-OVERFLOW RESPONSIVE ENGINE (ALL TOOLS)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Universal flex wrap for all button and action containers */
+.tool-actions,
+.action-buttons,
+.button-row,
+.btn-row,
+.btn-group,
+.tabs-wrap,
+.mode-tabs,
+.tool-workspace [style*="display: flex"],
+.tool-workspace [style*="display:flex"],
+.tool-split [style*="display: flex"],
+.tool-split [style*="display:flex"] {
+  flex-wrap: wrap !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Prevent any button or input from blowing out of its container */
+.tool-workspace .btn,
+.tool-split .btn,
+.workspace-section .btn {
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Force container alignment & zero horizontal scroll */
+.tool-page,
+.tool-container,
+.tool-workspace,
+.tool-split,
+.tool-split-inputs,
+.tool-split-output {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Prevent inputs, textareas, canvases, tables from overflowing */
+.tool-workspace input,
+.tool-workspace select,
+.tool-workspace textarea,
+.tool-workspace canvas,
+.tool-workspace img,
+.tool-workspace table,
+.tool-workspace pre,
+.tool-workspace code {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Responsive collapse on tablets and small laptops */
+@media (max-width: 991px) {
+  .tool-split {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-5, 20px) !important;
+  }
+  .tool-split-inputs,
+  .tool-split-output {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .tool-split-output {
+    position: static !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
+/* Responsive mode tabs on small screens */
+@media (max-width: 768px) {
+  .tool-workspace [style*="border-bottom: 2px solid"],
+  .tool-workspace [style*="border-bottom:2px solid"] {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .tool-workspace [style*="border-bottom: 2px solid"] button,
+  .tool-workspace [style*="border-bottom:2px solid"] button {
+    flex: 1 1 calc(50% - 8px) !important;
+    min-width: 120px !important;
+    font-size: 13px !important;
+    padding: 8px 10px !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* Responsive Grid Form Controls (1fr 1fr or 1fr 1fr 1fr to 1 column on mobile) */
+@media (max-width: 680px) {
+  .tool-workspace [style*="grid-template-columns: 1fr 1fr 1fr"],
+  .tool-workspace [style*="grid-template-columns: 1fr 1fr"],
+  .tool-workspace [style*="grid-template-columns: repeat(3,"],
+  .tool-workspace [style*="grid-template-columns: repeat(2,"] {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .tool-split-inputs,
+  .tool-split-output {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .tool-workspace {
+    padding: var(--space-4, 16px) 12px !important;
+  }
+}
+
+/* Fix Preview Containers (Twitter card, Instagram post, Canvas previews) */
+.tweet-card-box,
+.ig-card,
+.canvas-preview-box,
+.handwriting-sheet {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
 }

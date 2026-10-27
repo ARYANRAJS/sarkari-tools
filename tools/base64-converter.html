@@ -73,7 +73,7 @@
 
         <!-- Mode 1: Text -->
         <div id="textModeArea">
-          <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+          <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
             <button type="button" id="btnActionEncode" class="btn btn-primary" style="padding: 4px 12px; font-size: 13px;">Encode (Text ➔ Base64)</button>
             <button type="button" id="btnActionDecode" class="btn btn-outline" style="padding: 4px 12px; font-size: 13px;">Decode (Base64 ➔ Text)</button>
           </div>
@@ -94,7 +94,7 @@
               </div>
               <textarea id="destTextBase64" class="form-textarea" rows="10" readonly placeholder="Result will appear here..." style="font-size: 14px; background: #f8fafc; font-family: 'Fira Code', monospace;"></textarea>
 
-              <div style="display: flex; gap: 8px; margin-top: 10px;">
+              <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
                 <button type="button" id="btnCopyTextBase64" class="btn btn-primary" style="font-size: 13px;">📋 Copy Result</button>
                 <button type="button" id="btnClearTextBase64" class="btn btn-outline" style="font-size: 13px; color: #b91c1c; border-color: #fca5a5;">🗑️ Clear</button>
               </div>
