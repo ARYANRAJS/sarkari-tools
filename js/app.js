@@ -940,9 +940,9 @@
           <div class="footer-col">
             <h4>Support & Community</h4>
             <ul>
-              <li><a href="javascript:void(0)" class="open-feedback-trigger">💬 Anonymous Feedback</a></li>
-              <li><a href="javascript:void(0)" class="open-feedback-trigger">🐞 Report a Bug</a></li>
-              <li><a href="javascript:void(0)" class="open-feedback-trigger">💡 Request New Tool</a></li>
+              <li><a href="${homeUrl}#anonymousFeedbackSection">💬 Anonymous Feedback</a></li>
+              <li><a href="${homeUrl}#anonymousFeedbackSection">🐞 Report a Bug</a></li>
+              <li><a href="${homeUrl}#anonymousFeedbackSection">💡 Request New Tool</a></li>
               <li><a href="${homeUrl}#features">Why Choose Us</a></li>
             </ul>
           </div>
@@ -952,7 +952,7 @@
           <div class="footer-bottom-links">
             <a href="${homeUrl}">Home</a>
             <a href="${toolsDirUrl}">All Tools</a>
-            <a href="javascript:void(0)" class="open-feedback-trigger" style="color: var(--saffron-dark); font-weight: 600;">💬 Anonymous Feedback Box</a>
+            <a href="${homeUrl}#anonymousFeedbackSection" style="color: var(--saffron-dark); font-weight: 600;">💬 Anonymous Feedback Box</a>
           </div>
         </div>
       </div>
