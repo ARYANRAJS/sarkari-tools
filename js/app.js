@@ -1045,21 +1045,28 @@
       document.body.classList.add('home-page');
     }
 
+    let ticking = false;
     const checkHeroScroll = () => {
-      const currentScroll = window.pageYOffset;
-      if (currentScroll > 10) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+          if (currentScroll > 10) {
+            header.classList.add('scrolled');
+          } else {
+            header.classList.remove('scrolled');
+          }
 
-      if (heroSearch) {
-        const rect = heroSearch.getBoundingClientRect();
-        if (rect.bottom < 50) {
-          document.body.classList.add('scrolled-past-hero');
-        } else {
-          document.body.classList.remove('scrolled-past-hero');
-        }
+          if (heroSearch) {
+            const rect = heroSearch.getBoundingClientRect();
+            if (rect.bottom < 50) {
+              document.body.classList.add('scrolled-past-hero');
+            } else {
+              document.body.classList.remove('scrolled-past-hero');
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
@@ -1195,8 +1202,9 @@
 
     // Re-animate cards
     grid.classList.remove('visible');
-    void grid.offsetWidth;
-    grid.classList.add('visible');
+    requestAnimationFrame(() => {
+      grid.classList.add('visible');
+    });
   }
 
   /* ───────── BACK TO TOP ───────── */
@@ -1440,12 +1448,12 @@
 
   /* ───────── INITIALIZATION ───────── */
   function init() {
-    // Inject header & footer if placeholders exist
+    // Inject header & footer if placeholders exist and not already rendered
     const headerEl = document.getElementById('header-placeholder');
     const footerEl = document.getElementById('footer-placeholder');
     
-    if (headerEl) headerEl.innerHTML = renderHeader();
-    if (footerEl) footerEl.innerHTML = renderFooter();
+    if (headerEl && !document.getElementById('siteHeader')) headerEl.innerHTML = renderHeader();
+    if (footerEl && !document.querySelector('.site-footer')) footerEl.innerHTML = renderFooter();
 
     // Theme toggle (sun/moon) — top right corner of header
     const themeBtn = document.getElementById('themeToggle');
@@ -1476,8 +1484,13 @@
     }
 
     // Initial tool grid render
-    if (document.getElementById('toolsGrid')) {
-      renderToolsGrid('all');
+    const grid = document.getElementById('toolsGrid');
+    if (grid) {
+      if (grid.children.length === 0) {
+        renderToolsGrid('all');
+      } else {
+        grid.classList.add('visible');
+      }
     }
   }
 
