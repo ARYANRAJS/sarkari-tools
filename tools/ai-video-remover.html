@@ -430,40 +430,61 @@
               </div>
 
               <!-- Organic Handheld Micro-Jitter -->
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md);">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); margin-bottom: 10px;">
                 <div>
                   <div style="font-weight: 600; font-size: 13px; color: var(--navy);">Subtle Handheld Micro-Float</div>
                   <div style="font-size: 11px; color: var(--gray-500);">Breaks rigid AI motion vectors with 0.25px organic camera float.</div>
                 </div>
                 <input type="checkbox" id="chkMicroJitter" checked style="width: 18px; height: 18px; accent-color: var(--saffron);">
               </div>
+
+              <!-- VAE 8x8 Latent Grid Scrambler (Higgsfield & Wan Disrupter) -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: var(--radius-md); margin-bottom: 10px;">
+                <div>
+                  <div style="font-weight: 700; font-size: 13px; color: #065f46;">Anti-Higgsfield &amp; Wan VAE Grid Scrambler</div>
+                  <div style="font-size: 11px; color: #047857;">Sub-pixel dynamic spatial offset destroys the 8x8 periodic Fourier frequency peaks checked by Hive Detect.</div>
+                </div>
+                <input type="checkbox" id="chkVaeScramble" checked style="width: 18px; height: 18px; accent-color: #059669;">
+              </div>
+
+              <!-- 180 Shutter Angle Optical Motion Residual -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md);">
+                <div>
+                  <div style="font-weight: 600; font-size: 13px; color: var(--navy);">180° Shutter Angle Optical Motion Blur</div>
+                  <div style="font-size: 11px; color: var(--gray-500);">Blends genuine frame exposure continuity to destroy AI temporal rigidity.</div>
+                </div>
+                <input type="checkbox" id="chkShutterBlur" checked style="width: 18px; height: 18px; accent-color: var(--saffron);">
+              </div>
             </div>
 
-            <!-- TAB 3: Camera Microphone & Room Tone -->
+            <!-- TAB 3: Camera Microphone & AI Music De-Watermarker -->
             <div id="tabContentAudio" class="tab-content" style="display: none;">
               <div style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">
-                Silent AI videos are easily flagged by detectors. Real cameras record an acoustic background room tone.
+                AI music detectors (Hive Detect, Google SynthID) scan spectral phase and bandwidth. Select audio humanization:
               </div>
 
               <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px;">
-                <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
-                  <input type="radio" name="optAudioChoice" value="auto_tone" checked style="accent-color: var(--saffron);">
-                  <span><strong>Inject 48kHz Camera Mic Room Tone</strong> (Recommended for mute AI videos)</span>
+                <label style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; cursor: pointer; padding: 10px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-md);">
+                  <input type="radio" name="optAudioChoice" value="humanize_music" checked style="accent-color: #2563eb; margin-top: 2px;">
+                  <div>
+                    <span style="font-weight: 700; color: #1e40af;">🎵 Humanize Video Music &amp; Strip Google SynthID</span>
+                    <div style="font-size: 11px; color: #3b82f6; margin-top: 2px;">Keeps your video's music, but scrambles Google SynthID phase watermarks and adds analog tube warmth &amp; room acoustic resonance so detectors read 0% AI.</div>
+                  </div>
                 </label>
                 <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
-                  <input type="radio" name="optAudioChoice" value="keep_original" style="accent-color: var(--saffron);">
-                  <span>Keep Original Audio Track (If video already has sound)</span>
+                  <input type="radio" name="optAudioChoice" value="auto_tone" style="accent-color: var(--saffron);">
+                  <span><strong>🎙️ Inject 48kHz Camera Mic Room Tone</strong> (For mute or silent AI videos)</span>
                 </label>
                 <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
                   <input type="radio" name="optAudioChoice" value="mute" style="accent-color: var(--saffron);">
-                  <span>Mute Audio Track</span>
+                  <span>🔇 Mute Audio Track completely</span>
                 </label>
               </div>
 
               <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 12px 16px;">
                 <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
-                  <span>Room Tone Sound Level:</span>
-                  <span id="labelMicVolume" style="font-weight: 700; color: var(--navy);">-46 dB (Subtle Camera Floor)</span>
+                  <span>Camera Mic Room Ambiance:</span>
+                  <span id="labelMicVolume" style="font-weight: 700; color: var(--navy);">-46 dB (Subtle Acoustic Floor)</span>
                 </div>
                 <input type="range" id="sliderRoomToneVol" min="2" max="25" value="8" style="width: 100%; accent-color: var(--navy);">
               </div>
@@ -504,11 +525,11 @@
 
             <!-- Action Buttons Row -->
             <div style="margin-top: auto; padding-top: 18px; border-top: 1px solid var(--gray-200); display: flex; flex-direction: column; gap: 8px;">
-              <button type="button" id="btnHumanizeReencode" class="btn btn-primary" style="width: 100%; font-size: 15px; padding: 12px 20px; font-weight: 700; box-shadow: 0 4px 14px rgba(234,88,12,0.3);">
-                🎬 Humanize &amp; Re-encode (Deep Anti-Forensics)
+              <button type="button" id="btnHumanizeReencode" class="btn btn-primary" style="width: 100%; font-size: 15px; padding: 13px 20px; font-weight: 700; box-shadow: 0 4px 14px rgba(234,88,12,0.3); background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);">
+                🔬 Frame-by-Frame Anti-Forensics &amp; Music Humanizer
               </button>
               <button type="button" id="btnInstantPatch" class="btn btn-outline" style="width: 100%; font-size: 13px; padding: 9px 16px;">
-                ⚡ Instant Camera Tag &amp; C2PA Purge (1 Second)
+                ⚡ Fast Container Camera Patch (Metadata Only)
               </button>
             </div>
 

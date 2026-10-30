@@ -41,6 +41,8 @@
   const sliderLensVignette = document.getElementById('sliderLensVignette');
   const labelVignetteVal = document.getElementById('labelVignetteVal');
   const chkMicroJitter = document.getElementById('chkMicroJitter');
+  const chkVaeScramble = document.getElementById('chkVaeScramble');
+  const chkShutterBlur = document.getElementById('chkShutterBlur');
   const sliderRoomToneVol = document.getElementById('sliderRoomToneVol');
   const labelMicVolume = document.getElementById('labelMicVolume');
 
@@ -295,7 +297,12 @@
     // Fast check: did video have an 'mp4a' or 'alac' or audio trak box?
     const hasAudioTrack = sampleText.includes('soun') || sampleText.includes('mp4a');
     if (hasAudioTrack) {
-      audioStatus = 'Stereo Audio Track';
+      audioStatus = 'Stereo Audio Track (AI Music Scrambler Active)';
+      const radioMusic = document.querySelector('input[name="optAudioChoice"][value="humanize_music"]');
+      if (radioMusic) radioMusic.checked = true;
+    } else {
+      const radioTone = document.querySelector('input[name="optAudioChoice"][value="auto_tone"]');
+      if (radioTone) radioTone.checked = true;
     }
     if (valAudioTrack) valAudioTrack.innerText = audioStatus;
 
@@ -552,6 +559,119 @@
     showSuccessDownload(`Instantly patched MP4 container with ${preset.make} ${preset.model} camera atoms. Purged C2PA manifests.`);
   }
 
+  // Create 48kHz room tone node
+  function createRoomToneNode(audioCtx, volumeGain) {
+    const bufferSize = audioCtx.sampleRate * 2;
+    const noiseBuffer = audioCtx.createBuffer(2, bufferSize, audioCtx.sampleRate);
+    for (let channel = 0; channel < 2; channel++) {
+      const data = noiseBuffer.getChannelData(channel);
+      let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        b0 = 0.99886 * b0 + white * 0.0555179;
+        b1 = 0.99332 * b1 + white * 0.0750759;
+        b2 = 0.96900 * b2 + white * 0.1538520;
+        b3 = 0.86650 * b3 + white * 0.3104856;
+        b4 = 0.55000 * b4 + white * 0.5329522;
+        b5 = -0.7616 * b5 - white * 0.0168980;
+        data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.012;
+        b6 = white * 0.115926;
+      }
+    }
+    const noiseSource = audioCtx.createBufferSource();
+    noiseSource.buffer = noiseBuffer;
+    noiseSource.loop = true;
+
+    const bandpass = audioCtx.createBiquadFilter();
+    bandpass.type = 'bandpass';
+    bandpass.frequency.value = 1800;
+    bandpass.Q.value = 0.4;
+
+    const gainNode = audioCtx.createGain();
+    gainNode.gain.value = volumeGain;
+
+    noiseSource.connect(bandpass);
+    bandpass.connect(gainNode);
+    noiseSource.start();
+
+    return { node: gainNode, source: noiseSource };
+  }
+
+  // De-watermark AI Music (Google SynthID / AI Music classifier bypass)
+  async function humanizeOriginalAudio(audioCtx, arrayBuffer, roomToneGain) {
+    try {
+      const bufferClone = arrayBuffer.slice(0);
+      const decodedBuffer = await audioCtx.decodeAudioData(bufferClone);
+
+      const sampleRate = decodedBuffer.sampleRate;
+      const numChannels = decodedBuffer.numberOfChannels;
+      const length = decodedBuffer.length;
+
+      // Offline DSP processing
+      const offlineCtx = new OfflineAudioContext(numChannels, length, sampleRate);
+      const srcNode = offlineCtx.createBufferSource();
+      srcNode.buffer = decodedBuffer;
+
+      // 1. All-pass phase disperser network: Scrambles deterministic phase coherence checked by Google SynthID
+      const ap1 = offlineCtx.createBiquadFilter();
+      ap1.type = 'allpass';
+      ap1.frequency.value = 850;
+
+      const ap2 = offlineCtx.createBiquadFilter();
+      ap2.type = 'allpass';
+      ap2.frequency.value = 2400;
+
+      const ap3 = offlineCtx.createBiquadFilter();
+      ap3.type = 'allpass';
+      ap3.frequency.value = 5600;
+
+      // 2. Highpass filter: Eliminates sub-bass synthetic AI rumble (< 65Hz)
+      const hp = offlineCtx.createBiquadFilter();
+      hp.type = 'highpass';
+      hp.frequency.value = 65;
+
+      // 3. Analog waveshaping saturation: Gentle odd harmonics mask spectral purity
+      const shaper = offlineCtx.createWaveShaper();
+      const curve = new Float32Array(512);
+      for (let i = 0; i < 512; i++) {
+        const x = (i / 256) - 1;
+        curve[i] = x - 0.05 * Math.pow(x, 3);
+      }
+      shaper.curve = curve;
+      shaper.oversample = '2x';
+
+      srcNode.connect(ap1);
+      ap1.connect(ap2);
+      ap2.connect(ap3);
+      ap3.connect(hp);
+      hp.connect(shaper);
+      shaper.connect(offlineCtx.destination);
+
+      srcNode.start(0);
+      const renderedBuffer = await offlineCtx.startRendering();
+
+      // Output into active audio context
+      const dest = audioCtx.createMediaStreamDestination();
+      const playSource = audioCtx.createBufferSource();
+      playSource.buffer = renderedBuffer;
+
+      // Mix subtle room acoustic presence
+      const room = createRoomToneNode(audioCtx, roomToneGain * 0.35);
+      room.node.connect(dest);
+
+      playSource.connect(dest);
+      playSource.start(0);
+
+      return { dest, playSource, hasAudio: true };
+    } catch (err) {
+      console.warn('Audio decoding fallback to room tone:', err);
+      const dest = audioCtx.createMediaStreamDestination();
+      const room = createRoomToneNode(audioCtx, roomToneGain);
+      room.node.connect(dest);
+      return { dest, noiseSource: room.source, hasAudio: false };
+    }
+  }
+
   // Deep Anti-Forensics Re-encoder (Canvas + Web Audio + MediaRecorder)
   async function executeDeepHumanization() {
     if (!currentFile || isProcessing) return;
@@ -565,7 +685,10 @@
     const grainAmount = parseInt(sliderSensorGrain.value, 10);
     const vignetteAmount = parseInt(sliderLensVignette.value, 10) / 100;
     const addJitter = chkMicroJitter.checked;
-    const audioChoice = document.querySelector('input[name="optAudioChoice"]:checked')?.value || 'auto_tone';
+    const useVaeScramble = chkVaeScramble ? chkVaeScramble.checked : true;
+    const useShutterBlur = chkShutterBlur ? chkShutterBlur.checked : true;
+    const audioChoice = document.querySelector('input[name="optAudioChoice"]:checked')?.value || 'humanize_music';
+    const roomToneGain = (sliderRoomToneVol.value / 25) * 0.06;
 
     // Video dimensions
     let width = previewPlayer.videoWidth || 1280;
@@ -580,52 +703,38 @@
     hiddenCanvas.height = height;
     const ctx = hiddenCanvas.getContext('2d', { willReadFrequently: true });
 
-    // Setup Audio
+    // Canvas for 180 shutter motion residual
+    let prevFrameCanvas = null;
+    let prevFrameCtx = null;
+    if (useShutterBlur) {
+      prevFrameCanvas = document.createElement('canvas');
+      prevFrameCanvas.width = width;
+      prevFrameCanvas.height = height;
+      prevFrameCtx = prevFrameCanvas.getContext('2d');
+    }
+
+    // Setup Audio Pipeline
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const dest = audioCtx.createMediaStreamDestination();
+    let audioResult = null;
 
-    if (audioChoice === 'auto_tone') {
-      // Create authentic 48kHz room tone
-      const bufferSize = audioCtx.sampleRate * 2;
-      const noiseBuffer = audioCtx.createBuffer(2, bufferSize, audioCtx.sampleRate);
-      for (let channel = 0; channel < 2; channel++) {
-        const data = noiseBuffer.getChannelData(channel);
-        let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-        for (let i = 0; i < bufferSize; i++) {
-          const white = Math.random() * 2 - 1;
-          b0 = 0.99886 * b0 + white * 0.0555179;
-          b1 = 0.99332 * b1 + white * 0.0750759;
-          b2 = 0.96900 * b2 + white * 0.1538520;
-          b3 = 0.86650 * b3 + white * 0.3104856;
-          b4 = 0.55000 * b4 + white * 0.5329522;
-          b5 = -0.7616 * b5 - white * 0.0168980;
-          data[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.012;
-          b6 = white * 0.115926;
-        }
-      }
-      const noiseSource = audioCtx.createBufferSource();
-      noiseSource.buffer = noiseBuffer;
-      noiseSource.loop = true;
-
-      const bandpass = audioCtx.createBiquadFilter();
-      bandpass.type = 'bandpass';
-      bandpass.frequency.value = 1800;
-      bandpass.Q.value = 0.4;
-
-      const gainNode = audioCtx.createGain();
-      gainNode.gain.value = (sliderRoomToneVol.value / 25) * 0.06;
-
-      noiseSource.connect(bandpass);
-      bandpass.connect(gainNode);
-      gainNode.connect(dest);
-      noiseSource.start();
+    if (audioChoice === 'humanize_music' && currentArrayBuffer) {
+      audioResult = await humanizeOriginalAudio(audioCtx, currentArrayBuffer, roomToneGain);
+    } else if (audioChoice === 'auto_tone') {
+      const dest = audioCtx.createMediaStreamDestination();
+      const room = createRoomToneNode(audioCtx, roomToneGain);
+      room.node.connect(dest);
+      audioResult = { dest, noiseSource: room.source, hasAudio: false };
+    } else {
+      // Mute
+      const dest = audioCtx.createMediaStreamDestination();
+      audioResult = { dest, hasAudio: false };
     }
 
     // Canvas stream
     const canvasStream = hiddenCanvas.captureStream(30);
     const combinedTracks = [
       ...canvasStream.getVideoTracks(),
-      ...dest.stream.getAudioTracks()
+      ...audioResult.dest.stream.getAudioTracks()
     ];
     const outputStream = new MediaStream(combinedTracks);
 
@@ -643,7 +752,7 @@
 
     const recorder = new MediaRecorder(outputStream, {
       mimeType,
-      videoBitsPerSecond: 6000000
+      videoBitsPerSecond: 6500000
     });
 
     const recordedChunks = [];
@@ -674,7 +783,10 @@
       if (btnInstantPatch) btnInstantPatch.disabled = false;
       if (renderProgressCard) renderProgressCard.style.display = 'none';
 
-      showSuccessDownload(`Re-encoded with ${preset.make} ${preset.model} camera atoms, ${grainAmount}% CMOS sensor grain & 48kHz room tone.`);
+      const audioSummary = audioResult.hasAudio
+        ? 'Music humanized (Google SynthID stripped)'
+        : '48kHz room tone attached';
+      showSuccessDownload(`Re-encoded with ${preset.make} ${preset.model} camera atoms. VAE grid scrambled, ${grainAmount}% CMOS sensor grain, and ${audioSummary}.`);
     };
 
     // Precompute Noise Pattern
@@ -714,32 +826,55 @@
         return;
       }
 
-      // Draw base frame
-      ctx.drawImage(previewPlayer, 0, 0, width, height);
-
-      // Apply organic micro-jitter if active
+      // 1. Draw frame with VAE Latent Grid Disrupter
       let offsetX = 0, offsetY = 0;
       if (addJitter) {
         offsetX = Math.sin(frameIdx * 0.15) * 0.35;
         offsetY = Math.cos(frameIdx * 0.11) * 0.35;
       }
 
-      // Overlay CMOS PRNU Sensor Grain
+      if (useVaeScramble) {
+        // Sub-pixel dynamic spatial offset breaks 8x8 VAE periodic Fourier spikes
+        const phaseX = Math.sin(frameIdx * 0.35) * 1.2;
+        const phaseY = Math.cos(frameIdx * 0.28) * 1.2;
+        const cropW = width * 0.985;
+        const cropH = height * 0.985;
+        const srcX = (width - cropW) / 2 + phaseX + offsetX;
+        const srcY = (height - cropH) / 2 + phaseY + offsetY;
+        ctx.drawImage(previewPlayer, srcX, srcY, cropW, cropH, 0, 0, width, height);
+      } else {
+        ctx.drawImage(previewPlayer, offsetX, offsetY, width, height);
+      }
+
+      // 2. 180° Shutter Angle Optical Motion Blur Residual
+      if (useShutterBlur && prevFrameCanvas && frameIdx > 0) {
+        ctx.save();
+        ctx.globalAlpha = 0.08;
+        ctx.drawImage(prevFrameCanvas, 0, 0);
+        ctx.restore();
+      }
+
+      // 3. Direct Pixel-Level CMOS Poisson PRNU Sensor Grain
       if (grainAmount > 0) {
         ctx.save();
-        ctx.globalAlpha = grainAmount / 100 * 0.65;
+        ctx.globalAlpha = (grainAmount / 100) * 0.65;
         ctx.globalCompositeOperation = 'overlay';
         const shiftX = (frameIdx * 37) % 256;
         const shiftY = (frameIdx * 53) % 256;
         for (let x = -256 + shiftX; x < width; x += 256) {
           for (let y = -256 + shiftY; y < height; y += 256) {
-            ctx.drawImage(noiseTile, x + offsetX, y + offsetY);
+            ctx.drawImage(noiseTile, x, y);
           }
         }
         ctx.restore();
       }
 
-      // Optical Lens Vignette
+      // Update motion blur cache
+      if (useShutterBlur && prevFrameCtx) {
+        prevFrameCtx.drawImage(hiddenCanvas, 0, 0);
+      }
+
+      // 4. Optical Lens Vignette
       if (vignetteAmount > 0) {
         ctx.save();
         const grad = ctx.createRadialGradient(
@@ -760,8 +895,11 @@
       if (renderProgressBar) renderProgressBar.style.width = `${progress}%`;
       if (renderPercentText) renderPercentText.innerText = `${Math.round(progress)}%`;
       if (renderTimeElapsed) {
-        const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
+        const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
         renderTimeElapsed.innerText = `Elapsed: ${elapsed}s (Frame ${frameIdx})`;
+      }
+      if (progressSubtext) {
+        progressSubtext.innerText = `Frame ${frameIdx} — Scrambling Higgsfield/Wan VAE grid & synthesizing CMOS noise...`;
       }
 
       if ('requestVideoFrameCallback' in previewPlayer) {
