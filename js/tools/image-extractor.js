@@ -208,6 +208,18 @@
       return;
     }
 
+    // Fast-path: Direct image URL pasted
+    if (/\.(jpe?g|png|webp|gif|svg|bmp|avif)(\?.*)?$/i.test(rawUrl)) {
+      showLoading(true, 'Direct image detected...', 'Loading HD original...');
+      setTimeout(() => {
+        parseAndExtract(`<img src="${rawUrl}">`, rawUrl);
+        showLoading(false);
+        btnExtractUrl.disabled = false;
+        window.showToast?.('Direct image loaded in HD!', 'success');
+      }, 50);
+      return;
+    }
+
     showLoading(true, `Extracting HD images from ${parsedUrl.hostname}...`, 'Connecting through high-speed proxy cascade...');
     btnExtractUrl.disabled = true;
 
@@ -372,6 +384,11 @@
       if (hd.includes('cloudinary.com') || hd.includes('imagekit.io')) {
         hd = hd.replace(/\/c_thumb,w_[0-9]+,h_[0-9]+/, '');
         hd = hd.replace(/\/tr:w-[0-9]+,h-[0-9]+/, '');
+      }
+
+      // I. Pinterest Master Originals (236x / 474x / 564x / 736x -> originals)
+      if (hd.includes('pinimg.com')) {
+        hd = hd.replace(/\/(236x|474x|564x|600x|736x)\//, '/originals/');
       }
     } catch (e) {
       console.warn('Error upgrading HD url:', e);
@@ -897,31 +914,11 @@
     const targetUrl = item.hdUrl || item.url;
     window.showToast?.(`Downloading HD: ${item.filename}...`, 'info', 2000);
 
-    let rawBlob = null;
+    let rawBlob = await fetchImageBlob(targetUrl);
 
-    // 1. Data URLs
-    if (targetUrl.startsWith('data:')) {
-      try {
-        const res = await fetch(targetUrl);
-        rawBlob = await res.blob();
-      } catch (e) {}
-    }
-
-    // 2. Direct CORS Fetch
-    if (!rawBlob) {
-      try {
-        const res = await fetch(targetUrl, { mode: 'cors' });
-        if (res.ok) rawBlob = await res.blob();
-      } catch (e) {}
-    }
-
-    // 3. Fallback: Proxy Fetch
-    if (!rawBlob) {
-      try {
-        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
-        const res = await fetch(proxyUrl);
-        if (res.ok) rawBlob = await res.blob();
-      } catch (e) {}
+    // Fallback to preview url if HD link failed
+    if (!rawBlob && item.url && item.url !== targetUrl) {
+      rawBlob = await fetchImageBlob(item.url);
     }
 
     // If blob was successfully fetched, optionally upscale to 2x or 4x
@@ -945,6 +942,7 @@
     a.href = targetUrl;
     a.download = item.filename;
     a.target = '_blank';
+    a.rel = 'noopener noreferrer';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -1045,22 +1043,81 @@
     }
   }
 
+  function isSameOriginUrl(url) {
+    try {
+      if (url.startsWith('data:') || url.startsWith('blob:')) return true;
+      const parsed = new URL(url, window.location.href);
+      return parsed.origin === window.location.origin;
+    } catch (e) {
+      return false;
+    }
+  }
+
   async function fetchImageBlob(url) {
     if (!url) return null;
-    if (url.startsWith('data:')) {
-      const res = await fetch(url);
-      return await res.blob();
+
+    // 1. Data URLs & Blob URLs
+    if (url.startsWith('data:') || url.startsWith('blob:')) {
+      try {
+        const res = await fetch(url);
+        return await res.blob();
+      } catch (e) {}
     }
 
+    // 2. Same-Origin images can be fetched directly without CORS issues
+    if (isSameOriginUrl(url)) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) return await res.blob();
+      } catch (e) {}
+    }
+
+    // 3. Cross-Origin: Primary Cloudflare Edge Image Proxy (wsrv.nl)
+    // Always provides Access-Control-Allow-Origin: * and streams original binaries
     try {
-      const res = await fetch(url, { mode: 'cors' });
-      if (res.ok) return await res.blob();
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 9000);
+      const proxyUrl = `https://wsrv.nl/?url=${encodeURIComponent(url)}`;
+      const res = await fetch(proxyUrl, { signal: controller.signal });
+      clearTimeout(tid);
+      if (res.ok) {
+        const blob = await res.blob();
+        if (blob && blob.size > 80) return blob;
+      }
     } catch (e) {}
 
-    // Proxy fallback
+    // 4. Cross-Origin: Secondary Image Proxy (images.weserv.nl)
     try {
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 9000);
+      const proxyUrl = `https://images.weserv.nl/?url=${encodeURIComponent(url)}`;
+      const res = await fetch(proxyUrl, { signal: controller.signal });
+      clearTimeout(tid);
+      if (res.ok) {
+        const blob = await res.blob();
+        if (blob && blob.size > 80) return blob;
+      }
+    } catch (e) {}
+
+    // 5. Fallback: AllOrigins Raw CORS Proxy
+    try {
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 7000);
       const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-      const res = await fetch(proxyUrl);
+      const res = await fetch(proxyUrl, { signal: controller.signal });
+      clearTimeout(tid);
+      if (res.ok) {
+        const blob = await res.blob();
+        if (blob && blob.size > 80) return blob;
+      }
+    } catch (e) {}
+
+    // 6. Direct CORS Fetch (fallback if origin allows CORS)
+    try {
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(url, { mode: 'cors', signal: controller.signal });
+      clearTimeout(tid);
       if (res.ok) return await res.blob();
     } catch (e) {}
 
