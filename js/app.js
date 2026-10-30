@@ -18,6 +18,18 @@
   /* ───────── TOOL REGISTRY ───────── */
   const TOOLS = [
     {
+      id: 'image-metadata-editor',
+      name: 'Image Metadata & AI to Camera Converter',
+      description: 'View, edit, or delete EXIF & GPS metadata, remove AI prompt traces, and convert AI images into authentic camera photos',
+      category: 'image',
+      categoryLabel: 'Image Tools',
+      icon: '📷',
+      iconBg: 'image-tools',
+      url: 'tools/image-metadata-editor.html',
+      keywords: ['image metadata', 'exif editor', 'remove ai metadata', 'convert ai to camera photo', 'delete exif', 'photo metadata', 'midjourney metadata', 'stable diffusion exif', 'gps remover', 'camera exif'],
+      badge: 'New'
+    },
+    {
       id: 'image-extractor',
       name: 'Webpage Image Extractor',
       description: 'Extract and download all photos, SVGs, and background images from any website URL or HTML in bulk or ZIP',
