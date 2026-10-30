@@ -1,7 +1,7 @@
 /**
  * AllToolsInOne - Website Tech Stack & Shopify Detector
  * Comprehensive, client-side technology finder and Wappalyzer alternative.
- * Detects 200+ technologies across E-commerce, CMS, Frameworks, Analytics, Payments & CDNs.
+ * Detects 150+ technologies across E-commerce, CMS, Frameworks, Analytics, Payments & CDNs.
  */
 
 (function () {
@@ -50,13 +50,16 @@
     payment: { label: '💳 Payment Gateways & BNPL', icon: '💳' },
     server: { label: '☁️ Web Servers, CDN & Hosting', icon: '☁️' },
     chat: { label: '💬 Customer Support & Chat', icon: '💬' },
-    security: { label: '🛡️ Security, CAPTCHA & Fonts', icon: '🛡️' },
-    email: { label: '✉️ Email & Business Infrastructure', icon: '✉️' }
+    security: { label: '🛡️ Security, CAPTCHA & Privacy', icon: '🛡️' },
+    email: { label: '✉️ Email & Business Infrastructure', icon: '✉️' },
+    tools: { label: '🌐 Protocols & SEO Meta Tags', icon: '🌐' }
   };
 
-  // ───────── 200+ TECHNOLOGY SIGNATURE DATABASE ─────────
+  // ───────── 150+ TECHNOLOGY SIGNATURE DATABASE ─────────
   const TECH_DATABASE = [
-    // --- 1. E-COMMERCE PLATFORMS ---
+    // ==========================================
+    // 1. E-COMMERCE PLATFORMS
+    // ==========================================
     {
       id: 'shopify',
       name: 'Shopify',
@@ -65,10 +68,10 @@
       description: 'Global cloud e-commerce engine powering millions of direct-to-consumer online stores.',
       website: 'https://shopify.com',
       test: (ctx) => {
-        if (ctx.html.includes('cdn.shopify.com') || ctx.html.includes('Shopify.theme') || ctx.html.includes('myshopify.com')) {
+        if (ctx.html.includes('cdn.shopify.com') || ctx.html.includes('Shopify.theme') || ctx.html.includes('myshopify.com') || (ctx.asn && ctx.asn.includes('SHOPIFY'))) {
           const themeMatch = ctx.html.match(/Shopify\.theme\s*=\s*\{[^}]*name:\s*["']([^"']+)["']/i);
           return {
-            evidence: 'Found cdn.shopify.com / Shopify JS runtime',
+            evidence: 'Found cdn.shopify.com / Shopify JS runtime / Hosting network',
             version: themeMatch ? `Theme: ${themeMatch[1]}` : 'Store Active'
           };
         }
@@ -84,7 +87,7 @@
       website: 'https://woocommerce.com',
       test: (ctx) => {
         if (ctx.html.includes('woocommerce') || ctx.html.includes('wc-blocks') || ctx.html.includes('wp-content/plugins/woocommerce')) {
-          return { evidence: 'Found woocommerce plugin scripts and CSS classes' };
+          return { evidence: 'Found WooCommerce plugin scripts and CSS classes' };
         }
         return null;
       }
@@ -145,60 +148,48 @@
         return null;
       }
     },
+    {
+      id: 'wix_stores',
+      name: 'Wix Stores',
+      category: 'ecommerce',
+      icon: '🛍️',
+      description: 'E-commerce module integrated into Wix website builder.',
+      website: 'https://wix.com',
+      test: (ctx) => {
+        if (ctx.html.includes('wixstores') || ctx.html.includes('wix-ecommerce')) {
+          return { evidence: 'Found Wix Stores shopping cart components' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'squarespace_commerce',
+      name: 'Squarespace Commerce',
+      category: 'ecommerce',
+      icon: '🛒',
+      description: 'Built-in store & checkout system for Squarespace websites.',
+      website: 'https://squarespace.com/ecommerce-website',
+      test: (ctx) => {
+        if (ctx.html.includes('squarespace-cart') || (ctx.html.includes('static.squarespace.com') && ctx.html.includes('commerce'))) {
+          return { evidence: 'Found Squarespace commerce and cart scripts' };
+        }
+        return null;
+      }
+    },
 
-    // --- 2. SHOPIFY APPS & EXTENSIONS ---
-    {
-      id: 'klaviyo',
-      name: 'Klaviyo',
-      category: 'shopify_apps',
-      icon: '✉️',
-      description: 'Leading email & SMS marketing automation platform for e-commerce.',
-      website: 'https://klaviyo.com',
-      test: (ctx) => {
-        if (ctx.html.includes('static.klaviyo.com') || ctx.html.includes('_learnq') || ctx.html.includes('klaviyo.js')) {
-          return { evidence: 'Found Klaviyo marketing tag (_learnq)' };
-        }
-        return null;
-      }
-    },
-    {
-      id: 'judge_me',
-      name: 'Judge.me Product Reviews',
-      category: 'shopify_apps',
-      icon: '⭐',
-      description: 'Fast, star-rated customer reviews & photo review app for Shopify.',
-      website: 'https://judge.me',
-      test: (ctx) => {
-        if (ctx.html.includes('judge.me') || ctx.html.includes('cdn.judge.me') || ctx.html.includes('jdgm-widget')) {
-          return { evidence: 'Found Judge.me review widget & CDN script' };
-        }
-        return null;
-      }
-    },
-    {
-      id: 'loox',
-      name: 'Loox Photo Reviews',
-      category: 'shopify_apps',
-      icon: '📷',
-      description: 'Visual photo reviews and social proof app for Shopify stores.',
-      website: 'https://loox.app',
-      test: (ctx) => {
-        if (ctx.html.includes('loox.io') || ctx.html.includes('loox-reviews') || ctx.html.includes('loox-rating')) {
-          return { evidence: 'Found Loox photo review widgets' };
-        }
-        return null;
-      }
-    },
+    // ==========================================
+    // 2. SHOPIFY APPS & EXTENSIONS
+    // ==========================================
     {
       id: 'pagefly',
       name: 'PageFly Landing Page Builder',
       category: 'shopify_apps',
       icon: '📄',
-      description: 'Drag-and-drop landing page & theme builder app for Shopify.',
+      description: 'Popular drag-and-drop landing page and product page builder for Shopify.',
       website: 'https://pagefly.io',
       test: (ctx) => {
-        if (ctx.html.includes('cdn.pagefly.io') || ctx.html.includes('pf-c-') || ctx.html.includes('pagefly')) {
-          return { evidence: 'Found PageFly components and cdn.pagefly.io' };
+        if (ctx.html.includes('cdn.pagefly.io') || ctx.html.includes('pagefly-container') || ctx.html.includes('__pagefly')) {
+          return { evidence: 'Found PageFly builder containers and CSS' };
         }
         return null;
       }
@@ -208,11 +199,95 @@
       name: 'Shogun Page Builder',
       category: 'shopify_apps',
       icon: '🏯',
-      description: 'Enterprise drag-and-drop page builder for e-commerce.',
+      description: 'Visual page builder for e-commerce stores.',
       website: 'https://getshogun.com',
       test: (ctx) => {
-        if (ctx.html.includes('getshogun.com') || ctx.html.includes('shogun-root')) {
-          return { evidence: 'Found Shogun page engine' };
+        if (ctx.html.includes('cdn.getshogun.com') || ctx.html.includes('shogun-root')) {
+          return { evidence: 'Found Shogun page components and runtime scripts' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'gempages',
+      name: 'GemPages',
+      category: 'shopify_apps',
+      icon: '💎',
+      description: 'Conversion-focused drag and drop landing page builder for Shopify.',
+      website: 'https://gempages.net',
+      test: (ctx) => {
+        if (ctx.html.includes('gempages') || ctx.html.includes('gem-page')) {
+          return { evidence: 'Found GemPages builder elements' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'klaviyo',
+      name: 'Klaviyo Marketing Automation',
+      category: 'shopify_apps',
+      icon: '📧',
+      description: 'Intelligent marketing automation, email campaigns, and SMS for e-commerce.',
+      website: 'https://klaviyo.com',
+      test: (ctx) => {
+        if (ctx.html.includes('static.klaviyo.com') || ctx.html.includes('klaviyo.js') || ctx.html.includes('_learnq')) {
+          return { evidence: 'Found Klaviyo tracking pixel and onsite script' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'judgeme',
+      name: 'Judge.me Product Reviews',
+      category: 'shopify_apps',
+      icon: '⭐',
+      description: 'Fast-loading customer product review and rating star widget.',
+      website: 'https://judge.me',
+      test: (ctx) => {
+        if (ctx.html.includes('cdn.judge.me') || ctx.html.includes('jdgm-widget')) {
+          return { evidence: 'Found Judge.me review widget scripts and review blocks' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'loox',
+      name: 'Loox Photo Reviews',
+      category: 'shopify_apps',
+      icon: '📸',
+      description: 'Social proof and photo review platform for Shopify brands.',
+      website: 'https://loox.app',
+      test: (ctx) => {
+        if (ctx.html.includes('loox.io') || ctx.html.includes('loox-rating')) {
+          return { evidence: 'Found Loox photo review embed' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'yotpo',
+      name: 'Yotpo Reviews & Loyalty',
+      category: 'shopify_apps',
+      icon: '🏆',
+      description: 'E-commerce retention marketing platform for reviews, visual UGC & loyalty.',
+      website: 'https://yotpo.com',
+      test: (ctx) => {
+        if (ctx.html.includes('staticw2.yotpo.com') || ctx.html.includes('yotpo.js')) {
+          return { evidence: 'Found Yotpo review scripts' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'smileio',
+      name: 'Smile.io Rewards',
+      category: 'shopify_apps',
+      icon: '😊',
+      description: 'Customer loyalty, referral, and VIP rewards program software.',
+      website: 'https://smile.io',
+      test: (ctx) => {
+        if (ctx.html.includes('js.smile.io') || ctx.html.includes('smile-ui')) {
+          return { evidence: 'Found Smile.io loyalty widget runtime' };
         }
         return null;
       }
@@ -222,85 +297,59 @@
       name: 'Recharge Subscriptions',
       category: 'shopify_apps',
       icon: '🔄',
-      description: 'Leading recurring billing and subscription payments platform for Shopify.',
+      description: 'Leading subscription payment and recurring billing solution for Shopify.',
       website: 'https://rechargepayments.com',
       test: (ctx) => {
-        if (ctx.html.includes('rechargepayments.com') || ctx.html.includes('recharge-subscription')) {
-          return { evidence: 'Found Recharge recurring billing widgets' };
-        }
-        return null;
-      }
-    },
-    {
-      id: 'omnisend',
-      name: 'Omnisend',
-      category: 'shopify_apps',
-      icon: '📬',
-      description: 'E-commerce email marketing & SMS automation platform.',
-      website: 'https://omnisend.com',
-      test: (ctx) => {
-        if (ctx.html.includes('omnisnippet1.com') || ctx.html.includes('omnisend')) {
-          return { evidence: 'Found Omnisend tracking snippet' };
+        if (ctx.html.includes('rechargepayments.com') || ctx.html.includes('recharge-widget')) {
+          return { evidence: 'Found Recharge recurring subscription widget' };
         }
         return null;
       }
     },
     {
       id: 'gorgias',
-      name: 'Gorgias Helpdesk & Live Chat',
+      name: 'Gorgias Helpdesk',
       category: 'shopify_apps',
       icon: '💬',
       description: 'Customer service helpdesk built specifically for e-commerce stores.',
       website: 'https://gorgias.com',
       test: (ctx) => {
-        if (ctx.html.includes('gorgias.chat') || ctx.html.includes('gorgias-chat-container')) {
-          return { evidence: 'Found Gorgias chat container' };
+        if (ctx.html.includes('gorgias.chat') || ctx.html.includes('config.gorgias.io')) {
+          return { evidence: 'Found Gorgias live chat embed' };
         }
         return null;
       }
     },
     {
-      id: 'smile_io',
-      name: 'Smile.io Loyalty & Rewards',
+      id: 'privy',
+      name: 'Privy Popups & Email',
       category: 'shopify_apps',
       icon: '🎁',
-      description: 'Customer loyalty, points, VIP tiers, and referral program for stores.',
-      website: 'https://smile.io',
+      description: 'Lead capture popups, spin-to-win wheels, and cart-saver banners.',
+      website: 'https://privy.com',
       test: (ctx) => {
-        if (ctx.html.includes('smile.io') || ctx.html.includes('smile-ui-container')) {
-          return { evidence: 'Found Smile.io loyalty rewards widget' };
-        }
-        return null;
-      }
-    },
-    {
-      id: 'yotpo',
-      name: 'Yotpo Reviews & Loyalty',
-      category: 'shopify_apps',
-      icon: '🌟',
-      description: 'Customer reviews, visual marketing, and SMS platform.',
-      website: 'https://yotpo.com',
-      test: (ctx) => {
-        if (ctx.html.includes('staticw2.yotpo.com') || ctx.html.includes('yotpo-widget')) {
-          return { evidence: 'Found Yotpo static widgets' };
+        if (ctx.html.includes('widget.privy.com')) {
+          return { evidence: 'Found Privy lead capture widget' };
         }
         return null;
       }
     },
 
-    // --- 3. CMS & SITE BUILDERS ---
+    // ==========================================
+    // 3. CMS & WEBSITE BUILDERS
+    // ==========================================
     {
       id: 'wordpress',
       name: 'WordPress',
       category: 'cms',
       icon: '📝',
-      description: 'World\'s most popular open-source content management system powering over 40% of the web.',
+      description: 'World\'s most popular open-source CMS powering over 40% of the internet.',
       website: 'https://wordpress.org',
       test: (ctx) => {
-        if (ctx.html.includes('wp-content') || ctx.html.includes('wp-includes') || ctx.metaGenerator.includes('WordPress')) {
-          const verMatch = ctx.metaGenerator.match(/WordPress\s*([\d.]+)/i);
+        if (ctx.metaGenerator.toLowerCase().includes('wordpress') || ctx.html.includes('wp-content') || ctx.html.includes('wp-includes')) {
+          const verMatch = ctx.metaGenerator.match(/wordpress\s+([\d.]+)/i);
           return {
-            evidence: 'Found wp-content directory and WordPress scripts',
+            evidence: 'Found wp-content / wp-includes directory paths',
             version: verMatch ? verMatch[1] : undefined
           };
         }
@@ -312,11 +361,11 @@
       name: 'Webflow',
       category: 'cms',
       icon: '🌊',
-      description: 'Visual web design platform, CMS, and hosting engine.',
+      description: 'Visual web design platform and CMS for creating custom responsive websites.',
       website: 'https://webflow.com',
       test: (ctx) => {
-        if (ctx.html.includes('data-wf-page') || ctx.html.includes('webflow.com') || ctx.metaGenerator.includes('Webflow')) {
-          return { evidence: 'Found Webflow data-wf attributes and JS engine' };
+        if (ctx.html.includes('data-wf-page') || ctx.html.includes('assets.website-files.com') || ctx.metaGenerator.toLowerCase().includes('webflow')) {
+          return { evidence: 'Found Webflow data-wf attributes and assets' };
         }
         return null;
       }
@@ -326,12 +375,11 @@
       name: 'Ghost CMS',
       category: 'cms',
       icon: '👻',
-      description: 'Modern Node.js publishing platform for professional creators and journalists.',
+      description: 'Open-source publishing platform built on modern Node.js technology.',
       website: 'https://ghost.org',
       test: (ctx) => {
-        if (ctx.metaGenerator.includes('Ghost') || ctx.html.includes('ghost-sdk')) {
-          const ver = ctx.metaGenerator.match(/Ghost\s*([\d.]+)/i);
-          return { evidence: 'Found Ghost generator tag', version: ver ? ver[1] : undefined };
+        if (ctx.metaGenerator.toLowerCase().includes('ghost') || ctx.html.includes('ghost-foot') || ctx.html.includes('public/ghost.css')) {
+          return { evidence: 'Found Ghost publisher meta tag & assets' };
         }
         return null;
       }
@@ -341,11 +389,11 @@
       name: 'Drupal',
       category: 'cms',
       icon: '💧',
-      description: 'Enterprise open-source PHP content management system.',
+      description: 'Enterprise open-source modular content management system.',
       website: 'https://drupal.org',
       test: (ctx) => {
-        if (ctx.html.includes('Drupal.settings') || ctx.metaGenerator.includes('Drupal')) {
-          return { evidence: 'Found Drupal settings object' };
+        if (ctx.metaGenerator.toLowerCase().includes('drupal') || ctx.html.includes('drupal.js') || ctx.html.includes('sites/default/files')) {
+          return { evidence: 'Found Drupal generator / sites/default asset paths' };
         }
         return null;
       }
@@ -354,11 +402,11 @@
       id: 'wix',
       name: 'Wix',
       category: 'cms',
-      icon: '✨',
-      description: 'Cloud-based web development platform and website builder.',
+      icon: '⚡',
+      description: 'Cloud-based web development platform with drag-and-drop builder.',
       website: 'https://wix.com',
       test: (ctx) => {
-        if (ctx.html.includes('static.parastorage.com') || ctx.html.includes('wix-site') || ctx.metaGenerator.includes('Wix.com')) {
+        if (ctx.html.includes('static.parastorage.com') || ctx.metaGenerator.toLowerCase().includes('wix.com')) {
           return { evidence: 'Found Wix parastorage CDN assets' };
         }
         return null;
@@ -369,41 +417,136 @@
       name: 'Squarespace',
       category: 'cms',
       icon: '⬛',
-      description: 'All-in-one website building and hosting platform.',
+      description: 'All-in-one website building and hosting platform known for sleek modern templates.',
       website: 'https://squarespace.com',
       test: (ctx) => {
-        if (ctx.html.includes('static1.squarespace.com') || ctx.html.includes('squarespace-') || ctx.html.includes('sqs-')) {
-          return { evidence: 'Found Squarespace static CDN assets' };
+        if (ctx.html.includes('static.squarespace.com') || ctx.html.includes('squarespace-headers')) {
+          return { evidence: 'Found Squarespace static CDN scripts' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'framer',
+      name: 'Framer',
+      category: 'cms',
+      icon: '📐',
+      description: 'Interactive website builder and CMS for high-speed design and publishing.',
+      website: 'https://framer.com',
+      test: (ctx) => {
+        if (ctx.html.includes('framer.com/m/') || ctx.html.includes('framer-') || ctx.metaGenerator.toLowerCase().includes('framer')) {
+          return { evidence: 'Found Framer canvas component chunks and meta' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'hubspot_cms',
+      name: 'HubSpot CMS',
+      category: 'cms',
+      icon: '🟠',
+      description: 'Inbound marketing and CRM-integrated cloud website content management.',
+      website: 'https://hubspot.com/products/cms',
+      test: (ctx) => {
+        if (ctx.html.includes('hs-scripts.com') || ctx.html.includes('hubspot.com') || ctx.html.includes('hs_cos_wrapper')) {
+          return { evidence: 'Found HubSpot tracking and CMS template wrappers' };
         }
         return null;
       }
     },
 
-    // --- 4. JS FRAMEWORKS & LIBRARIES ---
-    {
-      id: 'nextjs',
-      name: 'Next.js',
-      category: 'frameworks',
-      icon: '▲',
-      description: 'The React Framework for the Web by Vercel — supports SSR, SSG, and Server Actions.',
-      website: 'https://nextjs.org',
-      test: (ctx) => {
-        if (ctx.html.includes('__NEXT_DATA__') || ctx.html.includes('/_next/static') || ctx.html.includes('/_next/data')) {
-          return { evidence: 'Found __NEXT_DATA__ hydration script and _next paths' };
-        }
-        return null;
-      }
-    },
+    // ==========================================
+    // 4. JAVASCRIPT FRAMEWORKS & LIBRARIES
+    // ==========================================
     {
       id: 'react',
       name: 'React',
       category: 'frameworks',
       icon: '⚛️',
-      description: 'Declarative, component-based JavaScript library by Meta for building user interfaces.',
+      description: 'Declarative, component-based JavaScript library by Meta for modern user interfaces.',
       website: 'https://react.dev',
       test: (ctx) => {
-        if (ctx.html.includes('react.production.min.js') || ctx.html.includes('data-reactroot') || ctx.html.includes('_reactRootContainer') || ctx.html.includes('__NEXT_DATA__')) {
-          return { evidence: 'Found React virtual DOM root / bundle signatures' };
+        // Modern React attributes (Helmet, Root, DevTools)
+        if (ctx.html.includes('data-react-helmet') || ctx.html.includes('data-reactroot') || ctx.html.includes('data-reactid') || ctx.html.includes('_reactRootContainer') || ctx.html.includes('_reactListening')) {
+          return { evidence: 'Found React virtual DOM attributes (data-react-helmet / data-reactroot)' };
+        }
+        // Framework hydration wrappers
+        if (ctx.html.includes('__NEXT_DATA__') || ctx.html.includes('__remixContext') || ctx.html.includes('___gatsby')) {
+          return { evidence: 'Found React SSR framework hydration state' };
+        }
+        // Script chunk signatures
+        const hasReactScript = ctx.scripts.some(s => /(?:react(?:-dom)?(?:\.production)?(?:\.min)?\.js|\/static\/js\/main\.|\/_next\/static\/)/i.test(s));
+        if (hasReactScript) {
+          return { evidence: 'Found React core script chunk in document' };
+        }
+        // Classic SPA container #root with Webpack or dynamic bundler chunks
+        if ((/<div\b[^>]*id=["']root["']/i.test(ctx.html)) && (ctx.html.includes('webpack') || ctx.scripts.some(s => /\/(?:runtime|chunk|\d+)\.[a-f0-9]+\.js/i.test(s)))) {
+          return { evidence: 'Found React SPA #root container with dynamic chunk bundle structure' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'webpack',
+      name: 'Webpack',
+      category: 'frameworks',
+      icon: '📦',
+      description: 'Premier JavaScript module bundler and code-splitting asset packaging engine.',
+      website: 'https://webpack.js.org',
+      test: (ctx) => {
+        // Check script chunk naming conventions
+        const hasWebpackScript = ctx.scripts.some(s => /(?:webpack|runtime\.[a-f0-9]+\.js|\b\d+\.[a-f0-9]{6,}\.js|chunk-[a-f0-9]+|\/static\/js\/\d+\.)/i.test(s));
+        // Check HTML / inline scripts
+        const hasWebpackInline = ctx.html.includes('webpackChunk') || ctx.html.includes('webpackJsonp') || ctx.html.includes('__webpack_require__') || ctx.html.includes('window.webpackJsonp');
+        if (hasWebpackInline || hasWebpackScript) {
+          return { evidence: 'Found Webpack code-splitting runtime and chunk asset loaders' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'nextjs',
+      name: 'Next.js',
+      category: 'frameworks',
+      icon: '▲',
+      description: 'The React Framework for the Web by Vercel — enabling hybrid static & server rendering.',
+      website: 'https://nextjs.org',
+      test: (ctx) => {
+        if (ctx.html.includes('__NEXT_DATA__') || ctx.html.includes('/_next/static/') || ctx.html.includes('/_next/')) {
+          const match = ctx.html.match(/"buildId":"([^"]+)"/);
+          return {
+            evidence: 'Found Next.js __NEXT_DATA__ hydration script',
+            version: match ? `Build: ${match[1].slice(0, 8)}` : undefined
+          };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'jss',
+      name: 'JSS (CSS-in-JS)',
+      category: 'frameworks',
+      icon: '🎨',
+      description: 'JavaScript Style Sheets authoring tool that compiles styles dynamically into the DOM.',
+      website: 'https://cssinjs.org',
+      test: (ctx) => {
+        if (ctx.html.includes('data-jss') || /class=["'][^"']*\bjss\d+\b/i.test(ctx.html) || ctx.html.includes('makeStyles') || ctx.scripts.some(s => /jss(?:\.min)?\.js/i.test(s))) {
+          return { evidence: 'Found JSS stylesheet markers & jss-generated CSS class patterns' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'core_js',
+      name: 'core-js',
+      category: 'frameworks',
+      icon: '⚡',
+      description: 'Modular standard library for JavaScript, including polyfills for ECMAScript specifications.',
+      website: 'https://github.com/zloirock/core-js',
+      test: (ctx) => {
+        if (ctx.html.includes('core-js') || ctx.html.includes('__core-js_shared__') || ctx.scripts.some(s => /core-js/i.test(s))) {
+          const v = ctx.html.match(/core-js[^\w]([\d\.]+)/i);
+          return { evidence: 'Found core-js polyfill suite in client bundles', version: v ? v[1] : undefined };
         }
         return null;
       }
@@ -446,21 +589,35 @@
       test: (ctx) => {
         if (ctx.html.includes('ng-version') || ctx.html.includes('ng-app') || ctx.html.includes('zone.js')) {
           const ver = ctx.html.match(/ng-version=["']([^"']+)["']/i);
-          return { evidence: 'Found Angular ng-version / zone.js', version: ver ? ver[1] : undefined };
+          return { evidence: 'Found Angular ng-version / zone.js runtime', version: ver ? ver[1] : undefined };
         }
         return null;
       }
     },
     {
       id: 'svelte',
-      name: 'Svelte',
+      name: 'Svelte / SvelteKit',
       category: 'frameworks',
       icon: '🔥',
       description: 'Cybernetically enhanced web apps framework that compiles away into pure vanilla JS.',
       website: 'https://svelte.dev',
       test: (ctx) => {
-        if (ctx.html.includes('class="svelte-') || ctx.html.includes('__svelte')) {
-          return { evidence: 'Found Svelte scoped styling classes' };
+        if (ctx.html.includes('class="svelte-') || ctx.html.includes('__svelte') || ctx.html.includes('_app/immutable')) {
+          return { evidence: 'Found Svelte scoped styling classes & immutable bundle' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'astro',
+      name: 'Astro',
+      category: 'frameworks',
+      icon: '🚀',
+      description: 'Modern all-in-one web framework designed for content-focused, zero-JS-by-default websites.',
+      website: 'https://astro.build',
+      test: (ctx) => {
+        if (ctx.html.includes('data-astro-cid') || ctx.html.includes('astro-island') || ctx.metaGenerator.toLowerCase().includes('astro')) {
+          return { evidence: 'Found Astro island architecture components' };
         }
         return null;
       }
@@ -494,8 +651,66 @@
         return null;
       }
     },
+    {
+      id: 'vite',
+      name: 'Vite',
+      category: 'frameworks',
+      icon: '⚡',
+      description: 'Next-generation frontend tooling providing ultra-fast dev server and bundle builds.',
+      website: 'https://vitejs.dev',
+      test: (ctx) => {
+        if (ctx.html.includes('/@vite/client') || ctx.html.includes('vite/assets') || ctx.scripts.some(s => /vite/i.test(s))) {
+          return { evidence: 'Found Vite client runtime / asset pipeline' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'lodash',
+      name: 'Lodash',
+      category: 'frameworks',
+      icon: '🛠️',
+      description: 'Modern JavaScript utility library delivering modularity, performance & extras.',
+      website: 'https://lodash.com',
+      test: (ctx) => {
+        if (ctx.html.includes('lodash.min.js') || ctx.html.includes('lodash.js') || ctx.scripts.some(s => /lodash/i.test(s))) {
+          return { evidence: 'Found Lodash utility library script' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'gsap',
+      name: 'GSAP (GreenSock)',
+      category: 'frameworks',
+      icon: '🎬',
+      description: 'Industry-standard high-performance JavaScript animation engine.',
+      website: 'https://greensock.com/gsap/',
+      test: (ctx) => {
+        if (ctx.html.includes('gsap.min.js') || ctx.html.includes('ScrollTrigger.min.js') || ctx.html.includes('TweenMax')) {
+          return { evidence: 'Found GSAP animation script loader' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'swiper',
+      name: 'Swiper Slider',
+      category: 'frameworks',
+      icon: '📱',
+      description: 'Most modern mobile touch slider with hardware accelerated transitions.',
+      website: 'https://swiperjs.com',
+      test: (ctx) => {
+        if (ctx.html.includes('swiper-bundle') || ctx.html.includes('class="swiper') || ctx.html.includes('swiper-slide')) {
+          return { evidence: 'Found Swiper carousel components and CSS' };
+        }
+        return null;
+      }
+    },
 
-    // --- 5. UI & CSS FRAMEWORKS ---
+    // ==========================================
+    // 5. UI & CSS FRAMEWORKS
+    // ==========================================
     {
       id: 'tailwindcss',
       name: 'Tailwind CSS',
@@ -526,32 +741,100 @@
       }
     },
     {
-      id: 'elementor',
-      name: 'Elementor',
+      id: 'mui',
+      name: 'Material-UI (MUI)',
       category: 'ui',
-      icon: '📐',
-      description: 'Leading WordPress website builder and drag-and-drop page editor.',
-      website: 'https://elementor.com',
+      icon: 'Ⓜ️',
+      description: 'Comprehensive library of foundational React UI components implementing Google Material Design.',
+      website: 'https://mui.com',
       test: (ctx) => {
-        if (ctx.html.includes('elementor-') || ctx.html.includes('elementor-frontend')) {
-          return { evidence: 'Found Elementor frontend widget classes' };
+        if (ctx.html.includes('MuiButton-') || ctx.html.includes('MuiTypography-') || ctx.html.includes('MuiBox-root') || ctx.html.includes('@mui/material')) {
+          return { evidence: 'Found Material-UI component class tokens' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'emotion',
+      name: 'Emotion (CSS-in-JS)',
+      category: 'ui',
+      icon: '👩‍🎤',
+      description: 'Flexible CSS-in-JS library designed for writing css styles with JavaScript.',
+      website: 'https://emotion.sh',
+      test: (ctx) => {
+        if (ctx.html.includes('data-emotion') || (ctx.html.includes('css-') && ctx.html.includes('@emotion'))) {
+          return { evidence: 'Found Emotion CSS-in-JS style tags' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'font_awesome',
+      name: 'Font Awesome',
+      category: 'ui',
+      icon: '🚩',
+      description: 'The web\'s popular icon library and vector toolkit.',
+      website: 'https://fontawesome.com',
+      test: (ctx) => {
+        if (ctx.html.includes('fontawesome') || ctx.html.includes('font-awesome') || /fa-(?:solid|regular|brands|thin)/i.test(ctx.html)) {
+          return { evidence: 'Found Font Awesome icon stylesheets' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'google_fonts',
+      name: 'Google Fonts',
+      category: 'ui',
+      icon: '🔤',
+      description: 'Library of open source font families served via Google CDN.',
+      website: 'https://fonts.google.com',
+      test: (ctx) => {
+        if (ctx.html.includes('fonts.googleapis.com') || ctx.html.includes('fonts.gstatic.com')) {
+          return { evidence: 'Found Google Fonts stylesheet API link' };
         }
         return null;
       }
     },
 
-    // --- 6. ANALYTICS, TRACKERS & PIXELS ---
+    // ==========================================
+    // 6. ANALYTICS, TRACKERS & PIXELS
+    // ==========================================
     {
-      id: 'google_analytics',
-      name: 'Google Analytics (GA4)',
+      id: 'google_analytics_4',
+      name: 'Google Analytics 4 (GA4)',
       category: 'analytics',
       icon: '📈',
-      description: 'Google\'s enterprise web analytics platform for tracking visitor traffic and user journeys.',
+      description: 'Google\'s next-generation privacy-first event measurement and user journey analytics platform.',
       website: 'https://analytics.google.com',
       test: (ctx) => {
-        if (ctx.html.includes('googletagmanager.com/gtag/js') || ctx.html.includes('google-analytics.com/analytics.js') || /G-[A-Z0-9]{8,12}/.test(ctx.html)) {
-          const idMatch = ctx.html.match(/(G-[A-Z0-9]{8,12})/);
-          return { evidence: 'Found Google Analytics 4 tag', version: idMatch ? idMatch[1] : undefined };
+        // Direct HTML match (strictly G-[A-Z0-9] and not g-recaptcha or lowercase word tokens)
+        const idMatches = ctx.html.match(/["'](G-[A-Z0-9]{7,14})["']/g) || ctx.html.match(/gtag\(\s*["']config["']\s*,\s*["'](G-[A-Z0-9]{7,14})["']/g);
+        let validId = null;
+        if (idMatches && idMatches.length > 0) {
+          const clean = idMatches[0].replace(/["']/g, '').replace(/gtag\(\s*config\s*,\s*/, '');
+          if (/^G-[A-Z0-9]{7,14}$/.test(clean) && !/recaptcha|signin/i.test(clean)) {
+            validId = clean;
+          }
+        }
+        if (!validId) {
+          const rawMatch = ctx.html.match(/\b(G-[A-Z0-9]{8,12})\b/);
+          if (rawMatch && !/recaptcha|signin/i.test(rawMatch[1])) {
+            validId = rawMatch[1];
+          }
+        }
+        if (validId) {
+          return { evidence: `Found GA4 Measurement ID: ${validId} in source`, version: validId };
+        }
+        // Match inside live GTM container
+        if (ctx.gtmContent) {
+          const gtmGa4 = ctx.gtmContent.match(/\b(G-[A-Z0-9]{8,12})\b/);
+          if (gtmGa4 && !/recaptcha/i.test(gtmGa4[1])) {
+            return { evidence: `Extracted GA4 Measurement ID: ${gtmGa4[1]} from live GTM container`, version: gtmGa4[1] };
+          }
+        }
+        if (ctx.html.includes('googletagmanager.com/gtag/js?id=G-')) {
+          return { evidence: 'Found Google Analytics 4 gtag.js script' };
         }
         return null;
       }
@@ -561,12 +844,15 @@
       name: 'Google Tag Manager',
       category: 'analytics',
       icon: '🏷️',
-      description: 'Tag management system that allows updating measurement codes and event tags.',
+      description: 'Enterprise tag management system that allows updating measurement codes and event tags.',
       website: 'https://tagmanager.google.com',
       test: (ctx) => {
-        if (ctx.html.includes('googletagmanager.com/gtm.js') || ctx.html.includes('dataLayer')) {
-          const idMatch = ctx.html.match(/(GTM-[A-Z0-9]+)/);
-          return { evidence: 'Found Google Tag Manager container', version: idMatch ? idMatch[1] : undefined };
+        const idMatch = ctx.html.match(/(GTM-[A-Z0-9]{4,10})/i);
+        if (idMatch || ctx.html.includes('googletagmanager.com/gtm.js') || ctx.html.includes('dataLayer')) {
+          return {
+            evidence: idMatch ? `Found Google Tag Manager container: ${idMatch[1]}` : 'Found GTM dataLayer initialization',
+            version: idMatch ? idMatch[1] : undefined
+          };
         }
         return null;
       }
@@ -579,7 +865,7 @@
       description: 'Analytics tool for measuring ad performance and tracking conversions on Facebook & Instagram.',
       website: 'https://business.facebook.com',
       test: (ctx) => {
-        if (ctx.html.includes('connect.facebook.net/en_US/fbevents.js') || ctx.html.includes('fbq(')) {
+        if (ctx.html.includes('connect.facebook.net/en_US/fbevents.js') || ctx.html.includes('fbq(') || (ctx.gtmContent && (ctx.gtmContent.includes('fbevents') || ctx.gtmContent.includes('fbq')))) {
           return { evidence: 'Found Meta Pixel fbq tracking library' };
         }
         return null;
@@ -593,7 +879,7 @@
       description: 'Free user behavior analytics with instant heatmaps and session recordings.',
       website: 'https://clarity.microsoft.com',
       test: (ctx) => {
-        if (ctx.html.includes('clarity.ms/tag') || ctx.html.includes('clarity(')) {
+        if (ctx.html.includes('clarity.ms/tag') || ctx.html.includes('clarity(') || (ctx.gtmContent && ctx.gtmContent.includes('clarity.ms'))) {
           return { evidence: 'Found Microsoft Clarity session tracker' };
         }
         return null;
@@ -607,7 +893,7 @@
       description: 'Behavior analytics software providing website heatmaps and live user feedback.',
       website: 'https://hotjar.com',
       test: (ctx) => {
-        if (ctx.html.includes('static.hotjar.com') || ctx.html.includes('_hjSettings')) {
+        if (ctx.html.includes('static.hotjar.com') || ctx.html.includes('_hjSettings') || (ctx.gtmContent && ctx.gtmContent.includes('hotjar.com'))) {
           return { evidence: 'Found Hotjar tracking code' };
         }
         return null;
@@ -621,14 +907,44 @@
       description: 'Tracking pixel for measuring advertising conversions on TikTok.',
       website: 'https://ads.tiktok.com',
       test: (ctx) => {
-        if (ctx.html.includes('analytics.tiktok.com') || ctx.html.includes('ttq.load')) {
+        if (ctx.html.includes('analytics.tiktok.com') || ctx.html.includes('ttq.load') || (ctx.gtmContent && ctx.gtmContent.includes('analytics.tiktok.com'))) {
           return { evidence: 'Found TikTok advertising pixel' };
         }
         return null;
       }
     },
+    {
+      id: 'pinterest_tag',
+      name: 'Pinterest Tag',
+      category: 'analytics',
+      icon: '📌',
+      description: 'Conversion tracking pixel for measuring campaigns on Pinterest.',
+      website: 'https://pinterest.com',
+      test: (ctx) => {
+        if (ctx.html.includes('s.pinimg.com/ct/core.js') || ctx.html.includes('pintrk(') || (ctx.gtmContent && ctx.gtmContent.includes('pintrk'))) {
+          return { evidence: 'Found Pinterest conversion pixel' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'linkedin_insight',
+      name: 'LinkedIn Insight Tag',
+      category: 'analytics',
+      icon: '💼',
+      description: 'Lightweight JavaScript code that powers in-depth campaign reporting on LinkedIn.',
+      website: 'https://business.linkedin.com/marketing-solutions/insight-tag',
+      test: (ctx) => {
+        if (ctx.html.includes('snap.licdn.com/li.lms-analytics/insight.min.js') || (ctx.gtmContent && ctx.gtmContent.includes('snap.licdn.com'))) {
+          return { evidence: 'Found LinkedIn Insight tag' };
+        }
+        return null;
+      }
+    },
 
-    // --- 7. PAYMENT GATEWAYS ---
+    // ==========================================
+    // 7. PAYMENT GATEWAYS & BNPL
+    // ==========================================
     {
       id: 'razorpay',
       name: 'Razorpay',
@@ -700,21 +1016,9 @@
       }
     },
 
-    // --- 8. CDN, CLOUD & SERVERS ---
-    {
-      id: 'cloudflare',
-      name: 'Cloudflare',
-      category: 'server',
-      icon: '🧡',
-      description: 'Global cloud edge network providing DDoS protection, CDN, DNS, and serverless compute.',
-      website: 'https://cloudflare.com',
-      test: (ctx) => {
-        if (ctx.html.includes('cdnjs.cloudflare.com') || ctx.headers.includes('cloudflare') || ctx.html.includes('cf-cache-status') || ctx.ns.some(n => n.includes('cloudflare'))) {
-          return { evidence: 'Found Cloudflare edge headers / DNS / CDN' };
-        }
-        return null;
-      }
-    },
+    // ==========================================
+    // 8. CDN, CLOUD & SERVERS
+    // ==========================================
     {
       id: 'aws_cloudfront',
       name: 'Amazon CloudFront (AWS)',
@@ -723,8 +1027,91 @@
       description: 'High-performance global content delivery network (CDN) service by Amazon Web Services.',
       website: 'https://aws.amazon.com/cloudfront',
       test: (ctx) => {
-        if (ctx.html.includes('cloudfront.net') || ctx.headers.includes('cloudfront')) {
-          return { evidence: 'Found CloudFront edge distribution domain' };
+        const via = ctx.headerMap['via'] || '';
+        const xCache = ctx.headerMap['x-cache'] || '';
+        if (/cloudfront/i.test(via) || /cloudfront/i.test(xCache) || ctx.headers.includes('x-amz-cf-id') || ctx.headers.includes('x-amz-cf-pop') || ctx.html.includes('cloudfront.net')) {
+          return { evidence: 'Detected CloudFront edge distribution headers (Via / X-Amz-Cf-Id)' };
+        }
+        if (ctx.asn && /amazon-cf|cloudfront/i.test(ctx.asn)) {
+          return { evidence: 'Host IP routes through Amazon CloudFront edge network' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'aws_s3',
+      name: 'Amazon S3',
+      category: 'server',
+      icon: '🪣',
+      description: 'Amazon Simple Storage Service (S3) cloud object storage infrastructure.',
+      website: 'https://aws.amazon.com/s3/',
+      test: (ctx) => {
+        const server = ctx.headerMap['server'] || '';
+        if (/amazons3/i.test(server) || ctx.headers.includes('x-amz-server-side-encryption') || ctx.headers.includes('x-amz-request-id')) {
+          return { evidence: 'Detected Amazon S3 storage origin from Server response header' };
+        }
+        if (ctx.html.includes('s3.amazonaws.com') || /https?:\/\/[a-z0-9\.\-_]+\.s3[a-z0-9\.\-_]*\.amazonaws\.com/i.test(ctx.html)) {
+          return { evidence: 'Found Amazon S3 bucket asset URLs in document' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'cloudflare',
+      name: 'Cloudflare',
+      category: 'server',
+      icon: '🧡',
+      description: 'Global cloud edge network providing DDoS protection, CDN, DNS, and serverless compute.',
+      website: 'https://cloudflare.com',
+      test: (ctx) => {
+        const server = ctx.headerMap['server'] || '';
+        if (/cloudflare/i.test(server) || ctx.headers.includes('cf-ray') || ctx.headers.includes('cf-cache-status') || ctx.ns.some(n => n.includes('cloudflare')) || (ctx.asn && ctx.asn.includes('CLOUDFLARE'))) {
+          return { evidence: 'Found Cloudflare edge headers / CF-Ray / Nameservers' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'http3',
+      name: 'HTTP/3 (QUIC)',
+      category: 'server',
+      icon: '🚀',
+      description: 'Next-generation Hypertext Transfer Protocol running over UDP & QUIC for zero round-trip latency.',
+      website: 'https://en.wikipedia.org/wiki/HTTP/3',
+      test: (ctx) => {
+        const altSvc = ctx.headerMap['alt-svc'] || '';
+        if (/\bh3(?:-\d+)?\b/i.test(altSvc) || ctx.headers.includes('alt-svc: h3')) {
+          return { evidence: 'Negotiated HTTP/3 (QUIC) via Alt-Svc response header' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'nginx',
+      name: 'Nginx',
+      category: 'server',
+      icon: '🟢',
+      description: 'High-performance HTTP web server and reverse proxy.',
+      website: 'https://nginx.org',
+      test: (ctx) => {
+        const server = ctx.headerMap['server'] || '';
+        if (/nginx/i.test(server)) {
+          return { evidence: `Detected Nginx web server from response headers (${server})`, version: server };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'apache',
+      name: 'Apache HTTP Server',
+      category: 'server',
+      icon: '🪶',
+      description: 'Decentralized open-source cross-platform web server software.',
+      website: 'https://httpd.apache.org',
+      test: (ctx) => {
+        const server = ctx.headerMap['server'] || '';
+        if (/apache/i.test(server)) {
+          return { evidence: `Detected Apache web server from headers (${server})`, version: server };
         }
         return null;
       }
@@ -737,8 +1124,8 @@
       description: 'Frontend cloud platform for static & serverless modern web deployment.',
       website: 'https://vercel.com',
       test: (ctx) => {
-        if (ctx.html.includes('vercel.app') || ctx.headers.includes('vercel') || ctx.headers.includes('x-vercel-id')) {
-          return { evidence: 'Found Vercel deployment edge headers' };
+        if (ctx.html.includes('vercel.app') || ctx.headers.includes('x-vercel-id') || (ctx.headerMap['server'] || '').includes('Vercel')) {
+          return { evidence: 'Found Vercel deployment edge headers (x-vercel-id)' };
         }
         return null;
       }
@@ -751,14 +1138,30 @@
       description: 'Cloud platform for Git-integrated web development and Jamstack hosting.',
       website: 'https://netlify.com',
       test: (ctx) => {
-        if (ctx.html.includes('netlify.app') || ctx.headers.includes('netlify')) {
+        if (ctx.html.includes('netlify.app') || ctx.headers.includes('x-nf-request-id') || (ctx.headerMap['server'] || '').includes('Netlify')) {
           return { evidence: 'Found Netlify edge proxy signatures' };
         }
         return null;
       }
     },
+    {
+      id: 'fastly',
+      name: 'Fastly CDN',
+      category: 'server',
+      icon: '⚡',
+      description: 'Edge cloud platform and programmable content delivery network.',
+      website: 'https://fastly.com',
+      test: (ctx) => {
+        if (ctx.headers.includes('x-fastly-request-id') || (ctx.headerMap['via'] || '').includes('varnish') || (ctx.asn && ctx.asn.includes('FASTLY'))) {
+          return { evidence: 'Found Fastly edge proxy headers / network' };
+        }
+        return null;
+      }
+    },
 
-    // --- 9. CUSTOMER CHAT & SUPPORT ---
+    // ==========================================
+    // 9. CUSTOMER CHAT & SUPPORT
+    // ==========================================
     {
       id: 'intercom',
       name: 'Intercom',
@@ -816,7 +1219,9 @@
       }
     },
 
-    // --- 10. SECURITY, CAPTCHA & FONTS ---
+    // ==========================================
+    // 10. SECURITY, CAPTCHA & PRIVACY
+    // ==========================================
     {
       id: 'turnstile',
       name: 'Cloudflare Turnstile',
@@ -846,35 +1251,23 @@
       }
     },
     {
-      id: 'google_fonts',
-      name: 'Google Fonts',
+      id: 'hcaptcha',
+      name: 'hCaptcha',
       category: 'security',
-      icon: '🔤',
-      description: 'Library of open source font families served via Google CDN.',
-      website: 'https://fonts.google.com',
+      icon: '🛡️',
+      description: 'Privacy-focused anti-bot and CAPTCHA service for modern websites.',
+      website: 'https://hcaptcha.com',
       test: (ctx) => {
-        if (ctx.html.includes('fonts.googleapis.com') || ctx.html.includes('fonts.gstatic.com')) {
-          return { evidence: 'Found Google Fonts stylesheet API link' };
-        }
-        return null;
-      }
-    },
-    {
-      id: 'font_awesome',
-      name: 'Font Awesome',
-      category: 'security',
-      icon: '🚩',
-      description: 'The web\'s popular icon library and toolkit.',
-      website: 'https://fontawesome.com',
-      test: (ctx) => {
-        if (ctx.html.includes('fontawesome') || ctx.html.includes('font-awesome') || ctx.html.includes('fa-')) {
-          return { evidence: 'Found Font Awesome icon stylesheets' };
+        if (ctx.html.includes('js.hcaptcha.com') || ctx.html.includes('h-captcha')) {
+          return { evidence: 'Found hCaptcha anti-bot embed' };
         }
         return null;
       }
     },
 
-    // --- 11. EMAIL & BUSINESS INFRASTRUCTURE ---
+    // ==========================================
+    // 11. EMAIL & BUSINESS INFRASTRUCTURE
+    // ==========================================
     {
       id: 'google_workspace',
       name: 'Google Workspace (Gmail)',
@@ -883,7 +1276,7 @@
       description: 'Enterprise business email and collaboration suite by Google.',
       website: 'https://workspace.google.com',
       test: (ctx) => {
-        if (ctx.mx.some(m => m.includes('google.com') || m.includes('googlemail.com'))) {
+        if (ctx.mx.some(m => m.includes('google.com') || m.includes('aspmx.l.google.com') || m.includes('googlemail.com'))) {
           return { evidence: 'Live MX Records point to aspmx.l.google.com' };
         }
         return null;
@@ -898,43 +1291,104 @@
       website: 'https://microsoft.com/microsoft-365',
       test: (ctx) => {
         if (ctx.mx.some(m => m.includes('outlook.com') || m.includes('protection.outlook.com'))) {
-          return { evidence: 'Live MX Records point to Outlook mail servers' };
+          return { evidence: 'Live MX Records point to mail.protection.outlook.com' };
         }
         return null;
       }
     },
     {
-      id: 'zoho_mail',
-      name: 'Zoho Mail',
+      id: 'mandrill',
+      name: 'Mandrill / Mailchimp Transactional',
       category: 'email',
-      icon: '📬',
-      description: 'Secure, encrypted business email hosting platform.',
-      website: 'https://zoho.com/mail',
+      icon: '🐵',
+      description: 'Transactional email infrastructure for web applications by Mailchimp.',
+      website: 'https://mailchimp.com/features/transactional-email/',
       test: (ctx) => {
-        if (ctx.mx.some(m => m.includes('zoho.com'))) {
-          return { evidence: 'Live MX Records point to Zoho Mail servers' };
+        if (ctx.txt.some(t => t.includes('mandrillapp.com')) || ctx.html.includes('mandrillapp.com')) {
+          return { evidence: 'Found Mandrill transactional SPF authorization in DNS records' };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'sendgrid',
+      name: 'SendGrid',
+      category: 'email',
+      icon: '📨',
+      description: 'Cloud-based transactional and marketing email delivery platform by Twilio.',
+      website: 'https://sendgrid.com',
+      test: (ctx) => {
+        if (ctx.txt.some(t => t.includes('sendgrid.net')) || ctx.html.includes('sendgrid')) {
+          return { evidence: 'Found SendGrid email SPF authorization' };
+        }
+        return null;
+      }
+    },
+
+    // ==========================================
+    // 12. PROTOCOLS & SEO META TAGS
+    // ==========================================
+    {
+      id: 'opengraph',
+      name: 'Open Graph Protocol',
+      category: 'tools',
+      icon: '🌐',
+      description: 'Enables web pages to become rich social graph objects for Facebook, LinkedIn, Twitter & Slack.',
+      website: 'https://ogp.me/',
+      test: (ctx) => {
+        const ogCount = (ctx.html.match(/property=["']og:[^"']+["']/gi) || []).length;
+        if (ogCount > 0 || ctx.html.includes('prefix="og:')) {
+          return { evidence: `Found ${ogCount || 1}+ Open Graph protocol meta tags (og:title, og:image, etc.)` };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'twitter_cards',
+      name: 'Twitter Cards',
+      category: 'tools',
+      icon: '🐦',
+      description: 'Allows attaching rich photos, videos, and media previews to Tweets linking to your content.',
+      website: 'https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/abouts-cards',
+      test: (ctx) => {
+        const twCount = (ctx.html.match(/name=["']twitter:[^"']+["']/gi) || []).length;
+        if (twCount > 0) {
+          return { evidence: `Found ${twCount} Twitter Card meta tags (twitter:card, twitter:image)` };
+        }
+        return null;
+      }
+    },
+    {
+      id: 'schema_org',
+      name: 'Schema.org (JSON-LD)',
+      category: 'tools',
+      icon: '🏷️',
+      description: 'Structured semantic data markup recognized by Google for rich search snippets.',
+      website: 'https://schema.org',
+      test: (ctx) => {
+        if (ctx.html.includes('application/ld+json') || (ctx.html.includes('itemscope') && ctx.html.includes('itemtype'))) {
+          return { evidence: 'Found JSON-LD structured data schema markup' };
         }
         return null;
       }
     }
   ];
 
-  // Initialize
-  function init() {
-    setupEventListeners();
-  }
+  // ==========================================
+  // CONTROLLER & DATA RETRIEVAL PIPELINE
+  // ==========================================
 
-  function setupEventListeners() {
-    // Mode Switch
+  function init() {
+    // Mode Switchers
     if (techTabs) {
       techTabs.addEventListener('click', (e) => {
-        const btn = e.target.closest('.tool-tab');
+        const btn = e.target.closest('.tech-tab');
         if (!btn) return;
-        techTabs.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+        const target = btn.dataset.tab;
+        document.querySelectorAll('.tech-tab').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        const mode = btn.dataset.mode;
-        if (mode === 'url') {
+        if (target === 'url') {
           modeUrlSection.style.display = 'block';
           modeSourceSection.style.display = 'none';
         } else {
@@ -944,41 +1398,47 @@
       });
     }
 
-    // Scan Buttons
-    btnScanUrl?.addEventListener('click', handleScanUrl);
-    inpTargetUrl?.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') handleScanUrl();
-    });
+    // Action Triggers
+    if (btnScanUrl) btnScanUrl.addEventListener('click', handleScanUrl);
+    if (btnScanSource) btnScanSource.addEventListener('click', handleScanSource);
+    if (btnLoadDemoSource) btnLoadDemoSource.addEventListener('click', loadDemoShopifySource);
+    if (btnCopyReport) btnCopyReport.addEventListener('click', copyTextReport);
+    if (btnDownloadJson) btnDownloadJson.addEventListener('click', downloadJsonReport);
 
-    btnScanSource?.addEventListener('click', handleScanSource);
-    btnLoadDemoSource?.addEventListener('click', loadDemoShopifySource);
+    // Enter Key
+    if (inpTargetUrl) {
+      inpTargetUrl.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleScanUrl();
+      });
+    }
 
-    // Sample sites
+    // Sample site triggers
     sampleSiteButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        if (inpTargetUrl) {
-          inpTargetUrl.value = btn.dataset.url;
+        const url = btn.dataset.url;
+        if (inpTargetUrl && url) {
+          inpTargetUrl.value = url;
           handleScanUrl();
         }
       });
     });
 
-    // Category Filter Tabs
-    techCategoryFilters?.addEventListener('click', (e) => {
-      const btn = e.target.closest('.category-tab');
-      if (!btn) return;
-      techCategoryFilters.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-      activeFilter = btn.dataset.cat;
-      renderTechSections(currentScannedData);
-    });
-
-    // Copy & Export
-    btnCopyReport?.addEventListener('click', copyTextReport);
-    btnDownloadJson?.addEventListener('click', downloadJsonReport);
+    // Category Filter Buttons
+    if (techCategoryFilters) {
+      techCategoryFilters.addEventListener('click', (e) => {
+        const btn = e.target.closest('.category-tab');
+        if (!btn) return;
+        document.querySelectorAll('#techCategoryFilters .category-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.cat || 'all';
+        if (currentScannedData) {
+          renderTechSections(currentScannedData);
+        }
+      });
+    }
   }
 
-  // Handle URL Scan
+  // Handle URL Scan with Parallel Multi-Source Recon
   async function handleScanUrl() {
     let rawUrl = (inpTargetUrl ? inpTargetUrl.value : '').trim();
     if (!rawUrl) {
@@ -1000,34 +1460,54 @@
 
     const domain = urlObj.hostname.replace(/^www\./, '');
 
-    showLoading(true, `Connecting to ${domain}...`, 'Fetching live HTML source code & response headers...');
-
-    let htmlResult = { html: '', headers: '' };
-    let proxyFailed = false;
+    showLoading(true, `Connecting to ${domain}...`, 'Analyzing live HTML source, response headers, and cloud DNS in parallel...');
 
     try {
-      // 1. Fetch HTML via multi-proxy cascade
-      htmlResult = await fetchSiteHtml(rawUrl);
-    } catch (proxyErr) {
-      console.warn('HTML proxies failed, proceeding with DNS & infrastructure scan:', proxyErr);
-      proxyFailed = true;
-    }
+      // 1. Parallel Reconnaissance (HTML + Live HTTP Headers + DNS/ASN)
+      const [htmlResult, liveHeaders, dnsData] = await Promise.all([
+        fetchSiteHtml(rawUrl).catch(err => {
+          console.warn('HTML fetch error:', err);
+          return { html: '', headers: '' };
+        }),
+        fetchSiteHeaders(rawUrl).catch(err => {
+          console.warn('Headers fetch error:', err);
+          return '';
+        }),
+        fetchDnsRecords(domain).catch(err => {
+          console.warn('DNS fetch error:', err);
+          return { mx: [], ns: [], txt: [], ip: null, asn: '' };
+        })
+      ]);
 
-    try {
-      // 2. Fetch DNS MX & NS records via Google DoH
-      updateLoadingStatus(`Inspecting DNS & Infrastructure for ${domain}...`, 'Looking up MX mail servers, nameservers, and cloud IP records...');
-      const dnsData = await fetchDnsRecords(domain);
+      // Combine real server headers with proxy headers
+      const combinedHeaders = ((liveHeaders || '') + '\n' + (htmlResult.headers || '')).toLowerCase();
 
-      // 3. Run Analysis
-      updateLoadingStatus(`Matching 200+ technology signatures...`, 'Detecting Shopify apps, CMS, frameworks, payment gateways...');
-      const results = analyzeTechnology(htmlResult.html, htmlResult.headers, dnsData, domain);
+      // 2. Deep Google Tag Manager container inspection if GTM ID is detected
+      let gtmContent = '';
+      const gtmMatch = (htmlResult.html || '').match(/GTM-[A-Z0-9]{4,10}/i);
+      if (gtmMatch) {
+        updateLoadingStatus(`Inspecting Google Tag Manager Container (${gtmMatch[0]})...`, 'Extracting GA4 measurement IDs, Meta pixels, and event tags...');
+        try {
+          const controller = new AbortController();
+          const tid = setTimeout(() => controller.abort(), 3500);
+          gtmContent = await fetch(`https://www.googletagmanager.com/gtm.js?id=${gtmMatch[0]}`, { signal: controller.signal })
+            .then(r => r.text())
+            .catch(() => '');
+          clearTimeout(tid);
+        } catch (e) {}
+      }
+      dnsData.gtmContent = gtmContent;
+
+      // 3. Run Analysis Engine
+      updateLoadingStatus(`Matching 150+ technology signatures...`, 'Detecting frameworks, bundlers, CDNs, analytics, and infrastructure...');
+      const results = analyzeTechnology(htmlResult.html || '', combinedHeaders, dnsData, domain);
 
       // 4. Render UI
       currentScannedData = { domain, rawUrl, ...results };
       renderResults(currentScannedData);
 
-      if (proxyFailed) {
-        showToast(`Bot shield protected full HTML. Showing Cloud & DNS tech! Paste source in Tab 2 for deep app scan.`, 'info');
+      if (!htmlResult.html) {
+        showToast(`Bot shield protected direct HTML. Detected ${results.detectedList.length} technologies from cloud headers & DNS!`, 'info');
       } else {
         showToast(`Scan complete! Detected ${results.detectedList.length} technologies.`, 'success');
       }
@@ -1047,9 +1527,9 @@
       return;
     }
 
-    showLoading(true, 'Analyzing pasted HTML source code...', 'Extracting script tags, meta generator, and CSS classes...');
+    showLoading(true, 'Analyzing pasted HTML source code...', 'Extracting script tags, meta generator, bundles, and CSS classes...');
     setTimeout(() => {
-      const results = analyzeTechnology(html, '', { mx: [], ns: [] }, 'pasted-source-code.local');
+      const results = analyzeTechnology(html, '', { mx: [], ns: [], txt: [], ip: null, asn: '', gtmContent: '' }, 'pasted-source-code.local');
       currentScannedData = { domain: 'Pasted HTML Source', rawUrl: 'Local Source', ...results };
       renderResults(currentScannedData);
       showLoading(false);
@@ -1066,6 +1546,10 @@
   <meta charset="utf-8">
   <title>Modern boAt Lifestyle Online Store - Buy Earphones, Smartwatches</title>
   <meta name="generator" content="Shopify">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="boAt Lifestyle Store">
+  <meta property="og:image" content="https://boat-lifestyle.com/logo.png">
+  <meta name="twitter:card" content="summary_large_image">
   <script src="//cdn.shopify.com/s/files/1/0057/8938/4802/t/120/assets/theme.js"></script>
   <script>
     window.Shopify = { theme: { name: "boAt-Lifestyle-Modern-V4", id: 1204892 } };
@@ -1088,7 +1572,7 @@
 
   // Fetch HTML with multi-proxy fallback cascade
   async function fetchSiteHtml(targetUrl) {
-    // Attempt 1: Jina AI Reader HTML proxy (bypasses Cloudflare, Akamai & bot challenges)
+    // Attempt 1: Jina AI Reader HTML proxy
     try {
       const controller = new AbortController();
       const tid = setTimeout(() => controller.abort(), 7000);
@@ -1164,19 +1648,64 @@
     throw new Error('Website bot shield or network timeout prevented live HTML extraction.');
   }
 
-  // Fetch DNS DoH Records (Google Public DNS)
-  async function fetchDnsRecords(domain) {
-    const dns = { mx: [], ns: [] };
+  // Fetch real HTTP response headers using HackerTarget (CORS enabled)
+  async function fetchSiteHeaders(targetUrl) {
     try {
-      // MX Lookups
-      const mxRes = await fetch(`https://dns.google/resolve?name=${domain}&type=MX`).then(r => r.json());
-      if (mxRes.Answer) {
-        dns.mx = mxRes.Answer.map(a => (a.data || '').toLowerCase());
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 4000);
+      const res = await fetch(`https://api.hackertarget.com/httpheaders/?q=${encodeURIComponent(targetUrl)}`, {
+        signal: controller.signal
+      });
+      clearTimeout(tid);
+      if (res.ok) {
+        const text = await res.text();
+        if (text && text.length > 20 && !text.includes('error check your search')) {
+          return text;
+        }
       }
-      // NS Lookups
-      const nsRes = await fetch(`https://dns.google/resolve?name=${domain}&type=NS`).then(r => r.json());
-      if (nsRes.Answer) {
-        dns.ns = nsRes.Answer.map(a => (a.data || '').toLowerCase());
+    } catch (e) {
+      console.warn('Headers fetch (HackerTarget) failed/timed out:', e);
+    }
+    return '';
+  }
+
+  // Fetch DNS DoH Records + RDAP ASN
+  async function fetchDnsRecords(domain) {
+    const dns = { mx: [], ns: [], txt: [], ip: null, asn: '', gtmContent: '' };
+    try {
+      const [aRes, mxRes, nsRes, txtRes] = await Promise.allSettled([
+        fetch(`https://dns.google/resolve?name=${domain}&type=A`).then(r => r.json()),
+        fetch(`https://dns.google/resolve?name=${domain}&type=MX`).then(r => r.json()),
+        fetch(`https://dns.google/resolve?name=${domain}&type=NS`).then(r => r.json()),
+        fetch(`https://dns.google/resolve?name=${domain}&type=TXT`).then(r => r.json())
+      ]);
+
+      if (aRes.status === 'fulfilled' && aRes.value?.Answer) {
+        dns.ip = aRes.value.Answer[0]?.data || null;
+      }
+      if (mxRes.status === 'fulfilled' && mxRes.value?.Answer) {
+        dns.mx = mxRes.value.Answer.map(a => (a.data || '').toLowerCase());
+      }
+      if (nsRes.status === 'fulfilled' && nsRes.value?.Answer) {
+        dns.ns = nsRes.value.Answer.map(a => (a.data || '').toLowerCase());
+      }
+      if (txtRes.status === 'fulfilled' && txtRes.value?.Answer) {
+        dns.txt = txtRes.value.Answer.map(a => (a.data || '').toLowerCase());
+      }
+
+      // RDAP lookup for ASN / Network Name (e.g. AMAZON-CF, CLOUDFLARENET, FASTLY, etc.)
+      if (dns.ip) {
+        try {
+          const controller = new AbortController();
+          const tid = setTimeout(() => controller.abort(), 3000);
+          const rdap = await fetch(`https://rdap.arin.net/registry/ip/${dns.ip}`, { signal: controller.signal })
+            .then(r => r.json())
+            .catch(() => null);
+          clearTimeout(tid);
+          if (rdap) {
+            dns.asn = `${rdap.handle || ''} ${rdap.name || ''}`.toUpperCase();
+          }
+        } catch (e) {}
       }
     } catch (e) {
       console.warn('DNS lookup failed:', e);
@@ -1184,17 +1713,52 @@
     return dns;
   }
 
-  // Analysis Engine
+  // Comprehensive Analysis Engine
   function analyzeTechnology(html, headers, dns, domain) {
     const metaGeneratorMatch = html.match(/<meta[^>]*name=["']generator["'][^>]*content=["']([^"']+)["']/i);
     const metaGenerator = metaGeneratorMatch ? metaGeneratorMatch[1] : '';
 
+    // Extract all script sources
+    const scriptSrcs = [];
+    const scriptRegex = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
+    let sm;
+    while ((sm = scriptRegex.exec(html)) !== null) {
+      const srcMatch = sm[1].match(/src=["']([^"']+)["']/i);
+      if (srcMatch) scriptSrcs.push(srcMatch[1]);
+    }
+
+    // Extract link tags
+    const linkHrefs = [];
+    const linkRegex = /<link\b[^>]*href=["']([^"']+)["'][^>]*>/gi;
+    let lm;
+    while ((lm = linkRegex.exec(html)) !== null) {
+      linkHrefs.push(lm[1]);
+    }
+
+    // Parse header key-values
+    const headerMap = {};
+    (headers || '').split(/\r?\n/).forEach(line => {
+      const idx = line.indexOf(':');
+      if (idx > 0) {
+        const k = line.slice(0, idx).trim().toLowerCase();
+        const v = line.slice(idx + 1).trim();
+        headerMap[k] = (headerMap[k] ? headerMap[k] + '; ' : '') + v;
+      }
+    });
+
     const ctx = {
       html: html,
+      lowerHtml: html.toLowerCase(),
       headers: (headers || '').toLowerCase(),
+      headerMap: headerMap,
       metaGenerator: metaGenerator,
+      scripts: scriptSrcs,
+      links: linkHrefs,
       mx: dns.mx || [],
       ns: dns.ns || [],
+      txt: dns.txt || [],
+      asn: dns.asn || '',
+      gtmContent: dns.gtmContent || '',
       domain: domain
     };
 
@@ -1215,6 +1779,7 @@
           };
           detected.push(item);
 
+          // E-commerce priority
           if (tech.id === 'shopify') {
             detectedShopify = item;
             primaryEcommerce = 'Shopify';
@@ -1222,10 +1787,12 @@
             primaryEcommerce = tech.name;
           }
 
+          // CMS priority
           if (tech.category === 'cms' && !primaryCms) {
             primaryCms = tech.name;
           }
 
+          // Server priority
           if (tech.category === 'server') {
             detectedServer = tech.name;
           }
@@ -1235,12 +1802,48 @@
       }
     });
 
+    // Intelligent Summary Inference
+    if (!primaryCms) {
+      if (detected.some(t => t.id === 'nextjs')) {
+        primaryCms = 'Next.js (React Framework)';
+      } else if (detected.some(t => t.id === 'react')) {
+        primaryCms = 'React SPA (Custom App)';
+      } else if (detected.some(t => t.id === 'nuxtjs')) {
+        primaryCms = 'Nuxt (Vue Framework)';
+      } else if (detected.some(t => t.id === 'vue')) {
+        primaryCms = 'Vue.js SPA';
+      } else if (detected.some(t => t.id === 'svelte')) {
+        primaryCms = 'SvelteKit App';
+      } else if (detected.some(t => t.id === 'astro')) {
+        primaryCms = 'Astro Static Engine';
+      } else if (detectedShopify) {
+        primaryCms = 'Shopify CMS';
+      } else {
+        primaryCms = 'Custom / Static';
+      }
+    }
+
+    // Intelligent Server Inference
+    if (detected.some(t => t.id === 'aws_cloudfront') && detected.some(t => t.id === 'aws_s3')) {
+      detectedServer = 'AWS (CloudFront + S3)';
+    } else if (detected.some(t => t.id === 'aws_cloudfront')) {
+      detectedServer = 'Amazon CloudFront (AWS)';
+    } else if (detected.some(t => t.id === 'cloudflare')) {
+      detectedServer = 'Cloudflare CDN';
+    } else if (detected.some(t => t.id === 'vercel')) {
+      detectedServer = 'Vercel Edge';
+    } else if (detected.some(t => t.id === 'netlify')) {
+      detectedServer = 'Netlify Edge';
+    } else if (detected.some(t => t.id === 'nginx')) {
+      detectedServer = 'Nginx Web Server';
+    }
+
     return {
       detectedList: detected,
       isShopify: !!detectedShopify,
       shopifyDetails: detectedShopify,
       primaryEcommerce: primaryEcommerce || 'None',
-      primaryCms: primaryCms || (detectedShopify ? 'Shopify CMS' : 'Custom / Static'),
+      primaryCms: primaryCms,
       detectedServer: detectedServer
     };
   }
@@ -1289,7 +1892,7 @@
         <div style="text-align: center; padding: 40px; background: var(--white); border-radius: var(--radius-xl); border: 1px dashed var(--gray-300);">
           <div style="font-size: 36px; margin-bottom: 8px;">🤔</div>
           <div style="font-weight: 700; color: var(--navy); font-size: 16px;">No Common Technologies Detected</div>
-          <p style="font-size: 13px; color: var(--gray-500); max-width: 440px; margin: 6px auto 0;">The site may be completely custom-coded, using a private CDN, or has minimized script headers.</p>
+          <p style="font-size: 13px; color: var(--gray-500); max-width: 440px; margin: 6px auto 0;">The site may be completely custom-coded, behind an aggressive bot-shield, or has minimized script headers.</p>
         </div>
       `;
       return;
@@ -1306,7 +1909,7 @@
         if (activeFilter === 'analytics' && item.category !== 'analytics') return;
         if (activeFilter === 'payment' && item.category !== 'payment') return;
         if (activeFilter === 'server' && item.category !== 'server') return;
-        if (activeFilter === 'tools' && (item.category !== 'chat' && item.category !== 'security' && item.category !== 'email')) return;
+        if (activeFilter === 'tools' && (item.category !== 'chat' && item.category !== 'security' && item.category !== 'email' && item.category !== 'tools')) return;
       }
 
       if (!grouped[item.category]) {
