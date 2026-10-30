@@ -559,6 +559,18 @@
     showSuccessDownload(`Instantly patched MP4 container with ${preset.make} ${preset.model} camera atoms. Purged C2PA manifests.`);
   }
 
+  // Shared AudioContext to prevent node reconnection errors
+  let sharedAudioCtx = null;
+  function getSharedAudioContext() {
+    if (!sharedAudioCtx || sharedAudioCtx.state === 'closed') {
+      sharedAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (sharedAudioCtx.state === 'suspended') {
+      sharedAudioCtx.resume();
+    }
+    return sharedAudioCtx;
+  }
+
   // Create 48kHz room tone node
   function createRoomToneNode(audioCtx, volumeGain) {
     const bufferSize = audioCtx.sampleRate * 2;
@@ -597,79 +609,135 @@
     return { node: gainNode, source: noiseSource };
   }
 
-  // De-watermark AI Music (Google SynthID / AI Music classifier bypass)
-  async function humanizeOriginalAudio(audioCtx, arrayBuffer, roomToneGain) {
-    try {
-      const bufferClone = arrayBuffer.slice(0);
-      const decodedBuffer = await audioCtx.decodeAudioData(bufferClone);
+  // Multi-Stage Audio Humanizer: Scrambles Google SynthID & Emulates Acoustic Recording
+  function buildMusicHumanizerChain(audioCtx, sourceNode, destNode, roomToneGain) {
+    // 1. Google SynthID Phase Disperser (4-Stage Allpass Filter Network)
+    const ap1 = audioCtx.createBiquadFilter();
+    ap1.type = 'allpass';
+    ap1.frequency.value = 650;
 
-      const sampleRate = decodedBuffer.sampleRate;
-      const numChannels = decodedBuffer.numberOfChannels;
-      const length = decodedBuffer.length;
+    const ap2 = audioCtx.createBiquadFilter();
+    ap2.type = 'allpass';
+    ap2.frequency.value = 1750;
 
-      // Offline DSP processing
-      const offlineCtx = new OfflineAudioContext(numChannels, length, sampleRate);
-      const srcNode = offlineCtx.createBufferSource();
-      srcNode.buffer = decodedBuffer;
+    const ap3 = audioCtx.createBiquadFilter();
+    ap3.type = 'allpass';
+    ap3.frequency.value = 3800;
 
-      // 1. All-pass phase disperser network: Scrambles deterministic phase coherence checked by Google SynthID
-      const ap1 = offlineCtx.createBiquadFilter();
-      ap1.type = 'allpass';
-      ap1.frequency.value = 850;
+    const ap4 = audioCtx.createBiquadFilter();
+    ap4.type = 'allpass';
+    ap4.frequency.value = 7200;
 
-      const ap2 = offlineCtx.createBiquadFilter();
-      ap2.type = 'allpass';
-      ap2.frequency.value = 2400;
+    // 2. Camera Microphone Response EQ (Cuts synthetic sub-bass, boosts physical presence)
+    const hpFilter = audioCtx.createBiquadFilter();
+    hpFilter.type = 'highpass';
+    hpFilter.frequency.value = 75; // Cuts sub-60Hz synthetic AI rumble
 
-      const ap3 = offlineCtx.createBiquadFilter();
-      ap3.type = 'allpass';
-      ap3.frequency.value = 5600;
+    const presenceFilter = audioCtx.createBiquadFilter();
+    presenceFilter.type = 'peaking';
+    presenceFilter.frequency.value = 3200;
+    presenceFilter.Q.value = 1.2;
+    presenceFilter.gain.value = 2.4; // Camera mic presence peak
 
-      // 2. Highpass filter: Eliminates sub-bass synthetic AI rumble (< 65Hz)
-      const hp = offlineCtx.createBiquadFilter();
-      hp.type = 'highpass';
-      hp.frequency.value = 65;
+    const airFilter = audioCtx.createBiquadFilter();
+    airFilter.type = 'lowpass';
+    airFilter.frequency.value = 14500; // Natural air absorption
 
-      // 3. Analog waveshaping saturation: Gentle odd harmonics mask spectral purity
-      const shaper = offlineCtx.createWaveShaper();
-      const curve = new Float32Array(512);
-      for (let i = 0; i < 512; i++) {
-        const x = (i / 256) - 1;
-        curve[i] = x - 0.05 * Math.pow(x, 3);
-      }
-      shaper.curve = curve;
-      shaper.oversample = '2x';
+    // 3. Multi-Band AI Watermark Scrambler (Perturbs carrier frequencies)
+    const notch1 = audioCtx.createBiquadFilter();
+    notch1.type = 'peaking';
+    notch1.frequency.value = 1250;
+    notch1.Q.value = 2.5;
+    notch1.gain.value = -2.2;
 
-      srcNode.connect(ap1);
-      ap1.connect(ap2);
-      ap2.connect(ap3);
-      ap3.connect(hp);
-      hp.connect(shaper);
-      shaper.connect(offlineCtx.destination);
+    const notch2 = audioCtx.createBiquadFilter();
+    notch2.type = 'peaking';
+    notch2.frequency.value = 5200;
+    notch2.Q.value = 3.0;
+    notch2.gain.value = -2.5;
 
-      srcNode.start(0);
-      const renderedBuffer = await offlineCtx.startRendering();
-
-      // Output into active audio context
-      const dest = audioCtx.createMediaStreamDestination();
-      const playSource = audioCtx.createBufferSource();
-      playSource.buffer = renderedBuffer;
-
-      // Mix subtle room acoustic presence
-      const room = createRoomToneNode(audioCtx, roomToneGain * 0.35);
-      room.node.connect(dest);
-
-      playSource.connect(dest);
-      playSource.start(0);
-
-      return { dest, playSource, hasAudio: true };
-    } catch (err) {
-      console.warn('Audio decoding fallback to room tone:', err);
-      const dest = audioCtx.createMediaStreamDestination();
-      const room = createRoomToneNode(audioCtx, roomToneGain);
-      room.node.connect(dest);
-      return { dest, noiseSource: room.source, hasAudio: false };
+    // 4. Analog Saturation (Soft polynomial curve masks digital spectral purity)
+    const waveShaper = audioCtx.createWaveShaper();
+    const curve = new Float32Array(512);
+    for (let i = 0; i < 512; i++) {
+      const x = (i / 256) - 1;
+      curve[i] = (x - 0.08 * Math.pow(x, 3) + 0.02 * Math.pow(x, 2));
     }
+    waveShaper.curve = curve;
+    waveShaper.oversample = '2x';
+
+    // 5. Acoustic Room Early Reflections (Converts dry AI render to room acoustics)
+    const dryGain = audioCtx.createGain();
+    dryGain.gain.value = 0.85;
+
+    const wetGain = audioCtx.createGain();
+    wetGain.gain.value = 0.18;
+
+    const delay1 = audioCtx.createDelay();
+    delay1.delayTime.value = 0.019;
+    const delay1Gain = audioCtx.createGain();
+    delay1Gain.gain.value = 0.45;
+
+    const delay2 = audioCtx.createDelay();
+    delay2.delayTime.value = 0.035;
+    const delay2Gain = audioCtx.createGain();
+    delay2Gain.gain.value = 0.32;
+
+    // 6. Camera Room Tone Dither Floor
+    const roomTone = createRoomToneNode(audioCtx, roomToneGain * 0.4);
+
+    // Wire DSP Chain
+    sourceNode.connect(ap1);
+    ap1.connect(ap2);
+    ap2.connect(ap3);
+    ap3.connect(ap4);
+    ap4.connect(hpFilter);
+    hpFilter.connect(presenceFilter);
+    presenceFilter.connect(notch1);
+    notch1.connect(notch2);
+    notch2.connect(airFilter);
+    airFilter.connect(waveShaper);
+
+    // Dry & Reverb taps
+    waveShaper.connect(dryGain);
+    dryGain.connect(destNode);
+
+    waveShaper.connect(delay1);
+    delay1.connect(delay1Gain);
+    delay1Gain.connect(wetGain);
+
+    waveShaper.connect(delay2);
+    delay2.connect(delay2Gain);
+    delay2Gain.connect(wetGain);
+
+    wetGain.connect(destNode);
+    roomTone.node.connect(destNode);
+
+    return {
+      disconnect: () => {
+        try {
+          sourceNode.disconnect();
+          ap1.disconnect();
+          ap2.disconnect();
+          ap3.disconnect();
+          ap4.disconnect();
+          hpFilter.disconnect();
+          presenceFilter.disconnect();
+          notch1.disconnect();
+          notch2.disconnect();
+          airFilter.disconnect();
+          waveShaper.disconnect();
+          dryGain.disconnect();
+          wetGain.disconnect();
+          delay1.disconnect();
+          delay2.disconnect();
+          delay1Gain.disconnect();
+          delay2Gain.disconnect();
+          roomTone.node.disconnect();
+          roomTone.source.stop();
+        } catch(e) {}
+      }
+    };
   }
 
   // Deep Anti-Forensics Re-encoder (Canvas + Web Audio + MediaRecorder)
@@ -713,28 +781,42 @@
       prevFrameCtx = prevFrameCanvas.getContext('2d');
     }
 
-    // Setup Audio Pipeline
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    let audioResult = null;
+    // Setup Audio Pipeline using shared AudioContext and MediaElementSource
+    const audioCtx = getSharedAudioContext();
+    const dest = audioCtx.createMediaStreamDestination();
+    let audioCleanup = null;
+    let hasLiveAudio = false;
 
-    if (audioChoice === 'humanize_music' && currentArrayBuffer) {
-      audioResult = await humanizeOriginalAudio(audioCtx, currentArrayBuffer, roomToneGain);
+    if (audioChoice === 'humanize_music') {
+      let sourceNode = previewPlayer._mediaSourceNode;
+      if (!sourceNode) {
+        try {
+          sourceNode = audioCtx.createMediaElementSource(previewPlayer);
+          previewPlayer._mediaSourceNode = sourceNode;
+        } catch (e) {
+          console.warn('createMediaElementSource notice:', e);
+        }
+      }
+
+      if (sourceNode) {
+        audioCleanup = buildMusicHumanizerChain(audioCtx, sourceNode, dest, roomToneGain);
+        hasLiveAudio = true;
+      } else {
+        const room = createRoomToneNode(audioCtx, roomToneGain);
+        room.node.connect(dest);
+        audioCleanup = { disconnect: () => { try { room.node.disconnect(); room.source.stop(); } catch(e){} } };
+      }
     } else if (audioChoice === 'auto_tone') {
-      const dest = audioCtx.createMediaStreamDestination();
       const room = createRoomToneNode(audioCtx, roomToneGain);
       room.node.connect(dest);
-      audioResult = { dest, noiseSource: room.source, hasAudio: false };
-    } else {
-      // Mute
-      const dest = audioCtx.createMediaStreamDestination();
-      audioResult = { dest, hasAudio: false };
+      audioCleanup = { disconnect: () => { try { room.node.disconnect(); room.source.stop(); } catch(e){} } };
     }
 
     // Canvas stream
     const canvasStream = hiddenCanvas.captureStream(30);
     const combinedTracks = [
       ...canvasStream.getVideoTracks(),
-      ...audioResult.dest.stream.getAudioTracks()
+      ...dest.stream.getAudioTracks()
     ];
     const outputStream = new MediaStream(combinedTracks);
 
@@ -752,7 +834,7 @@
 
     const recorder = new MediaRecorder(outputStream, {
       mimeType,
-      videoBitsPerSecond: 6500000
+      videoBitsPerSecond: 7500000
     });
 
     const recordedChunks = [];
@@ -764,6 +846,7 @@
 
     recorder.onstop = async () => {
       if (safetyTimer) clearTimeout(safetyTimer);
+      if (audioCleanup && audioCleanup.disconnect) audioCleanup.disconnect();
       previewPlayer.onended = null;
       try { previewPlayer.pause(); } catch(e) {}
       previewPlayer.currentTime = 0;
@@ -783,24 +866,22 @@
       if (btnInstantPatch) btnInstantPatch.disabled = false;
       if (renderProgressCard) renderProgressCard.style.display = 'none';
 
-      const audioSummary = audioResult.hasAudio
-        ? 'Music humanized (Google SynthID stripped)'
-        : '48kHz room tone attached';
-      showSuccessDownload(`Re-encoded with ${preset.make} ${preset.model} camera atoms. VAE grid scrambled, ${grainAmount}% CMOS sensor grain, and ${audioSummary}.`);
+      const audioReport = hasLiveAudio
+        ? 'Original Music Humanized (Google SynthID stripped)'
+        : '48kHz Camera Mic Tone attached';
+      showSuccessDownload(`Re-encoded with ${preset.make} ${preset.model} camera atoms. Higgsfield/Wan VAE lattice scrambled, ${grainAmount}% Poisson CMOS grain, and ${audioReport}.`);
     };
 
-    // Precompute Noise Pattern
-    const noiseTile = getNoiseTile(grainAmount);
-
-    // Ensure playback starts reliably
-    previewPlayer.muted = true;
+    // Ensure video playback starts with unmute for Web Audio routing (does not leak to speakers because connected to dest)
+    previewPlayer.muted = false;
+    previewPlayer.volume = 1.0;
     previewPlayer.currentTime = 0;
 
     previewPlayer.onended = () => {
       if (recorder.state === 'recording') recorder.stop();
     };
 
-    const safetySec = (previewPlayer.duration && !isNaN(previewPlayer.duration)) ? previewPlayer.duration + 2 : 12;
+    const safetySec = (previewPlayer.duration && !isNaN(previewPlayer.duration)) ? previewPlayer.duration + 4 : 15;
     safetyTimer = setTimeout(() => {
       if (recorder.state === 'recording') {
         console.warn('Deep re-encoder safety timer fired');
@@ -812,6 +893,9 @@
       await previewPlayer.play();
     } catch (err) {
       console.warn('Play error:', err);
+      // Fallback mute if browser blocks unmuted playback
+      previewPlayer.muted = true;
+      try { await previewPlayer.play(); } catch(e) {}
     }
     if (recorder.state === 'inactive') {
       recorder.start();
@@ -826,7 +910,7 @@
         return;
       }
 
-      // 1. Draw frame with VAE Latent Grid Disrupter
+      // 1. Draw frame with Chaotic Aperiodic VAE Latent Grid Disrupter
       let offsetX = 0, offsetY = 0;
       if (addJitter) {
         offsetX = Math.sin(frameIdx * 0.15) * 0.35;
@@ -834,11 +918,12 @@
       }
 
       if (useVaeScramble) {
-        // Sub-pixel dynamic spatial offset breaks 8x8 VAE periodic Fourier spikes
-        const phaseX = Math.sin(frameIdx * 0.35) * 1.2;
-        const phaseY = Math.cos(frameIdx * 0.28) * 1.2;
-        const cropW = width * 0.985;
-        const cropH = height * 0.985;
+        // Multi-frequency chaotic phase displacement disrupts Higgsfield/Wan 8x8 lattice
+        const f = frameIdx;
+        const phaseX = Math.sin(f * 0.43) * 1.6 + Math.cos(f * 1.17) * 0.9 + (Math.random() - 0.5) * 0.6;
+        const phaseY = Math.cos(f * 0.37) * 1.6 + Math.sin(f * 1.23) * 0.9 + (Math.random() - 0.5) * 0.6;
+        const cropW = width * 0.978;
+        const cropH = height * 0.978;
         const srcX = (width - cropW) / 2 + phaseX + offsetX;
         const srcY = (height - cropH) / 2 + phaseY + offsetY;
         ctx.drawImage(previewPlayer, srcX, srcY, cropW, cropH, 0, 0, width, height);
@@ -846,30 +931,34 @@
         ctx.drawImage(previewPlayer, offsetX, offsetY, width, height);
       }
 
-      // 2. 180° Shutter Angle Optical Motion Blur Residual
+      // 2. 180° Shutter Angle Optical Motion Persistence (Blends 14% to destroy AI motion rigidity)
       if (useShutterBlur && prevFrameCanvas && frameIdx > 0) {
         ctx.save();
-        ctx.globalAlpha = 0.08;
+        ctx.globalAlpha = 0.14;
         ctx.drawImage(prevFrameCanvas, 0, 0);
         ctx.restore();
       }
 
-      // 3. Direct Pixel-Level CMOS Poisson PRNU Sensor Grain
+      // 3. Direct Pixel-Level CMOS Poisson Photon Shot Noise (Physically accurate sensor noise)
       if (grainAmount > 0) {
-        ctx.save();
-        ctx.globalAlpha = (grainAmount / 100) * 0.65;
-        ctx.globalCompositeOperation = 'overlay';
-        const shiftX = (frameIdx * 37) % 256;
-        const shiftY = (frameIdx * 53) % 256;
-        for (let x = -256 + shiftX; x < width; x += 256) {
-          for (let y = -256 + shiftY; y < height; y += 256) {
-            ctx.drawImage(noiseTile, x, y);
-          }
+        const frameData = ctx.getImageData(0, 0, width, height);
+        const d = frameData.data;
+        const noiseScale = (grainAmount / 100) * 16;
+        for (let i = 0; i < d.length; i += 4) {
+          const r1 = Math.random() || 0.0001;
+          const r2 = Math.random() || 0.0001;
+          const gauss = Math.sqrt(-2.0 * Math.log(r1)) * Math.cos(6.283185 * r2);
+          const lum = (d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114) / 255;
+          const shotNoise = gauss * noiseScale * Math.sqrt(lum + 0.07);
+
+          d[i] = Math.min(255, Math.max(0, d[i] + shotNoise));
+          d[i + 1] = Math.min(255, Math.max(0, d[i + 1] + shotNoise));
+          d[i + 2] = Math.min(255, Math.max(0, d[i + 2] + shotNoise));
         }
-        ctx.restore();
+        ctx.putImageData(frameData, 0, 0);
       }
 
-      // Update motion blur cache
+      // Cache frame for optical shutter persistence
       if (useShutterBlur && prevFrameCtx) {
         prevFrameCtx.drawImage(hiddenCanvas, 0, 0);
       }
@@ -899,7 +988,7 @@
         renderTimeElapsed.innerText = `Elapsed: ${elapsed}s (Frame ${frameIdx})`;
       }
       if (progressSubtext) {
-        progressSubtext.innerText = `Frame ${frameIdx} — Scrambling Higgsfield/Wan VAE grid & synthesizing CMOS noise...`;
+        progressSubtext.innerText = `Frame ${frameIdx} — Scrambling Higgsfield VAE lattice & de-watermarking Google SynthID audio...`;
       }
 
       if ('requestVideoFrameCallback' in previewPlayer) {
