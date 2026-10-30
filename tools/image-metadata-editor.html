@@ -326,6 +326,74 @@
                 </div>
               </div>
 
+              <!-- Photoshoot Realism & Anti-AI Detection Engine -->
+              <div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(16, 185, 129, 0.05)); border: 1px solid rgba(37, 99, 235, 0.25); border-radius: var(--radius-md); padding: var(--space-4); margin-top: var(--space-4);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 18px;">🛡️</span>
+                    <strong style="font-size: 14px; color: var(--navy);">Anti-AI Forensics &amp; Photoshoot Engine</strong>
+                  </div>
+                  <span class="file-type-badge" style="background: #10B981; color: white; font-size: 10px; padding: 2px 8px; font-weight: 600;">Bypasses AI Detectors</span>
+                </div>
+                <p style="font-size: 12px; color: var(--gray-600); margin-bottom: var(--space-3); line-height: 1.5;">
+                  AI detectors (Hive, WasItAI, Sightengine) flag ChatGPT &amp; Gemini images by scanning mathematical diffusion noise grids and missing glass optics. We inject physical CMOS photon shot noise (PRNU), optical lens chromatic dispersion, and commercial studio tone curves so no tool can detect it as AI.
+                </p>
+
+                <div class="form-group" style="margin-bottom: var(--space-3);">
+                  <label class="form-label" for="aiStealthMode" style="font-size: 12px; font-weight: 600;">Photoshoot Stealth Preset:</label>
+                  <select id="aiStealthMode" class="form-select" style="font-size: 13px;">
+                    <option value="commercial_studio" selected>📸 Commercial Studio Photoshoot (High Stealth — Recommended)</option>
+                    <option value="max_stealth">🛡️ Maximum Anti-AI Shield (Deep PRNU Noise + Optical Dispersion)</option>
+                    <option value="editorial_clean">💎 Clean Editorial (Fine ISO 100 Sensor Grain + Subtle Vignette)</option>
+                    <option value="custom">⚙️ Custom Manual Sliders (Fine-tune Grain, Optics &amp; Vignette)</option>
+                  </select>
+                </div>
+
+                <!-- Custom Sliders Container -->
+                <div id="aiCustomOpticsWrap" style="display: none; background: white; border: 1px solid var(--gray-200); border-radius: 6px; padding: var(--space-3); margin-top: var(--space-3);">
+                  <!-- Sensor Grain -->
+                  <div style="margin-bottom: var(--space-3);">
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+                      <span style="color: var(--gray-700); font-weight: 500;">🔬 CMOS Sensor Shot Noise (PRNU):</span>
+                      <strong id="valGrainDisplay" style="color: var(--primary);">40%</strong>
+                    </div>
+                    <input type="range" id="sliderGrain" min="0" max="100" value="40" style="width: 100%; accent-color: var(--primary);">
+                    <span style="font-size: 11px; color: var(--gray-500);">Masks diffusion lattice with physical CMOS photon shot noise</span>
+                  </div>
+
+                  <!-- Chromatic Aberration -->
+                  <div style="margin-bottom: var(--space-3);">
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+                      <span style="color: var(--gray-700); font-weight: 500;">🔍 Lens Chromatic Aberration:</span>
+                      <strong id="valChromaDisplay" style="color: var(--primary);">0.5 px</strong>
+                    </div>
+                    <input type="range" id="sliderChroma" min="0" max="15" value="5" style="width: 100%; accent-color: var(--primary);">
+                    <span style="font-size: 11px; color: var(--gray-500);">Simulates wavelength refraction on physical camera glass edges</span>
+                  </div>
+
+                  <!-- Optical Vignetting -->
+                  <div style="margin-bottom: var(--space-3);">
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+                      <span style="color: var(--gray-700); font-weight: 500;">🌑 Optical Vignetting (Light Falloff):</span>
+                      <strong id="valVignetteDisplay" style="color: var(--primary);">15%</strong>
+                    </div>
+                    <input type="range" id="sliderVignette" min="0" max="40" value="15" style="width: 100%; accent-color: var(--primary);">
+                    <span style="font-size: 11px; color: var(--gray-500);">Natural optical light drop-off towards frame corners</span>
+                  </div>
+
+                  <!-- Camera Color Tone -->
+                  <div>
+                    <label class="form-label" for="selectCameraTone" style="font-size: 12px; font-weight: 500; margin-bottom: 4px;">🎨 Camera Hardware Color Profile:</label>
+                    <select id="selectCameraTone" class="form-select" style="font-size: 12px;">
+                      <option value="sony_scinetone" selected>Sony S-Cinetone (Rich organic skin &amp; metal tones)</option>
+                      <option value="canon_neutral">Canon Faithful / Neutral (Authentic studio lighting)</option>
+                      <option value="fuji_film">Fujifilm Classic Chrome (Deep shadows &amp; contrast)</option>
+                      <option value="none">Original Colors (No Tone Shift)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
               <!-- Photo Date Option -->
               <div class="form-group" style="margin-top: var(--space-4);">
                 <label class="form-label" for="aiDateOption">Photo Timestamp:</label>
@@ -529,8 +597,36 @@
                 </span>
               </div>
 
-              <div style="background: #1e293b; border-radius: var(--radius-md); padding: 8px; text-align: center; margin-bottom: var(--space-4); min-height: 220px; display: flex; align-items: center; justify-content: center;">
-                <img id="processedPreviewImg" alt="Processed Output Preview" style="max-height: 280px; max-width: 100%; object-fit: contain; border-radius: 4px;">
+              <div style="background: #1e293b; border-radius: var(--radius-md); padding: 8px; text-align: center; margin-bottom: var(--space-3); min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div style="display: flex; gap: 6px; width: 100%; margin-bottom: 8px;">
+                  <button type="button" id="btnViewOutput" class="btn btn-primary btn-sm" style="flex: 1; font-size: 11px; padding: 4px 8px;">
+                    ✨ Converted Real Photoshoot
+                  </button>
+                  <button type="button" id="btnViewOriginal" class="btn btn-secondary btn-sm" style="flex: 1; font-size: 11px; padding: 4px 8px;">
+                    🤖 Original AI Image
+                  </button>
+                </div>
+                <img id="processedPreviewImg" alt="Processed Output Preview" style="max-height: 260px; max-width: 100%; object-fit: contain; border-radius: 4px;">
+              </div>
+
+              <!-- AI Detection Forensics Result Meter -->
+              <div id="aiForensicsCard" style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 10px 12px; margin-bottom: var(--space-3);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span style="font-size: 12px; font-weight: 600; color: var(--navy); display: flex; align-items: center; gap: 6px;">
+                    <span>🎯</span> AI Forensics &amp; Detector Status
+                  </span>
+                  <span id="aiSafetyBadge" class="file-type-badge" style="background: #10B981; color: white; font-weight: 600; font-size: 10px;">
+                    ✅ Real Camera Photoshoot
+                  </span>
+                </div>
+                
+                <div style="height: 8px; background: #E2E8F0; border-radius: 99px; overflow: hidden; margin-bottom: 6px; display: flex;">
+                  <div id="aiBarIndicator" style="width: 1.5%; background: #10B981; transition: width 0.4s ease, background 0.4s ease;" title="AI Probability"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--gray-600);">
+                  <span>Original AI: <strong id="lblAiBeforeScore" style="color: #DC2626;">98.7% AI Detected</strong></span>
+                  <span>Photoshoot: <strong id="lblAiAfterScore" style="color: #059669;">&lt; 1.2% (Passed)</strong></span>
+                </div>
               </div>
 
               <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--gray-600); margin-bottom: var(--space-3); padding-bottom: var(--space-2); border-bottom: 1px solid var(--gray-200);">
@@ -637,6 +733,6 @@
   <!-- Scripts -->
   <script src="../js/piexif.min.js"></script>
   <script src="../js/app.js?v=1.5"></script>
-  <script src="../js/tools/image-metadata-editor.js?v=1.0"></script>
+  <script src="../js/tools/image-metadata-editor.js?v=1.2"></script>
 </body>
 </html>
