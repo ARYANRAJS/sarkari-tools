@@ -39,33 +39,36 @@
     window.dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
   </script>
 
-  <!-- High-Performance Lazy Loader for 3rd-Party Scripts (GTM & AdSense) -->
+    <!-- High-Performance Lazy Loader for 3rd-Party Scripts (GTM & AdSense) -->
   <script>
     (function() {
-      var thirdPartyLoaded = false;
-      function loadThirdParties() {
-        if (thirdPartyLoaded) return;
-        thirdPartyLoaded = true;
-
+      var loaded = false;
+      function loadScripts() {
+        if (loaded) return;
+        loaded = true;
         var gtm = document.createElement('script');
         gtm.async = true;
         gtm.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-T2ZZ2MP6';
         document.head.appendChild(gtm);
-
-        var ads = document.createElement('script');
-        ads.async = true;
-        ads.crossOrigin = 'anonymous';
-        ads.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9560707690666988';
-        document.head.appendChild(ads);
       }
 
-      var events = ['scroll', 'touchstart', 'mousemove', 'click', 'keydown', 'wheel'];
-      events.forEach(function(ev) {
-        window.addEventListener(ev, loadThirdParties, { once: true, passive: true });
+      function scheduleLoad() {
+        if (loaded) return;
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadScripts, { timeout: 4000 });
+        } else {
+          setTimeout(loadScripts, 200);
+        }
+      }
+
+      // Deliberate user action triggers (never on mouse hover / wheel jitter)
+      ['scroll', 'touchstart', 'click'].forEach(function(ev) {
+        window.addEventListener(ev, scheduleLoad, { once: true, passive: true });
       });
 
+      // Background fallback 7 seconds after page load when main thread is completely quiet
       window.addEventListener('load', function() {
-        setTimeout(loadThirdParties, 4000);
+        setTimeout(scheduleLoad, 7000);
       });
     })();
   </script>

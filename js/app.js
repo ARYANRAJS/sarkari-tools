@@ -932,9 +932,9 @@
         <input type="text" class="header-search-input" placeholder="Search tools..." id="mobileSearchInput" autocomplete="off" aria-label="Search tools" style="width:100%; border-radius:var(--radius-md);">
         <div class="search-results-dropdown" id="mobileSearchResults"></div>
       </div>
-      <ul class="mobile-nav-links">
+      <ul class="mobile-nav-links" id="mobileNavLinks">
         <li><a href="${homeUrl}">🏠 Home</a></li>
-        ${TOOLS.map(t => `<li><a href="${getToolUrl(t)}">${t.icon} ${t.name}</a></li>`).join('')}
+        <li><a href="${toolsDirUrl}">⚡ All Tools Directory</a></li>
       </ul>
     </nav>`;
   }
@@ -1118,6 +1118,17 @@
 
     toggle.addEventListener('click', () => {
       const isOpen = mobileNav.classList.contains('active');
+      if (!isOpen) {
+        const linksList = document.getElementById('mobileNavLinks');
+        if (linksList && !linksList.dataset.rendered) {
+          linksList.dataset.rendered = 'true';
+          linksList.innerHTML = `
+            <li><a href="${homeUrl}">🏠 Home</a></li>
+            <li><a href="${toolsDirUrl}">⚡ All Tools Directory</a></li>
+            ${TOOLS.map(t => `<li><a href="${getToolUrl(t)}">${t.icon} ${t.name}</a></li>`).join('')}
+          `;
+        }
+      }
       mobileNav.classList.toggle('active');
       toggle.setAttribute('aria-expanded', !isOpen);
       document.body.style.overflow = isOpen ? '' : 'hidden';
@@ -1411,6 +1422,7 @@
           const inp = pageSection.querySelector('textarea');
           if (inp) inp.focus();
         } else {
+          ensureFeedbackModal();
           const backdrop = document.getElementById('feedbackModalBackdrop');
           if (backdrop) backdrop.classList.add('active');
         }
@@ -1559,6 +1571,8 @@
   
   // ── Universal Smooth Scroll Chaining & Wheel Trap Prevention ──
   function initScrollChaining() {
+    const hasStickyPanels = document.querySelector('.split-layout, .tool-split-output, .qr-preview-column, .preview-panel');
+    if (!hasStickyPanels) return;
     window.addEventListener('wheel', function (e) {
       // 1. If active element is a number input, blur it so wheel doesn't get trapped changing values
       if (document.activeElement && document.activeElement.type === 'number') {
