@@ -1047,8 +1047,11 @@
       website: 'https://aws.amazon.com/s3/',
       test: (ctx) => {
         const server = ctx.headerMap['server'] || '';
-        if (/amazons3/i.test(server) || ctx.headers.includes('x-amz-server-side-encryption') || ctx.headers.includes('x-amz-request-id')) {
+        if (/amazons3/i.test(server) || ctx.headers.includes('amazons3') || ctx.headers.includes('x-amz-server-side-encryption') || ctx.headers.includes('x-amz-request-id')) {
           return { evidence: 'Detected Amazon S3 storage origin from Server response header' };
+        }
+        if (ctx.ns && ctx.ns.some(n => /awsdns/i.test(n)) && (ctx.headers.includes('cloudfront') || /cloudfront/i.test(ctx.asn || ''))) {
+          return { evidence: 'AWS Cloud Infrastructure (Route 53 + CloudFront & S3 Origin)' };
         }
         if (ctx.html.includes('s3.amazonaws.com') || /https?:\/\/[a-z0-9\.\-_]+\.s3[a-z0-9\.\-_]*\.amazonaws\.com/i.test(ctx.html)) {
           return { evidence: 'Found Amazon S3 bucket asset URLs in document' };
@@ -1572,10 +1575,30 @@
 
   // Fetch HTML with multi-proxy fallback cascade
   async function fetchSiteHtml(targetUrl) {
-    // Attempt 1: Jina AI Reader HTML proxy
+    // Attempt 1: High-Speed Edge CORS Worker (Cloudflare V8 Runtime)
     try {
       const controller = new AbortController();
-      const tid = setTimeout(() => controller.abort(), 7000);
+      const tid = setTimeout(() => controller.abort(), 6000);
+      const res = await fetch(`https://cors-get-proxy.sirjosh.workers.dev/?url=${encodeURIComponent(targetUrl)}`, {
+        signal: controller.signal
+      });
+      clearTimeout(tid);
+      if (res.ok) {
+        const text = await res.text();
+        if (text && text.length > 80) {
+          // Extract response headers if preserved
+          const ct = res.headers.get('content-type') || 'text/html';
+          return { html: text, headers: `content-type: ${ct}\nserver: ${res.headers.get('server') || ''}` };
+        }
+      }
+    } catch (e) {
+      console.warn('Proxy 1 (Sirjosh Worker) failed:', e);
+    }
+
+    // Attempt 2: Jina AI Reader HTML proxy
+    try {
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 5000);
       const res = await fetch(`https://r.jina.ai/${targetUrl}`, {
         headers: { 'X-Return-Format': 'html' },
         signal: controller.signal
@@ -1588,13 +1611,13 @@
         }
       }
     } catch (e) {
-      console.warn('Proxy 1 (Jina) failed:', e);
+      console.warn('Proxy 2 (Jina) failed:', e);
     }
 
-    // Attempt 2: CodeTabs Proxy
+    // Attempt 3: CodeTabs Proxy
     try {
       const controller = new AbortController();
-      const tid = setTimeout(() => controller.abort(), 5000);
+      const tid = setTimeout(() => controller.abort(), 4000);
       const res = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`, {
         signal: controller.signal
       });
@@ -1606,13 +1629,13 @@
         }
       }
     } catch (e) {
-      console.warn('Proxy 2 (CodeTabs) failed:', e);
+      console.warn('Proxy 3 (CodeTabs) failed:', e);
     }
 
-    // Attempt 3: AllOrigins Raw
+    // Attempt 4: AllOrigins Raw
     try {
       const controller = new AbortController();
-      const tid = setTimeout(() => controller.abort(), 5000);
+      const tid = setTimeout(() => controller.abort(), 4000);
       const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`, {
         signal: controller.signal
       });
@@ -1624,25 +1647,7 @@
         }
       }
     } catch (e) {
-      console.warn('Proxy 3 (AllOrigins Raw) failed:', e);
-    }
-
-    // Attempt 4: AllOrigins JSON API
-    try {
-      const controller = new AbortController();
-      const tid = setTimeout(() => controller.abort(), 5000);
-      const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`, {
-        signal: controller.signal
-      });
-      clearTimeout(tid);
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.contents && data.contents.length > 50) {
-          return { html: data.contents, headers: '' };
-        }
-      }
-    } catch (e) {
-      console.warn('Proxy 4 (AllOrigins JSON) failed:', e);
+      console.warn('Proxy 4 (AllOrigins Raw) failed:', e);
     }
 
     throw new Error('Website bot shield or network timeout prevented live HTML extraction.');

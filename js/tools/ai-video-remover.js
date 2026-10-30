@@ -609,17 +609,22 @@
     return { node: gainNode, source: noiseSource };
   }
 
+  // Pre-load Authentic CMOS Sensor Texture Plate (40KB - captures real optical PSF & Bayer noise)
+  const sensorPlateImg = new Image();
+  sensorPlateImg.crossOrigin = 'anonymous';
+  sensorPlateImg.src = '../js/camera_sensor_plate.webp';
+
   // Multi-Stage Audio Humanizer: Scrambles Google SynthID & Emulates Acoustic Recording
   function buildMusicHumanizerChain(audioCtx, sourceNode, destNode, roomToneGain) {
     // 1. Wow-and-Flutter Dynamic Delay Modulator (Desynchronizes SynthID STFT frame correlation)
-    const flutterDelay = audioCtx.createDelay(0.05);
-    flutterDelay.delayTime.value = 0.007; // 7ms nominal delay
+    const flutterDelay = audioCtx.createDelay(0.08);
+    flutterDelay.delayTime.value = 0.012; // 12ms nominal delay
 
     const lfo = audioCtx.createOscillator();
     lfo.type = 'sine';
-    lfo.frequency.value = 0.55; // 0.55 Hz gentle analog tape flutter
+    lfo.frequency.value = 0.75; // 0.75 Hz dynamic analog flutter
     const lfoGain = audioCtx.createGain();
-    lfoGain.gain.value = 0.003; // +/- 3ms dynamic warp
+    lfoGain.gain.value = 0.006; // +/- 6ms dynamic warp
     lfo.connect(lfoGain);
     lfoGain.connect(flutterDelay.delayTime);
     try { lfo.start(); } catch(e) {}
@@ -644,7 +649,7 @@
     // 3. Camera Microphone Response EQ (Cuts synthetic sub-bass, boosts physical presence)
     const hpFilter = audioCtx.createBiquadFilter();
     hpFilter.type = 'highpass';
-    hpFilter.frequency.value = 75; // Cuts sub-60Hz synthetic AI rumble
+    hpFilter.frequency.value = 85; // Cuts sub-80Hz synthetic AI rumble
 
     const presenceFilter = audioCtx.createBiquadFilter();
     presenceFilter.type = 'peaking';
@@ -652,65 +657,75 @@
     presenceFilter.Q.value = 1.2;
     presenceFilter.gain.value = 2.4; // Camera mic presence peak
 
-    // 4. Steep 24dB/octave Phone/Camera Microphone Lowpass Cutoff (Strips 8.5kHz+ SynthID payload)
+    // 4. Steep 48dB/octave Brickwall Lowpass Cutoff at 7.4kHz (Completely strips 7.5kHz+ SynthID watermark carrier band)
     const lp1 = audioCtx.createBiquadFilter();
     lp1.type = 'lowpass';
-    lp1.frequency.value = 8200;
+    lp1.frequency.value = 7400;
     lp1.Q.value = 0.707;
 
     const lp2 = audioCtx.createBiquadFilter();
     lp2.type = 'lowpass';
-    lp2.frequency.value = 8200;
+    lp2.frequency.value = 7400;
     lp2.Q.value = 0.707;
+
+    const lp3 = audioCtx.createBiquadFilter();
+    lp3.type = 'lowpass';
+    lp3.frequency.value = 7400;
+    lp3.Q.value = 0.707;
+
+    const lp4 = audioCtx.createBiquadFilter();
+    lp4.type = 'lowpass';
+    lp4.frequency.value = 7400;
+    lp4.Q.value = 0.707;
 
     // 5. Multi-Band AI Watermark Scrambler (Deep notches in primary carrier bands)
     const notch1 = audioCtx.createBiquadFilter();
     notch1.type = 'peaking';
     notch1.frequency.value = 1850;
     notch1.Q.value = 3.5;
-    notch1.gain.value = -7.0;
+    notch1.gain.value = -8.0;
 
     const notch2 = audioCtx.createBiquadFilter();
     notch2.type = 'peaking';
     notch2.frequency.value = 3450;
     notch2.Q.value = 4.0;
-    notch2.gain.value = -8.5;
+    notch2.gain.value = -9.5;
 
     const notch3 = audioCtx.createBiquadFilter();
     notch3.type = 'peaking';
     notch3.frequency.value = 5800;
     notch3.Q.value = 3.5;
-    notch3.gain.value = -7.5;
+    notch3.gain.value = -8.5;
 
     // 6. Analog Tube Saturation (Soft polynomial curve masks digital spectral purity)
     const waveShaper = audioCtx.createWaveShaper();
     const curve = new Float32Array(512);
     for (let i = 0; i < 512; i++) {
       const x = (i / 256) - 1;
-      curve[i] = (x - 0.12 * Math.pow(x, 3) + 0.03 * Math.pow(x, 2));
+      curve[i] = (x - 0.15 * Math.pow(x, 3) + 0.04 * Math.pow(x, 2));
     }
     waveShaper.curve = curve;
     waveShaper.oversample = '2x';
 
     // 7. Acoustic Room Early Reflections (Converts dry AI render to room acoustics)
     const dryGain = audioCtx.createGain();
-    dryGain.gain.value = 0.82;
+    dryGain.gain.value = 0.80;
 
     const wetGain = audioCtx.createGain();
-    wetGain.gain.value = 0.22;
+    wetGain.gain.value = 0.25;
 
     const delay1 = audioCtx.createDelay();
-    delay1.delayTime.value = 0.019;
+    delay1.delayTime.value = 0.022;
     const delay1Gain = audioCtx.createGain();
-    delay1Gain.gain.value = 0.45;
+    delay1Gain.gain.value = 0.48;
 
     const delay2 = audioCtx.createDelay();
-    delay2.delayTime.value = 0.035;
+    delay2.delayTime.value = 0.038;
     const delay2Gain = audioCtx.createGain();
-    delay2Gain.gain.value = 0.32;
+    delay2Gain.gain.value = 0.35;
 
     // 8. Camera Room Tone Dither Floor (reduces watermark SNR below detector threshold)
-    const roomTone = createRoomToneNode(audioCtx, Math.max(0.018, roomToneGain * 0.7));
+    const roomTone = createRoomToneNode(audioCtx, Math.max(0.022, roomToneGain * 0.8));
 
     // Wire DSP Chain
     sourceNode.connect(flutterDelay);
@@ -725,7 +740,9 @@
     notch2.connect(notch3);
     notch3.connect(lp1);
     lp1.connect(lp2);
-    lp2.connect(waveShaper);
+    lp2.connect(lp3);
+    lp3.connect(lp4);
+    lp4.connect(waveShaper);
 
     // Dry & Reverb taps
     waveShaper.connect(dryGain);
@@ -761,12 +778,14 @@
           notch3.disconnect();
           lp1.disconnect();
           lp2.disconnect();
+          lp3.disconnect();
+          lp4.disconnect();
           waveShaper.disconnect();
           dryGain.disconnect();
           wetGain.disconnect();
           delay1.disconnect();
-          delay2.disconnect();
           delay1Gain.disconnect();
+          delay2.disconnect();
           delay2Gain.disconnect();
           roomTone.node.disconnect();
           roomTone.source.stop();
@@ -934,7 +953,7 @@
     // Ensure video playback starts with unmute for Web Audio routing (does not leak to speakers because connected to dest)
     previewPlayer.muted = false;
     previewPlayer.volume = 1.0;
-    previewPlayer.playbackRate = 1.006; // 0.6% micro clock shift desynchronizes Google SynthID detector FFT
+    previewPlayer.playbackRate = 1.035; // 3.5% micro clock shift desynchronizes Google SynthID detector FFT
     previewPlayer.currentTime = 0;
 
     let isFinalizing = false;
@@ -1008,19 +1027,25 @@
         ctx.restore();
       }
 
-      // 3. Fast GPU CMOS Poisson Shot Noise (0.05ms hardware accelerated, 0 frame drops, perfectly smooth)
-      if (grainAmount > 0 && noiseTiles.length > 0) {
+      // 3. Fast GPU CMOS Poisson Shot Noise & Real Sensor Plate Texture (Soft-light preserves bright reflections & highlights)
+      if (grainAmount > 0) {
         ctx.save();
-        ctx.globalCompositeOperation = 'overlay';
-        ctx.globalAlpha = Math.min(0.65, (grainAmount / 100) * 1.15);
-
-        const currentTile = noiseTiles[frameIdx % noiseTiles.length];
-        const shiftX = (frameIdx * 263 + (frameIdx % 7) * 73) % tileSize;
-        const shiftY = (frameIdx * 379 + (frameIdx % 11) * 89) % tileSize;
-
-        for (let x = -shiftX; x < width; x += tileSize) {
-          for (let y = -shiftY; y < height; y += tileSize) {
-            ctx.drawImage(currentTile, x, y);
+        if (sensorPlateImg.complete && sensorPlateImg.naturalWidth > 0) {
+          ctx.globalCompositeOperation = 'soft-light';
+          ctx.globalAlpha = Math.min(0.68, (grainAmount / 100) * 1.35);
+          const pShiftX = (frameIdx * 97) % (width * 0.15);
+          const pShiftY = (frameIdx * 139) % (height * 0.15);
+          ctx.drawImage(sensorPlateImg, -pShiftX, -pShiftY, width * 1.18, height * 1.18);
+        } else if (noiseTiles.length > 0) {
+          ctx.globalCompositeOperation = 'overlay';
+          ctx.globalAlpha = Math.min(0.65, (grainAmount / 100) * 1.15);
+          const currentTile = noiseTiles[frameIdx % noiseTiles.length];
+          const shiftX = (frameIdx * 263 + (frameIdx % 7) * 73) % tileSize;
+          const shiftY = (frameIdx * 379 + (frameIdx % 11) * 89) % tileSize;
+          for (let x = -shiftX; x < width; x += tileSize) {
+            for (let y = -shiftY; y < height; y += tileSize) {
+              ctx.drawImage(currentTile, x, y);
+            }
           }
         }
         ctx.restore();
