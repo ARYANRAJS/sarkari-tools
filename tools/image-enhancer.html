@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultra AI Image Enhancer &amp; 4K/8K Super-Resolution | Free Online Photo Quality Enhancer</title>
+  <meta name="description" content="Enhance blurry, low-resolution, or compressed photos into ultra-crisp studio quality with deep multi-scale sharpening, CLAHE HDR dynamic range, bilateral noise reduction, and edge-directed 4x/8x super-resolution. 100% free and private in-browser.">
+  <meta name="keywords" content="ai image enhancer, photo enhancer online, unblur image, upscale image 4k, super resolution online, clahe photo enhancer, sharpen blurry photo, old photo restore, hd photo converter, best image quality enhancer, free photo upscaler">
+  <meta property="og:title" content="Ultra AI Image Enhancer &amp; 4K Super-Resolution | Free Online Tool">
+  <meta property="og:description" content="Deep multi-stage photo enhancer: Edge-directed super-resolution, CLAHE local HDR tone mapping, bilateral de-noising, and micro-texture recovery. 100% private in-browser.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon & Touch Icons -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="48x48" href="../favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/image-enhancer.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.5">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.5">
+
+  <style>
+    /* ───────── ENHANCER SPECIFIC STYLES ───────── */
+    .enhancer-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: 0.3px;
+    }
+    .preset-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: var(--space-5);
+    }
+    .preset-option-card {
+      border: 2px solid var(--gray-200);
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 14px 12px;
+      cursor: pointer;
+      transition: all var(--duration-fast);
+      text-align: left;
+      position: relative;
+    }
+    .preset-option-card:hover {
+      border-color: var(--saffron);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .preset-option-card.active {
+      border-color: var(--saffron);
+      background: #fffcf8;
+      box-shadow: 0 0 0 1px var(--saffron);
+    }
+    .preset-option-card .badge-rec {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #10b981;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .preset-option-card .preset-icon {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+    .preset-option-card .preset-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+    .preset-option-card .preset-desc {
+      font-size: 11px;
+      color: var(--gray-500);
+      line-height: 1.35;
+    }
+
+    /* Scale factor selector */
+    .scale-selector-wrap {
+      display: flex;
+      gap: 10px;
+      margin-bottom: var(--space-5);
+      flex-wrap: wrap;
+    }
+    .scale-chip {
+      flex: 1;
+      min-width: 90px;
+      border: 2px solid var(--gray-200);
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 10px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--duration-fast);
+    }
+    .scale-chip:hover {
+      border-color: var(--saffron);
+    }
+    .scale-chip.active {
+      border-color: var(--saffron);
+      background: var(--navy);
+      color: #fff;
+    }
+    .scale-chip.active .scale-sub {
+      color: #cbd5e1;
+    }
+    .scale-chip .scale-val {
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .scale-chip .scale-sub {
+      font-size: 10px;
+      color: var(--gray-500);
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Comparison Viewer (Split Slider) */
+    .compare-container {
+      position: relative;
+      width: 100%;
+      height: 480px;
+      background: #0f172a;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      user-select: none;
+      touch-action: pan-y;
+      border: 1px solid var(--gray-300);
+      box-shadow: var(--shadow-lg);
+    }
+    @media (max-width: 768px) {
+      .compare-container {
+        height: 340px;
+      }
+    }
+    .compare-image-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .compare-image-layer img,
+    .compare-image-layer canvas {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+    .compare-before-layer {
+      z-index: 2;
+      overflow: hidden;
+      clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+      border-right: 2px solid #fff;
+    }
+    .compare-divider-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 3px;
+      background: #ffffff;
+      z-index: 10;
+      transform: translateX(-50%);
+      cursor: ew-resize;
+      box-shadow: 0 0 12px rgba(0,0,0,0.6);
+    }
+    .compare-divider-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      font-size: 16px;
+      font-weight: 800;
+      border: 2px solid var(--saffron);
+      cursor: grab;
+      transition: transform 0.1s ease;
+    }
+    .compare-divider-button:active {
+      cursor: grabbing;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    .compare-pill {
+      position: absolute;
+      top: 14px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      z-index: 12;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+    }
+    .pill-before {
+      left: 14px;
+      background: rgba(15, 23, 42, 0.75);
+      color: #f1f5f9;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .pill-after {
+      right: 14px;
+      background: rgba(16, 185, 129, 0.85);
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    /* Advanced Accordion */
+    .advanced-toggle {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--navy);
+      margin-bottom: 12px;
+      transition: background 0.15s;
+    }
+    .advanced-toggle:hover {
+      background: var(--gray-100);
+    }
+    .advanced-drawer {
+      display: none;
+      background: #fafafa;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+    .advanced-drawer.open {
+      display: block;
+    }
+
+    .slider-row {
+      margin-bottom: 14px;
+    }
+    .slider-row:last-child {
+      margin-bottom: 0;
+    }
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .slider-header span:last-child {
+      color: var(--saffron-dark);
+      font-weight: 700;
+    }
+
+    /* Metric stats grid */
+    .metric-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .metric-stat-box {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: 10px;
+      text-align: center;
+    }
+    .metric-stat-box .stat-val {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .metric-stat-box .stat-label {
+      font-size: 10px;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- Site Header (injected by js/app.js) -->
+  <div id="header-placeholder"></div>
+
+  <main class="main-content">
+    <div class="container" style="max-width: 1140px;">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-separator">/</span>
+        <a href="../tools.html">Tools</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">Ultra AI Image Enhancer</span>
+      </nav>
+
+      <!-- Tool Header -->
+      <div class="tool-header" style="margin-bottom: var(--space-6);">
+        <div class="enhancer-hero-badge">
+          ✨ Deep Multi-Pass Studio Engine • 100% Client-Side
+        </div>
+        <div class="tool-icon-wrapper" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: #fff; width: 56px; height: 56px; border-radius: var(--radius-xl); display: inline-flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 12px; box-shadow: 0 6px 16px rgba(29,78,216,0.25);">
+          💎
+        </div>
+        <h1 class="tool-title" style="font-size: 28px; font-weight: 700; color: var(--navy); margin-bottom: 8px;">
+          Ultra AI Image Enhancer &amp; 4K Super-Resolution
+        </h1>
+        <p class="tool-subtitle" style="color: var(--gray-600); max-width: 800px; font-size: 15px; line-height: 1.6;">
+          Transform blurry, compressed, low-light, or low-resolution images into crystal-clear studio photographs. Features edge-directed super-resolution (up to 8x), CLAHE local HDR tone mapping, bilateral de-noising, and high-frequency texture synthesis. Zero cloud upload — runs 100% privately in your browser.
+        </p>
+      </div>
+
+      <!-- Upload Zone Card -->
+      <div class="tool-card" id="uploadZoneCard" style="border: 2px dashed var(--gray-300); background: var(--white); border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: var(--space-6);">
+        <input type="file" id="imageFileInput" accept="image/jpeg,image/png,image/webp,image/bmp" style="display: none;">
+        <div style="font-size: 52px; margin-bottom: 12px;">🖼️</div>
+        <div style="font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px;">
+          Drop your image here, or <span style="color: var(--saffron); text-decoration: underline;">Browse Files</span>
+        </div>
+        <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 16px;">
+          Supports JPG, PNG, WebP up to 30MB. Runs directly on your device GPU/CPU for complete privacy.
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <button type="button" class="btn btn-primary" onclick="document.getElementById('imageFileInput').click();">
+            📁 Select Image File
+          </button>
+          <button type="button" class="btn btn-outline" id="btnLoadSampleImage">
+            ⚡ Try Sample Blurry Image
+          </button>
+        </div>
+        <div style="margin-top: 14px; font-size: 12px; color: var(--gray-400);">
+          🔒 End-to-end client-side privacy. Zero data leaves your computer. No sign-up required.
+        </div>
+      </div>
+
+      <!-- Main Workspace (Hidden until file is loaded) -->
+      <div id="enhancerWorkspace" style="display: none;">
+
+        <!-- File Info Bar -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 12px 18px; margin-bottom: var(--space-5); flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="font-size: 24px;">📸</div>
+            <div>
+              <div id="fileInfoName" style="font-weight: 700; color: var(--navy); font-size: 14px;">photo.jpg</div>
+              <div id="fileInfoDimensions" style="font-size: 12px; color: var(--gray-500);">Original: 800 × 600 px • 145 KB</div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" id="btnChangeImage" onclick="document.getElementById('imageFileInput').click();">
+            🔄 Choose Another Image
+          </button>
+        </div>
+
+        <!-- Two Columns Layout: Left Controls, Right Preview/Result -->
+        <div style="display: grid; grid-template-columns: 1fr 1.35fr; gap: var(--space-6); margin-bottom: var(--space-6);" class="tool-split">
+
+          <!-- LEFT COLUMN: PRESETS & TUNING -->
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+
+            <!-- Presets Section -->
+            <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-5);">
+              <label class="form-label" style="font-weight: 700; color: var(--navy); font-size: 14px; margin-bottom: 10px; display: block;">
+                🎯 1. Select Enhancement Preset
+              </label>
+
+              <div class="preset-card-grid">
+                <!-- Preset 1: Ultra Master -->
+                <div class="preset-option-card active" data-preset="ultra_master">
+                  <span class="badge-rec">Best Output</span>
+                  <div class="preset-icon">🌟</div>
+                  <div class="preset-name">Ultra AI Master</div>
+                  <div class="preset-desc">Maximum multi-pass deblur, CLAHE HDR, bilateral denoise &amp; micro-texture recovery.</div>
+                </div>
+
+                <!-- Preset 2: Portrait & Face -->
+                <div class="preset-option-card" data-preset="portrait">
+                  <div class="preset-icon">👤</div>
+                  <div class="preset-name">Portrait &amp; Face</div>
+                  <div class="preset-desc">Smooths skin artifacts while making eyes, eyelashes &amp; hair strands ultra-sharp.</div>
+                </div>
+
+                <!-- Preset 3: Landscape & Nature -->
+                <div class="preset-option-card" data-preset="landscape">
+                  <div class="preset-icon">🏞️</div>
+                  <div class="preset-name">Landscape &amp; HDR</div>
+                  <div class="preset-desc">Deep shadow recovery, sky contrast, foliage vibrance, and atmospheric de-haze.</div>
+                </div>
+
+                <!-- Preset 4: Document & Text -->
+                <div class="preset-option-card" data-preset="document">
+                  <div class="preset-icon">📜</div>
+                  <div class="preset-name">Document &amp; Text</div>
+                  <div class="preset-desc">Purges paper grain and yellowing, sharpens faded characters and signatures.</div>
+                </div>
+              </div>
+
+              <!-- Super-Resolution Upscale Chip Selector -->
+              <label class="form-label" style="font-weight: 700; color: var(--navy); font-size: 13px; margin-bottom: 8px; display: block;">
+                🔍 2. Resolution Upscale Factor
+              </label>
+              <div class="scale-selector-wrap">
+                <div class="scale-chip" data-scale="1">
+                  <div class="scale-val">1x</div>
+                  <div class="scale-sub">Fidelity Only</div>
+                </div>
+                <div class="scale-chip active" data-scale="2">
+                  <div class="scale-val">2x HD</div>
+                  <div class="scale-sub">Recommended</div>
+                </div>
+                <div class="scale-chip" data-scale="4">
+                  <div class="scale-val">4x Ultra</div>
+                  <div class="scale-sub">4K Studio</div>
+                </div>
+                <div class="scale-chip" data-scale="8">
+                  <div class="scale-val">8x Max</div>
+                  <div class="scale-sub">8K Poster</div>
+                </div>
+              </div>
+
+              <!-- Advanced Fine Tuning Drawer Toggle -->
+              <div class="advanced-toggle" id="advancedToggle">
+                <span>⚙️ Advanced Studio Adjustments</span>
+                <span id="advancedToggleArrow">▼</span>
+              </div>
+
+              <!-- Advanced Controls Panel -->
+              <div class="advanced-drawer" id="advancedDrawer">
+                <!-- Clarity / Micro-sharpening -->
+                <div class="slider-row">
+                  <div class="slider-header">
+                    <span>Clarity &amp; Micro-Sharpening</span>
+                    <span id="valClarity">80%</span>
+                  </div>
+                  <input type="range" id="sliderClarity" min="0" max="100" value="80" class="form-range" style="width: 100%;">
+                </div>
+
+                <!-- CLAHE Dynamic Range -->
+                <div class="slider-row">
+                  <div class="slider-header">
+                    <span>CLAHE HDR Dynamic Range</span>
+                    <span id="valHdr">75%</span>
+                  </div>
+                  <input type="range" id="sliderHdr" min="0" max="100" value="75" class="form-range" style="width: 100%;">
+                </div>
+
+                <!-- Bilateral Denoise -->
+                <div class="slider-row">
+                  <div class="slider-header">
+                    <span>Bilateral Noise Reduction</span>
+                    <span id="valDenoise">60%</span>
+                  </div>
+                  <input type="range" id="sliderDenoise" min="0" max="100" value="60" class="form-range" style="width: 100%;">
+                </div>
+
+                <!-- Color Vibrance -->
+                <div class="slider-row">
+                  <div class="slider-header">
+                    <span>Color Vibrance</span>
+                    <span id="valVibrance">+25%</span>
+                  </div>
+                  <input type="range" id="sliderVibrance" min="-50" max="50" value="25" class="form-range" style="width: 100%;">
+                </div>
+
+                <!-- Anti-Halo Checkbox -->
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
+                  <input type="checkbox" id="chkAntiHalo" checked style="accent-color: var(--saffron); width: 16px; height: 16px;">
+                  <label for="chkAntiHalo" style="font-size: 12px; color: var(--navy); font-weight: 600;">
+                    Anti-Halo Protection (Prevents edge ringing &amp; white borders)
+                  </label>
+                </div>
+              </div>
+
+              <!-- Main Execute Button -->
+              <button type="button" id="btnRunEnhancer" class="btn btn-primary" style="width: 100%; font-size: 16px; padding: 14px 20px; font-weight: 700; box-shadow: 0 4px 16px rgba(234,88,12,0.35); background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);">
+                🚀 Enhance to Maximum Quality
+              </button>
+
+              <div style="text-align: center; margin-top: 8px; font-size: 11px; color: var(--gray-400);">
+                ⏱️ Deep multi-pass calculation takes ~2-6 seconds depending on resolution.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN: INTERACTIVE COMPARISON VIEWER -->
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+
+            <!-- Viewer Card -->
+            <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-5);">
+              
+              <!-- Viewer Controls Bar -->
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <span style="font-size: 14px; font-weight: 700; color: var(--navy);">Comparison View:</span>
+                  <button type="button" id="btnViewSplit" class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 4px 8px; font-weight: 700;">
+                    ⬌ Split Slider
+                  </button>
+                  <button type="button" id="btnViewToggle" class="btn btn-outline btn-sm" style="font-size: 11px; padding: 4px 8px;">
+                    👁️ Hold to Original
+                  </button>
+                </div>
+
+                <div style="font-size: 12px; color: var(--gray-500);" id="viewerHintText">
+                  Drag the slider to compare Before &amp; After
+                </div>
+              </div>
+
+              <!-- Draggable Split Comparison Canvas Container -->
+              <div class="compare-container" id="compareContainer">
+                <!-- Layer 1: Enhanced Image (Background Layer) -->
+                <div class="compare-image-layer" id="layerAfter">
+                  <canvas id="canvasAfter"></canvas>
+                </div>
+
+                <!-- Layer 2: Original Image (Clipped Foreground Layer) -->
+                <div class="compare-image-layer compare-before-layer" id="layerBefore">
+                  <canvas id="canvasBefore"></canvas>
+                </div>
+
+                <!-- Center Divider Bar & Handle -->
+                <div class="compare-divider-handle" id="dividerHandle">
+                  <div class="compare-divider-button" id="dividerButton">
+                    ⬌
+                  </div>
+                </div>
+
+                <!-- Badges -->
+                <div class="compare-pill pill-before">Before (Original)</div>
+                <div class="compare-pill pill-after" id="badgeAfterStatus">After (Ultra Enhanced)</div>
+              </div>
+
+              <!-- Metric Stats Grid (Shown after processing) -->
+              <div class="metric-stats-grid" id="statsGrid">
+                <div class="metric-stat-box">
+                  <div class="stat-val" id="statOutputRes">-- × --</div>
+                  <div class="stat-label">Output Resolution</div>
+                </div>
+                <div class="metric-stat-box">
+                  <div class="stat-val" id="statClarityGain">+120%</div>
+                  <div class="stat-label">Clarity Boost</div>
+                </div>
+                <div class="metric-stat-box">
+                  <div class="stat-val" id="statDynamicRange">+85%</div>
+                  <div class="stat-label">HDR Contrast</div>
+                </div>
+                <div class="metric-stat-box">
+                  <div class="stat-val" id="statProcessingTime">1.8s</div>
+                  <div class="stat-label">Compute Time</div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Download & Export Bar -->
+            <div id="exportCard" style="display: none; background: #ecfdf5; border: 2px solid #10b981; border-radius: var(--radius-xl); padding: var(--space-5);">
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                <div>
+                  <div style="font-size: 16px; font-weight: 800; color: #065f46;">
+                    🎉 Image Enhanced to Maximum Quality!
+                  </div>
+                  <div style="font-size: 12px; color: #047857;" id="exportSummaryText">
+                    Multi-scale textures sharpened • CLAHE HDR tone mapped • Lossless studio rendering.
+                  </div>
+                </div>
+
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                  <select id="exportFormatSelect" class="form-select" style="padding: 9px 12px; font-size: 13px; font-weight: 600; width: auto;">
+                    <option value="png">PNG (Lossless 100%)</option>
+                    <option value="jpeg">JPG (Studio 100%)</option>
+                    <option value="webp">WebP (Modern Lossless)</option>
+                  </select>
+                  <button type="button" id="btnDownloadEnhanced" class="btn btn-primary" style="background: #059669; border-color: #059669; font-weight: 700; font-size: 14px; padding: 10px 20px;">
+                    📥 Download Photo
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Rendering Progress Overlay Card (Visible during computation) -->
+        <div id="renderProgressCard" style="display: none; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); text-align: center;">
+          <div style="font-size: 32px; margin-bottom: 8px;">⚙️</div>
+          <div style="font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 4px;" id="progressStageTitle">
+            Executing Deep Multi-Pass Enhancement Pipeline...
+          </div>
+          <div style="font-size: 13px; color: var(--gray-500); margin-bottom: 14px;" id="progressStageDesc">
+            Stage 1/5: Analyzing spatial frequency &amp; luminance distribution...
+          </div>
+          
+          <div style="max-width: 520px; margin: 0 auto;">
+            <div style="height: 12px; background: var(--gray-200); border-radius: 999px; overflow: hidden; position: relative;">
+              <div id="renderProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #3b82f6, #f97316); transition: width 0.15s ease;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--gray-500); margin-top: 6px;">
+              <span id="renderTimeElapsed">Time elapsed: 0.0s</span>
+              <span id="renderPercentText" style="font-weight: 700; color: var(--navy);">0%</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Educational & SEO Technical Deep-Dive Section -->
+      <div class="tool-info-section" style="margin-top: var(--space-8); background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-8);">
+        <h2 style="font-size: 22px; color: var(--navy); margin-bottom: 14px;">
+          How Does the Ultra AI Image Enhancer Work?
+        </h2>
+        <p style="color: var(--gray-600); line-height: 1.6; font-size: 14px; margin-bottom: 16px;">
+          Most basic online photo editors apply simple high-pass filters or over-sharpening kernels that amplify JPEG noise and introduce ugly white halos around edges. Our <strong>Ultra AI Image Enhancer</strong> utilizes an advanced five-stage computational photography pipeline designed to extract genuine detail and expand optical dynamic range:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 20px 0;">
+          <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px;">
+            <div style="font-size: 20px; margin-bottom: 6px;">🔬</div>
+            <div style="font-weight: 700; color: var(--navy); font-size: 14px; margin-bottom: 4px;">1. Bilateral Edge-Preserving Denoise</div>
+            <div style="font-size: 12px; color: var(--gray-600); line-height: 1.5;">
+              Purges JPEG compression blockiness, high-ISO sensor grain, and digital chroma noise while maintaining razor-sharp silhouette boundaries.
+            </div>
+          </div>
+
+          <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px;">
+            <div style="font-size: 20px; margin-bottom: 6px;">☀️</div>
+            <div style="font-weight: 700; color: var(--navy); font-size: 14px; margin-bottom: 4px;">2. CLAHE Local Adaptive Contrast</div>
+            <div style="font-size: 12px; color: var(--gray-600); line-height: 1.5;">
+              Divides luminance into 64 contextual grid cells. Equalizes dark shadow details without clipping or washing out bright sky highlights.
+            </div>
+          </div>
+
+          <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px;">
+            <div style="font-size: 20px; margin-bottom: 6px;">📐</div>
+            <div style="font-weight: 700; color: var(--navy); font-size: 14px; margin-bottom: 4px;">3. Directional Super-Resolution (4x/8x)</div>
+            <div style="font-size: 12px; color: var(--gray-600); line-height: 1.5;">
+              Detects local Sobel gradient vectors to interpolate along physical contours, eradicating staircase pixelation during upscaling.
+            </div>
+          </div>
+
+          <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px;">
+            <div style="font-size: 20px; margin-bottom: 6px;">✨</div>
+            <div style="font-weight: 700; color: var(--navy); font-size: 14px; margin-bottom: 4px;">4. Multi-Scale Laplacian Micro-Textures</div>
+            <div style="font-size: 12px; color: var(--gray-600); line-height: 1.5;">
+              Synthesizes high-frequency details (eyelashes, hair follicles, textile fibers) with non-linear hyperbolic tangent anti-halo limiting.
+            </div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 18px; color: var(--navy); margin: 24px 0 12px;">Frequently Asked Questions</h3>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="background: var(--gray-50); border-radius: var(--radius-md); padding: 14px 18px;">
+            <div style="font-weight: 700; color: var(--navy); font-size: 14px;">Are my images uploaded to any remote server?</div>
+            <div style="font-size: 13px; color: var(--gray-600); margin-top: 4px; line-height: 1.5;">
+              No! The entire enhancement pipeline runs directly inside your web browser via HTML5 Canvas and typed memory buffers. Zero bytes are ever transmitted over the internet, ensuring 100% security for personal, sensitive, or document scans.
+            </div>
+          </div>
+
+          <div style="background: var(--gray-50); border-radius: var(--radius-md); padding: 14px 18px;">
+            <div style="font-weight: 700; color: var(--navy); font-size: 14px;">Can I enhance old, vintage, or blurry family photos?</div>
+            <div style="font-size: 13px; color: var(--gray-600); margin-top: 4px; line-height: 1.5;">
+              Yes. The "Portrait &amp; Face" or "Ultra AI Master" presets are specifically engineered to restore faded contrast, reconstruct facial features, and remove scanning noise from historical prints.
+            </div>
+          </div>
+
+          <div style="background: var(--gray-50); border-radius: var(--radius-md); padding: 14px 18px;">
+            <div style="font-weight: 700; color: var(--navy); font-size: 14px;">What upscale factor should I choose?</div>
+            <div style="font-size: 13px; color: var(--gray-600); margin-top: 4px; line-height: 1.5;">
+              Choose <strong>2x HD</strong> for standard social media and web display. Choose <strong>4x Ultra</strong> or <strong>8x Max</strong> if you plan to print large posters, zoom in on fine details, or need 4K/8K resolution backgrounds.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Site Footer (injected by js/app.js) -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="../js/app.js?v=1.5"></script>
+  <script src="../js/tools/image-enhancer.js?v=1.0"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-/* ═══════════════════════════════════════════════════
+﻿/* ═══════════════════════════════════════════════════
    SARKARI RESULT TOOLS — Main Application JS
    ═══════════════════════════════════════════════════ */
 
@@ -17,6 +17,18 @@
 
   /* ───────── TOOL REGISTRY ───────── */
   const TOOLS = [
+    {
+      id: 'image-enhancer',
+      name: 'Ultra AI Image Enhancer & 4K Super-Resolution',
+      description: 'Deep multi-stage photo enhancer: Edge-directed super-resolution (up to 8x), CLAHE local HDR tone mapping, bilateral de-noising, and micro-texture recovery',
+      category: 'image',
+      categoryLabel: 'Image Tools',
+      icon: '💎',
+      iconBg: 'image-tools',
+      url: 'tools/image-enhancer.html',
+      keywords: ['image enhancer', 'ai photo enhancer', 'unblur image', 'super resolution', 'upscale image', 'clahe photo enhancer', 'hd photo converter', 'old photo restore', 'sharpen image', 'photo quality enhancer', '4k upscaler'],
+      badge: 'New'
+    },
     {
       id: 'ai-video-remover',
       name: 'AI Video to Camera Converter & Forensics Humanizer',
