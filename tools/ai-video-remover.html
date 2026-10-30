@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
+  <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Video to Real Camera Converter &amp; Metadata Remover | Free Online Forensics Humanizer</title>
+  <meta name="description" content="Convert AI-generated videos (Sora, Kling, Runway Gen-3, Luma, Pika) into genuine camera recordings. Purge C2PA credentials, inject Apple iPhone 15 Pro &amp; Sony FX3 metadata, and simulate physical CMOS sensor shot noise. 100% private in-browser.">
+  <meta name="keywords" content="ai video remover, ai to camera video, remove ai from video, video metadata editor, c2pa video remover, sora ai video remover, kling ai humanizer, runway video metadata, cmos sensor noise video, deepfake humanizer, bypass ai video detector, fake video to real">
+  <meta property="og:title" content="AI Video to Real Camera Converter &amp; Metadata Forensics Humanizer">
+  <meta property="og:description" content="Strip C2PA and AI generator traces, inject authentic iPhone/Sony camera metadata, and apply physical CMOS sensor grain &amp; camera mic room tone. 100% client-side safe.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon & Touch Icons -->
+  <link rel="shortcut icon" href="../favicon.ico">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="48x48" href="../favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="canonical" href="https://alltoolsinone.com/tools/ai-video-remover.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=1.5">
+  <link rel="stylesheet" href="../css/animations.css?v=1.2">
+  <link rel="stylesheet" href="../css/tools.css?v=1.5">
+
+  <style>
+    .mode-tabs-nav {
+      display: flex;
+      gap: var(--space-2);
+      border-bottom: 2px solid var(--gray-200);
+      margin-bottom: var(--space-6);
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .mode-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: var(--space-3) var(--space-5);
+      font-weight: 600;
+      font-size: var(--text-sm);
+      color: var(--gray-600);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      transition: all var(--duration-fast);
+      white-space: nowrap;
+    }
+    .mode-tab:hover {
+      color: var(--navy);
+    }
+    .mode-tab.active {
+      color: var(--saffron-dark);
+      border-bottom-color: var(--saffron);
+    }
+    .ai-detected-alert {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    .camera-detected-alert {
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    .clean-detected-alert {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    .preset-preview-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-top: var(--space-3);
+    }
+    .preset-prop {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 4px 0;
+      border-bottom: 1px dashed var(--gray-200);
+    }
+    .preset-prop:last-child {
+      border-bottom: none;
+    }
+    .preset-prop span:first-child {
+      color: var(--gray-500);
+    }
+    .preset-prop span:last-child {
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .engine-card {
+      background: #fdfaf5;
+      border: 1px solid #fed7aa;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-6);
+    }
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--saffron);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 8px;
+    }
+    .risk-meter-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .risk-meter-bar {
+      flex: 1;
+      height: 10px;
+      background: var(--gray-200);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .risk-meter-fill {
+      height: 100%;
+      transition: width 0.5s ease, background 0.5s ease;
+    }
+    .video-viewport-wrapper {
+      position: relative;
+      background: #000;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-height: 480px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .video-viewport-wrapper video {
+      width: 100%;
+      max-height: 480px;
+      object-fit: contain;
+      display: block;
+    }
+    .forensic-metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .forensic-metric-box {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      text-align: center;
+    }
+    .forensic-metric-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .forensic-metric-label {
+      font-size: 11px;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+    .camera-preset-card {
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      cursor: pointer;
+      transition: all var(--duration-fast);
+      background: var(--white);
+    }
+    .camera-preset-card:hover {
+      border-color: var(--saffron);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .camera-preset-card.active {
+      border-color: var(--saffron);
+      background: #fffcf8;
+      box-shadow: 0 0 0 1px var(--saffron);
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T2ZZ2MP6"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- Site Header (injected by js/app.js) -->
+  <div id="header-placeholder"></div>
+
+  <main class="main-content">
+    <div class="container" style="max-width: 1120px;">
+      
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="breadcrumb-separator">/</span>
+        <a href="../tools.html">Tools</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">AI Video to Camera Converter &amp; Metadata Remover</span>
+      </nav>
+
+      <!-- Tool Header -->
+      <div class="tool-header" style="margin-bottom: var(--space-6);">
+        <div class="tool-icon-wrapper" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: #fff; width: 56px; height: 56px; border-radius: var(--radius-xl); display: inline-flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 12px; box-shadow: 0 6px 16px rgba(234,88,12,0.25);">
+          🎬
+        </div>
+        <h1 class="tool-title" style="font-size: 28px; font-weight: 700; color: var(--navy); margin-bottom: 8px;">
+          AI Video to Real Camera Converter &amp; Metadata Remover
+        </h1>
+        <p class="tool-subtitle" style="color: var(--gray-600); max-width: 780px; font-size: 15px; line-height: 1.6;">
+          Convert AI-generated videos (Sora, Kling, Runway Gen-3, Luma Dream Machine, Pika) into authentic camera recordings. Purge C2PA credentials, inject Apple iPhone 15 Pro &amp; Sony FX3 metadata, and simulate physical CMOS sensor shot noise &amp; camera microphone room tone. 100% private in-browser.
+        </p>
+      </div>
+
+      <!-- Upload Zone Card -->
+      <div class="tool-card" id="uploadZoneCard" style="border: 2px dashed var(--gray-300); background: var(--white); border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: var(--space-6);">
+        <input type="file" id="videoFileInput" accept="video/mp4,video/quicktime,video/webm" style="display: none;">
+        <div style="font-size: 48px; margin-bottom: 12px;">📹</div>
+        <div style="font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px;">
+          Drop your AI Video here, or <span style="color: var(--saffron); text-decoration: underline;">Browse Files</span>
+        </div>
+        <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 16px;">
+          Supports MP4, MOV, WebM up to 150MB. Processed 100% privately in your browser — zero bytes uploaded to any server.
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <button type="button" class="btn btn-primary" onclick="document.getElementById('videoFileInput').click();">
+            📁 Select Video File
+          </button>
+          <button type="button" class="btn btn-outline" id="btnLoadSampleVideo">
+            ⚡ Try Sample AI Video
+          </button>
+        </div>
+        <div style="margin-top: 14px; font-size: 12px; color: var(--gray-400);">
+          🔒 End-to-end client-side sandboxed. No registration, no watermarks, completely free.
+        </div>
+      </div>
+
+      <!-- Main Workspace (Hidden until video is loaded) -->
+      <div id="videoWorkspace" style="display: none;">
+
+        <!-- Forensics Status Alert Box -->
+        <div id="forensicAlertBox" class="ai-detected-alert">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <span id="forensicAlertIcon" style="font-size: 32px;">⚠️</span>
+              <div>
+                <div id="forensicAlertTitle" style="font-weight: 700; font-size: 16px; color: #991b1b;">
+                  AI Generated Video Signatures Detected!
+                </div>
+                <div id="forensicAlertDesc" style="font-size: 13px; color: #7f1d1d; margin-top: 2px;">
+                  Found C2PA provenance manifest / missing camera hardware atoms. AI detection risk is high.
+                </div>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 11px; text-transform: uppercase; font-weight: 700; color: #991b1b;">AI Detection Risk</div>
+              <div id="forensicRiskVal" style="font-size: 24px; font-weight: 800; color: #dc2626;">98.4%</div>
+            </div>
+          </div>
+          <!-- Risk Bar -->
+          <div class="risk-meter-wrap">
+            <div class="risk-meter-bar">
+              <div id="riskMeterFill" class="risk-meter-fill" style="width: 98.4%; background: #dc2626;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Player & Metadata Grid -->
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-6); margin-bottom: var(--space-6);">
+          
+          <!-- Left: Video Viewport -->
+          <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-5);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-weight: 700; color: var(--navy); font-size: 15px;">Live Video Preview</span>
+              <span id="badgeVideoStatus" class="ocr-badge status-done" style="font-size: 11px;">Input Loaded</span>
+            </div>
+
+            <div class="video-viewport-wrapper">
+              <video id="previewPlayer" controls playsinline></video>
+            </div>
+
+            <!-- Video File Specifications -->
+            <div class="forensic-metric-grid">
+              <div class="forensic-metric-box">
+                <div class="forensic-metric-val" id="valResolution">-- x --</div>
+                <div class="forensic-metric-label">Resolution</div>
+              </div>
+              <div class="forensic-metric-box">
+                <div class="forensic-metric-val" id="valDuration">0.0s</div>
+                <div class="forensic-metric-label">Duration</div>
+              </div>
+              <div class="forensic-metric-box">
+                <div class="forensic-metric-val" id="valFileSize">0 MB</div>
+                <div class="forensic-metric-label">File Size</div>
+              </div>
+              <div class="forensic-metric-box">
+                <div class="forensic-metric-val" id="valAudioTrack">Checking...</div>
+                <div class="forensic-metric-label">Audio Track</div>
+              </div>
+            </div>
+
+            <!-- Change Video Button -->
+            <div style="margin-top: 14px; text-align: center;">
+              <button type="button" class="btn btn-outline" style="font-size: 12px; padding: 6px 14px;" onclick="document.getElementById('videoFileInput').click();">
+                🔄 Change Video File
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Anti-Forensics Inspector & Customization -->
+          <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-5); display: flex; flex-direction: column;">
+            
+            <!-- Mode Tabs -->
+            <div class="mode-tabs-nav" id="humanizerTabs" style="margin-bottom: 16px;">
+              <button type="button" class="mode-tab active" data-tab="camera">📱 Camera Profile</button>
+              <button type="button" class="mode-tab" data-tab="sensor">🔬 CMOS Sensor</button>
+              <button type="button" class="mode-tab" data-tab="audio">🎙️ Room Tone</button>
+              <button type="button" class="mode-tab" data-tab="c2pa">✂️ C2PA Purge</button>
+            </div>
+
+            <!-- TAB 1: Camera Hardware Profile -->
+            <div id="tabContentCamera" class="tab-content" style="display: block;">
+              <div style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">
+                Select a genuine camera hardware profile to inject into the MP4 container (`moov/udta` atoms):
+              </div>
+
+              <!-- Preset Cards Grid -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
+                
+                <div class="camera-preset-card active" data-preset="iphone15">
+                  <div style="font-size: 20px;">📱</div>
+                  <div style="font-weight: 700; font-size: 13px; color: var(--navy);">Apple iPhone 15 Pro</div>
+                  <div style="font-size: 11px; color: var(--gray-500);">iOS 17.5.1 QuickTime</div>
+                </div>
+
+                <div class="camera-preset-card" data-preset="sony_fx3">
+                  <div style="font-size: 20px;">🎥</div>
+                  <div style="font-weight: 700; font-size: 13px; color: var(--navy);">Sony FX3 Cinema</div>
+                  <div style="font-size: 11px; color: var(--gray-500);">XAVC S S-Cinetone</div>
+                </div>
+
+                <div class="camera-preset-card" data-preset="canon_r5">
+                  <div style="font-size: 20px;">📷</div>
+                  <div style="font-weight: 700; font-size: 13px; color: var(--navy);">Canon EOS R5</div>
+                  <div style="font-size: 11px; color: var(--gray-500);">C-Log RF 24-70mm</div>
+                </div>
+
+                <div class="camera-preset-card" data-preset="gopro12">
+                  <div style="font-size: 20px;">🏄</div>
+                  <div style="font-weight: 700; font-size: 13px; color: var(--navy);">GoPro HERO 12</div>
+                  <div style="font-size: 11px; color: var(--gray-500);">Action Cam Telemetry</div>
+                </div>
+
+              </div>
+
+              <!-- Preset Properties Preview -->
+              <div class="preset-preview-box">
+                <div class="preset-prop"><span>Camera Make:</span><span id="propMake">Apple</span></div>
+                <div class="preset-prop"><span>Camera Model:</span><span id="propModel">iPhone 15 Pro Max</span></div>
+                <div class="preset-prop"><span>Firmware / Software:</span><span id="propSoftware">iOS 17.5.1</span></div>
+                <div class="preset-prop"><span>GPS Location:</span><span id="propLocation">+28.6139+077.2090+216.0/ (New Delhi)</span></div>
+                <div class="preset-prop"><span>Creation Timestamp:</span><span id="propTimestamp">Just now (Local)</span></div>
+              </div>
+            </div>
+
+            <!-- TAB 2: CMOS Sensor Noise & Lens Optics Engine -->
+            <div id="tabContentSensor" class="tab-content" style="display: none;">
+              <div class="engine-card" style="margin-bottom: 12px; padding: 12px 16px;">
+                <div style="font-weight: 700; font-size: 13px; color: var(--navy); margin-bottom: 4px;">
+                  🔬 CMOS Sensor Shot Noise (PRNU Emulation)
+                </div>
+                <div style="font-size: 12px; color: var(--gray-600); margin-bottom: 10px;">
+                  AI generators output unnatural mathematical smoothness. Physical sensors always produce Poisson photon shot noise.
+                </div>
+
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+                  <span>Noise Grain Intensity:</span>
+                  <span id="labelGrainVal" style="font-weight: 700; color: var(--saffron-dark);">18% (Natural ISO 400)</span>
+                </div>
+                <input type="range" id="sliderSensorGrain" min="0" max="60" value="18" style="width: 100%; accent-color: var(--saffron);">
+                <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--gray-400); margin-top: 4px;">
+                  <span>0% (Clean)</span>
+                  <span>18% (Natural ISO 400)</span>
+                  <span>35% (ISO 800)</span>
+                  <span>60% (ISO 1600)</span>
+                </div>
+              </div>
+
+              <!-- Optical Lens Vignette -->
+              <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span style="font-weight: 600; font-size: 13px; color: var(--navy);">Optical Lens Vignette</span>
+                  <span id="labelVignetteVal" style="font-weight: 700; font-size: 12px; color: var(--navy);">15%</span>
+                </div>
+                <input type="range" id="sliderLensVignette" min="0" max="40" value="15" style="width: 100%; accent-color: var(--navy);">
+                <div style="font-size: 11px; color: var(--gray-500); margin-top: 4px;">
+                  Subtly attenuates corner light rays, perfectly replicating real camera optics.
+                </div>
+              </div>
+
+              <!-- Organic Handheld Micro-Jitter -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md);">
+                <div>
+                  <div style="font-weight: 600; font-size: 13px; color: var(--navy);">Subtle Handheld Micro-Float</div>
+                  <div style="font-size: 11px; color: var(--gray-500);">Breaks rigid AI motion vectors with 0.25px organic camera float.</div>
+                </div>
+                <input type="checkbox" id="chkMicroJitter" checked style="width: 18px; height: 18px; accent-color: var(--saffron);">
+              </div>
+            </div>
+
+            <!-- TAB 3: Camera Microphone & Room Tone -->
+            <div id="tabContentAudio" class="tab-content" style="display: none;">
+              <div style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">
+                Silent AI videos are easily flagged by detectors. Real cameras record an acoustic background room tone.
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px;">
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
+                  <input type="radio" name="optAudioChoice" value="auto_tone" checked style="accent-color: var(--saffron);">
+                  <span><strong>Inject 48kHz Camera Mic Room Tone</strong> (Recommended for mute AI videos)</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
+                  <input type="radio" name="optAudioChoice" value="keep_original" style="accent-color: var(--saffron);">
+                  <span>Keep Original Audio Track (If video already has sound)</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;">
+                  <input type="radio" name="optAudioChoice" value="mute" style="accent-color: var(--saffron);">
+                  <span>Mute Audio Track</span>
+                </label>
+              </div>
+
+              <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 12px 16px;">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+                  <span>Room Tone Sound Level:</span>
+                  <span id="labelMicVolume" style="font-weight: 700; color: var(--navy);">-46 dB (Subtle Camera Floor)</span>
+                </div>
+                <input type="range" id="sliderRoomToneVol" min="2" max="25" value="8" style="width: 100%; accent-color: var(--navy);">
+              </div>
+            </div>
+
+            <!-- TAB 4: C2PA Purge & Watermark Cleaner -->
+            <div id="tabContentC2PA" class="tab-content" style="display: none;">
+              <div style="font-size: 13px; color: var(--gray-600); margin-bottom: 12px;">
+                Digital provenance metadata embedded by AI models to enable watermarking and tracking:
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="padding: 10px 14px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: var(--radius-md); display: flex; align-items: center; gap: 10px;">
+                  <span style="font-size: 20px;">🛡️</span>
+                  <div>
+                    <div style="font-weight: 700; font-size: 13px; color: #065f46;">C2PA JUMBF Manifest Purge</div>
+                    <div style="font-size: 11px; color: #047857;">Removes UUID `d8fec3d6-1b0e-483c-9297-5828877ec481` boxes from container.</div>
+                  </div>
+                </div>
+
+                <div style="padding: 10px 14px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: var(--radius-md); display: flex; align-items: center; gap: 10px;">
+                  <span style="font-size: 20px;">🧹</span>
+                  <div>
+                    <div style="font-weight: 700; font-size: 13px; color: #065f46;">Synthetic Encoder String Sanitizer</div>
+                    <div style="font-size: 11px; color: #047857;">Cleans default Lavf, FFmpeg, and AI tool strings from `moov/udta`.</div>
+                  </div>
+                </div>
+
+                <div style="padding: 10px 14px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: var(--radius-md); display: flex; align-items: center; gap: 10px;">
+                  <span style="font-size: 20px;">🏷️</span>
+                  <div>
+                    <div style="font-weight: 700; font-size: 13px; color: #065f46;">Apple QuickTime Container Compatibility</div>
+                    <div style="font-size: 11px; color: #047857;">Rewrites `ftyp` brand to `qt  ` / `mp42` for native Apple Photos &amp; QuickTime validity.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons Row -->
+            <div style="margin-top: auto; padding-top: 18px; border-top: 1px solid var(--gray-200); display: flex; flex-direction: column; gap: 8px;">
+              <button type="button" id="btnHumanizeReencode" class="btn btn-primary" style="width: 100%; font-size: 15px; padding: 12px 20px; font-weight: 700; box-shadow: 0 4px 14px rgba(234,88,12,0.3);">
+                🎬 Humanize &amp; Re-encode (Deep Anti-Forensics)
+              </button>
+              <button type="button" id="btnInstantPatch" class="btn btn-outline" style="width: 100%; font-size: 13px; padding: 9px 16px;">
+                ⚡ Instant Camera Tag &amp; C2PA Purge (1 Second)
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Rendering Progress Overlay Card (Visible during processing) -->
+        <div id="renderProgressCard" style="display: none; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); text-align: center;">
+          <div style="font-size: 32px; margin-bottom: 8px;">⚙️</div>
+          <div style="font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 4px;" id="progressStatusText">
+            Simulating Physical CMOS Sensor &amp; Optical Realism...
+          </div>
+          <div style="font-size: 13px; color: var(--gray-500); margin-bottom: 14px;" id="progressSubtext">
+            Processing frame 45 / 120 (30 FPS) — Disrupting latent diffusion artifacts...
+          </div>
+          
+          <div style="max-width: 500px; margin: 0 auto;">
+            <div style="height: 12px; background: var(--gray-200); border-radius: 999px; overflow: hidden; position: relative;">
+              <div id="renderProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #f97316, #ea580c); transition: width 0.1s;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--gray-500); margin-top: 6px;">
+              <span id="renderTimeElapsed">Elapsed: 0s</span>
+              <span id="renderPercentText" style="font-weight: 700; color: var(--navy);">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Download & Results Card (Visible after processing) -->
+        <div id="downloadResultsCard" style="display: none; background: #ecfdf5; border: 2px solid #10b981; border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div style="display: flex; gap: 14px; align-items: center;">
+              <div style="font-size: 40px;">🎉</div>
+              <div>
+                <div style="font-size: 18px; font-weight: 800; color: #065f46;">
+                  Video Successfully Humanized &amp; Camera Tags Injected!
+                </div>
+                <div style="font-size: 13px; color: #047857; margin-top: 2px;" id="downloadSummaryText">
+                  Applied physical CMOS sensor noise floor, camera room tone, and Apple iPhone 15 Pro QuickTime metadata.
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+                  <span class="ocr-badge status-done" id="badgePostRisk" style="font-size: 11px;">AI Risk: &lt; 1.2% (Camera Authenticated)</span>
+                  <span class="ocr-badge status-done" style="font-size: 11px;">C2PA Manifest: Stripped</span>
+                  <span class="ocr-badge status-done" style="font-size: 11px;">Audio: 48kHz Stereo Attached</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Download Button -->
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button type="button" id="btnDownloadProcessedVideo" class="btn btn-primary" style="font-size: 15px; padding: 12px 24px; font-weight: 700; background: #059669; border-color: #059669;">
+                📥 Download Video (.mp4)
+              </button>
+              <button type="button" id="btnCopyForensicReport" class="btn btn-outline" style="font-size: 13px; padding: 12px 16px;">
+                📋 Copy Report
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Educational & Technical SEO Section -->
+      <div class="tool-info-section" style="margin-top: var(--space-8); background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-xl); padding: var(--space-8);">
+        <h2 style="font-size: 22px; color: var(--navy); margin-bottom: 12px;">
+          How Do AI Video Detectors Work &amp; How Does This Humanizer Beat Them?
+        </h2>
+        <p style="color: var(--gray-600); line-height: 1.6; font-size: 14px; margin-bottom: 16px;">
+          Tools like Hive Detect, Sensity AI, CopyLeaks, and Deepware analyze video files through a multi-tiered forensic lens. Rather than looking only at individual frames, they evaluate four distinct layers: <strong>Cryptographic Provenance (C2PA)</strong>, <strong>Frequency Spectrum (Fourier &amp; PRNU noise)</strong>, <strong>Temporal Vector Consistency</strong>, and <strong>Acoustic Presence</strong>.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          
+          <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px;">
+            <div style="font-size: 24px; margin-bottom: 6px;">📜</div>
+            <div style="font-weight: 700; color: var(--navy); font-size: 15px; margin-bottom: 4px;">1. C2PA Content Credentials Purge</div>
+            <p style="font-size: 13px; color: var(--gray-600); line-height: 1.5;">
+              Models like OpenAI Sora and Runway Gen-3 embed invisible C2PA JUMBF cryptographic manifests. Detectors check these first. Our tool removes the `c2pa` and `uuid` manifest boxes cleanly from the MP4 container.
+            </p>
+          </div>
+
+          <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px;">
+            <div style="font-size: 24px; margin-bottom: 6px;">🔬</div>
+            <div style="font-weight: 700; color: var(--navy); font-size: 15px; margin-bottom: 4px;">2. CMOS Sensor Shot Noise (PRNU)</div>
+            <p style="font-size: 13px; color: var(--gray-600); line-height: 1.5;">
+              Every real camera sensor possesses Photo-Response Non-Uniformity (PRNU) and Poisson photon noise. AI videos are mathematically smooth. Our engine injects authentic CMOS sensor grain to disrupt Fourier frequency classifiers.
+            </p>
+          </div>
+
+          <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px;">
+            <div style="font-size: 24px; margin-bottom: 6px;">📱</div>
+            <div style="font-weight: 700; color: var(--navy); font-size: 15px; margin-bottom: 4px;">3. Real Camera Hardware EXIF/Atoms</div>
+            <p style="font-size: 13px; color: var(--gray-600); line-height: 1.5;">
+              Default AI exports lack camera metadata or carry `Lavf` (FFmpeg) tags. We inject authentic Apple QuickTime (`com.apple.quicktime.make = Apple`, `iPhone 15 Pro Max`) or Sony FX3 metadata with real GPS coordinates.
+            </p>
+          </div>
+
+          <div style="background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 16px;">
+            <div style="font-size: 24px; margin-bottom: 6px;">🎙️</div>
+            <div style="font-weight: 700; color: var(--navy); font-size: 15px; margin-bottom: 4px;">4. Camera Microphone Room Tone</div>
+            <p style="font-size: 13px; color: var(--gray-600); line-height: 1.5;">
+              Silent videos are an instant giveaway for AI generation. Our engine synthesizes a subtle 48kHz stereo camera ambient room tone at -46dB, making the video stream look 100% like a genuine live camera shoot.
+            </p>
+          </div>
+
+        </div>
+
+        <h3 style="font-size: 17px; color: var(--navy); margin-bottom: 8px;">Frequently Asked Questions</h3>
+        <div style="font-size: 14px; color: var(--gray-600); line-height: 1.6;">
+          <p><strong>Is my video uploaded to a server?</strong><br>No. The entire process runs 100% in your local web browser using the HTML5 Canvas API, Web Audio API, and client-side binary ArrayBuffer MP4 patching. Your video never touches any cloud or server.</p>
+          <p style="margin-top: 10px;"><strong>Which AI video generators are supported?</strong><br>Compatible with all major AI video models including OpenAI Sora, Kling AI, Runway Gen-2 &amp; Gen-3, Luma Dream Machine, Pika Labs, Haiper, Stable Video Diffusion, and HeyGen.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Site Footer (injected by js/app.js) -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Hidden Working Canvas for Video Frame Processing -->
+  <canvas id="hiddenVideoCanvas" style="display: none;"></canvas>
+
+  <!-- Scripts -->
+  <script src="../js/app.js?v=1.5"></script>
+  <script src="../js/tools/ai-video-remover.js?v=1.0"></script>
+</body>
+</html>

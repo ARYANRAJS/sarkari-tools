@@ -18,6 +18,18 @@
   /* ───────── TOOL REGISTRY ───────── */
   const TOOLS = [
     {
+      id: 'ai-video-remover',
+      name: 'AI Video to Camera Converter & Forensics Humanizer',
+      description: 'Purge C2PA credentials, inject Apple iPhone 15 Pro & Sony FX3 metadata, and simulate physical CMOS sensor grain & camera mic room tone',
+      category: 'video',
+      categoryLabel: 'Video & Media Tools',
+      icon: '🎬',
+      iconBg: 'media-tools',
+      url: 'tools/ai-video-remover.html',
+      keywords: ['ai video remover', 'ai to camera video', 'remove ai from video', 'video metadata editor', 'c2pa video remover', 'sora ai remover', 'kling ai humanizer', 'runway video metadata', 'cmos sensor noise video', 'deepfake humanizer', 'fake video to real'],
+      badge: 'New'
+    },
+    {
       id: 'image-metadata-editor',
       name: 'Image Metadata & AI to Camera Converter',
       description: 'View, edit, or delete EXIF & GPS metadata, remove AI prompt traces, and convert AI images into authentic camera photos',
