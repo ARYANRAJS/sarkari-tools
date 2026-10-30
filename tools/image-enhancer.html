@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-T2ZZ2MP6');</script>
-  <!-- End Google Tag Manager -->
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ultra AI Image Enhancer &amp; 4K/8K Super-Resolution | Free Online Photo Quality Enhancer</title>
   <meta name="description" content="Enhance blurry, low-resolution, or compressed photos into ultra-crisp studio quality with deep multi-scale sharpening, CLAHE HDR dynamic range, bilateral noise reduction, and edge-directed 4x/8x super-resolution. 100% free and private in-browser.">
@@ -26,12 +19,58 @@
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <link rel="canonical" href="https://alltoolsinone.com/tools/image-enhancer.html">
 
+    <!-- DNS Prefetches & Preconnects -->
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=1.5">
-  <link rel="stylesheet" href="../css/animations.css?v=1.2">
-  <link rel="stylesheet" href="../css/tools.css?v=1.5">
+
+  <!-- Non-blocking Google Fonts -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"></noscript>
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/tools.css">
+
+  <!-- Google Analytics & Tag Manager DataLayer Init -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+  </script>
+
+  <!-- High-Performance Lazy Loader for 3rd-Party Scripts (GTM & AdSense) -->
+  <script>
+    (function() {
+      var thirdPartyLoaded = false;
+      function loadThirdParties() {
+        if (thirdPartyLoaded) return;
+        thirdPartyLoaded = true;
+
+        var gtm = document.createElement('script');
+        gtm.async = true;
+        gtm.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-T2ZZ2MP6';
+        document.head.appendChild(gtm);
+
+        var ads = document.createElement('script');
+        ads.async = true;
+        ads.crossOrigin = 'anonymous';
+        ads.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9560707690666988';
+        document.head.appendChild(ads);
+      }
+
+      var events = ['scroll', 'touchstart', 'mousemove', 'click', 'keydown', 'wheel'];
+      events.forEach(function(ev) {
+        window.addEventListener(ev, loadThirdParties, { once: true, passive: true });
+      });
+
+      window.addEventListener('load', function() {
+        setTimeout(loadThirdParties, 4000);
+      });
+    })();
+  </script>
 
   <style>
     /* ───────── ENHANCER SPECIFIC STYLES ───────── */
@@ -729,7 +768,7 @@
   <div id="footer-placeholder"></div>
 
   <!-- Scripts -->
-  <script src="../js/app.js?v=1.5"></script>
-  <script src="../js/tools/image-enhancer.js?v=1.0"></script>
+  <script src="../js/app.js" defer></script>
+  <script src="../js/tools/image-enhancer.js" defer></script>
 </body>
 </html>
