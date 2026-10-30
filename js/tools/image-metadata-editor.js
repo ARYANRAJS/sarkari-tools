@@ -608,6 +608,38 @@
     const maxDistSq = (centerX * centerX) + (centerY * centerY);
     const maxDist = Math.sqrt(maxDistSq);
 
+    // 0. Aperiodic Sub-Pixel Bilinear VAE Lattice Disrupter (Breaks DALL-E 3 / Midjourney 8x8 Fourier harmonics)
+    const origCopy = new Uint8ClampedArray(data);
+    for (let y = 0; y < height; y++) {
+      const dispY = Math.cos(y * 0.045) * 0.7 + Math.sin(y * 0.035) * 0.5;
+      for (let x = 0; x < width; x++) {
+        const dispX = Math.sin(x * 0.045) * 0.7 + Math.cos(x * 0.035) * 0.5;
+        const srcX = Math.min(width - 1.001, Math.max(0, x + dispX));
+        const srcY = Math.min(height - 1.001, Math.max(0, y + dispY));
+
+        const x0 = Math.floor(srcX);
+        const y0 = Math.floor(srcY);
+        const x1 = Math.min(width - 1, x0 + 1);
+        const y1 = Math.min(height - 1, y0 + 1);
+
+        const wx = srcX - x0;
+        const wy = srcY - y0;
+
+        const i00 = (y0 * width + x0) * 4;
+        const i10 = (y0 * width + x1) * 4;
+        const i01 = (y1 * width + x0) * 4;
+        const i11 = (y1 * width + x1) * 4;
+
+        const targetIdx = (y * width + x) * 4;
+        for (let c = 0; c < 3; c++) {
+          data[targetIdx + c] = (1 - wx) * (1 - wy) * origCopy[i00 + c] +
+                                wx * (1 - wy) * origCopy[i10 + c] +
+                                (1 - wx) * wy * origCopy[i01 + c] +
+                                wx * wy * origCopy[i11 + c];
+        }
+      }
+    }
+
     // 1. Chromatic Aberration & Radial Lens Dispersion (Simulates optical camera glass)
     if (chromaticStrength > 0.05) {
       const copy = new Uint8ClampedArray(data);
@@ -663,18 +695,17 @@
       // B. Photometric Luminance
       const lum = 0.299 * r + 0.587 * g + 0.114 * b;
 
-      // C. Authentic CMOS Sensor Shot Noise (PRNU)
+      // C. Authentic CMOS Sensor Shot Noise (True Box-Muller Gaussian PRNU)
       if (grainStrength > 0.001) {
-        const lutIdx = (x * 37 ^ y * 101 ^ (x & 15)) & (NOISE_LUT_SIZE - 1);
-        const gaussian = NOISE_LUT[lutIdx];
-        const shadowWeight = 1.0 - (lum / 255) * 0.45;
+        const u1 = Math.random() || 0.0001;
+        const u2 = Math.random() || 0.0001;
+        const gaussian = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(6.283185 * u2);
+        const shadowWeight = Math.sqrt(lum / 255 + 0.08);
 
-        const noiseL = gaussian * grainStrength * 255 * shadowWeight;
-        const noiseC = NOISE_LUT[(lutIdx + 128) & (NOISE_LUT_SIZE - 1)] * grainStrength * 35;
-
-        r += noiseL + noiseC;
-        g += noiseL - noiseC * 0.5;
-        b += noiseL + noiseC * 1.2;
+        const noiseL = gaussian * grainStrength * 320 * shadowWeight;
+        r += noiseL;
+        g += noiseL;
+        b += noiseL;
       }
 
       // D. Camera Tone Profile (Eliminates AI plastic color cast)

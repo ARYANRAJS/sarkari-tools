@@ -644,6 +644,7 @@
   }
 
   function detectImageType(url) {
+    if (!url) return 'JPG';
     const lower = url.toLowerCase();
     if (lower.startsWith('data:image/svg') || lower.includes('.svg')) return 'SVG';
     if (lower.startsWith('data:image/png') || lower.includes('.png')) return 'PNG';
@@ -651,23 +652,28 @@
     if (lower.startsWith('data:image/gif') || lower.includes('.gif')) return 'GIF';
     if (lower.startsWith('data:image/avif') || lower.includes('.avif')) return 'AVIF';
     if (lower.startsWith('data:image/jpeg') || lower.includes('.jpg') || lower.includes('.jpeg')) return 'JPG';
-    return 'IMG';
+    return 'JPG';
   }
 
   function generateCleanFilename(url, index, ext) {
+    const safeExt = (ext && ext !== 'IMG') ? ext.toLowerCase() : 'jpg';
     if (url.startsWith('data:image/svg')) return `vector_${index + 1}.svg`;
-    if (url.startsWith('data:image/')) return `image_${index + 1}.${ext.toLowerCase()}`;
+    if (url.startsWith('data:image/')) return `image_${index + 1}.${safeExt}`;
 
     try {
       const parsed = new URL(url);
       const pathname = parsed.pathname;
       const base = pathname.substring(pathname.lastIndexOf('/') + 1).split('?')[0];
-      if (base && base.includes('.')) {
-        return base.replace(/[^a-zA-Z0-9._-]/g, '_');
+      if (base) {
+        let clean = base.replace(/[^a-zA-Z0-9._-]/g, '_');
+        if (!/\.[a-zA-Z0-9]+$/.test(clean)) {
+          clean += '.' + safeExt;
+        }
+        return clean;
       }
     } catch (e) {}
 
-    return `image_${index + 1}.${ext.toLowerCase()}`;
+    return `image_${index + 1}.${safeExt}`;
   }
 
   // Background Dimension Prober
@@ -924,12 +930,21 @@
     // If blob was successfully fetched, optionally upscale to 2x or 4x
     if (rawBlob) {
       let finalBlob = rawBlob;
-      let finalName = item.filename;
+      let finalName = item.filename || `image_${item.index + 1}.jpg`;
 
       if (qualityFactor > 1 && item.type !== 'SVG') {
         window.showToast?.(`Upscaling to ${qualityFactor}x HD Super-Resolution...`, 'info', 1500);
         finalBlob = await upscaleImageBlob(rawBlob, qualityFactor);
-        finalName = finalName.replace(/(\.[a-z0-9]+)$/i, `_${qualityFactor}x_HD$1`);
+        if (/\.[a-zA-Z0-9]+$/i.test(finalName)) {
+          finalName = finalName.replace(/\.[a-zA-Z0-9]+$/i, `_${qualityFactor}x_HD.png`);
+        } else {
+          finalName = `${finalName}_${qualityFactor}x_HD.png`;
+        }
+      } else {
+        if (!/\.[a-zA-Z0-9]+$/i.test(finalName)) {
+          const ext = item.type && item.type !== 'IMG' ? item.type.toLowerCase() : 'jpg';
+          finalName += '.' + ext;
+        }
       }
 
       window.downloadFile?.(finalBlob, finalName);
@@ -940,13 +955,12 @@
     // 4. Anchor click fallback (navigates or triggers browser download)
     const a = document.createElement('a');
     a.href = targetUrl;
-    a.download = item.filename;
-    a.target = '_blank';
+    a.download = item.filename || 'image.jpg';
     a.rel = 'noopener noreferrer';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    window.showToast?.('Download opened in browser tab!', 'info');
+    window.showToast?.('Download triggered in browser!', 'info');
   }
 
   // 11. Download Selected as HD ZIP

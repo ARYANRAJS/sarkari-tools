@@ -38,14 +38,18 @@
       const res = await fetch(imageUrl, { mode: 'cors' });
       if (!res.ok) throw new Error('Network error');
       const blob = await res.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(blobUrl);
+      if (window.downloadFile) {
+        window.downloadFile(blob, filename);
+      } else {
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+      }
     } catch (e) {
       // Fallback: direct window open or download attribute
       const a = document.createElement('a');

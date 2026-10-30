@@ -1317,14 +1317,33 @@
 
   /* ───────── DOWNLOAD HELPER ───────── */
   window.downloadFile = function(blob, filename) {
+    if (!blob) return;
+    let safeName = filename || 'download';
+    if (!/\.[a-zA-Z0-9]+$/.test(safeName)) {
+      const mime = (blob.type || '').toLowerCase();
+      let ext = 'jpg';
+      if (mime.includes('png')) ext = 'png';
+      else if (mime.includes('webp')) ext = 'webp';
+      else if (mime.includes('svg')) ext = 'svg';
+      else if (mime.includes('gif')) ext = 'gif';
+      else if (mime.includes('pdf')) ext = 'pdf';
+      else if (mime.includes('zip')) ext = 'zip';
+      else if (mime.includes('mp4')) ext = 'mp4';
+      safeName += '.' + ext;
+    }
+
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = filename;
+    a.download = safeName;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 100);
+
+    // Retain blob URL for 60s so Chromium does not discard download filename and fallback to raw UUID
+    setTimeout(() => {
+      try { URL.revokeObjectURL(url); } catch (e) {}
+    }, 60000);
   };
 
   /* ───────── ANONYMOUS FEEDBACK SYSTEM ───────── */
